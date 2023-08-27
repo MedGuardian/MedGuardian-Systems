@@ -3,14 +3,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LoginGUI {
+public class LoginJFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Login");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            JPanel panel = new JPanel();
-            panel.setLayout(new GridLayout(7, 5));
+            JPanel mainPanel = new JPanel(new GridBagLayout());
+            GridBagConstraints constraints = new GridBagConstraints();
+            constraints.insets = new Insets(10, 10, 10, 10);
+
+            JPanel panel = new JPanel(new GridLayout(3, 3));
 
             JLabel userLabel = new JLabel("Usuário:");
             JTextField userField = new JTextField();
@@ -25,7 +28,7 @@ public class LoginGUI {
             panel.add(userField);
             panel.add(passwordLabel);
             panel.add(passwordField);
-            panel.add(new JLabel());
+            panel.add(new JLabel()); // Espaço vazio, para espaçamento
             panel.add(loginButton);
 
             loginButton.addActionListener(new ActionListener() {
@@ -34,10 +37,10 @@ public class LoginGUI {
                     String username = userField.getText();
                     String password = new String(passwordField.getPassword());
 
-                    String loginAdmin = "Garcia";
-                    String senhaAdmin = "1234";
+                    String adminUsername = "Garcia";
+                    String adminPassword = "1234";
 
-                    if (username.equals(loginAdmin) && password.equals(senhaAdmin)) {
+                    if (username.equals(adminUsername) && password.equals(adminPassword)) {
                         resultLabel.setText("Logado com sucesso!");
                     } else {
                         resultLabel.setText("Erro de login!");
@@ -45,10 +48,17 @@ public class LoginGUI {
                 }
             });
 
-            frame.add(panel, BorderLayout.CENTER);
-            frame.add(resultLabel, BorderLayout.SOUTH);
+            constraints.gridx = 0;
+            constraints.gridy = 0;
+            mainPanel.add(panel, constraints);
 
+            constraints.gridx = 0;
+            constraints.gridy = 1;
+            mainPanel.add(resultLabel, constraints);
+
+            frame.add(mainPanel);
             frame.pack();
+            frame.setLocationRelativeTo(null); // Centro da tela
             frame.setVisible(true);
         });
     }
