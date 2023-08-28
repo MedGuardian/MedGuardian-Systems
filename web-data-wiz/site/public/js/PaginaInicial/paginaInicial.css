@@ -249,7 +249,9 @@ button {
 
 .MissaoVisaoValores{
     display: flex;
-    margin-top: 5%;
+    margin: 5% 0;
+    background-color: #ABABAB;
+    padding: 2% 0;
 }
 
 .conteudoMissaoVisaoValores{
@@ -287,14 +289,23 @@ button {
     margin-left: 4%;
 }
 
+
+.tituloAvaliacoes{
+    text-align: center;
+    font-family: LeagueSpartan;
+}
+
 .avaliacoes{
     width: 100%;
 }
 
 .conteudoAvaliacoes{
     width: 100%;
+    display: grid;
+    grid-template-rows: 460px 100px;
+    grid-template-columns: 1fr 20px 20px 20px 20px 20px 1fr;
+    font-family: KyivType Sans;
 }
-
 
   
   main#carousel {
@@ -338,7 +349,7 @@ button {
   }
   div.item:nth-of-type(3) {
     --offset: 3;
-    background-color: #898989;
+    background-color: #A8A5A5;
   }
   div.item:nth-of-type(4) {
     --offset: 4;
@@ -391,7 +402,6 @@ input:nth-of-type(5):checked ~ main#carousel {
 
 .tituloAvaliacao{
     font-size: 20px;
-    font-family: KyivType Sans;
     text-align: center;
     margin-top: 10%;
 }
@@ -405,6 +415,12 @@ input:nth-of-type(5):checked ~ main#carousel {
 
 .imagemAvaliacao img {
     width: 50%;
+}
+
+.textoAvaliacao{
+    font-size: 17px;
+    text-align: center;
+    padding: 2% 4%;
 }
 
   
@@ -437,4 +453,11 @@ input:nth-of-type(5):checked ~ main#carousel {
     font-family: LeagueSpartan;
     opacity: 50%;
     margin-top: -2%;
+}
+
+@media (max-width: 600px) {
+    body {
+        font-size: 14px;
+        background-color: red;
+    }
 }
