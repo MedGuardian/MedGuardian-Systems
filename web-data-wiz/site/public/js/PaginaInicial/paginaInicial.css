@@ -455,9 +455,3 @@ input:nth-of-type(5):checked ~ main#carousel {
     margin-top: -2%;
 }
 
-@media (max-width: 600px) {
-    body {
-        font-size: 14px;
-        background-color: red;
-    }
-}
