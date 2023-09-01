@@ -62,6 +62,10 @@ button {
         font-weight: 700;
 }
 
+.conteudoHeader a {
+    color: #004D02;
+}
+
 .conteudoHeader li {
     display: flex;
     margin-left: 5%;

@@ -10,6 +10,10 @@
     height: 20px;
     width: 30%;
     box-shadow:0px 0px 10px rgba(0, 0, 0, 0.5);
+    font-family: LeagueSpartan;
+    font-weight: 600;
+    font-size: 18px;
+    padding-left: 1%;
 }
 .inputs .container span{
     padding: 11px 11px;
