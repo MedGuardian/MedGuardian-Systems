@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="../PaginaInicial/paginaInicial.css">
     <link rel="stylesheet" href="login.css">
-    <link rel="shortcut icon" href="../../../assets/images/LOGO.png" type="image/x-icon">
+    <script src="login.js"></script>
+    <script src="../js/funcoes.js"></script>
+    <link rel="shortcut icon" href="../../assets/images/LOGO.png" type="image/x-icon">
 </head>
+
 <body>
     <div class="header">
         <div class="container">
@@ -27,52 +31,39 @@
                 </div>
 
             </div>
-
-           
-
         </div>
     </div>
 
-    <div class="conteudoLogin">
 
+    <div class="login">
+        <div class="container">
+            <div class="conteudoLogin">
 
-        <div class="login">
-            <div class="inputs">
-                <div class="container">
-                    <div class="conteudoInputs">
+                <div class="conteudoEsquerda">
+                    <div class="inputsLogin">
                         <span>Login</span>
-                        <input type="text">
+                        <input type="text" id="inputLogin">
                         <span>Senha</span>
-                        <input type="text">
+                        <input type="password" id="inputSenha">
+                        <span id="spanErro"></span>
+                    </div>
+
+                    <div class="botaoEntrar">
+                        <button onclick="entrar()">Entrar</button>
                     </div>
                 </div>
-            
-            </div>
-            <div class="botao">
-                <div class="container">
-                    <div class="botoesHeader">
-                        <button id="botaoEntrar" onclick="entrar()">Entrar</button>
+
+                <div class="conteudoDireita">
+                    <div class="imagem">
+                        <img src="../../assets/images/hospital.svg" alt="">
                     </div>
                 </div>
-            </div>
 
-        </div>
-
-
-
-        <div class="imagem">
-            <div class="container">
-                <div class="imgHosp">
-                    <img height="450px" id="img" src="../../../assets/images/hospital.svg" alt="">
-                </div>
             </div>
         </div>
-       
-
     </div>
-    
-
 
 
 </body>
-</html> 
+
+</html>

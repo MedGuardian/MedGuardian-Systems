@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="../PaginaInicial/paginaInicial.css">
+    <link rel="stylesheet" href="cadastro.css">
+    <script src="../js/funcoes.js"></script>
+    <script src="cadastro.js"></script>
+    <link rel="shortcut icon" href="../../assets/images/LOGO.png" type="image/x-icon">
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+
+            <div class="tituloHeader">
+                <span id="tituloHeader">MedGuardian</span>
+            </div>
+
+            <div class="conteudoHeader">
+                <li class="liHeader"><a>Home</a></li>
+                <li class="liHeader"><a>Orçamento</a></li>
+                <li class="liHeader"><a>Fale-conosco</a></li>
+
+                <div class="botoesHeader">
+                    <button id="botaoLogin" onclick="telaLogin()">Login</button>
+                    <button id="botaoCadastro" onclick="telaCadastro()">Cadastre-se</button>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="inputs">
+        <div class="container">
+        <span>Nome da empresa</span>
+        <input type="text" id="inputNomeEmpresa">
+        <span>Razao social</span>
+        <input type="text" id="inputRazaoSocial">
+        <span>CNPJ</span>
+        <input type="text" id="inputCNPJ">
+        <span>Email</span>
+        <input type="text" id="inputEmail">
+        <span>Contato</span>
+        <input type="text" id="inputContato">
+        <span>CEP</span>
+        <input type="text" id="inputCep">
+        <span>Logradouro</span>
+        <input type="text" id="inputEndereco">
+        <div class="inputRow">
+            <span>Nº</span>
+            <input type="text" id="inputNumeroEndereco">
+            <span>Complemento</span>
+            <input type="text" id="inputComplementoEndereco">
+        </div>
+        <span id="spanErro"></span>
+    </div>
+</div>
+
+    <div class="imgHosp">
+        <div class="container">
+            <img height="450px" id="img" src="../../assets/images/hospital.svg" alt="">
+        </div>
+    </div>
+
+    <div class="botaoCadastro">
+        <button onclick="cadastrar()">Cadastrar</button>
+    </div>
+
+</body>
+</html>

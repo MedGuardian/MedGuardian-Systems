@@ -1,0 +1,67 @@
+.inputs .container{
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+}
+.inputs .container input{
+    border-radius: 10px;
+    border: none;
+    background-color: #CACACA;
+    height: 20px;
+    width: 30%;
+    box-shadow:0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+.inputs .container span{
+    padding: 11px 11px;
+    color: #004D02;
+    font-family: Poppins;
+    font-weight: 900;
+}
+.imgHosp .container{
+    display: flex;
+    flex-direction: row;
+}
+.imgHosp .container .imgInput{
+    display: flex;
+    flex-direction: row;
+}
+#img{
+    position: absolute;
+    left: 43%;
+    bottom: 25%;
+}
+.inputs .container .inputRow{
+    position: absolute;
+    top: 76%;
+    left: 35%;
+}
+.imgHosp{
+    margin-bottom: 50px;
+}
+
+.botaoCadastro{
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+}
+
+.botaoCadastro button {
+    font-family: LeagueSpartan;
+    font-size: 25px;
+    border-radius: 15px;
+    padding: 10px 0;
+    color: white;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+    background-color: #004D02;
+    width: 210px;
+    justify-content: center;
+    align-items: center;
+}
+
+#spanErro{
+    display: none;
+    width: 100%;
+    color: red;
+    font-size: 1vmax;
+    font-family: LeagueSpartan;
+}
