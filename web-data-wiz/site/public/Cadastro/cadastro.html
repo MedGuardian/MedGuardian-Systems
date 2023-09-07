@@ -14,7 +14,7 @@
     <div class="header">
         <div class="container">
 
-            <div class="tituloHeader">
+            <!-- <div class="tituloHeader"> -->
                 <span id="tituloHeader">MedGuardian</span>
             </div>
 
@@ -41,7 +41,7 @@
         <span>Razao social</span>
         <input type="text" id="inputRazaoSocial">
         <span>CNPJ</span>
-        <input type="text" id="inputCNPJ">
+        <input maxlength="18" onblur="validaCNPJ(this.value)" oninput="transformarCnpj(this.value)" type="text" id="inputCNPJ">
         <span>Email</span>
         <input type="text" id="inputEmail">
         <span>Contato</span>
