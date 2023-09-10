@@ -33,6 +33,8 @@
     position: absolute;
     left: 43%;
     bottom: 25%;
+    height: 475px;
+    width: 600px;
 }
 .inputs .container .inputRow{
     position: absolute;
@@ -68,4 +70,8 @@
     color: red;
     font-size: 1vmax;
     font-family: LeagueSpartan;
+}
+
+@media only screen and (min-width: 320px) {
+    
 }

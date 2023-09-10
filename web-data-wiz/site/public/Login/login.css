@@ -4,7 +4,7 @@
     margin: auto;
 }
 
-.login{
+.login {
     display: flex;
     width: 100%;
     font-family: LeagueSpartan;
@@ -29,7 +29,7 @@
     width: 70%;
 }
 
-.inputsLogin input{
+.inputsLogin input {
     margin-bottom: 5%;
     background-color: #CACACA;
     border: solid 0px black;
@@ -42,14 +42,14 @@
     padding-left: 1%;
 }
 
-.inputsLogin span{
+.inputsLogin span {
     margin-bottom: 2%;
     font-size: 20px;
     color: #004D02;
     font-weight: 600;
 }
 
-.botaoEntrar{
+.botaoEntrar {
     margin-top: 5%;
     width: 70%;
     display: flex;
@@ -76,10 +76,174 @@
     width: 100%;
 }
 
-#spanErro{
+#spanErro {
     display: none;
     width: 100%;
     color: red;
     font-size: 1vmax;
     font-family: LeagueSpartan;
+}
+
+@media only screen and (min-width: 320px) {
+    .conteudoLogin {
+        flex-direction: column-reverse;
+        margin-top: 15%;
+    }
+
+    .conteudoDireita img {
+        width: 200%;
+    }
+
+    .conteudoEsquerda {
+        width: 100%;
+        align-items: center;
+    }
+
+    .inputsLogin {
+        width: 100%;
+    }
+
+    .inputsLogin input {
+        height: 10px;
+        font-size: 10px;
+        padding-left: 5px;
+    }
+
+    .inputsLogin span {
+        text-align: center;
+        font-size: 15px;
+    }
+
+    .botaoEntrar {
+        margin-top: 15%;
+        width: 70%;
+    }
+
+    .botaoEntrar button {
+        font-size: 15px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .conteudoLogin {
+        flex-direction: row;
+        margin-top: 10%;
+    }
+
+    .conteudoDireita img {
+        width: 120%;
+    }
+
+    .conteudoEsquerda {
+        width: 40%;
+        margin-top: 20%;
+    }
+
+    .inputsLogin {
+        width: 80%;
+        justify-content: start;
+    }
+
+    .inputsLogin input {
+        height: 15px;
+        font-size: 12px;
+        padding-left: 5px;
+    }
+
+    .inputsLogin span {
+        text-align: left;
+        font-size: 17.5px;
+    }
+
+    .botaoEntrar {
+        margin-top: 10%;
+        width: 75%;
+    }
+
+    .botaoEntrar button {
+        font-size: 15px;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .conteudoLogin {
+        flex-direction: row;
+        margin-top: 5%;
+    }
+
+    .conteudoDireita img {
+        width: 120%;
+    }
+
+    .conteudoEsquerda {
+        width: 40%;
+        margin-top: 20%;
+    }
+
+    .inputsLogin {
+        width: 80%;
+        justify-content: start;
+    }
+
+    .inputsLogin input {
+        height: 15px;
+        font-size: 15px;
+    }
+
+    .inputsLogin span {
+        text-align: left;
+        font-size: 17.5px;
+    }
+
+    .botaoEntrar {
+        margin-top: 12%;
+        width: 75%;
+    }
+
+    .botaoEntrar button {
+        font-size: 15px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .conteudoLogin {
+        margin-top: 0;
+    }
+
+    .conteudoDireita img {
+        width: 100%;
+    }
+
+    .conteudoEsquerda {
+        width: 50%;
+        margin-top: 15%;
+        align-items: start;
+    }
+
+    .inputsLogin {
+        width: 80%;
+        justify-content: start;
+    }
+
+    .inputsLogin input {
+        margin-bottom: 5%;
+        height: 25px;
+        font-size: 18px;
+        padding-left: 1%;
+    }
+
+    .inputsLogin span {
+        margin-bottom: 2%;
+        font-size: 20px;
+        text-align: left;
+    }
+
+    .botaoEntrar {
+        margin-top: 10%;
+        width: 75%;
+    }
+
+    .botaoEntrar button {
+        font-size: 25px;
+    }
 }
