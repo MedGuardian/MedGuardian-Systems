@@ -122,6 +122,10 @@
     .botaoEntrar button {
         font-size: 15px;
     }
+
+    #spanErro {
+        font-size: 10px;
+    }
 }
 
 @media only screen and (min-width: 768px) {
@@ -221,7 +225,7 @@
     }
 
     .inputsLogin {
-        width: 80%;
+        width: 70%;
         justify-content: start;
     }
 
@@ -239,11 +243,15 @@
     }
 
     .botaoEntrar {
-        margin-top: 10%;
-        width: 75%;
+        margin-top: 5%;
+        width: 70%;
     }
 
     .botaoEntrar button {
         font-size: 25px;
+    }
+
+    #spanErro {
+        font-size: 1vmax;
     }
 }
