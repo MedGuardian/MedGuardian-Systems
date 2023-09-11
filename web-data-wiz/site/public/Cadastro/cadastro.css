@@ -36,10 +36,9 @@
     height: 475px;
     width: 600px;
 }
-.inputs .container .inputRow{
-    position: absolute;
-    top: 76%;
-    left: 35%;
+#inputRow{
+    display: flex;
+    flex-direction: row;
 }
 .imgHosp{
     margin-bottom: 50px;
