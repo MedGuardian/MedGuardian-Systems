@@ -217,7 +217,7 @@ button {
     text-align: center;
 }
 
-.assistenteConteudoSobreNosCelular{
+.assistenteConteudoSobreNosCelular {
     display: none;
 }
 
@@ -243,7 +243,7 @@ button {
     width: 40%;
 }
 
-.imagemSobreNosCelular{
+.imagemSobreNosCelular {
     display: none;
 }
 
@@ -272,7 +272,7 @@ button {
     text-align: end;
 }
 
-.conteudoDireitaSobreNosCelular{
+.conteudoDireitaSobreNosCelular {
     display: none;
 }
 
@@ -552,7 +552,12 @@ input:nth-of-type(5):checked~main#carousel {
         justify-content: flex-end;
         width: 100%;
         align-items: center;
-        font-size: 10px;
+        font-size: 8px;
+    }
+
+    #iconmenuperfil {
+        display: inline-block;
+        font-size: 8px;
     }
 }
 
@@ -599,6 +604,12 @@ input:nth-of-type(5):checked~main#carousel {
         flex-direction: row;
         width: 20%;
         align-items: center;
+        font-size: 12px;
+    }
+
+    #iconmenuperfil {
+        display: inline-block;
+        font-size: 12px;
     }
 }
 
@@ -645,6 +656,11 @@ input:nth-of-type(5):checked~main#carousel {
         flex-direction: row;
         width: 20%;
         align-items: center;
+        font-size: 15px;
+    }
+    #iconmenuperfil {
+        display: inline-block;
+        font-size: 15px;
     }
 }
 
@@ -691,6 +707,11 @@ input:nth-of-type(5):checked~main#carousel {
         flex-direction: row;
         width: 20%;
         align-items: center;
+        font-size: 20px;
+    }
+    #iconmenuperfil {
+        display: inline-block;
+        font-size: 20px;
     }
 }
 
@@ -700,25 +721,20 @@ input:nth-of-type(5):checked~main#carousel {
         background-color: white;
     }
 
-    #iconmenuperfil {
-        display: inline-block;
-        font-size: 12px;
-    }
-
     #textoSuperiorApresentacaoHeader {
         display: none;
     }
 
-    .apresentacaoHeader{
+    .apresentacaoHeader {
         margin-bottom: 5%;
     }
 
-    .apresentacaoHeader .container{
+    .apresentacaoHeader .container {
         flex-direction: column-reverse;
         align-items: center;
     }
 
-    .conteudoApresentacaoHeader{
+    .conteudoApresentacaoHeader {
         width: 100%;
         text-align: center;
         margin-top: 0;
@@ -729,7 +745,7 @@ input:nth-of-type(5):checked~main#carousel {
         width: 100%;
     }
 
-    #botaoContato{
+    #botaoContato {
         width: 30%;
         font-size: 10px;
         border-radius: 10px;
@@ -740,36 +756,36 @@ input:nth-of-type(5):checked~main#carousel {
         display: none;
     }
 
-    .segundaApresentacao{
+    .segundaApresentacao {
         margin-right: 0;
     }
 
-    .conteudoSegundaApresentacao{
+    .conteudoSegundaApresentacao {
         text-align: center;
         margin-right: 0;
         width: 100%;
     }
 
-    #textoSuperiorSegundaApresentacao{
+    #textoSuperiorSegundaApresentacao {
         font-size: 10px;
     }
 
-    
-    #textoInferiorSegundaApresentacao{
+
+    #textoInferiorSegundaApresentacao {
         font-size: 10px;
         display: flex;
         flex-direction: column;
     }
-    
+
     .textoInferiorSegundaApresentacao span {
         margin-bottom: 5%;
     }
 
-    .imagemSobreNos{
+    .imagemSobreNos {
         display: none;
     }
 
-    .imagemSobreNosCelular{
+    .imagemSobreNosCelular {
         display: flex;
         width: 100%;
     }
@@ -778,16 +794,16 @@ input:nth-of-type(5):checked~main#carousel {
         font-size: 20px;
     }
 
-    .conteudoSobreNos{
+    .conteudoSobreNos {
         flex-direction: column;
     }
 
-    .assistenteConteudoSobreNosCelular{
+    .assistenteConteudoSobreNosCelular {
         display: flex;
         flex-direction: row;
     }
 
-    .assistenteConteudoSobreNos{
+    .assistenteConteudoSobreNos {
         flex-direction: column;
         font-size: 7px;
         width: 40%;
@@ -795,38 +811,682 @@ input:nth-of-type(5):checked~main#carousel {
         color: #004D02;
     }
 
-    .conteudoEsquerdaSobreNos{
+    .conteudoEsquerdaSobreNos {
         width: 100%;
     }
 
-    .conteudoDireitaSobreNos{
+    .conteudoDireitaSobreNos {
         width: 100%;
     }
 
-    .conteudoDireitaSobreNosCelular{
+    .conteudoDireitaSobreNosCelular {
         display: flex;
         flex-direction: column;
         width: 60%;
         margin-left: 5%;
     }
 
-    .conteudoInferiorSobreNos{
+    .conteudoInferiorSobreNos {
         font-size: 7px;
     }
 
-    .conteudoSuperiorEsquerdaSobreNos, .conteudoMeioEsquerdaSobreNos, .conteudoInferiorEsquerdaSobreNos, .conteudoSuperiorDireitaSobreNos, .conteudoMeioDireitaSobreNos, .conteudoInferiorDireitaSobreNos {
+    .conteudoSuperiorEsquerdaSobreNos,
+    .conteudoMeioEsquerdaSobreNos,
+    .conteudoInferiorEsquerdaSobreNos,
+    .conteudoSuperiorDireitaSobreNos,
+    .conteudoMeioDireitaSobreNos,
+    .conteudoInferiorDireitaSobreNos {
         text-align: start;
     }
 
-    .conteudoInferiorSobreNos{
+    .conteudoInferiorSobreNos {
         margin-top: 7.5%;
     }
 
-    .tituloMissao{
+    .tituloMissao,
+    .tituloVisao,
+    .tituloValores {
         font-size: 12px;
     }
 
-    .textoMissao{
+    .imagemMissao,
+    .imagemVisao,
+    .imagemValores {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .textoMissao,
+    .textoVisao,
+    .textoValores {
         font-size: 10px;
+        margin-left: 0;
+    }
+
+    .textoMissao,
+    .textoVisao,
+    .textoValores span {
+        margin-bottom: 5%;
+    }
+
+    .tituloAvaliacoes h1 {
+        font-size: 20px;
+    }
+
+    .tituloAvaliacao {
+        font-size: 15px;
+    }
+
+    .textoAvaliacao {
+        font-size: 12px;
+        padding: 2% 25%;
+    }
+
+    .imagemFooter img {
+        width: 15%;
+    }
+
+    .nomeEmpresaFooter {
+        font-size: 20px;
+        font-weight: 800;
+        font-family: LeagueSpartan;
+        opacity: 50%;
+        margin-top: -2%;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+
+    body {
+        background-color: white;
+    }
+
+    #textoSuperiorApresentacaoHeader {
+        display: flex;
+        font-size: 20px;
+        margin-top: 2%;
+    }
+
+    .apresentacaoHeader {
+        margin-bottom: 5%;
+    }
+
+    .apresentacaoHeader .container {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+
+    .conteudoApresentacaoHeader {
+        width: 100%;
+        text-align: center;
+        margin-top: 0;
+    }
+
+    .textoInferiorApresentacaoHeader {
+        font-size: 15px;
+        width: 100%;
+        margin-top: 2%;
+    }
+
+    .textoInferiorVerde {
+        margin-top: 2%;
+    }
+
+    #botaoContato {
+        width: 25%;
+        font-size: 15px;
+        border-radius: 10px;
+        padding: 5px 0;
+    }
+
+    .imagemSegundaApresentacao {
+        display: none;
+    }
+
+    .segundaApresentacao {
+        margin-right: 0;
+    }
+
+    .conteudoSegundaApresentacao {
+        text-align: center;
+        margin-right: 0;
+        width: 100%;
+    }
+
+    #textoSuperiorSegundaApresentacao {
+        font-size: 15px;
+    }
+
+
+    #textoInferiorSegundaApresentacao {
+        font-size: 12px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .textoInferiorSegundaApresentacao span {
+        margin-bottom: 5%;
+    }
+
+    .imagemSobreNos {
+        display: none;
+    }
+
+    .imagemSobreNosCelular {
+        display: flex;
+        width: 100%;
+    }
+
+    .tituloSobreNos {
+        font-size: 25px;
+    }
+
+    .conteudoSobreNos {
+        flex-direction: column;
+    }
+
+    .assistenteConteudoSobreNosCelular {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .assistenteConteudoSobreNos {
+        flex-direction: column;
+        font-size: 10px;
+        width: 40%;
+        text-align: center;
+        color: #004D02;
+    }
+
+    .conteudoEsquerdaSobreNos {
+        width: 100%;
+    }
+
+    .conteudoDireitaSobreNos {
+        width: 100%;
+    }
+
+    .conteudoDireitaSobreNosCelular {
+        display: flex;
+        flex-direction: column;
+        width: 60%;
+        margin-left: 5%;
+    }
+
+    .conteudoInferiorSobreNos {
+        font-size: 10px;
+    }
+
+    .conteudoSuperiorEsquerdaSobreNos,
+    .conteudoMeioEsquerdaSobreNos,
+    .conteudoInferiorEsquerdaSobreNos,
+    .conteudoSuperiorDireitaSobreNos,
+    .conteudoMeioDireitaSobreNos,
+    .conteudoInferiorDireitaSobreNos {
+        text-align: start;
+    }
+
+    .conteudoInferiorSobreNos {
+        margin-top: 7.5%;
+    }
+
+    .tituloMissao,
+    .tituloVisao,
+    .tituloValores {
+        font-size: 15px;
+    }
+
+    .imagemMissao,
+    .imagemVisao,
+    .imagemValores {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .textoMissao,
+    .textoVisao,
+    .textoValores {
+        font-size: 12px;
+        margin-left: 0;
+    }
+
+    .textoMissao,
+    .textoVisao,
+    .textoValores span {
+        margin-bottom: 5%;
+    }
+
+    .tituloAvaliacoes h1 {
+        font-size: 25px;
+    }
+
+    .tituloAvaliacao {
+        font-size: 20px;
+    }
+
+    .textoAvaliacao {
+        font-size: 15px;
+        padding: 2% 10%;
+    }
+
+    .imagemFooter img {
+        width: 20%;
+    }
+
+    .nomeEmpresaFooter {
+        font-size: 25px;
+        font-weight: 800;
+        font-family: LeagueSpartan;
+        opacity: 50%;
+        margin-top: -2%;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+
+    body {
+        background-color: white;
+    }
+
+    .apresentacaoHeader {
+        margin-top: 5%;
+    }
+
+    #textoSuperiorApresentacaoHeader {
+        display: flex;
+        font-size: 25px;
+        margin-top: 15%;
+    }
+
+    .apresentacaoHeader {
+        margin-bottom: 10%;
+    }
+
+    .apresentacaoHeader .container {
+        flex-direction: row;
+    }
+
+    .conteudoApresentacaoHeader {
+        width: 50%;
+        text-align: Start;
+        margin-top: 0;
+    }
+
+    .textoInferiorApresentacaoHeader {
+        font-size: 18px;
+        width: 100%;
+        margin-top: 5%;
+    }
+
+    .textoInferiorVerde {
+        margin-top: 5%;
+    }
+
+    #botaoContato {
+        width: 45%;
+        font-size: 18px;
+        border-radius: 15px;
+        padding: 6px 0;
+    }
+
+    .imagemSegundaApresentacao {
+        display: flex;
+    }
+
+    .segundaApresentacao {
+        margin-right: 0;
+    }
+
+    .imagemSegundaApresentacao {
+        display: flex;
+        width: 50%;
+    }
+
+    .imagemSegundaApresentacao {
+        height: 300px;
+    }
+
+    .conteudoSegundaApresentacao {
+        text-align: center;
+        margin-right: 5%;
+        width: 100%;
+    }
+
+    #textoSuperiorSegundaApresentacao {
+        font-size: 20px;
+    }
+
+
+    #textoInferiorSegundaApresentacao {
+        font-size: 15px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .textoInferiorSegundaApresentacao span {
+        margin-bottom: 4%;
+    }
+
+    .imagemSobreNos {
+        display: flex;
+        width: 45%;
+    }
+
+    .imagemSobreNosCelular {
+        display: none;
+    }
+
+    .tituloSobreNos {
+        font-size: 30px;
+    }
+
+    .conteudoSobreNos {
+        flex-direction: column;
+    }
+
+    .assistenteConteudoSobreNosCelular {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .assistenteConteudoSobreNos {
+        flex-direction: row;
+        font-size: 15px;
+        width: 100%;
+        text-align: center;
+        color: #004D02;
+    }
+
+    .conteudoEsquerdaSobreNos {
+        width: 27.5%;
+    }
+
+    .conteudoDireitaSobreNos {
+        width: 27.5%;
+    }
+
+    .conteudoDireitaSobreNosCelular {
+        display: flex;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .conteudoInferiorSobreNos {
+        font-size: 18px;
+    }
+
+    .conteudoSuperiorEsquerdaSobreNos,
+    .conteudoInferiorEsquerdaSobreNos {
+        text-align: right;
+    }
+
+    .conteudoMeioEsquerdaSobreNos,
+    .conteudoMeioDireitaSobreNos {
+        text-align: center;
+    }
+
+    .conteudoMeioDireitaSobreNos{
+        margin-left: 5%;
+    }
+
+    .conteudoMeioEsquerdaSobreNos{
+        margin-right: 5%;
+    }
+
+    .conteudoSuperiorDireitaSobreNos,
+    .conteudoInferiorDireitaSobreNos {
+        text-align: left;
+    }
+
+    .conteudoInferiorSobreNos {
+        margin-top: 2.5%;
+    }
+
+    .tituloMissao,
+    .tituloVisao,
+    .tituloValores {
+        font-size: 18px;
+    }
+
+    .imagemMissao,
+    .imagemVisao,
+    .imagemValores {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .textoMissao,
+    .textoVisao,
+    .textoValores {
+        font-size: 15px;
+        margin-left: 2%;
+    }
+
+    .textoMissao,
+    .textoVisao,
+    .textoValores span {
+        margin-bottom: 5%;
+    }
+
+    .tituloAvaliacoes h1 {
+        font-size: 30px;
+    }
+
+    .tituloAvaliacao {
+        font-size: 25px;
+    }
+
+    .textoAvaliacao {
+        font-size: 15px;
+        padding: 2% 10%;
+    }
+
+    .imagemFooter img {
+        width: 25%;
+    }
+
+    .nomeEmpresaFooter {
+        font-size: 30px;
+        font-weight: 800;
+        font-family: LeagueSpartan;
+        opacity: 50%;
+        margin-top: -2%;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+
+    body {
+        background-color: white;
+    }
+
+    #textoSuperiorApresentacaoHeader {
+        display: flex;
+        font-size: 40px;
+    }
+
+    .apresentacaoHeader {
+        margin-top: 0;
+    }
+
+    .conteudoApresentacaoHeader {
+        width: 50%;
+        margin-top: 5%;
+    }
+
+    .textoInferiorApresentacaoHeader {
+        font-size: 25px;
+        width: 100%;
+        margin-top: 10%;
+    }
+
+    #botaoContato {
+        width: 50%;
+        font-size: 25px;
+        border-radius: 15px;
+        padding: 6px 0;
+    }
+
+    .segundaApresentacao {
+        margin-right: 10%;
+    }
+
+    .imagemSegundaApresentacao {
+        height: 100%;
+        display: flex;
+    }
+
+    .conteudoSegundaApresentacao {
+        text-align: end;
+        margin-top: 2%;
+        margin-right: 10%;
+        width: 90%;
+    }
+
+    .textoInferiorSegundaApresentacao span {
+        margin-bottom: 1%;
+    }
+
+    #textoSuperiorSegundaApresentacao {
+        font-size: 30px;
+    }
+
+
+    #textoInferiorSegundaApresentacao {
+        margin-top: 5%;
+        font-size: 25px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .imagemSobreNos {
+        display: flex;
+        width: 40%;
+    }
+
+    .imagemSobreNosCelular {
+        display: none;
+    }
+
+    .tituloSobreNos {
+        font-size: 35px;
+    }
+
+    .conteudoSobreNos {
+        flex-direction: column;
+    }
+
+    .assistenteConteudoSobreNosCelular {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .assistenteConteudoSobreNos {
+        flex-direction: row;
+        font-size: 20px;
+        width: 100%;
+        text-align: center;
+        color: #004D02;
+    }
+
+    .conteudoEsquerdaSobreNos {
+        width: 30%;
+    }
+
+    .conteudoDireitaSobreNos {
+        width: 30%;
+    }
+
+    .conteudoDireitaSobreNosCelular {
+        display: flex;
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .conteudoInferiorSobreNos {
+        font-size: 20px;
+    }
+
+    .conteudoSuperiorEsquerdaSobreNos,
+    .conteudoInferiorEsquerdaSobreNos {
+        text-align: right;
+    }
+
+    .conteudoMeioEsquerdaSobreNos,
+    .conteudoMeioDireitaSobreNos {
+        text-align: center;
+    }
+
+    .conteudoMeioDireitaSobreNos{
+        margin-left: 5%;
+    }
+
+    .conteudoMeioEsquerdaSobreNos{
+        margin-right: 5%;
+    }
+
+    .conteudoSuperiorDireitaSobreNos,
+    .conteudoInferiorDireitaSobreNos {
+        text-align: left;
+    }
+
+    .conteudoInferiorSobreNos {
+        margin-top: 2.5%;
+    }
+
+    .tituloMissao,
+    .tituloVisao,
+    .tituloValores {
+        font-size: 40px;
+    }
+
+    .imagemMissao,
+    .imagemVisao,
+    .imagemValores {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .textoMissao,
+    .textoVisao,
+    .textoValores {
+        font-size: 20px;
+        margin-left: 4%;
+    }
+
+    .textoMissao,
+    .textoVisao,
+    .textoValores span {
+        margin-bottom: 5%;
+    }
+
+    .tituloAvaliacoes h1 {
+        width: 100%;
+        font-size: 30px;
+    }
+
+    .tituloAvaliacao {
+        font-size: 25px;
+    }
+
+    .textoAvaliacao {
+        font-size: 15px;
+        padding: 2% 10%;
+    }
+
+    .imagemFooter img {
+        width: 35%;
+    }
+
+    .nomeEmpresaFooter {
+        font-size: 50px;
+        font-weight: 800;
+        font-family: LeagueSpartan;
+        opacity: 50%;
+        margin-top: -2%;
     }
 }
