@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <script src="../js/funcoes.js"></script>
     <link rel="shortcut icon" href="../../assets/images/LOGO.png" type="image/x-icon">
 </head>
+
 <body>
     <div class="header">
         <div class="container">
@@ -36,37 +38,101 @@
 
     <div class="inputs">
         <div class="container">
-        <span>Nome da empresa</span>
-        <input type="text" id="inputNomeEmpresa">
-        <span>Razao social</span>
-        <input type="text" id="inputRazaoSocial">
-        <span>CNPJ</span>
-        <input maxlength="18" onblur="validaCNPJ(this.value)" oninput="transformarCnpj(this.value)" type="text" id="inputCNPJ">
-        <span>Email</span>
-        <input type="text" id="inputEmail">
-        <span>Contato</span>
-        <input type="text" id="inputContato">
-        <span>CEP</span>
-        <input type="text" id="inputCep">
-        <span>Logradouro</span>
-        <div id="inputRow">
-            <input type="text" id="inputEndereco">
-            <div class="spanInput">
-                <span>Nº</span>
-            </div>
-            <input type="text" id="inputNumeroEndereco">
-            <div class="spanInput">
-                <span>Complemento</span>
-            </div>
-            <input type="text" id="inputComplementoEndereco">
-        </div>
-        <span id="spanErro"></span>
-    </div>
-</div>
+            <div class="conteudoSuperiorInputs">
 
-    <div class="imgHosp">
-        <div class="container">
-            <img height="450px" id="img" src="../../assets/images/hospital.svg" alt="">
+
+            <div class="inputsEsquerda">
+
+                <div class="spanInput">
+                    <span>Nome da empresa</span>
+                    <input type="text" id="inputNomeEmpresa">
+                </div>
+                
+                <div class="spanInput">
+                    <span>Razao social</span>
+                    <input type="text" id="inputRazaoSocial">
+                </div>
+                
+                <div class="spanInput">
+                    <span>CNPJ</span>
+                    <input maxlength="18" onblur="validaCNPJ(this.value)" oninput="transformarCnpj(this.value)"
+                    type="text" id="inputCNPJ">
+                </div>
+                
+                <div class="spanInput">
+                    <span>Email</span>
+                    <input type="text" id="inputEmail">
+                </div>
+                
+                <div class="spanInput">
+                    <span>Contato</span>
+                    <input type="text" id="inputContato">
+                </div>
+                
+                <div class="spanInput">
+                    <span>CEP</span>
+                    <input type="text" id="inputCep">
+                </div>
+            
+                <div class="spanInput" id="divInputEnderecoCelular">
+                    <span>Logradouro</span>
+                    <input type="text" id="inputEndereco">
+                </div>
+
+                <div id="inputRowCelular">
+                    
+                    <div class="spanInput" id="divInputNumeroEndereco">
+                        <span>Nº</span>
+                        <input type="text" id="inputNumeroEndereco">
+                    </div>
+    
+                    <div class="spanInput" id="divInputComplementoEndereco">
+                        <span>Complemento</span>
+                        <input type="text" id="inputComplementoEndereco">
+                    </div>
+
+                </div>
+
+
+                <div class="spanErro">
+                    <span id="spanErroCelular"></span>
+                </div>
+
+                
+            </div>
+
+                
+
+
+
+
+
+                <div class="imgHosp">
+                    <div class="container">
+                        <img height="450px" id="img" src="../../assets/images/hospital.svg" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div id="inputRow">
+
+                <div class="spanInput" id="divInputEndereco">
+                    <span>Logradouro</span>
+                    <input type="text" id="inputEndereco">
+                </div>
+
+                <div class="spanInput" id="divInputNumeroEndereco">
+                    <span>Nº</span>
+                    <input type="text" id="inputNumeroEndereco">
+                </div>
+
+                <div class="spanInput" id="divInputComplementoEndereco">
+                    <span>Complemento</span>
+                    <input type="text" id="inputComplementoEndereco">
+                </div>
+
+            </div>
+            <span id="spanErro"></span>
         </div>
     </div>
 
@@ -75,4 +141,5 @@
     </div>
 
 </body>
+
 </html>

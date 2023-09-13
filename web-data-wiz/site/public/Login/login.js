@@ -32,7 +32,7 @@ function entrar(){
             }
 
             setTimeout(function () {
-                spanErro.style.display = "none"
+                spanErro.style.display = "none";
 
                 for (let i = 0; i < divBotao.length; i++) {
                     divBotao[i].style.marginTop = "5%";

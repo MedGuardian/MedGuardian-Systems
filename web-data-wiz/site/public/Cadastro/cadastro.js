@@ -1,9 +1,35 @@
+function verificarWidth(){
+    const larguraJanela = window.innerWidth;
+    const divBotao = document.getElementsByClassName("botaoCadastro");
+
+    if(larguraJanela < 767){
+        for (let i = 0; i < divBotao.length; i++) {
+            divBotao[i].style.marginTop = "10%";
+        }
+    } else if (larguraJanela < 1023){
+        for (let i = 0; i < divBotao.length; i++) {
+            divBotao[i].style.marginTop = "5%";
+        }
+    } else if (larguraJanela < 1443) {
+        for (let i = 0; i < divBotao.length; i++) {
+            divBotao[i].style.marginTop = "3%";
+        }
+    } else {
+        for (let i = 0; i < divBotao.length; i++) {
+            divBotao[i].style.marginTop = "2.5%";
+        }
+    }
+}
+
 function cadastrar() {
-    const spanErro = document.getElementById("spanErro")
+    const spanErro = document.getElementById("spanErro");
+    const spanErroCelular = document.getElementById("spanErroCelular")
     const divBotao = document.getElementsByClassName("botaoCadastro");
 
     var divInputs = document.querySelector(".inputs");
     var inputs = divInputs.querySelectorAll("input");
+
+    const larguraJanela = window.innerWidth;
 
     var nomeEmpresa = inputNomeEmpresa.value;
     var razaoSocial = inputRazaoSocial.value;
@@ -17,12 +43,30 @@ function cadastrar() {
 
     if (nomeEmpresa == "" || razaoSocial == "" || CNPJ == "" || email == "" || contato == "" || cep == "" || endereco == "" || numeroEndereco == "") {
 
-        spanErro.innerHTML = "Por gentileza, preencha todos os campos"
-        spanErro.style.display = "block"
-        for (let i = 0; i < divBotao.length; i++) {
-            divBotao[i].style.marginTop = "-0.6%";
-        }
 
+        spanErro.innerHTML = "Por gentileza, preencha todos os campos";
+        spanErroCelular.innerHTML = "Por gentileza, preencha todos os campos";
+        if(larguraJanela < 767){
+            spanErroCelular.style.display = "block";
+            for (let i = 0; i < divBotao.length; i++) {
+                divBotao[i].style.marginTop = "4.5%";
+            }
+        } else if (larguraJanela < 1023){
+            spanErroCelular.style.display = "block";
+            for (let i = 0; i < divBotao.length; i++) {
+                divBotao[i].style.marginTop = "2.25%";
+            }
+        } else if (larguraJanela < 1443){
+            spanErro.style.display = "block"
+            for (let i = 0; i < divBotao.length; i++) {
+                divBotao[i].style.marginTop = "0.5%";
+            }
+        } else {
+            spanErro.style.display = "block"
+            for (let i = 0; i < divBotao.length; i++) {
+                divBotao[i].style.marginTop = "0%";
+            }
+        }
         for (var i = 0; i < inputs.length; i++) {
             if (inputs[i].value.trim() === "") {
                 inputs[i].style.boxShadow = "0px 0px 10px rgba(255, 0, 0, 0.5)"
@@ -30,16 +74,16 @@ function cadastrar() {
         }
 
         setTimeout(function () {
-            spanErro.style.display = "none"
-            for (let i = 0; i < divBotao.length; i++) {
-                divBotao[i].style.marginTop = "5%";
-            }
+            spanErro.style.display = "none";
+            spanErroCelular.style.display = "none";
 
             for (var i = 0; i < inputs.length; i++) {
                 if (inputs[i].value.trim() === "") {
                     inputs[i].style.boxShadow = "0px 0px 10px rgba(0, 0, 0, 0.5)"
                 }
             }
+
+            verificarWidth()
 
         }, 3000);
 
