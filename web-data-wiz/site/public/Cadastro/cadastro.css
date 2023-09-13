@@ -21,6 +21,16 @@
     font-family: Poppins;
     font-weight: 900;
 }
+.inputs .container span{
+    padding: 11px 11px;
+    color: #004D02;
+    font-family: Poppins;
+    font-weight: 900;
+}
+.inputs .container .numInput{
+    display: flex;
+    flex-direction: column;
+}
 .imgHosp .container{
     display: flex;
     flex-direction: row;
@@ -32,7 +42,7 @@
 #img{
     position: absolute;
     left: 43%;
-    bottom: 25%;
+    bottom: 20%;
     height: 475px;
     width: 600px;
 }
@@ -71,6 +81,37 @@
     font-family: LeagueSpartan;
 }
 
-@media only screen and (min-width: 320px) {
-    
+@media only screen and (max-width: 320px) {
+    .inputs .container span{
+        font-size: 14px;
+        padding: 7px 7px;
+
+    }
+    #inputRow{
+        flex-direction: column;
+    }
+    .inputs .container input{
+        width: 70%;
+        height: 10px;
+
+    }
+    .inputRow .spanInput span{
+        padding: 11px 11px;
+    }
+    #img{
+       display: none;
+    }
+    .botaoCadastro button{
+        font-size: 10px;
+        width: 30%;
+    }
+    .botaoCadastro{
+        margin-top: 10%;
+    }
+    .inputs{
+        margin-left: 30%;
+    }
+    .imgHosp{
+        margin-bottom: 0px;
+    }
 }
