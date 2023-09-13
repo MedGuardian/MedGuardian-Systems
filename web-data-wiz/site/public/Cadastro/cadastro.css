@@ -1,3 +1,7 @@
+a{
+    color: black;
+}
+
 .conteudoSuperiorInputs {
     display: flex;
     flex-direction: row;
