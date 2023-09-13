@@ -154,3 +154,16 @@ function gerarDigitos(numerosVerificacao){
 
     return digitoVerificador;
 }
+
+function formataCep(cep) {
+    // Remove todos os caracteres não numéricos do valor do input
+    var cepUser = inputCep.value.replace(/\D/g, "");
+
+    // Verifica se o CEP tem o tamanho correto para adicionar o "-"
+    if (cepUser.length === 8) {
+      cepUser = cepUser.substring(0, 5) + "-" + cepUser.substring(5);
+    }
+
+    // Define o valor formatado de volta ao input
+    inputCep.value = cepUser;
+  }
