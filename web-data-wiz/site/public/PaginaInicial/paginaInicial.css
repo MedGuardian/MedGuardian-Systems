@@ -19,6 +19,10 @@ body {
     background-color: #E8E8E8;
 }
 
+.footer .imagemFooter{
+    margin-bottom: 3%;
+}
+
 li {
     list-style: none;
 }

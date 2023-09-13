@@ -2,6 +2,10 @@ a{
     color: black;
 }
 
+#inputRow .spanInput{
+    margin-top: 3%;
+}
+
 .conteudoSuperiorInputs {
     display: flex;
     flex-direction: row;
@@ -62,6 +66,7 @@ a{
     align-items: center;
 }
 
+
 #inputRow #divInputEndereco {
     width: 33.33%;
 }
@@ -110,7 +115,7 @@ a{
     font-family: LeagueSpartan;
 }
 
-@media only screen and (min-width: 320px) {
+@media only screen and (max-width: 320px) {
     .imgHosp {
         display: none;
     }
