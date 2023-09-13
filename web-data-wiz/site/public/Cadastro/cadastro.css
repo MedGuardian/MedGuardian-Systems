@@ -39,7 +39,7 @@
     padding: 1%;
     color: #004D02;
     font-family: Poppins;
-    font-weight: 900;
+    font-weight: 600;
 }
 
 .inputs .container .numInput {
@@ -429,8 +429,8 @@
     }
 
     #inputRow #divInputEndereco {
-        width: 50%;
-        margin-right: 10%;
+        width: 44.33%;
+        margin-right: 5%;
     }
 
     #inputRow #divInputNumeroEndereco {
@@ -480,7 +480,7 @@
 
     #divInputNumeroEndereco {
         width: 30%;
-        padding-right: 10%;
+        padding-right: 5%;
     }
 
     #divInputNumeroEndereco input {
