@@ -21,10 +21,6 @@
             </div>
 
             <div class="conteudoHeader">
-                <li class="liHeader"><a>Home</a></li>
-                <li class="liHeader"><a>Orçamento</a></li>
-                <li class="liHeader"><a>Fale-conosco</a></li>
-
                 <div class="botoesHeader">
                     <button id="botaoLogin" onclick="telaLogin()">Login</button>
                     <button id="botaoCadastro" onclick="telaCadastro()">Cadastre-se</button>
@@ -71,6 +67,45 @@
             </div>
         </div>
     </div>
+
+
+
+    <div class="modalContato" id="modalContato" style="display: none;">
+        <div class="container">
+            <div class="conteudoModalContato">
+
+                <div class="iconFecharModal">
+                    <img src="../../assets/images/icon-fechar.png" onclick="fecharModal()">
+                </div>
+
+                <div class="textoSuperiorModalContato">
+                    <span>Se interessou? Entre em contato</span>
+                </div>
+
+                <div class="formasContato">
+                    <span>Email: atendimento.medguardian@gmail.com</span>
+                    <span>Telefone: +55 11 99999-9999</span>
+                </div>
+
+                <div class="legendaCaixaTexto">
+                    <span>Ou envie sua solicitação diretamente pela caixa de texto abaixo:</span>
+                </div>
+
+                <div class="caixaTexto">
+                    <textarea id="minhaCaixaDeTexto" rows="6"></textarea>
+                </div>
+
+                <div class="botaoEnviarEmail">
+                    <button onclick="enviarEmail()">Enviar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay"></div>
+
+
 
     <div class="segundaApresentacao">
 
@@ -381,7 +416,7 @@
         </div>
         
         <div class="nomeEmpresaFooter">
-            <span>Copyright © 2023 - 2023 Arttech. Todos os direitos reservados. | Termos de uso | Política de
+            <span>Copyright © 2023 - 2023 MedGuardian. Todos os direitos reservados. | Termos de uso | Política de
                 privacidade | Definições de cookies | Mapa do site</span>
         </div>
     </div>

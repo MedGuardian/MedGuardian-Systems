@@ -43,5 +43,27 @@
   // Chame a função uma vez para configurar o texto inicial com base na resolução atual
   setInterval (atualizarTextoComBaseNaResolucao, 1)
 
+function telaContato(){
+  const modalContato = document.getElementById("modalContato");
+  const overlay = document.getElementById("overlay");
+
+  modalContato.style.display = "block";
+  overlay.style.display = "block";
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth" 
+  });
+
+}
+
+function fecharModal(){
+  const modalContato = document.getElementById("modalContato");
+  const overlay = document.getElementById("overlay");
+
+  modalContato.style.display = "none";
+  overlay.style.display = "none";
+}
+
   
   
