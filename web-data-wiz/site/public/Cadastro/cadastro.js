@@ -91,7 +91,7 @@ function cadastrar() {
 
     } else {
         setTimeout(function () {
-            window.location.href = '../PaginaInicial/paginainicial.html'
+            window.location.href = '../Login/login.html'
         }, 1000);
     }
 

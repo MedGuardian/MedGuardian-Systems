@@ -1,0 +1,159 @@
+.header {
+    background-color: #04AF26;
+}
+
+.header a {
+    color: white;
+}
+
+.header button {
+    display: none;
+}
+
+#tituloHeaderDashboard{
+    font-size: 61px;
+    font-weight: 800;
+    opacity: 90%;
+}
+
+.conteudoDashboard{
+    display: flex;
+    width: 100%;
+}
+
+.menuLateral {
+    display: flex;
+    flex-direction: column;
+    background-color: #04AF26;
+    width: 6%;
+    align-items: center;
+    justify-content: center;
+    transition: width 0.3s ease;
+}
+
+.menuLateral:hover{
+    width: 15%;
+    align-items: start;
+    justify-content: left;
+    .icones{
+        margin: 5% 0 5% 1%;
+        justify-content: left;
+        align-items: start;
+    }
+
+    .icones span {
+        display: block;
+    }
+}
+
+.menuLateral .logoMenuLateral {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 25%;
+}
+
+.menuLateral .logoMenuLateral img{
+    width: 50%;
+}
+
+.icones{
+    display: flex;
+    flex-direction: column;
+    margin: 75% 0;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.iconeMaquinas {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 13%;
+}
+
+.icones span {
+    display: none;
+    font-size: 15px;
+    font-family: LeagueSpartan;
+    color: white;
+    font-weight: 600;
+    margin-left: 2%;
+}
+
+.botaoSair{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 50%;
+}
+
+.botaoSair button {
+    color: white;
+    font-family: LeagueSpartan;
+    background: none;
+    border: none;
+    font-size: 20px;
+}
+
+.blocosDashboard {
+   display: flex; 
+   width: 100%;
+}
+
+.conteudoBlocosDashboard{
+    display: flex;
+    flex-direction: column;
+    font-family: LeagueSpartan;
+    margin-top: 3%;
+    width: 100%;
+}
+
+.blocosDashboardCima{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.blocosDashboardBaixo{
+    margin-top: 3%;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.blocosGraficos{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+.tituloBlocosDashboard{
+    background-color: #92E3A9;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    border-radius: 10px 10px 0 0 ;
+}
+
+.tituloBlocosDashboard span {
+    font-size: 20px;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    font-family: LeagueSpartan;
+    padding: 2% 0;
+    font-weight: 600;
+}
+
+.graficoBlocos{
+    background-color: #f2f2f2;
+    height: 220px;
+    border-radius: 0 0 10px 10px;
+}

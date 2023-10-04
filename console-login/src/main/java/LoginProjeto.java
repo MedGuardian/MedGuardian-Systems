@@ -14,9 +14,9 @@ public class LoginProjeto {
         String senhaAdmin = "1234";
 
         if(nomeUsuario.equals(nomeUsuarioAdmin) && senha.equals(senhaAdmin)){
-            System.out.println("TA LOGADO!");
+            System.out.println("Seja bem-vindo!");
         } else {
-            System.out.println("ERROU");
+            System.out.println("Usuário ou senha inválido(a)!");
         }
     }
 };

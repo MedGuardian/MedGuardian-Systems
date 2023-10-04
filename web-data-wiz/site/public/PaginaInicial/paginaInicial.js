@@ -17,25 +17,25 @@
 
     if (larguraJanela < 768) { // Por exemplo, mude para a largura desejada
       spanConteudoSuperiorEsquerdaSobreNos.innerHTML = 'Acesso rápido a informações relevantes sobre os pacientes.';
-      spanConteudoMeioEsquerdaSobreNos.innerHTML = 'Dados centralizados para analize de tendencias, surtos e doenças  para pevenção populacional';
+      spanConteudoMeioEsquerdaSobreNos.innerHTML = 'Decisões tomadas com base nas informações coletadas, visando a perpetuidade do hospital.';
       spanConteudoInferiorEsquerdaSobreNos.innerHTML = 'As informações armazenadas podem ser usadas para apoiar decisões estratégicas e desenvolvimento de políticas de saúde.';
-      spanConteudoSuperiorDireitaSobreNos.innerHTML = ' Sistema permitirá que os  profissionais de saúde compartilhem informações de forma rápida e eficaz.';
+      spanConteudoSuperiorDireitaSobreNos.innerHTML = ' Permitir que os  profissionais de saúde compartilhem informações de forma rápida e eficaz.';
       spanConteudoMeioDireitaSobreNos.innerHTML = 'Dados precisos e atualizados em tempo real, os erros podem ser minimizados, aumentando a segurança do paciente.';
-      spanConteudoInferiorDireitaSobreNos.innerHTML = 'Pacientes podem acessar seus próprios registros médicos de forma segura.';
+      spanConteudoInferiorDireitaSobreNos.innerHTML = 'Foco no importante: o paciente.';
 
-      spanTextoMissao.innerHTML = 'Capacitar e monitorar os sistema e garantir a segurança e eficiência e de seus dados por meio da monitoração avançada de computadores.';
+      spanTextoMissao.innerHTML = 'Capacitar e monitorar o sistema e garantir a segurança e eficiência e de seus dados por meio da monitoração avançada de computadores.';
       spanTextoVisao.innerHTML = 'Ser reconhecidos como o parceiros de confiança quando se trata de gerenciar o desempenho de computadores e coleta de dados.';
       spanTextoValores.innerHTML = 'Inovação. Excelência. Colaboração. Entender necessidades. Responsabilidade. Sustentabilidade.';
     } else {
       spanConteudoSuperiorEsquerdaSobreNos.innerHTML = 'Ao ter acesso rápido a informações relevantes sobre os pacientes, os profissionais de saúde podem tomar decisões mais informadas, proporcionando um atendimento mais preciso e personalizado.';
-      spanConteudoMeioEsquerdaSobreNos.innerHTML = 'Ao centralizar os dados de pacientes, será possível realizar análises de tendências de saúde, identificar surtos de doenças e tomar medidas preventivas em nível populacional.';
+      spanConteudoMeioEsquerdaSobreNos.innerHTML = 'Ao trazer relatórios de desempenho das máquinas, decisões podem ser tomadas visando a perpetuidade do hospital.';
       spanConteudoInferiorEsquerdaSobreNos.innerHTML = 'As informações armazenadas podem ser usadas para apoiar decisões estratégicas relacionadas à alocação de recursos, planejamento de atendimento e desenvolvimento de políticas de saúde.';
-      spanConteudoSuperiorDireitaSobreNos.innerHTML = 'Com dados precisos e atualizados disponíveis eletronicamente, os erros relacionados àadministração incorreta de medicamentos, alergias e histórico médico podem ser minimizados, aumentando a segurança do paciente.';
-      spanConteudoMeioDireitaSobreNos.innerHTML = 'O sistema permitirá que os médicos, enfermeiros e outros profissionais de saúdecompartilhem informações de forma rápida e eficaz, melhorando a colaboração e a coordenação no cuidado do paciente.';
-      spanConteudoInferiorDireitaSobreNos.innerHTML = 'O sistema permitirá que pacientes acessem seus próprios registros médicos de forma segura, incentivando a participação ativa na gestão de sua saúde.';
+      spanConteudoSuperiorDireitaSobreNos.innerHTML = 'Com dados precisos e atualizados disponíveis eletronicamente, os erros relacionados à administração incorreta de medicamentos, alergias e histórico médico podem ser minimizados.';
+      spanConteudoMeioDireitaSobreNos.innerHTML = 'O sistema permitirá que os médicos, enfermeiros e outros profissionais de saúde compartilhem informações de forma rápida e eficaz, melhorando o atendimento ao paciente.';
+      spanConteudoInferiorDireitaSobreNos.innerHTML = 'A nossa proposta visa minimizar as interrupções no fluxo de trabalho dos pronto-socorros. Permitindo que eles se concentrem no que é mais importante: cuidar dos pacientes.';
 
       spanTextoMissao.innerHTML = 'Nossa missão é capacitar e monitorar os sistemas para garantir a segurança, a eficiência e a integridade de seus dados por meio da monitoração avançada de computadores. Através do nosso sistema de monitoramento de coleta e armazenamento de dados, estamos comprometidos em oferecer soluções de monitoramento inteligentes, permitindo que nossos clientes tomem decisões informadas, protejam suas informações sensíveis e otimizem o desempenho de suas operações.'
-      spanTextoVisao.innerHTML = 'Nossa visão é liderar a indústria de monitoramento de computadores, sendo reconhecidos como o parceiro de confiança quando se trata de gerenciar o desempenho de computadores que coletam dado. Planejamos alcançar isso expandindo nossa presença global, desenvolvendo constantemente tecnologias inovadoras e oferecendo um serviço excepcional.'
+      spanTextoVisao.innerHTML = 'Nossa visão é liderar a indústria de monitoramento de computadores, sendo reconhecidos como o parceiro de confiança quando se trata de gerenciar o desempenho de computadores que coletam dados. Planejamos alcançar isso expandindo nossa presença global, desenvolvendo constantemente tecnologias inovadoras e oferecendo um serviço excepcional.'
       spanTextoValores.innerHTML = ' Estamos comprometidos com a constante busca por inovação e excelência. Acreditamos no poder da colaboração. Trabalhamos em estreita parceria com nossos clientes para entender suas necessidades.Reconhecemos nossa responsabilidade em contribuir positivamente para a sociedade. Promovemos práticas sustentáveis, respeitamos normas legais e éticas e buscamos oportunidades de impacto social positivo através de nossa tecnologia.'
     }
   }
