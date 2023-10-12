@@ -157,7 +157,7 @@ function gerarDigitos(numerosVerificacao){
 
 function formataCep(cep) {
     // Remove todos os caracteres não numéricos do valor do input
-    var cepUser = inputCep.value.replace(/\D/g, "");
+    var cepUser = inputCEP.value.replace(/\D/g, "");
 
     // Verifica se o CEP tem o tamanho correto para adicionar o "-"
     if (cepUser.length === 8) {
@@ -165,5 +165,5 @@ function formataCep(cep) {
     }
 
     // Define o valor formatado de volta ao input
-    inputCep.value = cepUser;
+    inputCEP.value = cepUser;
   }
