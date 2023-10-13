@@ -125,3 +125,84 @@
     font-size: 20px;
     font-weight: 600;
 }
+
+.menuFlutuante{
+    display: flex;
+    position: absolute;
+    z-index: 9;
+    background-color: #004D02;
+    color: white;
+    width: 250px;
+    left: 73.5%;
+    top: 8%;
+    border-radius: 10px;
+    font-family: LeagueSpartan;
+    font-weight: 600;
+}
+
+.conteudoMenuFlutuante{
+    width: 90%;
+    margin: auto;
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+}
+
+.conteudoSuperiorMenuFlutuante{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.informacoesMenuFlutuante{
+    display: flex;
+    flex-direction: column;
+}
+
+.informacoesSuperiorMenuFlutuante{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.nomeContaMenuFlutuante{
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.adminMenuFlutuante{
+    font-size: 18px;
+    font-weight: 400;
+    margin-left: 5%;
+}
+
+.emailMenuFlutuante{
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.userIconMenuFlutuante {
+    margin-right: 5%;
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    background-color: #92E3A9;
+}
+
+.conteudoInferiorMenuFlutuante{
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    margin-top: 15%;
+}
+
+.conteudoInferiorMenuFlutuante span {
+    margin-bottom: 7.5%;
+}
+
+.linhaMenuFlutuante{
+    height: 1px;
+    width: 100%;
+    background-color: white;
+    margin-bottom: 7.5%;
+}

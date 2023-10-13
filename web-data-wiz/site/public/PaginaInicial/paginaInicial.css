@@ -666,7 +666,8 @@ input:nth-of-type(5):checked~main#carousel {
     #iconmenuperfil {
         display: inline-block;
         font-size: 8px;
-    }
+
+cursor: pointer;    }
 
     .footer{
         text-align: center;
@@ -753,6 +754,7 @@ input:nth-of-type(5):checked~main#carousel {
     #iconmenuperfil {
         display: inline-block;
         font-size: 12px;
+        cursor: pointer;
     }
 
     .modalContato{ 
@@ -832,6 +834,7 @@ input:nth-of-type(5):checked~main#carousel {
     #iconmenuperfil {
         display: inline-block;
         font-size: 15px;
+        cursor: pointer;
     }
 
     .modalContato{ 
@@ -912,6 +915,7 @@ input:nth-of-type(5):checked~main#carousel {
     #iconmenuperfil {
         display: inline-block;
         font-size: 20px;
+        cursor: pointer;
     }
 
     .modalContato{ 
