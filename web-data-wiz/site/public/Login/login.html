@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="css/paginaInicial.css">
+    <link rel="stylesheet" href="../PaginaInicial/paginaInicial.css">
     <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
 
 
-    <link rel="stylesheet" href="css/login.css">
-    <script src="js/login.js"></script>
-    <script src="js/funcoes.js"></script>
-    <link rel="shortcut icon" href="assets/images/LOGO.png" type="image/x-icon">
+    <link rel="stylesheet" href="login.css">
+    <script src="login.js"></script>
+    <script src="../js/funcoes.js"></script>
+    <link rel="shortcut icon" href="../assets/images/LOGO.png" type="image/x-icon">
 </head>
 
 <body>
@@ -58,7 +58,7 @@
                 </div>
                 <div class="conteudoDireita">
                     <div class="imagem">
-                        <img src="assets/images/hospital.svg" alt="">
+                        <img src="../assets/images/hospital.svg" alt="">
                     </div>
                 </div>
 
@@ -72,12 +72,11 @@
 </html>
 <script>
     function entrar() {
-        aguardar();
 
         var cnpjVar = inputCnpj.value;
         var senhaVar = inputSenha.value;
 
-        if (emailVar == "" || senhaVar == "") {
+        if (cnpjVar == "" || senhaVar == "") {
             return false;
         }
 
@@ -92,15 +91,14 @@
             })
         }).then(function (resposta) {
             console.log("ESTOU NO THEN DO entrar()!")
-
             if (resposta.ok) {
                 console.log(resposta);
-
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
+                    sessionStorage.idEmpresa = json.idEmpresa;
                     setTimeout(function () {
-                        window.location = "./oiiiii";
+                        window.location ="../Dashboard/dashboard.html";
                     }, 1000); // apenas para exibir o loading
 
                 });

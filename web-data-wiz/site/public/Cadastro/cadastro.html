@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
-    <link rel="stylesheet" href="css/paginaInicial.css">
-    <link rel="stylesheet" href="css/cadastro.css">
-    <script src="js/cadastro.js"></script>
-    <script src="js/funcoes.js"></script>
+    <link rel="stylesheet" href="../PaginaInicial/paginaInicial.css">
+    <link rel="stylesheet" href="../Cadastro/cadastro.css">
+    <script src="cadastro.js"></script>
+    <script src="../js/funcoes.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="shortcut icon" href="assets/images/LOGO.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../assets/images/LOGO.png" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
 
@@ -54,7 +54,8 @@
                 
                 <div class="spanInput">
                     <span>CNPJ</span>
-                    <input maxlength="18" onblur="validaCNPJ(this.value)" oninput="transformarCnpj(this.value)" type="text" id="inputCNPJ">
+                    <input maxlength="18" onblur="
+                    validaCNPJ(this.value), cnpjApi(this.value)" type="text" id="inputCNPJ">
                 </div>
                 
                 <div class="spanInput">
@@ -79,14 +80,14 @@
             
                 <div class="spanInput" id="divInputEnderecoCelular">
                     <span>Nº</span>
-                    <input type="text" id="inputNumero">
+                    <input type="text" id="inputNumeroMob">
                 </div>
 
                 <div id="inputRowCelular">
                     
                     <div class="spanInput" id="divInputNumeroEndereco">
                         <span>Complemento</span>
-                        <input type="text" id="inputComplemento">
+                        <input type="text" id="inputComplementoMob">
                     </div>
     
                     <div class="spanInput" id="divInputComplementoEndereco">
@@ -112,7 +113,7 @@
 
                 <div class="imgHosp">
                     <div class="container">
-                        <img height="450px" id="img" src="assets/images/hospital.svg" alt="">
+                        <img height="450px" id="img" src="../assets/images/hospital.svg" alt="">
                     </div>
                 </div>
             </div>
@@ -121,12 +122,12 @@
 
                 <div class="spanInput" id="divInputEndereco">
                     <span>Complemento</span>
-                    <input type="text" id="inputEnderecoMob">
+                    <input type="text" id="inputComplemento">
                 </div>
 
                 <div class="spanInput" id="divInputNumeroEndereco">
                     <span>Nº</span>
-                    <input type="text" id="inputNumeroEnderecoMob">
+                    <input type="text" id="inputNumero">
                 </div>
 
                 <div class="spanInput" id="divInputComplementoEndereco">
@@ -148,11 +149,72 @@
 
 </html>
 <script>
-    
+
+  function cnpjApi(cnpj){
+    // https://brasilapi.com.br/api/cnpj/v1/{cnpj}
+    var cnpj = inputCNPJ.value
+    fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+  }).then(function(resposta){
+      //console.log(json)
+      resposta.json().then(function(json){
+        inputRazaoSocial.value=json.razao_social
+        inputLogradouro.value = json.logradouro
+        inputEmail = json.email
+        inputComplemento.value = json.complemento
+        inputNumero.value = json.numero
+        inputContato.value = json.ddd_telefone_1
+        inputCEP.value = json.cep
+
+        transformarCnpj(cnpj)
+      }
+        
+    )
+  })
+}
  
-    function cadastrar(){
+    function cadEndereco(){
             //Recupere o valor da nova input pelo nome do id
             // Agora vá para o método fetch logo abaixo
+            var cepVar = inputCEP.value;
+            var logVar = inputLogradouro.value;
+            var numVar = inputNumero.value;
+            var compVar = inputComplemento.value;
+             // Enviando o valor da nova input
+            fetch("/usuarios/cadastrarEndereco", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                // crie um atributo que recebe o valor recuperado aqui
+                // Agora vá para o arquivo routes/usuario.js
+                cepServer: cepVar,
+                logServer: logVar,
+                numServer: numVar,
+                compServer: compVar
+              }),
+            })
+              .then(function (resposta) {
+                console.log("resposta: ", resposta);
+        
+                if (resposta.ok) {
+                    console.log("certin")
+                } else {
+                  throw "Houve um erro ao tentar realizar o cadastro!";
+                }
+              })
+              .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+              });
+        
+            return false;
+          }
+
+          function cadastrar(){
             var razaoSocialVar = inputRazaoSocial.value;
             var cnpjVar = inputCNPJ.value;
             var emailVar = inputEmail.value;
@@ -185,14 +247,16 @@
                 console.log("resposta: ", resposta);
         
                 if (resposta.ok) {
+                    cadEndereco()
                     Swal.fire(
                         'Cadastro realizado com sucesso!',
                         'Aguarde enquanto redirecionamos para o login',
                         'success'
                       )
+
                   setTimeout(() => {
-                    window.location = "login.html";
-                  }, "2000");
+                  window.location = "../Login/login.html";
+                  }, "2000"); 
         
                 } else {
                   throw "Houve um erro ao tentar realizar o cadastro!";
@@ -203,6 +267,7 @@
               });
         
             return false;
+
           }
         
     
