@@ -54,7 +54,8 @@
                 
                 <div class="spanInput">
                     <span>CNPJ</span>
-                    <input maxlength="18" onblur="validaCNPJ(this.value)" oninput="transformarCnpj(this.value)" type="text" id="inputCNPJ">
+                    <input maxlength="18" onblur="
+                    validaCNPJ(this.value), cnpjApi(this.value)" type="text" id="inputCNPJ">
                 </div>
                 
                 <div class="spanInput">
@@ -148,7 +149,32 @@
 
 </html>
 <script>
-    
+
+  function cnpjApi(cnpj){
+    // https://brasilapi.com.br/api/cnpj/v1/{cnpj}
+    var cnpj = inputCNPJ.value
+    fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      }
+  }).then(function(resposta){
+      //console.log(json)
+      resposta.json().then(function(json){
+        inputRazaoSocial.value=json.razao_social
+        inputLogradouro.value = json.logradouro
+        inputEmail = json.email
+        inputComplemento.value = json.complemento
+        inputNumero.value = json.numero
+        inputContato.value = json.ddd_telefone_1
+        inputCEP.value = json.cep
+
+        transformarCnpj(cnpj)
+      }
+        
+    )
+  })
+}
  
     function cadEndereco(){
             //Recupere o valor da nova input pelo nome do id
