@@ -1,155 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="dashboard.css">
-    <link rel="stylesheet" href="../PaginaInicial/paginaInicial.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="dashboard.css" />
+    <link rel="stylesheet" href="../PaginaInicial/paginaInicial.css" />
     <script src="../js/sessao.js"></script>
     <script src="../js/funcoes.js"></script>
     <title>Document</title>
-</head>
-<body onload="validarSessao()">
-
+  </head>
+  <body onload="validarSessao()">
     <div class="header">
-        <div class="container">
-
-            <div class="tituloHeader">
-                <span id="tituloHeaderDashboard"><a href="../PaginaInicial/paginaInicial.html">MedGuardian</a></span>
-            </div>
-
-            <div class="conteudoHeader">
-                <div class="botoesHeader">
-                    <button id="botaoLogin" onclick="telaLogin()">Login</button>
-                    <button id="botaoCadastro" onclick="telaCadastro()">Cadastre-se</button>
-                </div>
-
-                <div class="saudacaoLogado" id="saudacaoLogado">
-                    <span id="saudacao">Olá, </span>
-                    <li id="iconmenuperfil" class="material-symbols-outlined">menu</li>
-                </div>
-
-            </div>
-
-
+      <div class="container">
+        <div class="tituloHeader">
+          <span id="tituloHeaderDashboard"
+            ><a href="../PaginaInicial/paginaInicial.html">MedGuardian</a></span
+          >
         </div>
+
+        <div class="conteudoHeader">
+          <div class="botoesHeader">
+            <button id="botaoLogin" onclick="telaLogin()">Login</button>
+            <button id="botaoCadastro" onclick="telaCadastro()">
+              Cadastre-se
+            </button>
+          </div>
+
+          <div class="saudacaoLogado" id="saudacaoLogado">
+            <span id="saudacao">Olá, </span>
+            <li id="iconmenuperfil" class="material-symbols-outlined">menu</li>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="conteudoDashboard">
-
-        <div class="menuLateral">
-
-            <div class="logoMenuLateral">
-                <img src="../../assets/images/LOGO.png" alt="">
-            </div>
-
-            <div class="icones">
-                <div class="iconeMaquinas">
-                    <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M34.125 31.5066H7.875C7.17902 31.5059 6.51174 31.2291 6.01961 30.7369C5.52748 30.2448 5.25069 29.5775 5.25 28.8816V10.5066C5.25069 9.81058 5.52748 9.14331 6.01961 8.65117C6.51174 8.15904 7.17902 7.88226 7.875 7.88156H34.125C34.821 7.88226 35.4883 8.15904 35.9804 8.65117C36.4725 9.14331 36.7493 9.81058 36.75 10.5066V28.8816C36.749 29.5774 36.4721 30.2445 35.98 30.7366C35.4879 31.2286 34.8209 31.5055 34.125 31.5066ZM7.875 10.5066V28.8816H34.125V10.5066H7.875ZM2.625 34.1316H39.375V36.7566H2.625V34.1316Z" fill="white"/>
-                        </svg>
-                        <span>MÁQUINA 1</span>
-                </div>
-                <div class="iconeMaquinas">
-                    <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M34.125 31.5066H7.875C7.17902 31.5059 6.51174 31.2291 6.01961 30.7369C5.52748 30.2448 5.25069 29.5775 5.25 28.8816V10.5066C5.25069 9.81058 5.52748 9.14331 6.01961 8.65117C6.51174 8.15904 7.17902 7.88226 7.875 7.88156H34.125C34.821 7.88226 35.4883 8.15904 35.9804 8.65117C36.4725 9.14331 36.7493 9.81058 36.75 10.5066V28.8816C36.749 29.5774 36.4721 30.2445 35.98 30.7366C35.4879 31.2286 34.8209 31.5055 34.125 31.5066ZM7.875 10.5066V28.8816H34.125V10.5066H7.875ZM2.625 34.1316H39.375V36.7566H2.625V34.1316Z" fill="white"/>
-                        </svg>
-                        <span>MÁQUINA 1</span>
-                </div>
-                <div class="iconeMaquinas">
-                    <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M34.125 31.5066H7.875C7.17902 31.5059 6.51174 31.2291 6.01961 30.7369C5.52748 30.2448 5.25069 29.5775 5.25 28.8816V10.5066C5.25069 9.81058 5.52748 9.14331 6.01961 8.65117C6.51174 8.15904 7.17902 7.88226 7.875 7.88156H34.125C34.821 7.88226 35.4883 8.15904 35.9804 8.65117C36.4725 9.14331 36.7493 9.81058 36.75 10.5066V28.8816C36.749 29.5774 36.4721 30.2445 35.98 30.7366C35.4879 31.2286 34.8209 31.5055 34.125 31.5066ZM7.875 10.5066V28.8816H34.125V10.5066H7.875ZM2.625 34.1316H39.375V36.7566H2.625V34.1316Z" fill="white"/>
-                        </svg>
-                        <span>MÁQUINA 1</span>
-                </div>
-                <div class="iconeMaquinas">
-                    <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M34.125 31.5066H7.875C7.17902 31.5059 6.51174 31.2291 6.01961 30.7369C5.52748 30.2448 5.25069 29.5775 5.25 28.8816V10.5066C5.25069 9.81058 5.52748 9.14331 6.01961 8.65117C6.51174 8.15904 7.17902 7.88226 7.875 7.88156H34.125C34.821 7.88226 35.4883 8.15904 35.9804 8.65117C36.4725 9.14331 36.7493 9.81058 36.75 10.5066V28.8816C36.749 29.5774 36.4721 30.2445 35.98 30.7366C35.4879 31.2286 34.8209 31.5055 34.125 31.5066ZM7.875 10.5066V28.8816H34.125V10.5066H7.875ZM2.625 34.1316H39.375V36.7566H2.625V34.1316Z" fill="white"/>
-                        </svg>
-                        <span>MÁQUINA 1</span>
-                </div>
-                <div class="iconeMaquinas">
-                    <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M34.125 31.5066H7.875C7.17902 31.5059 6.51174 31.2291 6.01961 30.7369C5.52748 30.2448 5.25069 29.5775 5.25 28.8816V10.5066C5.25069 9.81058 5.52748 9.14331 6.01961 8.65117C6.51174 8.15904 7.17902 7.88226 7.875 7.88156H34.125C34.821 7.88226 35.4883 8.15904 35.9804 8.65117C36.4725 9.14331 36.7493 9.81058 36.75 10.5066V28.8816C36.749 29.5774 36.4721 30.2445 35.98 30.7366C35.4879 31.2286 34.8209 31.5055 34.125 31.5066ZM7.875 10.5066V28.8816H34.125V10.5066H7.875ZM2.625 34.1316H39.375V36.7566H2.625V34.1316Z" fill="white"/>
-                        </svg>
-                        <span>MÁQUINA 1</span>
-                </div>
-                <div class="iconeMaquinas">
-                    <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M34.125 31.5066H7.875C7.17902 31.5059 6.51174 31.2291 6.01961 30.7369C5.52748 30.2448 5.25069 29.5775 5.25 28.8816V10.5066C5.25069 9.81058 5.52748 9.14331 6.01961 8.65117C6.51174 8.15904 7.17902 7.88226 7.875 7.88156H34.125C34.821 7.88226 35.4883 8.15904 35.9804 8.65117C36.4725 9.14331 36.7493 9.81058 36.75 10.5066V28.8816C36.749 29.5774 36.4721 30.2445 35.98 30.7366C35.4879 31.2286 34.8209 31.5055 34.125 31.5066ZM7.875 10.5066V28.8816H34.125V10.5066H7.875ZM2.625 34.1316H39.375V36.7566H2.625V34.1316Z" fill="white"/>
-                        </svg>
-                        <span>MÁQUINA 1</span>
-                </div>
-                <div class="iconeMaquinas">
-                    <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M34.125 31.5066H7.875C7.17902 31.5059 6.51174 31.2291 6.01961 30.7369C5.52748 30.2448 5.25069 29.5775 5.25 28.8816V10.5066C5.25069 9.81058 5.52748 9.14331 6.01961 8.65117C6.51174 8.15904 7.17902 7.88226 7.875 7.88156H34.125C34.821 7.88226 35.4883 8.15904 35.9804 8.65117C36.4725 9.14331 36.7493 9.81058 36.75 10.5066V28.8816C36.749 29.5774 36.4721 30.2445 35.98 30.7366C35.4879 31.2286 34.8209 31.5055 34.125 31.5066ZM7.875 10.5066V28.8816H34.125V10.5066H7.875ZM2.625 34.1316H39.375V36.7566H2.625V34.1316Z" fill="white"/>
-                        </svg>
-                        <span>MÁQUINA 1</span>
-                </div>
-            </div>
-            
-
-            <div class="botaoSair">
-                <button onclick="sairDashboard()">Sair</button>
-            </div>
+      <div class="menuLateral">
+        <div class="logoMenuLateral">
+          <img src="../../assets/images/LOGO.png" alt="" />
         </div>
 
-        <div class="blocosDashboard">
-                <div class="conteudoBlocosDashboard">
-
-                    <div class="blocosDashboardCima">
-
-                        <div class="blocosGraficos" id="bloco1DashboardCima">
-                            <div class="tituloBlocosDashboard" id="tituloBloco1DashboardCima">
-                                <span>USO DE RAM</span>
-                            </div>
-
-                            <div class="graficoBlocos" id="graficoBloco1">                              
-                                    <canvas id="grafico1"></canvas>
-                            </div>
-                        </div>
-
-                        <div class="blocosGraficos" id="bloco2DashboardCima">
-                            <div class="tituloBlocosDashboard" id="tituloBloco2DashboardCima">
-                                <span>USO DE CPU</span>
-                            </div>
-
-                            <div class="graficoBlocos" id="graficoBloco2">                              
-                                    <canvas id="grafico2"></canvas>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div class="blocosDashboardBaixo">
-
-                        <div class="blocosGraficos" id="bloco3DashboardCima">
-                            <div class="tituloBlocosDashboard" id="tituloBloco3DashboardCima">
-                                <span>USO DE REDE</span>
-                            </div>
-
-                            <div class="graficoBlocos" id="graficoBloco3">                              
-                                    <canvas id="grafico3"></canvas>
-                            </div>
-                        </div>
-
-                        <div class="blocosGraficos" id="bloco4DashboardCima">
-                            <div class="tituloBlocosDashboard" id="tituloBloco4DashboardCima">
-                                <span>USO DE DISCO</span>
-                            </div>
-
-                            <div class="graficoBlocos" id="graficoBloco4">                              
-                                    <canvas id="grafico4"></canvas>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
+        <div class="icones">
+          <div class="iconeMaquinas">
+            <svg
+              width="42"
+              height="42"
+              viewBox="0 0 42 42"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M34.125 31.5066H7.875C7.17902 31.5059 6.51174 31.2291 6.01961 30.7369C5.52748 30.2448 5.25069 29.5775 5.25 28.8816V10.5066C5.25069 9.81058 5.52748 9.14331 6.01961 8.65117C6.51174 8.15904 7.17902 7.88226 7.875 7.88156H34.125C34.821 7.88226 35.4883 8.15904 35.9804 8.65117C36.4725 9.14331 36.7493 9.81058 36.75 10.5066V28.8816C36.749 29.5774 36.4721 30.2445 35.98 30.7366C35.4879 31.2286 34.8209 31.5055 34.125 31.5066ZM7.875 10.5066V28.8816H34.125V10.5066H7.875ZM2.625 34.1316H39.375V36.7566H2.625V34.1316Z"
+                fill="white"
+              />
+            </svg>
+            <span>MÁQUINA 1</span>
+          </div>
+          <div class="iconeMaquinas">
+            <svg
+              width="42"
+              height="42"
+              viewBox="0 0 42 42"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M34.125 31.5066H7.875C7.17902 31.5059 6.51174 31.2291 6.01961 30.7369C5.52748 30.2448 5.25069 29.5775 5.25 28.8816V10.5066C5.25069 9.81058 5.52748 9.14331 6.01961 8.65117C6.51174 8.15904 7.17902 7.88226 7.875 7.88156H34.125C34.821 7.88226 35.4883 8.15904 35.9804 8.65117C36.4725 9.14331 36.7493 9.81058 36.75 10.5066V28.8816C36.749 29.5774 36.4721 30.2445 35.98 30.7366C35.4879 31.2286 34.8209 31.5055 34.125 31.5066ZM7.875 10.5066V28.8816H34.125V10.5066H7.875ZM2.625 34.1316H39.375V36.7566H2.625V34.1316Z"
+                fill="white"
+              />
+            </svg>
+            <span>MÁQUINA 1</span>
+          </div>
+          <div class="iconeMaquinas">
+            <svg
+              width="42"
+              height="42"
+              viewBox="0 0 42 42"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M34.125 31.5066H7.875C7.17902 31.5059 6.51174 31.2291 6.01961 30.7369C5.52748 30.2448 5.25069 29.5775 5.25 28.8816V10.5066C5.25069 9.81058 5.52748 9.14331 6.01961 8.65117C6.51174 8.15904 7.17902 7.88226 7.875 7.88156H34.125C34.821 7.88226 35.4883 8.15904 35.9804 8.65117C36.4725 9.14331 36.7493 9.81058 36.75 10.5066V28.8816C36.749 29.5774 36.4721 30.2445 35.98 30.7366C35.4879 31.2286 34.8209 31.5055 34.125 31.5066ZM7.875 10.5066V28.8816H34.125V10.5066H7.875ZM2.625 34.1316H39.375V36.7566H2.625V34.1316Z"
+                fill="white"
+              />
+            </svg>
+            <span>MÁQUINA 1</span>
+          </div>
+          <div class="iconeMaquinas">
+            <svg
+              width="42"
+              height="42"
+              viewBox="0 0 42 42"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M34.125 31.5066H7.875C7.17902 31.5059 6.51174 31.2291 6.01961 30.7369C5.52748 30.2448 5.25069 29.5775 5.25 28.8816V10.5066C5.25069 9.81058 5.52748 9.14331 6.01961 8.65117C6.51174 8.15904 7.17902 7.88226 7.875 7.88156H34.125C34.821 7.88226 35.4883 8.15904 35.9804 8.65117C36.4725 9.14331 36.7493 9.81058 36.75 10.5066V28.8816C36.749 29.5774 36.4721 30.2445 35.98 30.7366C35.4879 31.2286 34.8209 31.5055 34.125 31.5066ZM7.875 10.5066V28.8816H34.125V10.5066H7.875ZM2.625 34.1316H39.375V36.7566H2.625V34.1316Z"
+                fill="white"
+              />
+            </svg>
+            <span>MÁQUINA 1</span>
+          </div>
+          <div class="iconeMaquinas">
+            <svg
+              width="42"
+              height="42"
+              viewBox="0 0 42 42"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M34.125 31.5066H7.875C7.17902 31.5059 6.51174 31.2291 6.01961 30.7369C5.52748 30.2448 5.25069 29.5775 5.25 28.8816V10.5066C5.25069 9.81058 5.52748 9.14331 6.01961 8.65117C6.51174 8.15904 7.17902 7.88226 7.875 7.88156H34.125C34.821 7.88226 35.4883 8.15904 35.9804 8.65117C36.4725 9.14331 36.7493 9.81058 36.75 10.5066V28.8816C36.749 29.5774 36.4721 30.2445 35.98 30.7366C35.4879 31.2286 34.8209 31.5055 34.125 31.5066ZM7.875 10.5066V28.8816H34.125V10.5066H7.875ZM2.625 34.1316H39.375V36.7566H2.625V34.1316Z"
+                fill="white"
+              />
+            </svg>
+            <span>MÁQUINA 1</span>
+          </div>
+          <div class="iconeMaquinas">
+            <svg
+              width="42"
+              height="42"
+              viewBox="0 0 42 42"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M34.125 31.5066H7.875C7.17902 31.5059 6.51174 31.2291 6.01961 30.7369C5.52748 30.2448 5.25069 29.5775 5.25 28.8816V10.5066C5.25069 9.81058 5.52748 9.14331 6.01961 8.65117C6.51174 8.15904 7.17902 7.88226 7.875 7.88156H34.125C34.821 7.88226 35.4883 8.15904 35.9804 8.65117C36.4725 9.14331 36.7493 9.81058 36.75 10.5066V28.8816C36.749 29.5774 36.4721 30.2445 35.98 30.7366C35.4879 31.2286 34.8209 31.5055 34.125 31.5066ZM7.875 10.5066V28.8816H34.125V10.5066H7.875ZM2.625 34.1316H39.375V36.7566H2.625V34.1316Z"
+                fill="white"
+              />
+            </svg>
+            <span>MÁQUINA 1</span>
+          </div>
+          <div class="iconeMaquinas">
+            <svg
+              width="42"
+              height="42"
+              viewBox="0 0 42 42"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M34.125 31.5066H7.875C7.17902 31.5059 6.51174 31.2291 6.01961 30.7369C5.52748 30.2448 5.25069 29.5775 5.25 28.8816V10.5066C5.25069 9.81058 5.52748 9.14331 6.01961 8.65117C6.51174 8.15904 7.17902 7.88226 7.875 7.88156H34.125C34.821 7.88226 35.4883 8.15904 35.9804 8.65117C36.4725 9.14331 36.7493 9.81058 36.75 10.5066V28.8816C36.749 29.5774 36.4721 30.2445 35.98 30.7366C35.4879 31.2286 34.8209 31.5055 34.125 31.5066ZM7.875 10.5066V28.8816H34.125V10.5066H7.875ZM2.625 34.1316H39.375V36.7566H2.625V34.1316Z"
+                fill="white"
+              />
+            </svg>
+            <span>MÁQUINA 1</span>
+          </div>
         </div>
 
+        <div class="botaoSair">
+          <button onclick="sairDashboard()">Sair</button>
+        </div>
+      </div>
+
+      <div class="blocosDashboard">
+        <div class="conteudoBlocosDashboard">
+          <div class="blocosDashboardCima">
+            <div class="blocosGraficos" id="bloco1DashboardCima">
+              <div class="tituloBlocosDashboard" id="tituloBloco1DashboardCima">
+                <span>USO DE RAM</span>
+              </div>
+
+              <div class="graficoBlocos" id="graficoBloco1">
+                <canvas id="grafico1"></canvas>
+              </div>
+            </div>
+
+            <div class="blocosGraficos" id="bloco2DashboardCima">
+              <div class="tituloBlocosDashboard" id="tituloBloco2DashboardCima">
+                <span>USO DE CPU</span>
+              </div>
+
+              <div class="graficoBlocos" id="graficoBloco2">
+                <canvas id="grafico2"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="blocosDashboardBaixo">
+            <div class="blocosGraficos" id="bloco3DashboardCima">
+              <div class="tituloBlocosDashboard" id="tituloBloco3DashboardCima">
+                <span>USO DE REDE</span>
+              </div>
+
+              <div class="graficoBlocos" id="graficoBloco3">
+                <canvas id="grafico3"></canvas>
+              </div>
+            </div>
+
+            <div class="blocosGraficos" id="bloco4DashboardCima">
+              <div class="tituloBlocosDashboard" id="tituloBloco4DashboardCima">
+                <span>USO DE DISCO</span>
+              </div>
+
+              <div class="graficoBlocos" id="graficoBloco4">
+                <canvas id="grafico4"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</body>
+  </body>
 </html>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

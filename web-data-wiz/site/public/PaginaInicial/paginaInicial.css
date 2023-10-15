@@ -1,17 +1,16 @@
-<<<<<<< HEAD
 @font-face {
     font-family: LeagueSpartan;
-    src: url(../../assets/fonts/LeagueSpartan-VariableFont_wght.ttf);
+    src: url(../assets/fonts/LeagueSpartan-VariableFont_wght.ttf);
 }
 
 @font-face {
     font-family: Poppins;
-    src: url(../../assets/fonts/Poppins-Regular.ttf);
+    src: url(../assets/fonts/Poppins-Regular.ttf);
 }
 
 @font-face {
     font-family: KyivType Sans;
-    src: url(../../assets/fonts/Dmitry\ Rastvortsev\ -\ KyivType\ Sans\ Regular-.otf);
+    src: url(../assets/fonts/Dmitry\ Rastvortsev\ -\ KyivType\ Sans\ Regular-.otf);
 }
 
 body {
@@ -1702,20 +1701,19 @@ cursor: pointer;    }
         opacity: 50%;
         margin-top: -2%;
     }
-=======
 @font-face {
     font-family: LeagueSpartan;
-    src: url(../../assets/fonts/LeagueSpartan-VariableFont_wght.ttf);
+    src: url(../assets/fonts/LeagueSpartan-VariableFont_wght.ttf);
 }
 
 @font-face {
     font-family: Poppins;
-    src: url(../../assets/fonts/Poppins-Regular.ttf);
+    src: url(../assets/fonts/Poppins-Regular.ttf);
 }
 
 @font-face {
     font-family: KyivType Sans;
-    src: url(../../assets/fonts/Dmitry\ Rastvortsev\ -\ KyivType\ Sans\ Regular-.otf);
+    src: url(../assets/fonts/Dmitry\ Rastvortsev\ -\ KyivType\ Sans\ Regular-.otf);
 }
 
 body {
@@ -3402,5 +3400,5 @@ input:nth-of-type(5):checked~main#carousel {
         opacity: 50%;
         margin-top: -2%;
     }
->>>>>>> af6f759b755b6112951373340f18065c977ed137
+}
 }

@@ -15,7 +15,7 @@ function listar(req, res) {
 }
 
 function buscarPorId(req, res) {
-  var id = req.params.id;
+  var id = req.params.idEmpresa;
 
   empresaModel.buscarPorId(id).then((resultado) => {
     res.status(200).json(resultado);

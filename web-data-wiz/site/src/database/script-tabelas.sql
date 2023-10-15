@@ -6,100 +6,83 @@
 comandos para mysql - banco local - ambiente de desenvolvimento
 */
 
-CREATE DATABASE aquatech;
 
-USE aquatech;
+CREATE DATABASE medGuard;
+USE medGuard;
+CREATE TABLE Empresa (
+  idEmpresa INT NOT NULL auto_increment,
+  razaoSocial VARCHAR(45) NOT NULL,
+  cnpjEmpresa VARCHAR(18) NOT NULL,
+  emailEmpresa VARCHAR(45) NOT NULL,
+  contatoEmpresa VARCHAR(45) NOT NULL,
+  senhaEmpresa VARCHAR(45) NOT NULL,
+  PRIMARY KEY (idEmpresa));
 
-CREATE TABLE empresa (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	razao_social VARCHAR(50),
-	cnpj VARCHAR(14)
-);
+CREATE TABLE Endereco (
+  idEndereco INT NOT NULL auto_increment,
+  cep CHAR(9) NOT NULL,
+  logradouro VARCHAR(45) NOT NULL,
+  numeroEmpresa INT NOT NULL,
+  complementoEmpresa VARCHAR(45) NOT NULL,
+  fkEmpresa INT NOT NULL,
+  PRIMARY KEY (idEndereco),
+  CONSTRAINT fk_Endereco_Empresa
+    FOREIGN KEY (fkEmpresa)
+    REFERENCES Empresa (idEmpresa));
 
-CREATE TABLE usuario (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	nome VARCHAR(50),
-	email VARCHAR(50),
-	senha VARCHAR(50),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
-);
+CREATE TABLE Funcionario (
+  idFuncionario INT NOT NULL,
+  nomeFuncionario VARCHAR(45) NOT NULL,
+  fkEmpresa INT NOT NULL,
+  cpfFuncionario VARCHAR(45) NOT NULL,
+  loginFuncionario VARCHAR(45) NOT NULL,
+  senhaFuncionario VARCHAR(45) NOT NULL,
+  fkSupervisor INT NOT NULL,
+  PRIMARY KEY (idFuncionario),
+  CONSTRAINT fkFuncionarioEmpresa
+    FOREIGN KEY (fkEmpresa)
+    REFERENCES Empresa (idEmpresa),
+    CONSTRAINT fkFuncionarioSupervisor
+    FOREIGN KEY (fkSupervisor)
+    REFERENCES Funcionario (idFuncionario));
 
-CREATE TABLE aviso (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	titulo VARCHAR(100),
-	descricao VARCHAR(150),
-	fk_usuario INT,
-	FOREIGN KEY (fk_usuario) REFERENCES usuario(id)
-);
+CREATE TABLE Computador (
+  idComputador INT NOT NULL,
+  nomeComputador VARCHAR(45) NOT NULL,
+  PRIMARY KEY (idComputador));
 
-create table aquario (
-/* em nossa regra de negócio, um aquario tem apenas um sensor */
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	descricao VARCHAR(300),
-	fk_empresa INT,
-	FOREIGN KEY (fk_empresa) REFERENCES empresa(id)
-);
+CREATE TABLE FuncionarioDoDia (
+  fkFuncionario INT NOT NULL,
+  fkComputador INT NOT NULL,
+  dia DATE NOT NULL,
+  PRIMARY KEY (fkFuncionario, fkComputador),
+  CONSTRAINT fkFuncionarioComputador
+    FOREIGN KEY (fkFuncionario)
+    REFERENCES Funcionario (idFuncionario),
+  CONSTRAINT fkComputadorFuncionario
+    FOREIGN KEY (fkComputador)
+    REFERENCES Computador (idComputador));
 
-/* esta tabela deve estar de acordo com o que está em INSERT de sua API do arduino - dat-acqu-ino */
+CREATE TABLE Componente (
+  idComponente INT NOT NULL,
+  nomeComponente VARCHAR(45) NOT NULL,
+  PRIMARY KEY (idComponente));
 
-create table medida (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-	dht11_umidade DECIMAL,
-	dht11_temperatura DECIMAL,
-	luminosidade DECIMAL,
-	lm35_temperatura DECIMAL,
-	chave TINYINT,
-	momento DATETIME,
-	fk_aquario INT,
-	FOREIGN KEY (fk_aquario) REFERENCES aquario(id)
-);
-
-
-/*
-comando para sql server - banco remoto - ambiente de produção
-*/
-
-CREATE TABLE empresa (
-	id INT PRIMARY KEY IDENTITY(1,1),
-	razao_social VARCHAR(50),
-	cnpj VARCHAR(14)
-);
-
-CREATE TABLE usuario (
-	id INT PRIMARY KEY IDENTITY(1,1),
-	nome VARCHAR(50),
-	email VARCHAR(50),
-	senha VARCHAR(50),
-	fk_empresa INT FOREIGN KEY REFERENCES empresa(id)
-);
-
-CREATE TABLE aviso (
-	id INT PRIMARY KEY IDENTITY(1,1),
-	titulo VARCHAR(100),
-	descricao VARCHAR(150),
-	fk_usuario INT FOREIGN KEY REFERENCES usuario(id)
-);
-
-create table aquario (
-/* em nossa regra de negócio, um aquario tem apenas um sensor */
-	id INT PRIMARY KEY IDENTITY(1,1),
-	descricao VARCHAR(300),
-	fk_empresa INT FOREIGN KEY REFERENCES empresa(id)
-);
-
-/* esta tabela deve estar de acordo com o que está em INSERT de sua API do arduino - dat-acqu-ino */
-
-CREATE TABLE medida (
-	id INT PRIMARY KEY IDENTITY(1,1),
-	dht11_umidade DECIMAL,
-	dht11_temperatura DECIMAL,
-	luminosidade DECIMAL,
-	lm35_temperatura DECIMAL,
-	chave TINYINT,
-	momento DATETIME,
-	fk_aquario INT FOREIGN KEY REFERENCES aquario(id)
-);
+CREATE TABLE Registro (
+  idregistro INT NOT NULL,
+  dataRegistro DATE NOT NULL,
+  registro DECIMAL NOT NULL,
+  tipoCaptura VARCHAR(45) NOT NULL,
+  fkComputador INT NOT NULL,
+  fkComponente INT NOT NULL,
+  PRIMARY KEY (idregistro),
+  CONSTRAINT fkRegistroComputador
+    FOREIGN KEY (fkComputador)
+    REFERENCES Computador (idComputador),
+  CONSTRAINT fkRegistroComponente
+    FOREIGN KEY (fkComponente)
+    REFERENCES Componente (idComponente));
+    
 
 /*
 comandos para criar usuário em banco de dados azure, sqlserver,

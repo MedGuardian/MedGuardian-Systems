@@ -12,7 +12,7 @@ router.get("/buscar", function (req, res) {
     empresaController.buscarPorCnpj(req, res);
 });
 
-router.get("/buscar/:id", function (req, res) {
+router.get("/buscar/:idEmpresa", function (req, res) {
   empresaController.buscarPorId(req, res);
 });
 

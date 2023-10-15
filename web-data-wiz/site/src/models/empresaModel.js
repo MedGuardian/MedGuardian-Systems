@@ -1,8 +1,7 @@
 var database = require("../database/config");
 
 function buscarPorId(id) {
-  var query = `select * from empresa where id = '${id}'`;
-
+  var query = `SELECT * FROM Empresa JOIN Endereco ON idEmpresa = fkEmpresa WHERE idEmpresa =${id};`;
   return database.executar(query);
 }
 

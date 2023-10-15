@@ -13,6 +13,7 @@
     <link rel="shortcut icon" href="../assets/images/LOGO.png" type="image/x-icon">
     <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
+    <link rel="stylesheet" href="../../assets/fonts/Poppins-Regular.ttf">
 
 </head>
 
@@ -163,7 +164,7 @@
       resposta.json().then(function(json){
         inputRazaoSocial.value=json.razao_social
         inputLogradouro.value = json.logradouro
-        inputEmail = json.email
+        inputEmail.value = json.email
         inputComplemento.value = json.complemento
         inputNumero.value = json.numero
         inputContato.value = json.ddd_telefone_1
@@ -272,3 +273,8 @@
         
     
 </script>
+<style>
+  .swal2-popup {
+    font-family: Poppins;
+  }
+</style>
