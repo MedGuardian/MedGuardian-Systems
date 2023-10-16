@@ -1,0 +1,285 @@
+*{
+  font-family: LeagueSpartan;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; 
+  background: #DAF3EA;
+}
+
+.header {
+  position: relative;
+  background-color: #f0f0f0;
+}
+
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.navbar img {
+  width: 100%; 
+}
+
+.saudacao {
+  position: absolute;
+  top: 0;
+  margin-left: 257px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+}
+
+.saudacao h1, p{
+  color: #FFF;
+
+  font-style: normal;
+  line-height: normal;
+}
+
+.saudacao h1{
+  font-size: 50px;
+  font-weight: 500;
+}
+
+.saudacao p{
+  font-size: 30px;
+  font-weight: 300;
+}
+
+.conteudoGerenciarConta{
+  position: relative;
+  margin-top: 5%;
+
+  display: flex;
+  flex-direction: column;
+  border-radius: 50px;
+  background: #D9D9D9;
+  box-shadow: 20px 20px 60px 0px #FAFAFA, -20px -20px 60px 0px #B8B8B8;
+  border-radius: 10px;
+  width: 100%;
+  color: #004D02;
+}
+
+.container{
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.conteudoGerenciarConta .container {
+  display: flex;
+  flex-direction: column;
+}
+
+.conteudoDadosEmpresaGerenciarConta{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 3%;
+}
+
+.assistenteInputsGerenciarconta{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.tituloConteudoDadosEmpresaGerenciarConta{
+  font-size: 30px;
+  text-align: center;
+  font-weight: 800;
+}
+
+.subtituloConteudoInternoGerenciarConta{
+  font-size: 25px;
+  font-weight: 400;
+  margin: 2% 0 5% 15%;
+}
+
+.subtituloConteudoInternoGerenciarConta2 span{
+  font-size: 25px;
+  font-weight: 400;
+}
+
+
+.conteudoEsquerda{
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+.conteudoDireita{
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+.inputsGerenciarConta{
+  display: flex;
+  flex-direction: column;
+}
+
+.inputsGerenciarConta span {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 1%;
+}
+
+.inputsGerenciarConta input {
+  width: 100%;
+  border: 0;
+  background-color: #CACACA;
+  border-radius: 10px;
+  box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.5);
+  margin-bottom: 7.5%;
+  font-family: LeagueSpartan;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 4px 5px;
+}
+
+.inputsNumeroComplemento{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#inputNumero{
+  width: 25%;
+}
+
+#inputComplemento {
+  width: 60%;
+}
+
+.tituloDadosPessoaisGerenciarConta {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 800;
+  margin: 5% 0;
+}
+
+#conteudoEsquerdaDadosPessoais {
+  margin-top: 3.6%;
+}
+
+.tituloAlterarSenha{
+  font-size: 25px;
+  font-weight: 600;
+  margin-bottom: 3%;
+}
+
+.botaoGerenciarConta{
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.botaoGerenciarConta button {
+  width: 25%;
+  border-radius: 15px;
+  background-color: #004D02;
+  border: 0;
+  box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.5);
+  color: white;
+  margin: 5% 0;
+  padding: 7px 0;
+  font-family: LeagueSpartan;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.menuFlutuante{
+  display: flex;
+  position: absolute;
+  z-index: 9;
+  background-color: #004D02;
+  color: white;
+  width: 250px;
+  left: 73.5%;
+  top: 8%;
+  border-radius: 10px;
+  font-family: LeagueSpartan;
+  font-weight: 600;
+}
+
+.conteudoMenuFlutuante{
+  width: 90%;
+  margin: auto;
+  margin-top: 10%;
+  display: flex;
+  flex-direction: column;
+}
+
+.conteudoSuperiorMenuFlutuante{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.informacoesMenuFlutuante{
+  display: flex;
+  flex-direction: column;
+}
+
+.informacoesSuperiorMenuFlutuante{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.nomeContaMenuFlutuante{
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.adminMenuFlutuante{
+  font-size: 18px;
+  font-weight: 400;
+  margin-left: 5%;
+}
+
+.emailMenuFlutuante{
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.userIconMenuFlutuante {
+  margin-right: 5%;
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  background-color: #92E3A9;
+}
+
+.conteudoInferiorMenuFlutuante{
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  margin-top: 15%;
+}
+
+.conteudoInferiorMenuFlutuante span {
+  margin-bottom: 7.5%;
+}
+
+.linhaMenuFlutuante{
+  height: 1px;
+  width: 100%;
+  background-color: white;
+  margin-bottom: 7.5%;
+}
+
+.back p{
+  color: black;
+  margin-top: 14.75%;
+  margin-left: 10%;
+  font-size: 20px;
+}

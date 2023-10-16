@@ -1,212 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="../js/funcoes.js"></script>
-    <link rel="stylesheet" href="gerenciarconta.css" />
-    <link rel="stylesheet" href="../PaginaInicial/paginaInicial.css" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <title>Gerenciar dados</title>
-  </head>
 
-  <body onload="validarSessao(), consumirDadosPorId()">
-    <div class="header">
-      <div class="container">
-        <div class="tituloHeader">
-          <span id="tituloHeader"
-            ><a href="../PaginaInicial/paginaInicial.html">MedGuardian</a></span
-          >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="../js/funcoes.js"></script>
+  <link rel="stylesheet" href="gerenciarconta.css" />
+  <link rel="stylesheet" href="../PaginaInicial/paginaInicial.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <title>Gerenciar dados</title>
+</head>
+
+<body onload="validarSessao(), consumirDadosPorId()">
+  <div class="header">
+    <div class="container">
+      <div class="navbar">
+        <img src="../assets/images/navbarCircle.svg">
+        <div class="saudacao">
+          <h1>Olá, </h1>
+          <p>Gerencie sua Conta e Altere seus Dados:</p>
         </div>
+      </div>
+    </div>
+  </div>
 
-        <div class="conteudoHeader">
-          <div class="saudacaoLogado" id="saudacaoLogado">
-            <span id="saudacao">Olá, </span>
-            <li id="iconmenuperfil" class="material-symbols-outlined">menu</li>
+  <div class="gerenciarConta">
+    <div class="back">
+      <a href="#"><p> < voltar</p></a>
+    </div>
+    <div class="container">
+      <div class="conteudoGerenciarConta">
+        <div class="container">
+          <div class="conteudoDadosEmpresaGerenciarConta">
+            <div class="assistenteTituloGerenciarConta">
+              <div class="tituloConteudoDadosEmpresaGerenciarConta">
+                <span>Dados Empresa</span>
+              </div>
+
+              <div class="subtituloConteudoInternoGerenciarConta">
+                <span class="users">Apenas usuários autorizados podem alterar esta sessão</span>
+              </div>
+            </div>
+
+            <div class="assistenteInputsGerenciarconta">
+              <div class="conteudoEsquerda">
+                <div class="inputsGerenciarConta">
+                  <span>E-mail empresa</span>
+                  <input id="emailEmpresa" type="text" />
+                </div>
+
+                <div class="inputsGerenciarConta">
+                  <span>Razão empresa</span>
+                  <input disabled id="razaoEmpresa" type="text" />
+                </div>
+
+                <div class="inputsGerenciarConta">
+                  <span>CNPJ</span>
+                  <input disabled id="cnpjEmpresa" type="text" />
+                </div>
+
+                <div class="inputsGerenciarConta">
+                  <span>Telefone</span>
+                  <input id="telEmpresa" type="text" />
+                </div>
+              </div>
+
+              <div class="conteudoDireita">
+                <div class="inputsGerenciarConta">
+                  <span>CEP</span>
+                  <input id="cepEmpresa" type="text" />
+                </div>
+
+                <div class="inputsGerenciarConta">
+                  <span>Logradouro</span>
+                  <input id="logEmpresa" type="text" />
+                </div>
+
+                <div class="inputsNumeroComplemento">
+                  <div class="inputsGerenciarConta" id="inputNumero">
+                    <span>Nº</span>
+                    <input id="numEmpresa" type="text" />
+                  </div>
+
+                  <div class="inputsGerenciarConta" id="inputComplemento">
+                    <span>Complemento</span>
+                    <input id="compEmpresa" type="text" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="conteudoDadosPessoaisGerenciarconta">
+            <div class="tituloDadosPessoaisGerenciarConta">
+              <span>Dados Pessoais</span>
+            </div>
+
+            <div class="assistenteInputsGerenciarconta">
+              <div class="conteudoEsquerda" id="conteudoEsquerdaDadosPessoais">
+                <div class="inputsGerenciarConta">
+                  <span>E-mail cadastrado</span>
+                  <input type="text" />
+                </div>
+
+                <div class="inputsGerenciarConta">
+                  <span>Nome completo</span>
+                  <input type="text" />
+                </div>
+
+                <div class="inputsGerenciarConta">
+                  <span>Telefone</span>
+                  <input type="text" />
+                </div>
+              </div>
+
+              <div class="conteudoDireita">
+                <div class="tituloAlterarSenha">
+                  <span>Alterar senha</span>
+                </div>
+                <div class="inputsGerenciarConta">
+                  <span>Senha atual</span>
+                  <input type="password" />
+                </div>
+
+                <div class="inputsGerenciarConta">
+                  <span>Nova senha</span>
+                  <input type="password" />
+                </div>
+                <div class="inputsGerenciarConta">
+                  <span>Confirmar senha</span>
+                  <input type="password" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="botaoGerenciarConta">
+            <button onclick="enviarAlteracaoDados()">Alterar dados</button>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</body>
+<script>
+  function consumirDadosPorId() {
+    var idEmpresa = sessionStorage.idEmpresa;
 
-    <div class="gerenciarConta">
-      <div class="container">
-        <div class="conteudoGerenciarConta">
-          <div class="container">
-            <div class="conteudoDadosEmpresaGerenciarConta">
-              <div class="assistenteTituloGerenciarConta">
-                <div class="tituloConteudoDadosEmpresaGerenciarConta">
-                  <span>Dados Empresa</span>
-                </div>
-
-                <div class="subtituloConteudoInternoGerenciarConta">
-                  <span
-                    >Apenas usuários autorizados podem alterar esta sessão</span
-                  >
-                </div>
-              </div>
-
-              <div class="assistenteInputsGerenciarconta">
-                <div class="conteudoEsquerda">
-                  <div class="inputsGerenciarConta">
-                    <span>E-mail empresa</span>
-                    <input id="emailEmpresa" type="text" />
-                  </div>
-
-                  <div class="inputsGerenciarConta">
-                    <span>Razão empresa</span>
-                    <input disabled id="razaoEmpresa" type="text" />
-                  </div>
-
-                  <div class="inputsGerenciarConta">
-                    <span>CNPJ</span>
-                    <input disabled id="cnpjEmpresa" type="text" />
-                  </div>
-
-                  <div class="inputsGerenciarConta">
-                    <span>Telefone</span>
-                    <input id="telEmpresa" type="text" />
-                  </div>
-                </div>
-
-                <div class="conteudoDireita">
-                  <div class="inputsGerenciarConta">
-                    <span>CEP</span>
-                    <input id="cepEmpresa" type="text" />
-                  </div>
-
-                  <div class="inputsGerenciarConta">
-                    <span>Logradouro</span>
-                    <input id="logEmpresa" type="text" />
-                  </div>
-
-                  <div class="inputsNumeroComplemento">
-                    <div class="inputsGerenciarConta" id="inputNumero">
-                      <span>Nº</span>
-                      <input id="numEmpresa" type="text" />
-                    </div>
-
-                    <div class="inputsGerenciarConta" id="inputComplemento">
-                      <span>Complemento</span>
-                      <input id="compEmpresa" type="text" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="conteudoDadosPessoaisGerenciarconta">
-              <div class="tituloDadosPessoaisGerenciarConta">
-                <span>Dados Pessoais</span>
-              </div>
-
-              <div class="assistenteInputsGerenciarconta">
-                <div
-                  class="conteudoEsquerda"
-                  id="conteudoEsquerdaDadosPessoais"
-                >
-                  <div class="inputsGerenciarConta">
-                    <span>E-mail cadastrado</span>
-                    <input type="text" />
-                  </div>
-
-                  <div class="inputsGerenciarConta">
-                    <span>Nome completo</span>
-                    <input type="text" />
-                  </div>
-
-                  <div class="inputsGerenciarConta">
-                    <span>Telefone</span>
-                    <input type="text" />
-                  </div>
-                </div>
-
-                <div class="conteudoDireita">
-                  <div class="tituloAlterarSenha">
-                    <span>Alterar senha</span>
-                  </div>
-                  <div class="inputsGerenciarConta">
-                    <span>Senha atual</span>
-                    <input type="password" />
-                  </div>
-
-                  <div class="inputsGerenciarConta">
-                    <span>Nova senha</span>
-                    <input type="password" />
-                  </div>
-                  <div class="inputsGerenciarConta">
-                    <span>Confirmar senha</span>
-                    <input type="password" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="botaoGerenciarConta">
-              <button onclick="enviarAlteracaoDados()">Alterar dados</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </body>
-  <script>
-    function consumirDadosPorId() {
-      var idEmpresa = sessionStorage.idEmpresa;
-
-      fetch(`/empresas/buscar/${idEmpresa}`, { cache: "no-store" })
-        .then(function (response) {
-          if (response.ok) {
-            response.json().then(function (resposta) {
-              console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-              for (i = 0; i < resposta.length; i++) {
-                var dados = resposta[i];
-                emailEmpresa.value = dados.emailEmpresa;
-                razaoEmpresa.value = dados.razaoSocial;
-                cnpjEmpresa.value = dados.cnpjEmpresa;
-                telEmpresa.value = dados.contatoEmpresa;
-                cepEmpresa.value = dados.cep;
-                logEmpresa.value = dados.logradouro;
-                numEmpresa.value = dados.numeroEmpresa;
-                compEmpresa.value = dados.complementoEmpresa;
-              }
-            });
-          } else {
-            console.error("Nenhum dado encontrado ou erro na API");
-          }
-        })
-        .catch(function (error) {
-          console.error(`${error.message}`);
-        });
-    }
-
-    function enviarAlteracaoDados() {
-      Swal.fire({
-        confirmButtonColor: "#004D02",
-        denyButtonColor: "#b81414",
-        title: "Deseja atualizar os dados?",
-        showDenyButton: true,
-        showCancelButton: false,
-        confirmButtonText: "Sim",
-        denyButtonText: `Não`,
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          Swal.fire("Alterações salvas!", "", "success");
-          alterarDados();
-        } else if (result.isDenied) {
-          Swal.fire("Alterações canceladas", "", "info");
+    fetch(`/empresas/buscar/${idEmpresa}`, { cache: "no-store" })
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            for (i = 0; i < resposta.length; i++) {
+              var dados = resposta[i];
+              emailEmpresa.value = dados.emailEmpresa;
+              razaoEmpresa.value = dados.razaoSocial;
+              cnpjEmpresa.value = dados.cnpjEmpresa;
+              telEmpresa.value = dados.contatoEmpresa;
+              cepEmpresa.value = dados.cep;
+              logEmpresa.value = dados.logradouro;
+              numEmpresa.value = dados.numeroEmpresa;
+              compEmpresa.value = dados.complementoEmpresa;
+            }
+          });
+        } else {
+          console.error("Nenhum dado encontrado ou erro na API");
         }
+      })
+      .catch(function (error) {
+        console.error(`${error.message}`);
       });
-    }
+  }
 
-    function alterarDados() {
-      console.log("AAAAI MLK DOIDO");
-      
-    }
-  </script>
-  <style>
-    .swal2-popup {
-      font-family: Poppins;
-    }
-  </style>
+  function enviarAlteracaoDados() {
+    Swal.fire({
+      confirmButtonColor: "#004D02",
+      denyButtonColor: "#b81414",
+      title: "Deseja atualizar os dados?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Sim",
+      denyButtonText: `Não`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire("Alterações salvas!", "", "success");
+        alterarDados();
+      } else if (result.isDenied) {
+        Swal.fire("Alterações canceladas", "", "info");
+      }
+    });
+  }
+
+  function alterarDados() {
+    console.log("Deu certo");
+
+  }
+</script>
+<style>
+  .swal2-popup {
+    font-family: LeagueSpartan;
+  }
+</style>
+
 </html>
