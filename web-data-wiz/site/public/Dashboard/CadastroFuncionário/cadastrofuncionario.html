@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="../js/funcoes.js"></script>
+  <link rel="stylesheet" href="cadastrofuncionario.css" />
+  <link rel="stylesheet" href="../../PaginaInicial/paginaInicial.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <title>Cadastrar Funcionário</title>
+</head>
+
+<body onload="validarSessao()">
+  <div class="header">
+    <div class="container">
+      <div class="navbar">
+        <img src="../../assets/images/navbarCircle.svg">
+        <div class="saudacao">
+          <h1>Olá, </h1>
+          <p>Cadastre um Novo Funcionário</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gerenciarConta">
+    <div class="back">
+      <a href="#"><p> < voltar</p></a>
+    </div>
+    <div class="container">
+      <div class="conteudoGerenciarConta">
+        <div class="container">
+          <div class="conteudoDadosEmpresaGerenciarConta">
+            <div class="assistenteTituloGerenciarConta">
+              <div class="tituloConteudoDadosEmpresaGerenciarConta">
+                <span>Cadastro de Funcionários</span>
+              </div>
+
+              <div class="subtituloConteudoInternoGerenciarConta">
+                <span>Informe os  seguintes dados para cadastra-lo:</span>
+              </div>
+            </div>
+
+            <div class="assistenteInputsGerenciarconta">
+              <div class="conteudoEsquerda">
+                <div class="inputsGerenciarConta">
+                  <span>Nome Completo</span>
+                  <input id="nomeFuncionario" type="text" />
+                </div>
+
+                <div class="inputsGerenciarConta">
+                  <span>E-mail</span>
+                  <input id="emailFuncionario" type="text" />
+                </div>
+              </div>
+
+              <div class="conteudoDireita">
+                <div class="inputsGerenciarConta">
+                    <span>Senha</span>
+                    <input id="senha" type="text" />
+                  </div>
+  
+                  <div class="inputsGerenciarConta">
+                    <span>Confirmar Senha</span>
+                    <input id="confirmarSenha" type="text" />
+                  </div>
+                </div>
+              </div>
+              <div class="botaoCriarFunc">
+                <button onclick="enviarCadastro()">Cadastrar</button>
+              </div>
+            </div>
+          </div>
+        </body>
+
+    <script>
+        function enviarCadastro() {
+            Swal.fire({
+              confirmButtonColor: "#004D02",
+              denyButtonColor: "#b81414",
+              title: "Deseja cadastrar o Funcionário?",
+              showDenyButton: true,
+              showCancelButton: false,
+              confirmButtonText: "Sim",
+              denyButtonText: `Não`,
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                Swal.fire("Funcionário cadastrado!", "", "success");
+                alterarDados();
+              } else if (result.isDenied) {
+                Swal.fire("Criação cancelada", "", "info");
+              }
+            });
+          }
+        
+          function alterarDados() {
+            console.log("Deu certo");
+        
+          }
+    </script>
