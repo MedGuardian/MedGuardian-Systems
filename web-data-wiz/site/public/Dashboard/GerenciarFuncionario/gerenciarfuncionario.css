@@ -1,0 +1,109 @@
+*{
+    font-family: League Spartan;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; 
+    background: #DAF3EA;
+  }
+  
+.header {
+    position: relative;
+    background-color: #f0f0f0;
+}
+  
+  .container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+  }
+  
+  .navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
+  .navbar img {
+    width: 100%; 
+  }
+  
+  .saudacao {
+    position: absolute;
+    top: 0;
+    margin-left: 257px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+}
+
+  .saudacao h1, p{
+    color: #FFF;
+
+    font-style: normal;
+    line-height: normal;
+  }
+
+  .saudacao h1{
+    font-size: 50px;
+    font-weight: 500;
+}
+  
+  .saudacao p{
+    font-size: 30px;
+    font-weight: 300;
+}
+
+.gerenciador{
+    width: 1200px;
+    height: 1081px;
+    top: 50%;
+    left: 6%;
+    flex-shrink: 0;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+
+    border-radius: 50px;
+    background: #D9D9D9;
+    box-shadow: 20px 20px 60px 0px #FAFAFA, -20px -20px 60px 0px #B8B8B8;
+}
+
+.gerenciador .empresa, .pessoal{
+    color: #004D02;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.gerenciador .sectionUser, .youEdit{
+    color: #004D02;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.gerenciador p{
+    color: #004D02;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.gerenciador input {
+
+    width: 428px;
+    height: 30.027px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 9px;
+    background: #CACACA;
+    box-shadow: 0px 6px 10px 0px rgba(0, 0, 0, 0.40);
+}
