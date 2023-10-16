@@ -100,7 +100,8 @@ body {
 .subtituloConteudoInternoGerenciarConta{
     font-size: 25px;
     font-weight: 400;
-    margin: 2% 0;
+    margin: 2% 0 5% 15%;
+    
 }
 
 .conteudoEsquerda{
