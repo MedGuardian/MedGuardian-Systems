@@ -3,12 +3,12 @@ CREATE DATABASE medGuardian;
 USE medGuardian;
 
 CREATE TABLE IF NOT EXISTS empresa (
-  idEmpresa INT NOT NULL,
-  nomeEmpresa VARCHAR(45) NOT NULL,
+  idEmpresa INT AUTO_INCREMENT NOT NULL,
   razaoSocial VARCHAR(45) NOT NULL,
   cnpjEmpresa VARCHAR(18) NOT NULL,
   emailEmpresa VARCHAR(45) NOT NULL,
   contatoEmpresa VARCHAR(45) NOT NULL,
+  senhaEmpresa VARCHAR(255) NOT NULL,
   PRIMARY KEY (idEmpresa));
 
 CREATE TABLE IF NOT EXISTS endereco (
@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS funcionario (
   emailFuncionario VARCHAR(45) NOT NULL,
   senhaFuncionario VARCHAR(45) NOT NULL,
   fkAdmin INT NULL,
+  fkEmpresaAdmin INT NULL,
+  CONSTRAINT fk_funcionario_empresa_admin FOREIGN KEY (fkEmpresaAdmin) REFERENCES empresa(idEmpresa),
   CONSTRAINT fk_funcionario_admin FOREIGN KEY (fkAdmin) REFERENCES funcionario (idFuncionario),
   PRIMARY KEY (idFuncionario),
   CONSTRAINT fk_Funcionario_Empresa1
@@ -76,66 +78,6 @@ CREATE TABLE IF NOT EXISTS registro (
   CONSTRAINT fk_registro_Componente1
     FOREIGN KEY (fkComponente)
     REFERENCES Componente (idComponente));
-    
-    -- Empresa 1
-INSERT INTO Empresa (idEmpresa, nomeEmpresa, razaoSocial, cnpjEmpresa, emailEmpresa, contatoEmpresa)
-VALUES (1, 'Empresa A', 'Razao Social A', '12345678901', 'empresaA@email.com', 'Contato A');
-
--- Empresa 2
-INSERT INTO Empresa (idEmpresa, nomeEmpresa, razaoSocial, cnpjEmpresa, emailEmpresa, contatoEmpresa)
-VALUES (2, 'Empresa B', 'Razao Social B', '23456789012', 'empresaB@email.com', 'Contato B');
-
--- Empresa 3
-INSERT INTO Empresa (idEmpresa, nomeEmpresa, razaoSocial, cnpjEmpresa, emailEmpresa, contatoEmpresa)
-VALUES (3, 'Empresa C', 'Razao Social C', '34567890123', 'empresaC@email.com', 'Contato C');
-
--- Empresa 4
-INSERT INTO Empresa (idEmpresa, nomeEmpresa, razaoSocial, cnpjEmpresa, emailEmpresa, contatoEmpresa)
-VALUES (4, 'Empresa D', 'Razao Social D', '45678901234', 'empresaD@email.com', 'Contato D');
-
--- Empresa 5
-INSERT INTO Empresa (idEmpresa, nomeEmpresa, razaoSocial, cnpjEmpresa, emailEmpresa, contatoEmpresa)
-VALUES (5, 'Empresa E', 'Razao Social E', '56789012345', 'empresaE@email.com', 'Contato E');
-
--- Endereco 1 (pertencente à Empresa 1)
-INSERT INTO Endereco (cep, Logradouro, numeroEmpresa, complementoEmpresa, fkEmpresa)
-VALUES ('12345678', 'Rua A', 123, 'Apto 1', 1);
-
--- Endereco 2 (pertencente à Empresa 2)
-INSERT INTO Endereco (cep, Logradouro, numeroEmpresa, complementoEmpresa, fkEmpresa)
-VALUES ('23456789', 'Rua B', 456, 'Casa 2', 2);
-
--- Endereco 3 (pertencente à Empresa 3)
-INSERT INTO Endereco (cep, Logradouro, numeroEmpresa, complementoEmpresa, fkEmpresa)
-VALUES ('34567890', 'Rua C', 789, 'Sala 3', 3);
-
--- Endereco 4 (pertencente à Empresa 4)
-INSERT INTO Endereco (cep, Logradouro, numeroEmpresa, complementoEmpresa, fkEmpresa)
-VALUES ('45678901', 'Rua D', 101, 'Loja 4', 4);
-
--- Endereco 5 (pertencente à Empresa 5)
-INSERT INTO Endereco (cep, Logradouro, numeroEmpresa, complementoEmpresa, fkEmpresa)
-VALUES ('56789012', 'Rua E', 222, 'Apartamento 5', 5);
-
--- Funcionario 1 (trabalha na Empresa 1)
-INSERT INTO Funcionario (nomeFuncionario, fkEmpresa, emailFuncionario, senhaFuncionario)
-VALUES ('Funcionario 1', 1, 'funcionario1@email.com', 'senha1');
-
--- Funcionario 2 (trabalha na Empresa 2)
-INSERT INTO Funcionario (nomeFuncionario, fkEmpresa, emailFuncionario, senhaFuncionario)
-VALUES ('Funcionario 2', 2, 'funcionario2@email.com', 'senha2');
-
--- Funcionario 3 (trabalha na Empresa 3)
-INSERT INTO Funcionario (nomeFuncionario, fkEmpresa, emailFuncionario, senhaFuncionario)
-VALUES ('Funcionario 3', 3, 'funcionario3@email.com', 'senha3');
-
--- Funcionario 4 (trabalha na Empresa 4)
-INSERT INTO Funcionario (nomeFuncionario, fkEmpresa, emailFuncionario, senhaFuncionario)
-VALUES ('Funcionario 4', 4, 'funcionario4@email.com', 'senha4');
-
--- Funcionario 5 (trabalha na Empresa 5)
-INSERT INTO Funcionario (nomeFuncionario, fkEmpresa, emailFuncionario, senhaFuncionario)
-VALUES ('Funcionario 5', 5, 'funcionario5@email.com', 'senha5');
 
 SELECT * FROM empresa;
 SELECT * FROM endereco;

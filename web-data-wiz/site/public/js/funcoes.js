@@ -14,10 +14,13 @@ function validarSessao(){
     const msgSaudacao = document.getElementById("saudacao");
 
 
-    if (sessionStorage.LOGIN != null){
+    if (sessionStorage.idEmpresa != null || sessionStorage.idFuncionario != null){
         botaoLogin.style.display = "none";
         botaoCadastro.style.display = "none";
         divSaudacaoLogado.style.display = "flex";
-        msgSaudacao.innerHTML += "Lucas";
+        
+        var razaoSocial = sessionStorage.razaoSocial;
+        var primeiroNomeEmpresa = razaoSocial.split(' ')
+        msgSaudacao.innerHTML += primeiroNomeEmpresa[0];
     }
 }

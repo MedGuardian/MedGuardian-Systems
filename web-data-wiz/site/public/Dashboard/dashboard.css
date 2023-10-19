@@ -30,6 +30,7 @@ body{
     left: 25%;
     top: 5%;
     width: 50%;
+    cursor: pointer;
 }
 
 .headerDireitaTitulo{
