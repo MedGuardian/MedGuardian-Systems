@@ -49,19 +49,30 @@
             <div class="inputsEsquerda">
 
                 <div class="spanInput">
-                    <span>Razão social</span>
-                    <input type="text" id="inputRazaoSocial">
+                  <span>Email</span>
+                    <input type="text" id="inputEmail">
+                    
                 </div>
+                <div class="spanInput">
+                  <span >Senha</span>
+                  <input type="password" id="inputSenha">
+              </div>
+              <div class="spanInput">
+                <span >Confirmar Senha</span>
+                <input type="password" id="inputConfirmarSenha">
+              <div class="erroConfirmarSenha">
+                <span id="spanErroSenha"></span>
+              </div>
+            </div>
                 
                 <div class="spanInput">
                     <span>CNPJ</span>
-                    <input maxlength="18" onblur="
-                    validaCNPJ(this.value), cnpjApi(this.value)" type="text" id="inputCNPJ">
+                    <input maxlength="18" onblur="validaCNPJ(this.value), cnpjApi(this.value)" type="text" id="inputCNPJ">
                 </div>
                 
                 <div class="spanInput">
-                    <span>Email</span>
-                    <input type="text" id="inputEmail">
+                  <span>Razão social</span>
+                  <input type="text" id="inputRazaoSocial">
                 </div>
                 
                 <div class="spanInput">
@@ -91,10 +102,7 @@
                         <input type="text" id="inputComplementoMob">
                     </div>
     
-                    <div class="spanInput" id="divInputComplementoEndereco">
-                        <span>Senha</span>
-                        <input type="text" id="inputSenhaMob">
-                    </div>
+                    
 
                 </div>
 
@@ -129,11 +137,6 @@
                 <div class="spanInput" id="divInputNumeroEndereco">
                     <span>Nº</span>
                     <input type="text" id="inputNumero">
-                </div>
-
-                <div class="spanInput" id="divInputComplementoEndereco">
-                    <span>Senha</span>
-                    <input type="text" id="inputSenha">
                 </div>
 
             </div>
@@ -215,19 +218,46 @@
             return false;
           }
 
+          document.addEventListener("DOMContentLoaded", function () {
+            // ...
+            // Adicione o evento onkeyup ao campo inputConfirmarSenha
+            inputConfirmarSenha.addEventListener("keyup", verificarSenha);
+          });
+          
+          function verificarSenha() {
+            var senhaVar = inputSenha.value;
+            var confirmarSenhaVar = inputConfirmarSenha.value;
+            
+            if (senhaVar !== confirmarSenhaVar) {
+              spanErroSenha.innerHTML = "As senhas não coincidem.";
+            } else {
+              spanErroSenha.innerHTML = ""; // Limpar a mensagem de erro se as senhas coincidirem.
+            }
+          }
+          
           function cadastrar(){
             var razaoSocialVar = inputRazaoSocial.value;
             var cnpjVar = inputCNPJ.value;
             var emailVar = inputEmail.value;
             var contatoVar = inputContato.value;
+            var confirmarSenhaVar = inputConfirmarSenha.value;
             var senhaVar = inputSenha.value;
 
             if (
               emailVar == "" ||
-              senhaVar == ""
+              senhaVar == "" ||
+              confirmarSenhaVar == ""
             ) {
               return false;
             }
+
+
+            if (senhaVar != confirmarSenhaVar) {
+              spanErroSenha.innerHTML = "As senhas não coincidem.";
+              return false; 
+            }
+          
+
             // Enviando o valor da nova input
             fetch("/usuarios/cadastrar", {
               method: "POST",

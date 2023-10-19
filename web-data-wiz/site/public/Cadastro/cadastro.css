@@ -115,6 +115,13 @@ a{
     font-family: LeagueSpartan;
 }
 
+.erroConfirmarSenha{
+    width: 100%;
+    color: red;
+    font-size: 1vmax;
+    
+}
+
 @media only screen and (max-width: 320px) {
     .imgHosp {
         display: none;
