@@ -7,6 +7,7 @@ comandos para mysql - banco local - ambiente de desenvolvimento
 */
 
 
+
 CREATE DATABASE medGuard;
 USE medGuard;
 CREATE TABLE Empresa (
@@ -35,7 +36,7 @@ CREATE TABLE Funcionario (
   nomeFuncionario VARCHAR(45) NOT NULL,
   fkEmpresa INT NOT NULL,
   cpfFuncionario VARCHAR(45) NOT NULL,
-  loginFuncionario VARCHAR(45) NOT NULL,
+  emailFuncionario VARCHAR(45) NOT NULL,
   senhaFuncionario VARCHAR(45) NOT NULL,
   fkSupervisor INT NOT NULL,
   PRIMARY KEY (idFuncionario),

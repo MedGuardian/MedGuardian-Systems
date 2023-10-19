@@ -58,24 +58,29 @@
               <div class="conteudoDireita">
                 <div class="inputsGerenciarConta">
                     <span>Senha</span>
-                    <input id="senha" type="text" />
+                    <input id="senhaFuncionario" type="text" />
                   </div>
   
                   <div class="inputsGerenciarConta">
                     <span>Confirmar Senha</span>
-                    <input id="confirmarSenha" type="text" />
+                    <input id="confirmarSenha" type="text"/>
+                    <span id="senhaErrada"></span>
                   </div>
                 </div>
               </div>
               <div class="botaoCriarFunc">
-                <button onclick="enviarCadastro()">Cadastrar</button>
+                <button onclick="validarCadastro()">Cadastrar</button>
               </div>
             </div>
           </div>
         </body>
 
     <script>
-        function enviarCadastro() {
+        function validarCadastro() {
+          // pegando o valor das duas input
+          var senha = senhaFuncionario.value;
+          var confSenha = confirmarSenha.value;
+          // parte de falar se quer cadastrar mesmo ou não
             Swal.fire({
               confirmButtonColor: "#004D02",
               denyButtonColor: "#b81414",
@@ -85,18 +90,68 @@
               confirmButtonText: "Sim",
               denyButtonText: `Não`,
             }).then((result) => {
-              /* Read more about isConfirmed, isDenied below */
               if (result.isConfirmed) {
+                if(validaSenha(senha, confSenha)){
+                // se confirma ele valida se as duas são iguais
                 Swal.fire("Funcionário cadastrado!", "", "success");
-                alterarDados();
+                cadastrarFuncionario(senha);
+                }else{
+                  Swal.fire("As senhas são diferentes", "", "error")
+                }
               } else if (result.isDenied) {
                 Swal.fire("Criação cancelada", "", "info");
               }
             });
           }
         
-          function alterarDados() {
+          function cadastrarFuncionario(senha) {
             console.log("Deu certo");
-        
+              //Recupere o valor da nova input pelo nome do id
+              // Agora vá para o método fetch logo abaixo
+              var fkEmpresaVar = sessionStorage.f
+              var nomeFuncVar = nomeFuncionario.value;
+              var emailVar = emailFuncionario.value;
+              var senhaVar = senha;
+               // Enviando o valor da nova input
+
+              //senhaErrada.innerHTML = senhaVar!=confVar ? "As senhas são diferentes" : "";
+                fetch("/usuarios/cadastrarFuncionario", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  // crie um atributo que recebe o valor recuperado aqui
+                  // Agora vá para o arquivo routes/usuario.js
+                  nomeServer: nomeFuncVar,
+                  emailServer: emailVar,
+                  senhaServer:senhaVar
+                }),
+              })
+                .then(function (resposta) {
+                  console.log("resposta: ", resposta);
+          
+                  if (resposta.ok) {
+                      console.log("certin")
+                  } else {
+                    throw "Houve um erro ao tentar realizar o cadastro!";
+                  }
+                })
+                .catch(function (resposta) {
+                  console.log(`#ERRO: ${resposta}`);
+                });
+          
+              return false;
+            }
+          
+            function validaSenha(senha,confSenha){
+              if(senha!=confSenha){
+                senhaErrada.innerHTML="As senhas são diferentes";
+                senhaErrada.style.color="red";
+                return false;
+              }
+              senhaErrada.innerHTML=""
+              return true;
           }
-    </script>
+  
+</script>
