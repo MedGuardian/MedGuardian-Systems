@@ -29,6 +29,8 @@ CREATE TABLE IF NOT EXISTS funcionario (
   fkEmpresa INT NOT NULL,
   emailFuncionario VARCHAR(45) NOT NULL,
   senhaFuncionario VARCHAR(45) NOT NULL,
+  fkAdmin INT NULL,
+  CONSTRAINT fk_funcionario_admin FOREIGN KEY (fkAdmin) REFERENCES funcionario (idFuncionario),
   PRIMARY KEY (idFuncionario),
   CONSTRAINT fk_Funcionario_Empresa1
     FOREIGN KEY (fkEmpresa)
