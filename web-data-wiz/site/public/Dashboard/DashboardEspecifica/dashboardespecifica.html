@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dashboardespecifica.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="dashboardespecifica.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="headerDashboardEspecifica">
+
+        <div class="spansHeader">
+            <span id="saudacaoDashboard">Olá, MedGuardian</span>
+            <span>Verifique sua máquina específica</span>
+        </div>
+
+    </div>
+
+
+    <div class="dashboardEspecifica">
+        <div class="conteudoDashboardEspecifica">
+
+            <div class="botaoVoltar" onclick="voltarDashboardGeral()">
+                <img src="../../assets/images/voltar.png" alt="">
+                <!--<span>Voltar</span>-->
+            </div>
+
+            <div class="dashboardMaquina">
+                <div class="tituloDashboardMaquina">
+                    <span>Máquina 27</span>
+                </div>
+
+                <div class="cimaDashboardMaquina">
+                    <div class="componentesMaquina">
+                        <div class="tempoAtividadeMaquina">
+
+                            <div class="tituloTempoAtividade">
+                                <span>Tempo de atividade</span>
+                            </div>
+
+                            <div class="cronometroTempoAtividade">
+                                <div class="cronometro">
+                                    <span class="valorCronometro">00</span>
+                                    <span class="medidaCronometro">Dia</span>
+                                </div>
+
+                                <div class="cronometro">
+                                    <span class="valorCronometro">00</span>
+                                    <span class="medidaCronometro">Hora</span>
+                                </div>
+
+                                <div class="cronometro">
+                                    <span class="valorCronometro">00</span>
+                                    <span class="medidaCronometro">Min</span>
+                                </div>
+
+                                <div class="cronometro">
+                                    <span class="valorCronometro">00</span>
+                                    <span class="medidaCronometro">Seg</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="componentesColumn">
+                            <div class="componente">
+                                <div class="inputCheckboxComponente">
+                                    <input type="checkbox" checked="checked" name="componente" id="checkbox1">
+                                </div>
+                                <div class="spanComponente">
+                                    <span>CPU</span>
+                                </div>
+                                <div class="iconeComponente">
+                                    <svg width="20" height="20" viewBox="0 0 28 28" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
+                                            fill="#FF0000" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="componente">
+                                <div class="inputCheckboxComponente">
+                                    <input type="checkbox" name="componente" id="checkbox2">
+                                </div>
+                                <div class="spanComponente">
+                                    <span>Memória Ram</span>
+                                </div>
+                                <div class="iconeComponente">
+                                    <svg width="20" height="20" viewBox="0 0 28 28" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
+                                            fill="#FF0000" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="componente">
+                                <div class="inputCheckboxComponente">
+                                    <input type="checkbox" name="componente" id="checkbox3">
+                                </div>
+                                <div class="spanComponente">
+                                    <span>Memória Disco</span>
+                                </div>
+                                <div class="iconeComponente">
+                                    <svg width="20" height="20" viewBox="0 0 28 28" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
+                                            fill="#FF0000" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="componente">
+                                <div class="inputCheckboxComponente">
+                                    <input type="checkbox" name="componente" id="checkbox4">
+                                </div>
+                                <div class="spanComponente">
+                                    <span>Velocidade de rede</span>
+                                </div>
+                                <div class="iconeComponente">
+                                    <svg width="20" height="20" viewBox="0 0 28 28" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
+                                            fill="#FF0000" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="graficoSuperiorMaquina">
+                        <div class="conteudoEsquerdoGraficoSuperiorMaquina">
+                            <div class="tituloGraficoSuperiorMaquina">
+                                <span>Uso Atual de CPU</span>
+                            </div>
+
+                            <div class="legendaGraficoSuperiorMaquina">
+                                <div class="legenda">
+                                    <div class="circuloLegenda" id="circulo1"></div>
+                                    <span>Em uso</span>
+                                </div>
+
+                                <div class="legenda">
+                                    <div class="circuloLegenda" id="circulo2"></div>
+                                    <span>Disponível</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="conteudoDireitoGraficoSuperiorMaquina">
+                            <div class="grafico">
+                                <canvas id="graficoUso"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="graficoInferiorMaquina">
+                    <div class="graficoInferior">
+                        <canvas id="graficoDesempenho"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

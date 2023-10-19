@@ -1,159 +1,396 @@
-.header {
-    background-color: #04AF26;
+body{
+    font-family: LeagueSpartan;
+    margin: 0;
 }
 
-.header a {
+.headerElipse{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
     color: white;
 }
 
-.header button {
-    display: none;
+.conteudoHeaderElipse{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
 }
 
-#tituloHeaderDashboard{
-    font-size: 61px;
-    font-weight: 800;
-    opacity: 90%;
+.headerEsquerdaLogo{
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    background-color: #004D02;
+    width: 12%;
+    height: 100%;
+}
+
+.headerEsquerdaLogo img {
+    position: relative;
+    left: 25%;
+    top: 5%;
+    width: 50%;
+}
+
+.headerDireitaTitulo{
+    display: flex;
+    flex-direction: column;
+    background-image: url(../assets/images/navbarCircle.svg);
+    margin-left: 12%;
+    width: 88%;
+}
+
+.spansHeader{
+    display: flex;
+    flex-direction: column;
+    margin: 2.5% 0 2.5% 5%;
+}
+
+.headerDireitaTitulo span {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+#saudacaoDashboard{
+    font-size: 35px;
+    margin-bottom: 1%;
+}
+
+/* MENU LATERAL */
+
+.dashboard {
+    display: flex;
+    width: 100%;
 }
 
 .conteudoDashboard{
     display: flex;
+    flex-direction: row;
     width: 100%;
 }
 
-.menuLateral {
+.menuLateral{
     display: flex;
     flex-direction: column;
-    background-color: #04AF26;
-    width: 6%;
-    align-items: center;
-    justify-content: center;
-    transition: width 0.3s ease;
+    background-color: #004D02;
+    position: fixed;
+    height: 100%;
+    width: 12%;
 }
 
-.menuLateral:hover{
+.containerMenuLateral{
+    width: 88%;
+    margin: 0 12%;
+}
+
+.filtros {
+    display: flex;
+    flex-direction: column;
+}
+
+.boxFiltros {
+    display: flex;
+    flex-direction: column;
+}
+
+.botaoHome{
+    color: #C8C8C8;
+    margin-top: 10%;
+    cursor: pointer;
+}
+
+.botaoDashboard{
+    display: flex;
+    margin-top: 10%;
+    color: #FFFFFF;
+    background-color: #078204;
+    align-items: center;
+    border-radius: 5px 0 0 5px;
+}
+
+.botaoDashboard svg{
     width: 15%;
-    align-items: start;
-    justify-content: left;
-    .icones{
-        margin: 5% 0 5% 1%;
-        justify-content: left;
-        align-items: start;
-    }
-
-    .icones span {
-        display: block;
-    }
+    margin-right: 10%;
+    padding: 5% 0 5% 5%;
 }
 
-.menuLateral .logoMenuLateral {
+.botaoDashboard span {
+    padding: 5% 0;
+}
+
+.linha{
+    height: 1px;
+    width: 88%;
+    background-color: #E9ECEF;
+    margin: 15% 0 30% 0;
+}
+
+.botaoFiltros {
     display: flex;
+    color: #C8C8C8;
     align-items: center;
-    justify-content: center;
-    margin-top: 25%;
 }
 
-.menuLateral .logoMenuLateral img{
-    width: 50%;
+.botaoFiltros svg {
+    width: 15%;
+    margin-right: 10%;
 }
 
-.icones{
+.boxFiltros{
     display: flex;
     flex-direction: column;
-    margin: 75% 0;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+    background-color: #c8c8c8c6;
+    width: 88%;
+    margin-top: 10%;
+    border-radius: 7.5px;
 }
 
-.iconeMaquinas {
+.filtroRow{
     display: flex;
     flex-direction: row;
-    justify-content: center;
     align-items: center;
-    width: 100%;
-    margin-bottom: 13%;
+    padding: 10% 0;
+    padding-left: 2.5%;
 }
 
-.icones span {
-    display: none;
-    font-size: 15px;
-    font-family: LeagueSpartan;
-    color: white;
-    font-weight: 600;
-    margin-left: 2%;
+.filtroRow span {
+    padding-left: 5%;
+}
+
+.filtroRow svg {
+    padding-left: 10%;
 }
 
 .botaoSair{
     display: flex;
-    justify-content: center;
+    color: #FFFFFF;
     align-items: center;
-    width: 100%;
-    height: 100%;
-    margin-bottom: 50%;
+    margin-top: 100%;
+    cursor: pointer;
 }
 
-.botaoSair button {
-    color: white;
-    font-family: LeagueSpartan;
-    background: none;
-    border: none;
-    font-size: 20px;
-}
-
-.blocosDashboard {
-   display: flex; 
-   width: 100%;
-}
-
-.conteudoBlocosDashboard{
-    display: flex;
-    flex-direction: column;
-    font-family: LeagueSpartan;
-    margin-top: 3%;
-    width: 100%;
-}
-
-.blocosDashboardCima{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-evenly;
-}
-
-.blocosDashboardBaixo{
-    margin-top: 3%;
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-evenly;
-}
-
-.blocosGraficos{
-    display: flex;
-    flex-direction: column;
+.botaoSair svg {
     width: 30%;
+    margin-right: 10%;
 }
 
-.tituloBlocosDashboard{
-    background-color: #92E3A9;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    border-radius: 10px 10px 0 0 ;
-}
-
-.tituloBlocosDashboard span {
+.botaoSair span {
     font-size: 20px;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    font-family: LeagueSpartan;
-    padding: 2% 0;
+}
+
+/* MÁQUINAS */
+
+.dashboardMaquinas{
+    margin-left: 12%;
+    width: 88%;
+    display: flex;
+    background-color: #DAF3EA;
+}
+
+.conteudoDashboardMaquinas{
+    display: flex;
+    flex-direction: column;
+    margin-top: 2.5%;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    width: 100%;
+}
+
+.tituloDashboardMaquinas{
+    font-size: 40px;
+    color: #0A8100;
     font-weight: 600;
 }
 
-.graficoBlocos{
-    background-color: #f2f2f2;
-    height: 220px;
-    border-radius: 0 0 10px 10px;
+.boxesIndicadoresMaquinas{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    margin: 2% 0;
+}
+
+.boxIndicador{
+    display: flex;
+    flex-direction: row;
+    background-color: #C8C8C8;
+    border-radius: 12px;
+    padding: 0.5% 0;
+    width: 15%;
+    box-shadow: -20px 20px 40px 0px rgba(0,0,0,0.75), 20px -20px 40px 0px rgba(255,255,255, 0.75);
+}
+
+.circuloBoxIndicador{
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border: 1px solid black;
+    margin-top: 5%;
+    margin-left: 5%;
+}
+
+.tooltipIndicador{
+    display: none;
+    position: relative;
+    left: 90%;
+    top: 5%;
+}
+
+.spanBoxIndicador{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 200;
+}
+
+
+#spanBaixoBoxIndicador{
+    margin-top: 12%;
+    padding-bottom: 2%;
+    font-size: 25px;
+    font-weight: 400;
+}
+
+#boxTodasMaquinas{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 200;
+}
+
+#boxTodasMaquinas #spanBaixoBoxIndicador {
+    margin-top: 5%;
+}
+
+#boxIdeal {
+    background-color: #9F9F9F;
+}
+
+#boxAlerta{
+    background-color: #EE9663;
+}
+
+#boxCritico{
+    background-color: #FC8374;
+}
+
+#boxIdeal .circuloBoxIndicador{
+    background-color: #DCDCDC;
+}
+
+#boxAlerta .circuloBoxIndicador{
+    background-color: #F16A1B;
+}
+
+#boxCritico .circuloBoxIndicador{
+    background-color: #C03221;
+}
+
+.tituloDashboards{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin: 1% 0;
+}
+
+.auxiliarTituloDashboards{
+    background-color: #057D1D;
+    border-radius: 20px;
+    text-align: center;
+    width: 100%;
+    color: white;
+    font-size: 25px;
+    padding: 1% 0;
+    font-weight: 400;
+    letter-spacing: 5px;
+}
+
+.spanSelecionarMaquina{
+    margin: 1% 0;
+    color: black;
+    font-size: 22px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.maquinasCadastradas{
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    margin: 1% 0;
+}
+
+.boxMaquinaCadastrada{
+    background-color: #FC8374;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 1%;
+    width: 17.5%;
+}
+
+.spanNomeSO{
+    display: flex;
+    flex-direction: column;
+}
+
+.spanNomeSO span {
+    font-weight: 600;
+    margin-bottom: 3%;
+}
+
+#spanNome {
+    font-weight: 400;
+}
+
+#spanSO {
+    font-weight: 400;
+}
+
+.iconeAlertasMaquinaCadastrada{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.icone {
+    margin-right: 15%;
+}
+
+.alertaMaquinaCadastrada{
+    width: 100%;
+    margin-top: -20%;
+}
+
+.spanAlerta{
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.alertas{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.alertas svg {
+    margin-right: 10%;
+}
+
+.localMaquinaCadastrada{
+    display: flex;
+    flex-direction: row;
+    margin: 1.5% 0;
+    font-weight: 600;
+    font-size: 18px;
+    align-items: center;
+}
+
+#localMaquinaCadastrada{
+    font-size: 15px;
+    font-weight: 400;
+    margin-left: 2%;
 }

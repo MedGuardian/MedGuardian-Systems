@@ -34,6 +34,17 @@ public class testeProjeto {
         }
 
         do {
+//            System.out.println(looca.getGrupoDeJanelas().getJanelasVisiveis());
+//            String nomeApp = "";
+//            for(int i = 0; i < looca.getGrupoDeJanelas().getJanelasVisiveis().size(); i++){
+//                if(!looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().isEmpty()){
+//                    if(looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().contains("WhatsApp")){
+//                        nomeApp = "Whatsapp";
+//                    }
+//                }
+//            }
+//            System.out.println(nomeApp);
+
             System.out.println("Digite o email: ");
             Scanner leitorEmail = new Scanner(System.in);
             String email = leitorEmail.nextLine();

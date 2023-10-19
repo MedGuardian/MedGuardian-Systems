@@ -1,0 +1,268 @@
+@font-face {
+    font-family: LeagueSpartan;
+    src: url(../../assets/fonts/LeagueSpartan-VariableFont_wght.ttf);
+}
+
+body{
+    font-family: LeagueSpartan;
+    background-color: #DAF3EA;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+*{
+    font-family: LeagueSpartan;
+}
+
+.headerDashboardEspecifica{
+    display: flex;
+    flex-direction: column;
+    background-image: url(../../assets/images/navbarCircle.svg);
+    width: 100%;
+}
+
+.spansHeader{
+    display: flex;
+    flex-direction: column;
+    color: white;
+    margin-left: 17%;
+    font-weight: 600;
+    margin: 2% 0 3% 16%;
+}
+
+#saudacaoDashboard{
+    font-size: 35px;
+    margin-bottom: 1%;
+}
+
+.botaoVoltar{
+    margin: 1% 0;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    width: 100%;
+    align-items: center;
+}
+
+.botaoVoltar span {
+    font-size: 30px;
+}
+
+.botaoVoltar img {
+    margin-top: 1%;
+    margin-left: 5%;
+    height: 30px;
+    width: 30px;
+}
+
+.dashboardEspecifica{
+    display: flex;
+    width: 100%;
+}
+
+.conteudoDashboardEspecifica{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.dashboardMaquina{
+    display: flex;
+    flex-direction: column;
+    margin-top: 1%;
+    width: 80%;
+    margin: auto;
+    background-color: #D9D9D9;
+    padding: 2% 3%;
+    border-radius: 15px;
+}
+
+.tituloDashboardMaquina{
+    font-size: 30px;
+    font-weight: 600;
+    margin-left: 2%;
+}
+
+.cimaDashboardMaquina{
+    display: flex;
+    flex-direction: row;
+    margin-top: 2%;
+    justify-content: space-between;
+}
+
+.componentesMaquina{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+.tempoAtividadeMaquina{
+    display: flex;
+    flex-direction: column;
+}
+
+.tituloTempoAtividade{
+    text-align: center;
+    font-size: 22px;
+    font-weight: 200;
+}
+
+.cronometroTempoAtividade{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.cronometro{
+    display: flex;
+    flex-direction: column;
+    font-weight: 200;
+    margin-top: 5%;
+    justify-content: center;
+    align-items: center;
+}
+
+.cronometro span{
+    margin-bottom: 25%;
+}
+
+.valorCronometro{
+    color: #017404;
+    font-size: 25px;
+}
+
+.medidaCronometro{
+    font-size: 18px;
+}
+
+.componentesColumn{
+    display: flex;
+    flex-direction: column;
+    margin-top: 15%;
+}
+
+.componente{
+    display: flex;
+    flex-direction: row;
+    background-color: #838383;
+    margin-bottom: 5%;
+    align-items: center;
+    padding: 2% 3%;
+    color: white;
+    font-weight: 400;
+    border-radius: 10px;
+    width: 100%;
+    font-size: 20px;
+}
+
+
+.spanComponente{
+    margin-left: 2%;
+    width: 60%;
+}
+
+.iconeComponente {
+    display: flex;
+    width: 40%;
+    justify-content: flex-end;
+}
+
+.iconeComponente svg{
+    margin-right: 10%;
+}
+
+.inputCheckboxComponente input{
+    height: 20px;
+    width: 25px;
+}
+
+.graficoSuperiorMaquina{
+    background-color: #838383;
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    border-radius: 15px;
+}
+  
+.conteudoEsquerdoGraficoSuperiorMaquina{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+    margin-top: 7.5%;
+}
+
+.tituloGraficoSuperiorMaquina{
+    font-size: 25px;
+    font-weight: 200;
+    color: white;
+}
+
+.legendaGraficoSuperiorMaquina{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: flex-start;
+    margin-top: 25%;
+}
+
+.legenda {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10%;
+    margin-left: 20%;
+}
+
+.circuloLegenda{
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+}
+
+.legenda span {
+    color: white;
+    font-size: 25px;
+    font-weight: 200;
+    margin-left: 5%;
+}
+
+#circulo1 {
+    background-color: #004D02;
+}
+
+#circulo2{
+    background-color: #37D43C;
+}
+
+.conteudoDireitoGraficoSuperiorMaquina{
+    width: 50%;
+    display: flex;
+    height: 80%;
+    margin: auto;
+    justify-content: center;
+    margin-right: 10%;
+}
+
+.graficoInferiorMaquina{
+    display: flex;
+    width: 100%;
+    height: 400px;
+    margin: auto;
+    background-color: #838383;
+    border-radius: 15px;
+    margin-top: 2.5%;
+}
+
+.graficoInferior {
+    width: 90%;
+    margin: auto;
+    height: 350px;
+}
+
+.graficoInferior canvas {
+    background-color: white;
+    border-radius: 15px;
+}
