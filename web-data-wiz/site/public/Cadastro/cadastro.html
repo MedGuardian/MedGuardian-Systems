@@ -47,12 +47,8 @@
 
 
             <div class="inputsEsquerda">
+              
 
-                <div class="spanInput">
-                  <span>Email</span>
-                    <input type="text" id="inputEmail">
-                    
-                </div>
                 <div class="spanInput">
                   <span >Senha</span>
                   <input type="password" id="inputSenha">
@@ -66,9 +62,11 @@
             </div>
                 
                 <div class="spanInput">
-                    <span>CNPJ</span>
-                    <input maxlength="18" onblur="validaCNPJ(this.value), cnpjApi(this.value)" type="text" id="inputCNPJ">
+                  <span>Email</span>
+                    <input type="text" id="inputEmail">
+                    
                 </div>
+                
                 
                 <div class="spanInput">
                   <span>Razão social</span>
@@ -234,7 +232,7 @@
               spanErroSenha.innerHTML = ""; // Limpar a mensagem de erro se as senhas coincidirem.
             }
           }
-          
+
           function cadastrar(){
             var razaoSocialVar = inputRazaoSocial.value;
             var cnpjVar = inputCNPJ.value;
