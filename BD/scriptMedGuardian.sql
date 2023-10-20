@@ -1,6 +1,6 @@
--- DROP DATABASE medGuardian;
-CREATE DATABASE medGuardian;
-USE medGuardian;
+-- DROP DATABASE medguardian;
+CREATE DATABASE medguardian;
+USE medguardian;
 
 CREATE TABLE IF NOT EXISTS empresa (
   idEmpresa INT AUTO_INCREMENT NOT NULL,
@@ -88,7 +88,12 @@ SELECT * FROM funcionario;
 SELECT * FROM computador;
 SELECT * FROM funcionariododia;
 SELECT * FROM componente;
+SELECT * FROM especificacao;
 SELECT * FROM registro;
+
+select * from especificacao join computador
+	on fkComputador = idComputador
+		where idComputador = 1;
 
 
 
