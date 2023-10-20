@@ -27,8 +27,7 @@
 
             <div class="conteudoHeader">
                 <li class="liHeader"><a href="../index.html">Home</a></li>
-                <li class="liHeader"><a>Orçamento</a></li>
-                <li class="liHeader"><a>Fale-conosco</a></li>
+
 
                 <div class="botoesHeader">
                     <button id="botaoLogin" onclick="telaLogin()">Login</button>
@@ -47,7 +46,12 @@
 
 
             <div class="inputsEsquerda">
-              
+
+              <div class="spanInput">
+                <span >CNPJ</span>
+                <input id="inputCNPJ" onblur="cnpjApi()">
+            </div>
+
 
                 <div class="spanInput">
                   <span >Senha</span>
