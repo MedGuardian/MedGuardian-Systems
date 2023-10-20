@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login Empresa</title>
     <link rel="stylesheet" href="../PaginaInicial/paginaInicial.css">
     <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
@@ -117,6 +117,14 @@
         })
 
         return false;
+    }
+
+    function telaLogin(){
+        window.location.href = 'tipoLogin.html'
+    }
+    
+    function telaCadastro(){
+        window.location.href = '../Cadastro/cadastro.html'
     }
 
     window.addEventListener("keyup", capturarTecla)

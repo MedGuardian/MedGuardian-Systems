@@ -24,7 +24,17 @@ a{
     display: flex;
     flex-direction: column;
     width: 50%;
-    margin-top: 15%;
+}
+
+.divInformacao{
+    display: flex;
+    position: relative;
+}
+
+.divInformacao h1{
+    font-size: 30px;
+    color: #004D02;
+    font-weight: 700;
 }
 
 .inputsLogin {
