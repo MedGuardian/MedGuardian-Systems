@@ -29,10 +29,8 @@ CREATE TABLE IF NOT EXISTS funcionario (
   fkEmpresa INT NOT NULL,
   emailFuncionario VARCHAR(45) NOT NULL,
   senhaFuncionario VARCHAR(45) NOT NULL,
-  fkAdmin INT NULL,
-  fkEmpresaAdmin INT NULL,
-  CONSTRAINT fk_funcionario_empresa_admin FOREIGN KEY (fkEmpresaAdmin) REFERENCES empresa(idEmpresa),
-  CONSTRAINT fk_funcionario_admin FOREIGN KEY (fkAdmin) REFERENCES funcionario (idFuncionario),
+  tipoAcesso VARCHAR(45) NOT NULL,
+  CONSTRAINT chk_tipoAcesso CHECK (tipoAcesso IN ('Gerente', 'Supervisor', 'Analista', 'Estagiário')),
   PRIMARY KEY (idFuncionario),
   CONSTRAINT fk_Funcionario_Empresa1
     FOREIGN KEY (fkEmpresa)
@@ -58,26 +56,31 @@ CREATE TABLE IF NOT EXISTS funcionarioDoDia (
 CREATE TABLE IF NOT EXISTS componente (
   idComponente INT AUTO_INCREMENT NOT NULL,
   nomeComponente VARCHAR(45) NOT NULL,
-  fkComputador INT NOT NULL,
-  CONSTRAINT fk_computador_componente
-    FOREIGN KEY (fkComputador)
-    REFERENCES Computador (idComputador),
   PRIMARY KEY (idComponente));
+  
+CREATE TABLE IF NOT EXISTS especificacao(
+idEspecificacao INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+fkComputador INT NOT NULL,
+fkComponente INT NOT NULL,
+totalComponente DECIMAL(6,2) NULL,
+CONSTRAINT fk_computador_especificacao FOREIGN KEY (fkComputador)
+	REFERENCES computador(idComputador),
+CONSTRAINT fk_componente_especificacao FOREIGN KEY (fkComponente) 
+	REFERENCES componente(idComponente)
+);
 
 CREATE TABLE IF NOT EXISTS registro (
   idregistro INT AUTO_INCREMENT NOT NULL,
   dataHoraRegistro DATETIME NOT NULL,
   registro DECIMAL(6,2) NOT NULL,
   tipoCaptura VARCHAR(45) NULL,
-  fkComputador INT NOT NULL,
-  fkComponente INT NOT NULL,
-  PRIMARY KEY (idregistro),
-  CONSTRAINT fk_registro_computador1
-    FOREIGN KEY (fkComputador)
-    REFERENCES Computador (idComputador),
-  CONSTRAINT fk_registro_Componente1
-    FOREIGN KEY (fkComponente)
-    REFERENCES Componente (idComponente));
+	fkEspecificacao INT NOT NULL,
+  PRIMARY KEY (idregistro)
+);
+    
+    
+INSERT INTO empresa (razaoSocial, cnpjEmpresa, emailEmpresa, contatoEmpresa, senhaEmpresa) VALUES ('a', 1, 'lucasa@gmail.com', '21102002', '1');
+INSERT INTO funcionario (nomeFuncionario, fkEmpresa, emailFuncionario, senhaFuncionario, tipoAcesso) VALUES ('lucas', 1, 'lucas@gmail.com', '21102002', "Estagiário");
 
 SELECT * FROM empresa;
 SELECT * FROM endereco;

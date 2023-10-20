@@ -2,6 +2,10 @@ function voltarIndex(){
     window.location.href = '../index.html'
 }
 
+function sairDaDashboard(){
+    window.location.href = '../index.html'
+}
+
 const grafico1 = document.getElementById("grafico1")
 
 var maximo = 100;

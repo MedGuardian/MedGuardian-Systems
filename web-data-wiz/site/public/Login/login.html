@@ -96,6 +96,7 @@
                     console.log(JSON.stringify(json));
                     sessionStorage.idEmpresa = json.idEmpresa;
                     sessionStorage.razaoSocial = json.razaoSocial;
+                    sessionStorage.emailEmpresa = json.emailEmpresa;
                     setTimeout(function () {
                         window.location ="../Dashboard/dashboard.html";
                     }, 1000); // apenas para exibir o loading
@@ -117,5 +118,12 @@
 
         return false;
     }
+
+    window.addEventListener("keyup", capturarTecla)
+function capturarTecla(event) {
+      if (event.key === "Enter") {
+        entrar();
+      }
+}
 
 </script>
