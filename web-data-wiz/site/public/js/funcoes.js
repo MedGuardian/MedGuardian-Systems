@@ -1,10 +1,4 @@
-function telaLogin(){
-    window.location.href = '../Login/login.html'
-}
 
-function telaCadastro(){
-    window.location.href = '../Cadastro/cadastro.html'
-}
 
 function validarSessao(){
 
