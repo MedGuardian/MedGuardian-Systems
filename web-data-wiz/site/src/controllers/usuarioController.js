@@ -104,13 +104,38 @@ function atualizarEmpresa(req, res) {
             ).catch(
                 function (erro) {
                     console.log(erro);
-                    console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+                    console.log("\nHouve um erro ao atualizar os dados da empresa! Erro: ", erro.sqlMessage);
                     res.status(500).json(erro.sqlMessage);
                 }
             );
     }
 
 }
+
+function atualizarFuncionario(req, res) {
+    
+    var novaSenha = req.novaSenhaServer
+    var idFunc = req.params.idFunc; 
+ 
+         usuarioModel.atualizarFuncionario(novaSenha, idFunc)
+             .then(
+                 function (resultadoAutenticar) {
+                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
+                     console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
+ 
+                     if (resultadoAutenticar.length == 1) {
+                         console.log(resultadoAutenticar);
+                         res.json(resultadoAutenticar[0]);
+                    }
+                 }
+             ).catch(
+                 function (erro) {
+                     console.log(erro);
+                     console.log("\nHouve um erro ao atualizar os dados do funcionário! Erro: ", erro.sqlMessage);
+                     res.status(500).json(erro.sqlMessage);
+                 }
+             );
+ }
 
 
 function cadastrarFuncionario(req, res) {
@@ -232,5 +257,6 @@ module.exports = {
     cadastrarFuncionario,
     autenticarFuncionario,
     buscarFuncPorId,
-    atualizarEmpresa
+    atualizarEmpresa,
+    atualizarFuncionario
 }

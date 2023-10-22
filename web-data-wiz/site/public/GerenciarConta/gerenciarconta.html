@@ -26,7 +26,7 @@
 
   <div class="gerenciarConta">
     <div class="back">
-      <a href="#"><p> < voltar</p></a>
+      <a onclick="voltarPaginaAnterior()"><p> < voltar</p></a>
     </div>
     <div class="container">
       <div class="conteudoGerenciarConta">
@@ -165,7 +165,7 @@
               cnpjEmpresa.value = dados.cnpjEmpresa;
               telEmpresa.value = dados.contatoEmpresa;
               cepEmpresa.value = dados.cep;
-              logEmpresa.value = dados.Logradouro;
+              logEmpresa.value = dados.logradouro;
               numEmpresa.value = dados.numeroEmpresa;
               compEmpresa.value = dados.complementoEmpresa;
             }
@@ -178,7 +178,8 @@
         console.error(`${error.message}`);
       });
 
-      fetch(`/usuarios/buscar/${idFunc}`, { cache: "no-store" })
+      if(sessionStorage.idFuncionario != null){
+        fetch(`/usuarios/buscar/${idFunc}`, { cache: "no-store" })
       .then(function (response) {
         if (response.ok) {
           response.json().then(function (resposta) {
@@ -198,7 +199,7 @@
       .catch(function (error) {
         console.error(`${error.message}`);
       });
-
+      }
   }
 
 
@@ -223,14 +224,18 @@
   }
 
   function alterarDados() {
-    var idEmpresa = sessionStorage.fkEmpresa;
+    if(sessionStorage.idEmpresa){
+      var idEmpresa = sessionStorage.idEmpresa;
+    } else {
+      var idEmpresa = sessionStorage.fkEmpresa;
+    }
     emailVar = emailEmpresa.value;
-    telEmpresaVar = emailEmpresa.value;
-    cepEmpresaVar = emailEmpresa.value;
+    telEmpresaVar = telEmpresa.value;
+    cepEmpresaVar = cepEmpresa.value;
     logEmpresaVar = logEmpresa.value;
     numVar = numEmpresa.value;
     compVar = compEmpresa.value; 
-    idEmpresaVar = sessionStorage.fkEmpresa;
+    idEmpresaVar = idEmpresa;
     
     //senhaErrada.innerHTML = senhaVar!=confVar ? "As senhas são diferentes" : "";
           fetch(`/usuarios/atualizarEmpresa/:${idEmpresa}`, {
@@ -244,7 +249,7 @@
             emailServer:emailVar,
             telEmpresaServer:telEmpresaVar,
             cepServer: cepEmpresaVar,
-            logServer: logEmpresa,
+            logServer: logEmpresaVar,
             numServer:numVar,
             compServer:compVar,
             idEmpresaServer:idEmpresaVar
