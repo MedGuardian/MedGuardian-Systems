@@ -32,7 +32,7 @@
 
             <div class="dashboardMaquina">
                 <div class="tituloDashboardMaquina">
-                    <span>Máquina 27</span>
+                    <span>Você selecionou a</span> <span id="maquinaSelecionada">Máquina 27</span>
                 </div>
 
                 <div class="cimaDashboardMaquina">
@@ -93,17 +93,40 @@
                         </div>
                     </div>
                 </div>
-                <div class="graficoInferiorMaquina">
+
+                <div class="graficoInferiorGeral">
+
                     <div class="graficoInferior">
                         <canvas id="graficoDesempenho"></canvas>
                     </div>
 
-                    <div><span>CPU</span></div>
-                    <div><span>Disco</span></div>
-                    <div><span>RAM</span></div>
+                    <div class="graficoInferiorGeralLateral">
+                        <div class="porcentagemUtilizacao">
+                            <span>CPU</span>
+                            <div class="porcentagemUtilizacao2">
+                                <span id="utilizacaoCPU">43 <span>%</span></span>
+                                <span>% de Utilização</span>
+                            </div>
+                        </div>
+                        <div class="porcentagemUtilizacao">
+                            <span>Disco</span>
+                            <div class="porcentagemUtilizacao2">
+                                <span id="utilizacaoDisco">43 <span>%</span></span>
+                                <span>% de Utilização</span>
+                            </div>
+                        </div>
+                        <div class="porcentagemUtilizacao">
+                            <span>RAM</span>
+                            <div class="porcentagemUtilizacao2">
+                                <span id="utilizacaoRAM">43 <span>%</span></span>
+                                <span>% de Utilização</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
 </body>
 
 <script>
