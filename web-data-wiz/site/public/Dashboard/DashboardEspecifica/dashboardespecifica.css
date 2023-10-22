@@ -3,7 +3,7 @@
     src: url(../../assets/fonts/LeagueSpartan-VariableFont_wght.ttf);
 }
 
-body{
+body {
     font-family: LeagueSpartan;
     background-color: #DAF3EA;
     width: 100%;
@@ -11,18 +11,18 @@ body{
     margin: 0;
 }
 
-*{
+* {
     font-family: LeagueSpartan;
 }
 
-.headerDashboardEspecifica{
+.headerDashboardEspecifica {
     display: flex;
     flex-direction: column;
     background-image: url(../../assets/images/navbarCircle.svg);
     width: 100%;
 }
 
-.spansHeader{
+.spansHeader {
     display: flex;
     flex-direction: column;
     color: white;
@@ -31,12 +31,12 @@ body{
     margin: 2% 0 3% 16%;
 }
 
-#saudacaoDashboard{
+#saudacaoDashboard {
     font-size: 35px;
     margin-bottom: 1%;
 }
 
-.botaoVoltar{
+.botaoVoltar {
     margin: 1% 0;
     display: flex;
     flex-direction: row;
@@ -56,66 +56,70 @@ body{
     width: 30px;
 }
 
-.dashboardEspecifica{
+.dashboardEspecifica {
     display: flex;
     width: 100%;
+    background-color: #858585;
 }
 
-.conteudoDashboardEspecifica{
+.conteudoDashboardEspecifica {
     display: flex;
     width: 100%;
     flex-direction: column;
 }
 
-.dashboardMaquina{
+.dashboardMaquina {
     display: flex;
     flex-direction: column;
     margin-top: 1%;
     width: 80%;
     margin: auto;
-    background-color: #D9D9D9;
     padding: 2% 3%;
     border-radius: 15px;
 }
 
-.tituloDashboardMaquina{
+.tituloDashboardMaquina {
     font-size: 30px;
     font-weight: 600;
     margin-left: 2%;
 }
 
-.cimaDashboardMaquina{
+.cimaDashboardMaquina {
     display: flex;
-    flex-direction: row;
+    width: 100%;
     margin-top: 2%;
+    flex-direction: row;
+
+}
+
+.componentesMaquina {
+    display: flex;
     justify-content: space-between;
+    width: 100%;
 }
 
-.componentesMaquina{
+.tempoAtividadeMaquina {
     display: flex;
     flex-direction: column;
-    width: 30%;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #CFCFCF;
 }
 
-.tempoAtividadeMaquina{
-    display: flex;
-    flex-direction: column;
-}
-
-.tituloTempoAtividade{
+.tituloTempoAtividade {
     text-align: center;
     font-size: 22px;
     font-weight: 200;
 }
 
-.cronometroTempoAtividade{
+.cronometroTempoAtividade {
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-evenly;
 }
 
-.cronometro{
+.cronometro {
     display: flex;
     flex-direction: column;
     font-weight: 200;
@@ -124,26 +128,26 @@ body{
     align-items: center;
 }
 
-.cronometro span{
+.cronometro span {
     margin-bottom: 25%;
 }
 
-.valorCronometro{
+.valorCronometro {
     color: #017404;
     font-size: 25px;
 }
 
-.medidaCronometro{
+.medidaCronometro {
     font-size: 18px;
 }
 
-.componentesColumn{
+.componentesColumn {
     display: flex;
     flex-direction: column;
     margin-top: 15%;
 }
 
-.componente{
+.componente {
     display: flex;
     flex-direction: row;
     background-color: #838383;
@@ -157,96 +161,7 @@ body{
     font-size: 20px;
 }
 
-
-.spanComponente{
-    margin-left: 2%;
-    width: 60%;
-}
-
-.iconeComponente {
-    display: flex;
-    width: 40%;
-    justify-content: flex-end;
-}
-
-.iconeComponente svg{
-    margin-right: 10%;
-}
-
-.inputCheckboxComponente input{
-    height: 20px;
-    width: 25px;
-}
-
-.graficoSuperiorMaquina{
-    background-color: #838383;
-    width: 60%;
-    display: flex;
-    flex-direction: row;
-    border-radius: 15px;
-}
-  
-.conteudoEsquerdoGraficoSuperiorMaquina{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 40%;
-    margin-top: 7.5%;
-}
-
-.tituloGraficoSuperiorMaquina{
-    font-size: 25px;
-    font-weight: 200;
-    color: white;
-}
-
-.legendaGraficoSuperiorMaquina{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    justify-content: flex-start;
-    margin-top: 25%;
-}
-
-.legenda {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 10%;
-    margin-left: 20%;
-}
-
-.circuloLegenda{
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-}
-
-.legenda span {
-    color: white;
-    font-size: 25px;
-    font-weight: 200;
-    margin-left: 5%;
-}
-
-#circulo1 {
-    background-color: #004D02;
-}
-
-#circulo2{
-    background-color: #37D43C;
-}
-
-.conteudoDireitoGraficoSuperiorMaquina{
-    width: 50%;
-    display: flex;
-    height: 80%;
-    margin: auto;
-    justify-content: center;
-    margin-right: 10%;
-}
-
-.graficoInferiorMaquina{
+.graficoInferiorMaquina {
     display: flex;
     width: 100%;
     height: 400px;
@@ -265,4 +180,89 @@ body{
 .graficoInferior canvas {
     background-color: white;
     border-radius: 15px;
+}
+
+
+.medidor {
+
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #CFCFCF;
+}
+
+.medidor .speed-meter {
+    display: flex;
+    font-size: 10px;
+    align-items: center;
+    color: #000000;
+}
+
+.medidor span {
+    text-shadow: 2px 3px 0 #fff;
+    font-size: 8em;
+    color: #000000;
+}
+
+.medidor .unit {
+    text-shadow: 2px 3px 0 #fff;
+    color: #000000;
+    font-size: 2em;
+}
+
+.medidor .speed-meter>.speed {
+    margin-left: 16px;
+}
+
+.medidor .spinner {
+    margin-top: 8px;
+    border: 4px solid #45454572;
+    height: 32px;
+    width: 32px;
+    position: relative;
+    border-top-color: rgb(0, 96, 16);
+    border-radius: 50%;
+    animation: rotation 1s infinite linear;
+}
+
+
+@keyframes rotation {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+
+.InformacoesMaquina {
+    display: flex;
+    width: 50%;
+    padding: 5px;
+    flex-direction: column;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 200;
+    justify-content: space-around;
+    border-radius: 10px;
+    background-color: #CFCFCF;
+}
+
+.InformacoesMaquinaNomes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    border-radius: 5px;
+    padding: 2px;
+    text-align: center;
+    background-color: #718672;
+}
+
+.InformacoesMaquinaDados {
+    display: flex;
+    justify-content: space-evenly;
+    font-weight: 600;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 25px;
+    text-align: center;
+    background-color: #718672;
 }
