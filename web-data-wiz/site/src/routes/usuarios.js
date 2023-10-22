@@ -27,6 +27,9 @@ router.post("/atualizarEmpresa/:idEmpresa", function (req, res) {
     usuarioController.atualizarEmpresa(req, res);
 })
 
+router.post("/atualizarFuncionario/:idFunc", function (req, res) {
+    usuarioController.atualizarFuncionario(req, res);
+})
 
 
 module.exports = router;
