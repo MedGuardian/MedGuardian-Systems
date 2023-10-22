@@ -8,7 +8,7 @@ function validarSessao(){
     const msgSaudacao = document.getElementById("saudacao");
 
 
-    if (sessionStorage.idEmpresa != null || sessionStorage.idFuncionario != null){
+    if (sessionStorage.idEmpresa != null || sessionStorage.idFuncionario != null || sessionStorage.fkEmpresa){
         botaoLogin.style.display = "none";
         botaoCadastro.style.display = "none";
         divSaudacaoLogado.style.display = "flex";
@@ -51,7 +51,11 @@ function abrirDashboardMenuFlutuante(){
 }
 
 function abrirGerenciamentoMenuFlutuante(){
-    window.location.href = './Dashboard/GerenciarFuncionario/gerenciarfuncionario.html'
+    if(sessionStorage.idEmpresa==null && sessionStorage.cargo=="Analista"|| sessionStorage.cargo=="Estagiario"){
+        window.location.href = '/Dashboard/GerenciarFuncionario/gerenciarfuncionario.html'
+    }else if(sessionStorage.idEmpresa!=null || sessionStorage.cargo=="Gerente"|| sessionStorage.cargo=="Supervisor"){
+        window.location.href = '/GerenciarConta/gerenciarconta.html'
+    }
 }
 
 function fazerLogout(){

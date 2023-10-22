@@ -53,7 +53,7 @@
                     
 
                     <div class="botaoEntrar">
-                        <button onclick="entrar()">Entrar</button>
+                        <button onclick="logarUser()">Entrar</button>
                     </div>
                 </div>
                 
@@ -72,7 +72,7 @@
 
 </html>
 <script>
-    function entrar() {
+    function logarUser(){
 
         var emailVar = inputEmail.value;
         var senhaVar = inputSenha.value;
@@ -81,7 +81,7 @@
             return false;
         }
 
-        fetch("/usuarios/autenticar", {
+        fetch("/usuarios/autenticarFuncionario", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -97,12 +97,13 @@
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
-                    sessionStorage.idEmpresa = json.idEmpresa;
-                    sessionStorage.razaoSocial = json.razaoSocial;
-                    sessionStorage.emailEmpresa = json.emailEmpresa;
-                    setTimeout(function () {
-                        window.location = "../Dashboard/dashboard.html";
-                    }, 1000); // apenas para exibir o loading
+                    sessionStorage.fkEmpresa = json.fkEmpresa;
+                    sessionStorage.idFuncionario = json.idFuncionario;
+                    sessionStorage.cargo=json.tipoAcesso;
+
+                 setTimeout(function () {
+                window.location = "../Dashboard/dashboard.html";
+                }, 1000); 
 
                 });
 

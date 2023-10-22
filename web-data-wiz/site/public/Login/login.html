@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="login.css">
     <script src="login.js"></script>
     <script src="../js/funcoes.js"></script>
+    <script src="../Cadastro/cadastro.js"></script>
     <link rel="shortcut icon" href="../assets/images/LOGO.png" type="image/x-icon">
 </head>
 
@@ -44,7 +45,7 @@
                 <div class="conteudoEsquerda">
                     <div class="inputsLogin">
                         <span>CNPJ</span>
-                        <input type="text" id="inputCnpj">
+                        <input type="text" onblur="transformarCnpj(this.value)" id="inputCnpj">
                         <span>Senha</span>
                         <input type="password" id="inputSenha">
                         <span id="spanErro"></span>
@@ -70,8 +71,7 @@
 </html>
 <script>
     function entrar() {
-
-        var cnpjVar = inputCnpj.value;
+        var cnpjVar = inputCnpj.value.replace(/[^\d]/g, '');;
         var senhaVar = inputSenha.value;
 
         if (cnpjVar == "" || senhaVar == "") {
@@ -132,6 +132,16 @@ function capturarTecla(event) {
       if (event.key === "Enter") {
         entrar();
       }
+}
+
+function transformarCnpj(){
+    var cnpj = inputCnpj.value.replace(/[^\d]/g, '');
+
+            let cnpjFormatado = '';
+
+                cnpjFormatado = `${cnpj.substr(0, 2)}.${cnpj.substr(2, 3)}.${cnpj.substr(5, 3)}/${cnpj.substr(8, 4)}-${cnpj.substr(12)}`;
+
+            inputCnpj.value = cnpjFormatado;
 }
 
 </script>

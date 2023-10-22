@@ -11,7 +11,7 @@
   <title>Gerenciar dados</title>
 </head>
 
-<body onload="validarSessao(), consumirDadosPorId()">
+<body onload="consumirDadosPorId()">
   <div class="header">
     <div class="container">
       <div class="navbar">
@@ -100,17 +100,17 @@
               <div class="conteudoEsquerda" id="conteudoEsquerdaDadosPessoais">
                 <div class="inputsGerenciarConta">
                   <span>E-mail cadastrado</span>
-                  <input type="text" />
+                  <input type="text" id="emailFunc" />
                 </div>
 
                 <div class="inputsGerenciarConta">
                   <span>Nome completo</span>
-                  <input type="text" />
+                  <input type="text" id="nomeFunc" disabled/>
                 </div>
 
                 <div class="inputsGerenciarConta">
-                  <span>Telefone</span>
-                  <input type="text" />
+                  <span>Nível de acesso</span>
+                  <input type="text" id="nivelFunc" disabled/>
                 </div>
               </div>
 
@@ -120,16 +120,16 @@
                 </div>
                 <div class="inputsGerenciarConta">
                   <span>Senha atual</span>
-                  <input type="password" />
+                  <input type="password" id="senhaAtual" />
                 </div>
 
                 <div class="inputsGerenciarConta">
                   <span>Nova senha</span>
-                  <input type="password" />
+                  <input type="password" id="novaSenha"/>
                 </div>
                 <div class="inputsGerenciarConta">
                   <span>Confirmar senha</span>
-                  <input type="password" />
+                  <input type="password" id="confirmSenha" />
                 </div>
               </div>
             </div>
@@ -145,7 +145,13 @@
 </body>
 <script>
   function consumirDadosPorId() {
-    var idEmpresa = sessionStorage.idEmpresa;
+    var idFunc = sessionStorage.idFuncionario;
+    var idEmpresa;
+    if(sessionStorage.idEmpresa==null){
+      idEmpresa = sessionStorage.fkEmpresa;
+    }else{
+      idEmpresa = sessionStorage.idEmpresa;
+    }
 
     fetch(`/empresas/buscar/${idEmpresa}`, { cache: "no-store" })
       .then(function (response) {
@@ -159,7 +165,7 @@
               cnpjEmpresa.value = dados.cnpjEmpresa;
               telEmpresa.value = dados.contatoEmpresa;
               cepEmpresa.value = dados.cep;
-              logEmpresa.value = dados.logradouro;
+              logEmpresa.value = dados.Logradouro;
               numEmpresa.value = dados.numeroEmpresa;
               compEmpresa.value = dados.complementoEmpresa;
             }
@@ -171,7 +177,30 @@
       .catch(function (error) {
         console.error(`${error.message}`);
       });
+
+      fetch(`/usuarios/buscar/${idFunc}`, { cache: "no-store" })
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (resposta) {
+            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+            for (i = 0; i < resposta.length; i++) {
+              var dados = resposta[i];
+              emailFunc.value=dados.emailFuncionario;
+              nomeFunc.value = dados.nomeFuncionario;
+              nivelFunc.value = dados.tipoAcesso;
+              senhaAtual.value = dados.senhaFuncionario;
+            }
+          });
+        } else {
+          console.error("Nenhum dado encontrado ou erro na API");
+        }
+      })
+      .catch(function (error) {
+        console.error(`${error.message}`);
+      });
+
   }
+
 
   function enviarAlteracaoDados() {
     Swal.fire({
@@ -194,9 +223,48 @@
   }
 
   function alterarDados() {
-    console.log("Deu certo");
-
-  }
+    var idEmpresa = sessionStorage.fkEmpresa;
+    emailVar = emailEmpresa.value;
+    telEmpresaVar = emailEmpresa.value;
+    cepEmpresaVar = emailEmpresa.value;
+    logEmpresaVar = logEmpresa.value;
+    numVar = numEmpresa.value;
+    compVar = compEmpresa.value; 
+    idEmpresaVar = sessionStorage.fkEmpresa;
+    
+    //senhaErrada.innerHTML = senhaVar!=confVar ? "As senhas são diferentes" : "";
+          fetch(`/usuarios/atualizarEmpresa/:${idEmpresa}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            // crie um atributo que recebe o valor recuperado aqui
+            // Agora vá para o arquivo routes/usuario.js
+            emailServer:emailVar,
+            telEmpresaServer:telEmpresaVar,
+            cepServer: cepEmpresaVar,
+            logServer: logEmpresa,
+            numServer:numVar,
+            compServer:compVar,
+            idEmpresaServer:idEmpresaVar
+          }),
+        })
+          .then(function (resposta) {
+            console.log("resposta: ", resposta);
+            if (resposta.ok) {
+              console.log("certin")
+            } else {
+              throw "Houve um erro ao tentar realizar o cadastro!";
+            }
+          })
+          .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+          });
+    
+        return false;
+      }
+    
 </script>
 <style>
   .swal2-popup {

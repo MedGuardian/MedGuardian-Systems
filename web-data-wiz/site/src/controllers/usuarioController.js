@@ -1,4 +1,15 @@
 var usuarioModel = require("../models/usuarioModel");
+
+
+function buscarFuncPorId(req, res) {
+    var idFuncionario = req.params.idFunc; 
+        usuarioModel.listarFuncionario(idFuncionario).then((resultado) => {
+          res.status(200).json(resultado);
+        });
+      };
+
+
+
 function autenticar(req, res) {
     var cnpj = req.body.cnpjServer;
     var senha = req.body.senhaServer;
@@ -31,10 +42,83 @@ function autenticar(req, res) {
 
 }
 
+function autenticarFuncionario(req, res) {
+    var email = req.body.emailServer;
+    var senha = req.body.senhaServer;
+
+    if (email == undefined) {
+        res.status(400).send("Seu email está undefined!");
+    } else if (senha == undefined) {
+        res.status(400).send("Sua senha está indefinida!");
+    } else {
+
+        usuarioModel.autenticarFuncionario(email, senha)
+            .then(
+                function (resultadoAutenticar) {
+                    console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
+                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
+
+                    if (resultadoAutenticar.length == 1) {
+                        console.log(resultadoAutenticar);
+                        res.json(resultadoAutenticar[0]);
+                   }
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+
+}
+
+function atualizarEmpresa(req, res) {
+    
+   var email = req.body.emailServer;
+   var tel = req.body.telEmpresaServer;
+   var cep = req.body.cepServer;
+   var log = req.body.logServer;
+   var num = req.body.numServer;
+   var comp = req.body.compServer;
+   var idEmpresa = req.body.idEmpresaServer;
+
+    if (email == undefined) {
+        res.status(400).send("Seu email está undefined!");
+    } else if (tel == undefined) {
+        res.status(400).send("Sua senha está indefinida!");
+    } else {
+
+        usuarioModel.atualizarEmpresa(email, tel, cep, log, num, comp, idEmpresa)
+            .then(
+                function (resultadoAutenticar) {
+                    console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
+                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
+
+                    if (resultadoAutenticar.length == 1) {
+                        console.log(resultadoAutenticar);
+                        res.json(resultadoAutenticar[0]);
+                   }
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+
+}
+
+
 function cadastrarFuncionario(req, res) {
+    var fkEmpresa = req.body.fkEmpresaServer;
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
-    var senha = req.body.senhaServer
+    var senha = req.body.senhaServer;
+    var tipo = req.body.tipoUserServer;
 
     if (nome == undefined) {
         res.status(400).send("Seu cnpj está undefined!");
@@ -45,7 +129,7 @@ function cadastrarFuncionario(req, res) {
     } 
     else {
 
-        usuarioModel.cadastrarFuncionario(nome, email,senha)
+        usuarioModel.cadastrarFuncionario(nome, email,senha, fkEmpresa, tipo)
             .then(
                 function (resultadoAutenticar) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
@@ -145,5 +229,8 @@ module.exports = {
     autenticar,
     cadastrar,
     cadastrarEndereco, 
-    cadastrarFuncionario
+    cadastrarFuncionario,
+    autenticarFuncionario,
+    buscarFuncPorId,
+    atualizarEmpresa
 }

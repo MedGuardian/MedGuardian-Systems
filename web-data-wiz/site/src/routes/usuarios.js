@@ -11,13 +11,22 @@ router.post("/cadastrar", function (req, res) {
 router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });
-
+router.post("/autenticarFuncionario", function (req, res) {
+    usuarioController.autenticarFuncionario(req, res);
+});
 router.post("/cadastrarEndereco", function (req, res) {
     usuarioController.cadastrarEndereco(req, res);
 })
 router.post("/cadastrarFuncionario", function (req, res) {
     usuarioController.cadastrarFuncionario(req, res);
 })
+router.get("/buscar/:idFunc", function (req, res) {
+    usuarioController.buscarFuncPorId(req, res);
+})
+router.post("/atualizarEmpresa/:idEmpresa", function (req, res) {
+    usuarioController.atualizarEmpresa(req, res);
+})
+
 
 
 module.exports = router;

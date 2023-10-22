@@ -155,10 +155,11 @@
 
 </html>
 <script>
-
+  var cnpjPre;
   function cnpjApi(cnpj){
     // https://brasilapi.com.br/api/cnpj/v1/{cnpj}
     var cnpj = inputCNPJ.value
+    cnpjPre = inputCNPJ.value
     fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`, {
       method: "GET",
       headers: {
@@ -240,7 +241,7 @@
 
           function cadastrar(){
             var razaoSocialVar = inputRazaoSocial.value;
-            var cnpjVar = inputCNPJ.value;
+            var cnpjVar = cnpjPre;
             var emailVar = inputEmail.value;
             var contatoVar = inputContato.value;
             var confirmarSenhaVar = inputConfirmarSenha.value;
