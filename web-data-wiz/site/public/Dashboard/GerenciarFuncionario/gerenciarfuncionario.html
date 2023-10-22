@@ -11,7 +11,7 @@
     <title>Gerenciar Funcionário</title>
 </head>
 
-<body onload="validarSessao(), consumirDadosPorId()">
+<body onload="consumirDadosPorIdFuncionario()">
     <div class="header">
         <div class="container">
             <div class="navbar">
@@ -47,17 +47,17 @@
                                     <div class="conteudoEsquerda" id="conteudoEsquerdaDadosPessoais">
                                         <div class="inputsGerenciarConta">
                                             <span>E-mail cadastrado</span>
-                                            <input type="text" />
+                                            <input type="text" id="emailFunc" disabled />
                                         </div>
 
                                         <div class="inputsGerenciarConta">
                                             <span>Nome completo</span>
-                                            <input type="text" />
+                                            <input type="text" id="nomeFunc" disabled />
                                         </div>
 
                                         <div class="inputsGerenciarConta">
-                                            <span>Telefone</span>
-                                            <input type="text" />
+                                            <span>Cargo</span>
+                                            <input type="text" id="cargoFunc" disabled />
                                         </div>
                                     </div>
 
@@ -67,16 +67,19 @@
                                         </div>
                                         <div class="inputsGerenciarConta">
                                             <span>Senha atual</span>
-                                            <input type="password" />
+                                            <input type="password" id="senhaAtualFunc" disabled />
                                         </div>
 
                                         <div class="inputsGerenciarConta">
                                             <span>Nova senha</span>
-                                            <input type="password" />
+                                            <input type="password" id="novaSenhaFunc" />
                                         </div>
                                         <div class="inputsGerenciarConta">
                                             <span>Confirmar senha</span>
-                                            <input type="password" />
+                                            <input type="password" id="confirmarSenhaFunc" />
+                                        </div>
+                                        <div class="erroConfirmarSenha">
+                                            <span id="spanErroSenha"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -91,24 +94,21 @@
             </div>
 </body>
 <script>
-    function consumirDadosPorId() {
-        var idEmpresa = sessionStorage.idEmpresa;
+    function consumirDadosPorIdFuncionario() {
+        var idFunc = sessionStorage.idFuncionario;
 
-        fetch(`/empresas/buscar/${idEmpresa}`, { cache: "no-store" })
+        fetch(`/usuarios/buscar/${idFunc}`, { cache: "no-store" })
             .then(function (response) {
                 if (response.ok) {
                     response.json().then(function (resposta) {
                         console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
                         for (i = 0; i < resposta.length; i++) {
                             var dados = resposta[i];
-                            emailEmpresa.value = dados.emailEmpresa;
-                            razaoEmpresa.value = dados.razaoSocial;
-                            cnpjEmpresa.value = dados.cnpjEmpresa;
-                            telEmpresa.value = dados.contatoEmpresa;
-                            cepEmpresa.value = dados.cep;
-                            logEmpresa.value = dados.logradouro;
-                            numEmpresa.value = dados.numeroEmpresa;
-                            compEmpresa.value = dados.complementoEmpresa;
+                            console.log(resposta[i])
+                            emailFunc.value = dados.emailFuncionario;
+                            nomeFunc.value = dados.nomeFuncionario;
+                            cargoFunc.value = dados.tipoAcesso;
+                            senhaAtualFunc.value = dados.senhaFuncionario;
                         }
                     });
                 } else {
@@ -133,17 +133,56 @@
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
                 Swal.fire("Alterações salvas!", "", "success");
-                alterarDados();
+                alterarDadosFuncionario();
             } else if (result.isDenied) {
                 Swal.fire("Alterações canceladas", "", "info");
             }
         });
     }
 
-    function alterarDados() {
-        console.log("Deu certo");
+    function alterarDadosFuncionario() {
 
+        var novaSenhaVar = novaSenhaFunc.value;
+        var confirmarSenhaVar = confirmarSenhaFunc.value;
+        var idFunc = sessionStorage.idFuncionario;
+
+        var spanErroSenha = document.getElementById("spanErroSenha")
+
+        if (novaSenhaVar !== confirmarSenhaVar) {
+            spanErroSenha.innerHTML = "As senhas não coincidem.";
+            spanErroSenha.style.color = "red"
+            setTimeout(() => {
+                spanErroSenha.style.display = "none"
+            }, "2000");
+        } else {
+            fetch(`/usuarios/atualizarFuncionario/:${idFunc}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    // crie um atributo que recebe o valor recuperado aqui
+                    // Agora vá para o arquivo routes/usuario.js
+                    novaSenhaServer: novaSenhaVar,
+                    idFuncServer: idFunc
+                }),
+            })
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
+                    if (resposta.ok) {
+                        console.log("certin")
+                    } else {
+                        throw "Houve um erro ao tentar realizar a atualização dos dados do funcionário!";
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                });
+
+            return false;
+        }
     }
+
 </script>
 <style>
     .swal2-popup {

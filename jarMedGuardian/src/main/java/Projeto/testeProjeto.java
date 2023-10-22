@@ -38,6 +38,9 @@ public class testeProjeto {
 //            }
 //            System.out.println(nomeApp);
 
+            for(int i = 0; i < looca.getGrupoDeProcessos().getProcessos().size(); i++){
+                System.out.println(looca.getGrupoDeProcessos().getProcessos().get(i).getNome() + "PID: " + looca.getGrupoDeProcessos().getProcessos().get(i).getPid());
+            }
             System.out.println("Digite o email: ");
             Scanner leitorEmail = new Scanner(System.in);
             String email = leitorEmail.nextLine();
@@ -116,7 +119,6 @@ public class testeProjeto {
                 } else {
                     redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(3).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(3).getPacotesRecebidos().doubleValue()) / conversorMb;
                 }
-
 
                 for(int i = 0; i < bancoDeDados.selectComponente().size(); i++){
                     Integer idComponente = bancoDeDados.selectComponente().get(i).getIdComponente();

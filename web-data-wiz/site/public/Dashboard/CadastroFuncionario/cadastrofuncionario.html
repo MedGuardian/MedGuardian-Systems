@@ -40,7 +40,9 @@
               <div class="subtituloConteudoInternoGerenciarConta">
                 <span>Informe os  seguintes dados para cadastra-lo:</span>
               </div>
+                
             </div>
+            
 
             <div class="assistenteInputsGerenciarconta">
               <div class="conteudoEsquerda">
@@ -52,6 +54,15 @@
                 <div class="inputsGerenciarConta">
                   <span>E-mail</span>
                   <input id="emailFuncionario" type="text" />
+                </div>
+                <div class="select">
+                  <select name="selectTipoFunc" id="tipoFunc">
+                    <option value="" selected>Selecione um cargo</option>
+                    <option value="Gerente">Gerente</option>
+                    <option value="Supervisor">Supervisor</option>
+                    <option value="Analista">Analista</option>
+                    <option value="Estagiario">Estágiario</option>
+                  </select>
                 </div>
               </div>
 
@@ -66,7 +77,9 @@
                     <input id="confirmarSenha" type="text"/>
                     <span id="senhaErrada"></span>
                   </div>
+                  
                 </div>
+                
               </div>
               <div class="botaoCriarFunc">
                 <button onclick="validarCadastro()">Cadastrar</button>
@@ -108,12 +121,18 @@
             console.log("Deu certo");
               //Recupere o valor da nova input pelo nome do id
               // Agora vá para o método fetch logo abaixo
-              var fkEmpresaVar = sessionStorage.f
+              var tipoUserVar = tipoFunc.value;
+              var fkEmpresaVar = sessionStorage.idEmpresa;
               var nomeFuncVar = nomeFuncionario.value;
               var emailVar = emailFuncionario.value;
               var senhaVar = senha;
                // Enviando o valor da nova input
 
+               
+               nomeFuncionario.value="";
+               emailFuncionario.value="";
+               senhaFuncionario.value="";
+               confirmarSenha.value="";
               //senhaErrada.innerHTML = senhaVar!=confVar ? "As senhas são diferentes" : "";
                 fetch("/usuarios/cadastrarFuncionario", {
                 method: "POST",
@@ -123,6 +142,8 @@
                 body: JSON.stringify({
                   // crie um atributo que recebe o valor recuperado aqui
                   // Agora vá para o arquivo routes/usuario.js
+                  tipoUserServer: tipoUserVar,
+                  fkEmpresaServer: fkEmpresaVar,
                   nomeServer: nomeFuncVar,
                   emailServer: emailVar,
                   senhaServer:senhaVar
@@ -130,9 +151,9 @@
               })
                 .then(function (resposta) {
                   console.log("resposta: ", resposta);
-          
+                  console.log("certin")
                   if (resposta.ok) {
-                      console.log("certin")
+                    console.log("certin")
                   } else {
                     throw "Houve um erro ao tentar realizar o cadastro!";
                   }

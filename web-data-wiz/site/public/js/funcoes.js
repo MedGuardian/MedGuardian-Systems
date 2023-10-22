@@ -1,10 +1,4 @@
-function telaLogin(){
-    window.location.href = '../Login/login.html'
-}
 
-function telaCadastro(){
-    window.location.href = '../Cadastro/cadastro.html'
-}
 
 function validarSessao(){
 
@@ -13,33 +7,40 @@ function validarSessao(){
     const divSaudacaoLogado = document.getElementById("saudacaoLogado");
     const msgSaudacao = document.getElementById("saudacao");
 
-
     if (sessionStorage.idEmpresa != null || sessionStorage.idFuncionario != null){
         botaoLogin.style.display = "none";
         botaoCadastro.style.display = "none";
         divSaudacaoLogado.style.display = "flex";
         
-        var razaoSocial = sessionStorage.razaoSocial;
-        var primeiroNomeEmpresa = razaoSocial.split(' ')
-        msgSaudacao.innerHTML += primeiroNomeEmpresa[0];
+        if(sessionStorage.idFuncionario){
+            msgSaudacao.innerHTML += sessionStorage.nomeFuncionario;
+            atualizarMenuFlutuante(sessionStorage.nomeFuncionario, sessionStorage.emailFuncionario, sessionStorage.cargo)
+        } else {
+            msgSaudacao.innerHTML += sessionStorage.razaoSocial.split(' ')[0]
+            atualizarMenuFlutuante(sessionStorage.razaoSocial, sessionStorage.emailEmpresa, "Empresa")
+        }
 
-        atualizarMenuFlutuante()
     }
 }
 
-function atualizarMenuFlutuante(){
+function voltarPaginaAnterior() {
+    window.history.back();
+  }
+
+function atualizarMenuFlutuante(nome, email, cargo){
     var nomeMenuFlutuante = document.getElementById('nomeMenuFlutuante')
     var cargoMenuFlutuante = document.getElementById('cargoMenuFlutuante')
     var emailMenuFlutuante = document.getElementById('emailMenuFlutuante')
 
-    var nome = sessionStorage.razaoSocial.split(' ')
-    var cargo = "Empresa";
-    var email = sessionStorage.emailEmpresa
+    if(sessionStorage.idFuncionario){
+        var nomeFormatado = nome;
+    } else {
+        var nomeFormatado = nome.split(' ')[0];
+    }
 
-    nomeMenuFlutuante.innerHTML = nome[0]
+    nomeMenuFlutuante.innerHTML = nomeFormatado
     cargoMenuFlutuante.innerHTML = "(" + cargo + ")"
     emailMenuFlutuante.innerHTML = email
-
 }
 
 const menuFlutuante = document.getElementById("menuFlutuante");
@@ -57,7 +58,11 @@ function abrirDashboardMenuFlutuante(){
 }
 
 function abrirGerenciamentoMenuFlutuante(){
-    window.location.href = './Dashboard/GerenciarFuncionario/gerenciarfuncionario.html'
+    if(sessionStorage.idEmpresa==null && sessionStorage.cargo=="Analista"|| sessionStorage.cargo=="Estagiário"){
+        window.location.href = '/Dashboard/GerenciarFuncionario/gerenciarfuncionario.html'
+    }else if(sessionStorage.idEmpresa!=null || sessionStorage.cargo=="Gerente"|| sessionStorage.cargo=="Supervisor"){
+        window.location.href = '/GerenciarConta/gerenciarconta.html'
+    }
 }
 
 function fazerLogout(){

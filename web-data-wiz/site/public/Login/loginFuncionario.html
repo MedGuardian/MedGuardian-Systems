@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Funcionário</title>
+    <link rel="stylesheet" href="../PaginaInicial/paginaInicial.css">
+    <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
+
+
+    <link rel="stylesheet" href="login.css">
+    <script src="login.js"></script>
+    <script src="../js/funcoes.js"></script>
+    <link rel="shortcut icon" href="../assets/images/LOGO.png" type="image/x-icon">
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+
+            <div class="tituloHeader">
+                <span id="tituloHeader"><a href="../index.html">MedGuardian</a></span>
+            </div>
+
+            <div class="conteudoHeader">
+                <li class="liHeader"><a href="../index.html">Home</a></li>
+
+                <div class="botoesHeader">
+                    <button id="botaoLogin" onclick="telaLogin()">Login</button>
+                    <button id="botaoCadastro" onclick="telaCadastro()">Cadastre-se</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="login">
+        <div class="container">
+            <div class="conteudoLogin">
+
+                <div class="conteudoEsquerda">
+                    
+                    <div class="inputsLogin">
+                        <span>E-mail</span>
+                        <input type="text" id="inputEmail">
+                        <span>Senha</span>
+                        <input type="password" id="inputSenha">
+                        <span id="spanErro"></span>
+                    </div>
+                    
+
+                    <div class="botaoEntrar">
+                        <button onclick="logarUser()">Entrar</button>
+                    </div>
+                </div>
+                
+                <div class="conteudoDireita">
+                    <div class="imagem">
+                        <img src="../assets/images/hospital.svg" alt="">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+<script>
+    function logarUser(){
+
+        var emailVar = inputEmail.value;
+        var senhaVar = inputSenha.value;
+
+        if (emailVar == "" || senhaVar == "") {
+            return false;
+        }
+
+        fetch("/usuarios/autenticarFuncionario", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                emailServer: emailVar,
+                senhaServer: senhaVar
+            })
+        }).then(function (resposta) {
+            console.log("ESTOU NO THEN DO entrar()!")
+            if (resposta.ok) {
+                console.log(resposta);
+                resposta.json().then(json => {
+                    console.log(json);
+                    console.log(JSON.stringify(json));
+                    sessionStorage.fkEmpresa = json.fkEmpresa;
+                    sessionStorage.idFuncionario = json.idFuncionario;
+                    sessionStorage.cargo=json.tipoAcesso;
+                    sessionStorage.nomeFuncionario = json.nomeFuncionario
+                    sessionStorage.emailFuncionario = json.emailFuncionario
+                    
+                    setTimeout(function () {
+                        window.location = "../Dashboard/dashboard.html";
+                    }, 1000); 
+                    
+                });
+                
+            } else {
+
+                console.log("Houve um erro ao tentar realizar o login!");
+
+                resposta.text().then(texto => {
+                    console.error(texto);
+                });
+            }
+
+        }).catch(function (erro) {
+            console.log(erro);
+        })
+
+        return false;
+    }
+    function telaLogin() {
+        window.location.href = 'tipoLogin.html'
+    }
+
+    function telaCadastro() {
+        window.location.href = '../Cadastro/cadastro.html'
+    }
+
+    window.addEventListener("keyup", capturarTecla)
+    function capturarTecla(event) {
+        if (event.key === "Enter") {
+            logarUser();
+        }
+    }
+
+</script>
