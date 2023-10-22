@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS empresa (
 CREATE TABLE IF NOT EXISTS endereco (
   idEndereco INT AUTO_INCREMENT NOT NULL,
   cep CHAR(8) NOT NULL,
-  Logradouro VARCHAR(45) NULL,
+  logradouro VARCHAR(45) NULL,
   numeroEmpresa INT NOT NULL,
   complementoEmpresa VARCHAR(45) NULL,
   fkEmpresa INT NOT NULL,
@@ -94,6 +94,12 @@ SELECT * FROM registro;
 select * from especificacao join computador
 	on fkComputador = idComputador
 		where idComputador = 1;
+        
+ UPDATE endereco SET cep = 05882000, Logradouro = 'bla', numeroEmpresa = 1263, complementoEmpresa = 'bla' WHERE fkEmpresa = 1;
+ 
+ select * from endereco join empresa
+	on fkEmpresa = idEmpresa;
+	
 
 
 
