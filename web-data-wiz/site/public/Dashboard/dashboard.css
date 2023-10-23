@@ -162,17 +162,53 @@ body{
     padding-left: 10%;
 }
 
+.relatorio  a{
+    display: flex;
+    color: #C8C8C8;
+    align-items: center;
+    margin-top: 20%;
+    cursor: pointer;
+}
+
+.relatorio img {
+    margin-right: 5%;
+}
+
+.relatorio span {
+    font-size: 15px;
+    width: 80%;
+}
+
+.cadastrarFunc > a{
+    display: flex;
+    color: #C8C8C8;
+    align-items: center;
+    margin-top: 20%;
+    cursor: pointer;
+}
+
+.cadastrarFunc span {
+    margin-left: 6%;
+    font-size: 15px;
+    width: 90%;
+}
+
+.cadastrarFunc img {
+    margin-left: 2%;
+}
+
+
 .botaoSair{
     display: flex;
     color: #FFFFFF;
     align-items: center;
-    margin-top: 100%;
+    margin-top: 35%;
     cursor: pointer;
 }
 
 .botaoSair svg {
     width: 30%;
-    margin-right: 10%;
+    margin-left: 12%;
 }
 
 .botaoSair span {
@@ -395,3 +431,185 @@ body{
     font-weight: 400;
     margin-left: 2%;
 }
+
+.modal-window {
+    position: fixed;
+    background-color: rgba(97, 97, 97, 0.315);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 999;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s;
+    &:target {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+    }
+    & > div {
+      width: 600px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 2em;
+      background: white;
+    }
+    header {
+      font-weight: bold;
+    }
+    h1 {
+      font-size: 150%;
+      margin: 0 0 15px;
+    }
+  }
+  
+  .modal-close {
+    color: #aaa;
+    line-height: 50px;
+    font-size: 80%;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 70px;
+    text-decoration: none;
+    &:hover {
+      color: black;
+    }
+  }
+  
+  
+  
+  .modal-window {
+    & > div {
+      border-radius: 1rem;
+    }
+  }
+  
+  .modal-window div:not(:last-of-type) {
+    margin-bottom: 15px;
+  }
+  
+  .logo {
+    max-width: 150px;
+    display: block;
+  }
+  
+.label {
+    display: flex;
+    align-items: center;
+    border-radius: 100px;
+    padding: 10px 12px;
+    margin: 5px 0;
+    cursor: pointer;
+    transition: .3s;
+    width: 100%;
+  }
+  
+  .label:hover,
+  .label:focus-within,
+  .label:active {
+
+    background: hsla(0, 0%, 80%, 0.288);
+  }
+  
+  .radio-input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    z-index: -1;
+  }
+  
+  .radio-design {
+    width: 12px;
+    height: 12px;
+    border-radius: 100px;
+    background: linear-gradient(to right bottom, #9aff8a, #0A8100);
+    position: relative;
+  }
+  
+  .radio-design::before {
+    content: '';
+    display: inline-block;
+    width: inherit;
+    height: inherit;
+    border-radius: inherit;
+    background: hsl(0, 0%, 90%);
+    transform: scale(1.1);
+    transition: .3s;
+  }
+  
+  .radio-input:checked+.radio-design::before {
+    transform: scale(0);
+  }
+  
+  .label-text {
+    color: hsl(0, 0%, 60%);
+    margin-left: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: 900;
+    transition: .3s;
+  }
+  
+  .radio-input:checked~.label-text {
+    color: hsl(0, 0%, 40%);
+  }
+
+  #radio-input-wrapper{
+    display: flex;
+    flex-direction: row;
+  }
+
+  #radio-input-wrapper .coluna-direita{
+    margin-left: 5%;
+
+  }
+
+  #radio-input-wrapper .coluna-esquerda {
+    margin-left: 35%;
+  }
+
+  .coluna-esquerda{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+
+  }
+
+  .coluna-esquerda input{
+    margin-left: 15%;
+  }
+
+  .gerar-relatorio{
+    display: flex;
+    position: relative;
+    justify-content: center;
+  }
+
+  .botao{
+    display: flex;
+    position: relative;
+    justify-content: center;
+    margin-top: 15%;
+}
+
+  .botao .botao-relatorio{
+    border-radius: 16px;
+    padding: 10px;
+    background-color: #47C133;
+    color: #FFFFFF;
+  }
+
+  .botao-relatorio:hover{
+    transition: 0.5s;
+    transform: scale(1.05);
+  }

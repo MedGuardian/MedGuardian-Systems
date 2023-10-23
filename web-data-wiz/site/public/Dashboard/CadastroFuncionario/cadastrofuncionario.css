@@ -287,7 +287,12 @@
     background-color: white;
     margin-bottom: 7.5%;
   }
-  
+
+  .back a{
+    cursor: pointer;
+    width: 10%;
+  }
+
   .back p{
     color: black;
     margin-top: 14.75%;
