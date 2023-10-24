@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="dashboardespecifica.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-    <script src="dashboardespecifica.js"></script>
     <title>Document</title>
 </head>
 
@@ -35,95 +34,161 @@
                     <span>Você selecionou a</span> <span id="maquinaSelecionada">Máquina 27</span>
                 </div>
 
-                <div class="cimaDashboardMaquina">
-                    <div class="componentesMaquina">
-                        <div class="tempoAtividadeMaquina">
+                <div class="auxiliarConteudoDashboardMaquina">
 
-                            <div class="tituloTempoAtividade">
-                                <span>Tempo de atividade</span>
-                            </div>
+                    <div class="conteudoEsquerdaDashboardMaquina">
 
-                            <div class="cronometroTempoAtividade">
-                                <div class="cronometro">
-                                    <span class="valorCronometro">00</span>
-                                    <span class="medidaCronometro">Dia</span>
+                        <div class="cimaDashboardMaquina">
+                            <div class="indicadoresMaquina">
+                                <div class="tempoAtividadeMaquina">
+
+                                    <div class="tituloTempoAtividade">
+                                        <span>Tempo de atividade</span>
+                                    </div>
+
+                                    <div class="cronometroTempoAtividade">
+                                        <div class="cronometro">
+                                            <span class="valorCronometro" id="valorCronometroDias">02</span>
+                                            <span class="medidaCronometro">Dia</span>
+                                        </div>
+
+                                        <div class="cronometro">
+                                            <span class="valorCronometro" id="valorCronometroHoras">17</span>
+                                            <span class="medidaCronometro">Hora</span>
+                                        </div>
+
+                                        <div class="cronometro">
+                                            <span class="valorCronometro" id="valorCronometroMinutos">52</span>
+                                            <span class="medidaCronometro">Min</span>
+                                        </div>
+
+                                        <div class="cronometro">
+                                            <span class="valorCronometro" id="valorCronometroSegundos">39</span>
+                                            <span class="medidaCronometro">Seg</span>
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <div class="cronometro">
-                                    <span class="valorCronometro">00</span>
-                                    <span class="medidaCronometro">Hora</span>
+                                <div class="medidor">
+                                    <div class='speed-meter'>
+                                        <span id="spanVelocidadeRede">Velocidade de rede</span>
+                                        <span data-js-number id="spanValorVelocidadeRede">123</span>
+                                    </div>
+                                    <div class="speed">
+                                        <div class="unit">Mbps</div>
+                                        <div class="spinner"></div>
+                                    </div>
                                 </div>
 
-                                <div class="cronometro">
-                                    <span class="valorCronometro">00</span>
-                                    <span class="medidaCronometro">Min</span>
-                                </div>
+                                <div class="informacoesMaquina">
+                                    <div class="boxesInformacoes">
+                                        <div class="box">
+                                            <div class="tituloBox">
+                                                <span>Utilização</span>
+                                            </div>
+                                            <div class="valorBox">
+                                                <span>43%</span>
+                                            </div>
+                                        </div>
 
-                                <div class="cronometro">
-                                    <span class="valorCronometro">00</span>
-                                    <span class="medidaCronometro">Seg</span>
+                                        <div class="box">
+                                            <div class="tituloBox">
+                                                <span>Velocidade</span>
+                                            </div>
+                                            <div class="valorBox">
+                                                <span>1,82GHz</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="box">
+                                            <div class="tituloBox">
+                                                <span>Processos</span>
+                                            </div>
+                                            <div class="valorBox">
+                                                <span>239</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="box">
+                                            <div class="tituloBox">
+                                                <span>Threads</span>
+                                            </div>
+                                            <div class="valorBox">
+                                                <span>5384</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="medidor">
-                            <div class='speed-meter'>
-                                <span data-js-number>123</span>
-                                <div class="speed">
-                                    <div class="unit">Mbps</div>
-                                    <div class="spinner"></div>
+                        <div class="graficoInferiorGeral">
+
+                            <div class="informacoesMaquinaGrafico">
+                                <div class="opcaoSelecionadaGraficoLegenda">
+                                    <span id="componenteSelecionado">CPU</span>
+                                    <span id="tipoValorComponenteSelecionado">% Utilização</span>
+                                </div>
+
+                                <div class="nomeComponente">
+                                    <span id="nomeComponente">AMD Ryzen 5 3500U with radein Vega Mobile Gfx</span>
                                 </div>
                             </div>
+
+                            <div class="graficoInferior">
+                                <div class="conteudoCanvas">
+                                    <canvas id="graficoDesempenho"></canvas>
+                                </div>
+                            </div>
+
+
                         </div>
-                        <div class="InformacoesMaquina">
-                            <div class="InformacoesMaquinaNomes">
-                                <span>Utilização</span>
-                                <span>Velocidade</span>
-                                <span>Processos</span>
-                                <span>Threads</span>
 
-                            </div>
-                            <div class="InformacoesMaquinaDados">
-                                <span id="utilizacao">43 <span>%</span></span>
-                                <span id="velocidade">43 <span>Ghz</span></span>
-                                <span id="processos">239</span>
-                                <span id="threads">3017</span>
+                    </div>
+
+                    <div class="conteudoDireitaDashboardMaquina">
+                        <div class="boxesLaterais">
+                            <div class="boxLateral" onclick="escolherGrafico(1)">
+                                <div class="tituloBoxLateral">
+                                    <span>CPU</span>
+                                </div>
+                                <div class="divValorBoxLateral">
+                                    <div class="valorBoxLateral">
+                                        <span class="spanValorBoxLateral">21%</span>
+                                        <span class="spanTipoValorBoxLateral">% de utilização</span>
+                                    </div>
+                                </div>
                             </div>
 
+                            <div class="boxLateral" onclick="escolherGrafico(2)">
+                                <div class="tituloBoxLateral">
+                                    <span>Memória Disco</span>
+                                </div>
+                                <div class="divValorBoxLateral">
+                                    <div class="valorBoxLateral">
+                                        <span class="spanValorBoxLateral">49%</span>
+                                        <span class="spanTipoValorBoxLateral">% de utilização</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="boxLateral" onclick="escolherGrafico(3)">
+                                <div class="tituloBoxLateral">
+                                    <span>Memória RAM</span>
+                                </div>
+                                <div class="divValorBoxLateral">
+                                    <div class="valorBoxLateral">
+                                        <span class="spanValorBoxLateral">4,6/7,8</span>
+                                        <span class="spanTipoValorBoxLateral">GB de utilização</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
 
-                <div class="graficoInferiorGeral">
 
-                    <div class="graficoInferior">
-                        <canvas id="graficoDesempenho"></canvas>
-                    </div>
-
-                    <div class="graficoInferiorGeralLateral">
-                        <div class="porcentagemUtilizacao">
-                            <span>CPU</span>
-                            <div class="porcentagemUtilizacao2">
-                                <span id="utilizacaoCPU">43 <span>%</span></span>
-                                <span>% de Utilização</span>
-                            </div>
-                        </div>
-                        <div class="porcentagemUtilizacao">
-                            <span>Disco</span>
-                            <div class="porcentagemUtilizacao2">
-                                <span id="utilizacaoDisco">43 <span>%</span></span>
-                                <span>% de Utilização</span>
-                            </div>
-                        </div>
-                        <div class="porcentagemUtilizacao">
-                            <span>RAM</span>
-                            <div class="porcentagemUtilizacao2">
-                                <span id="utilizacaoRAM">43 <span>%</span></span>
-                                <span>% de Utilização</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -136,6 +201,9 @@
         setTimeout(() => tick(span), 800)
     }
 
-    tick(document.querySelector('[data-js-number]'))</script>
+    tick(document.querySelector('[data-js-number]'))
+</script>
 
 </html>
+
+<script src="dashboardespecifica.js"></script>
