@@ -62,7 +62,6 @@ public class TesteProjeto {
                     }
                 }
 
-
             System.out.println("Digite o email: ");
             Scanner leitorEmail = new Scanner(System.in);
             String email = leitorEmail.nextLine();
