@@ -1,8 +1,8 @@
-function voltarIndex(){
+function voltarIndex() {
     window.location.href = '../index.html'
 }
 
-function sairDaDashboard(){
+function sairDaDashboard() {
     window.location.href = '../index.html'
 }
 
@@ -22,7 +22,7 @@ const data_grafico1 = {
             backgroundColor: [
                 '#04AF26',
                 '#006432'
-              ],
+            ],
             borderColor: 'rgba(0,0,0, 0.1)',
             borderWidth: 2
         }
@@ -89,7 +89,7 @@ const config_grafico1 = {
             },
             tooltip: {
                 callbacks: {
-                    label: function(context) {
+                    label: function (context) {
                         var label = context.label || '';
                         var value = context.parsed || 0;
                         return label + ': ' + value + '%';
@@ -118,7 +118,7 @@ const data_grafico2 = {
             backgroundColor: [
                 '#04AF26',
                 '#006432'
-              ],
+            ],
             borderColor: 'rgba(0,0,0, 0.1)',
             borderWidth: 2
         }
@@ -185,7 +185,7 @@ const config_grafico2 = {
             },
             tooltip: {
                 callbacks: {
-                    label: function(context) {
+                    label: function (context) {
                         var label = context.label || '';
                         var value = context.parsed || 0;
                         return label + ': ' + value + '%';
@@ -214,7 +214,7 @@ const data_grafico3 = {
             backgroundColor: [
                 '#04AF26',
                 '#006432'
-              ],
+            ],
             borderColor: 'rgba(0,0,0, 0.1)',
             borderWidth: 2
         }
@@ -281,7 +281,7 @@ const config_grafico3 = {
             },
             tooltip: {
                 callbacks: {
-                    label: function(context) {
+                    label: function (context) {
                         var label = context.label || '';
                         var value = context.parsed || 0;
                         return label + ': ' + value + '%';
@@ -310,7 +310,7 @@ const data_grafico4 = {
             backgroundColor: [
                 '#04AF26',
                 '#006432'
-              ],
+            ],
             borderColor: 'rgba(0,0,0, 0.1)',
             borderWidth: 2
         }
@@ -377,7 +377,7 @@ const config_grafico4 = {
             },
             tooltip: {
                 callbacks: {
-                    label: function(context) {
+                    label: function (context) {
                         var label = context.label || '';
                         var value = context.parsed || 0;
                         return label + ': ' + value + '%';
