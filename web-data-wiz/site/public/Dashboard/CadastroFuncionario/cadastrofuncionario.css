@@ -3,6 +3,11 @@
   --darkgray: #2c3e50;
 }
 
+@font-face {
+  font-family: LeagueSpartan;
+  src: url(../../assets/fonts/LeagueSpartan-VariableFont_wght.ttf);
+}
+
 *{
     font-family: LeagueSpartan;
   }
@@ -10,41 +15,23 @@
   body {
     margin: 0;
     padding: 0;
-    overflow-x: hidden; 
-    background: #DAF3EA;
-    width: 100%;
-    height: 950px;
+    font-family: LeagueSpartan;
   }
   
   .header {
-    position: relative;
-    background-color: #f0f0f0;
-  }
-  
-  .navbar {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  
-  .navbar img {
-    width: 100%; 
+    display: flex;
+    background-image: url(../../assets/images/navbarCircle.svg);
   }
   
   .saudacao {
-    position: absolute;
-    top: 0;
-    margin-left: 257px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
-  
+    margin-left: 15%;
   }
   
   .saudacao h1, p{
     color: #FFF;
-  
     font-style: normal;
     line-height: normal;
   }
@@ -57,12 +44,17 @@
   .saudacao p{
     font-size: 30px;
     font-weight: 300;
+    margin-top: -2.5%;
+  }
+
+  .gerenciarConta{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 5% 0;
   }
   
   .conteudoGerenciarConta{
-    position: relative;
-    margin-top: 5%;
-
     display: flex;
     flex-direction: column;
     border-radius: 50px;
@@ -70,14 +62,13 @@
     box-shadow: 20px 20px 20px 0px #FAFAFA, -10px -10px 30px 0px #B8B8B8;
     border-radius: 10px;
     width: 100%;
-    height: 500px;
+    height: 530px;
     color: #004D02;
   }
   
   .container{
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 10px;
+    width: 80%;
+    margin: auto;
   }
   
   .conteudoGerenciarConta .container {
@@ -103,6 +94,7 @@
     font-size: 30px;
     text-align: center;
     font-weight: 800;
+    margin-top: 2%;
   }
   
   .subtituloConteudoInternoGerenciarConta{
@@ -177,10 +169,6 @@
     margin: 5% 0;
   }
   
-  #conteudoEsquerdaDadosPessoais {
-    margin-top: 3.6%;
-  }
-  
   .tituloAlterarSenha{
     font-size: 25px;
     font-weight: 600;
@@ -191,6 +179,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
+    cursor: pointer;
   }
   
   .botaoCriarFunc button {
@@ -205,6 +194,7 @@
     font-family: LeagueSpartan;
     font-size: 20px;
     font-weight: 600;
+    cursor: pointer;
   }
   
   .menuFlutuante{
@@ -288,16 +278,9 @@
     margin-bottom: 7.5%;
   }
 
-  .back a{
+  .botaoVoltar img{
+    width: 3%;
     cursor: pointer;
-    width: 10%;
-  }
-
-  .back p{
-    color: black;
-    margin-top: 14.75%;
-    margin-left: 10%;
-    font-size: 20px;
   }
   
   select {

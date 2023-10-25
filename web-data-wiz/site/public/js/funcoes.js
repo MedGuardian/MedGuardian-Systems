@@ -6,20 +6,48 @@ function validarSessao(){
     const botaoCadastro = document.getElementById("botaoCadastro");
     const divSaudacaoLogado = document.getElementById("saudacaoLogado");
     const msgSaudacao = document.getElementById("saudacao");
+    const spanCadastrarFuncionario = document.getElementById('spanCadastrarFuncionario');
+    const divGerarRelatorio = document.getElementById('divGerarRelatorio')
+    const botaoSair = document.getElementById('botaoSair');
 
-    if (sessionStorage.idEmpresa != null || sessionStorage.idFuncionario != null){
-        botaoLogin.style.display = "none";
-        botaoCadastro.style.display = "none";
-        divSaudacaoLogado.style.display = "flex";
-        
-        if(sessionStorage.idFuncionario){
-            msgSaudacao.innerHTML += sessionStorage.nomeFuncionario;
-            atualizarMenuFlutuante(sessionStorage.nomeFuncionario, sessionStorage.emailFuncionario, sessionStorage.cargo)
-        } else {
-            msgSaudacao.innerHTML += sessionStorage.razaoSocial.split(' ')[0]
-            atualizarMenuFlutuante(sessionStorage.razaoSocial, sessionStorage.emailEmpresa, "Empresa")
+
+    if(window.location.href.indexOf("dashboard.html") > -1){
+        if(sessionStorage.idEmpresa == null && (sessionStorage.cargo=="Analista"|| sessionStorage.cargo=="Estagiário")){
+            divGerarRelatorio.style.display = 'none'
+            botaoSair.style.marginTop = '80%'
+        }else if(sessionStorage.idEmpresa != null || (sessionStorage.cargo=="Gerente"|| sessionStorage.cargo=="Supervisor")){
+            divGerarRelatorio.style.display = 'block'
+        }
+    } else {
+        if (sessionStorage.idEmpresa != null || sessionStorage.idFuncionario != null){
+            botaoLogin.style.display = "none";
+            botaoCadastro.style.display = "none";
+            divSaudacaoLogado.style.display = "flex";
+            
+            if(sessionStorage.idFuncionario){
+                msgSaudacao.innerHTML += sessionStorage.nomeFuncionario.split(' ')[0];
+                atualizarMenuFlutuante(sessionStorage.nomeFuncionario.split(' ')[0], sessionStorage.emailFuncionario, sessionStorage.cargo)
+            } else {
+                msgSaudacao.innerHTML += sessionStorage.razaoSocial.split(' ')[0]
+                atualizarMenuFlutuante(sessionStorage.razaoSocial.split(' ')[0], sessionStorage.emailEmpresa, "Empresa")
+            }
         }
 
+        if(sessionStorage.idEmpresa == null && (sessionStorage.cargo=="Analista"|| sessionStorage.cargo=="Estagiário")){
+            spanCadastrarFuncionario.style.display = 'none'
+        }else if(sessionStorage.idEmpresa != null || (sessionStorage.cargo=="Gerente"|| sessionStorage.cargo=="Supervisor")){
+            spanCadastrarFuncionario.style.display = 'block'
+        }
+    }
+
+    
+
+    if(sessionStorage.idEmpresa == null && (sessionStorage.cargo=="Analista"|| sessionStorage.cargo=="Estagiário")){
+        spanCadastrarFuncionario.style.display = 'none'
+        divGerarRelatorio.style.backgroundColor = 'red'
+    }else if(sessionStorage.idEmpresa != null || (sessionStorage.cargo=="Gerente"|| sessionStorage.cargo=="Supervisor")){
+        spanCadastrarFuncionario.style.display = 'block'
+        divGerarRelatorio.style.backgroundColor = 'red'
     }
 }
 
@@ -32,13 +60,7 @@ function atualizarMenuFlutuante(nome, email, cargo){
     var cargoMenuFlutuante = document.getElementById('cargoMenuFlutuante')
     var emailMenuFlutuante = document.getElementById('emailMenuFlutuante')
 
-    if(sessionStorage.idFuncionario){
-        var nomeFormatado = nome;
-    } else {
-        var nomeFormatado = nome.split(' ')[0];
-    }
-
-    nomeMenuFlutuante.innerHTML = nomeFormatado
+    nomeMenuFlutuante.innerHTML = nome
     cargoMenuFlutuante.innerHTML = "(" + cargo + ")"
     emailMenuFlutuante.innerHTML = email
 }
@@ -68,4 +90,8 @@ function abrirGerenciamentoMenuFlutuante(){
 function fazerLogout(){
     sessionStorage.clear()
     window.location.reload()
+}
+
+function abrirCadastrarFuncionario(){
+    window.location.href = '../Dashboard/CadastroFuncionario/cadastrofuncionario.html'
 }

@@ -6,6 +6,10 @@ function sairDaDashboard() {
     window.location.href = '../index.html'
 }
 
+function abrirDashboardEspecifica(){
+    window.location.href = 'DashboardEspecifica/dashboardespecifica.html'
+}
+
 const grafico1 = document.getElementById("grafico1")
 
 var maximo = 100;

@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="../js/funcoes.js"></script>
   <link rel="stylesheet" href="cadastrofuncionario.css" />
-  <link rel="stylesheet" href="../../PaginaInicial/paginaInicial.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../../js/funcoes.js"></script>
   <title>Cadastrar Funcionário</title>
@@ -14,36 +13,31 @@
 
 <body onload="validarSessao()">
   <div class="header">
-    <div class="container">
-      <div class="navbar">
-        <img src="../../assets/images/navbarCircle.svg">
-        <div class="saudacao">
-          <h1>Olá, </h1>
-          <p>Cadastre um Novo Funcionário</p>
-        </div>
-      </div>
+    <div class="saudacao">
+      <h1>Olá, </h1>
+      <p>Cadastre um Novo Funcionário</p>
     </div>
   </div>
 
   <div class="gerenciarConta">
-    <div class="back">
-      <a onclick="voltarPaginaAnterior()"><p> < voltar</p></a>
-    </div>
     <div class="container">
       <div class="conteudoGerenciarConta">
         <div class="container">
           <div class="conteudoDadosEmpresaGerenciarConta">
+            <div class="botaoVoltar" onclick="voltarPaginaAnterior()">
+              <img src="../../assets/images/voltar.png" alt="">
+            </div>
             <div class="assistenteTituloGerenciarConta">
               <div class="tituloConteudoDadosEmpresaGerenciarConta">
                 <span>Cadastro de Funcionários</span>
               </div>
 
               <div class="subtituloConteudoInternoGerenciarConta">
-                <span>Informe os  seguintes dados para cadastra-lo:</span>
+                <span>Informe os seguintes dados para cadastra-lo:</span>
               </div>
-                
+
             </div>
-            
+
 
             <div class="assistenteInputsGerenciarconta">
               <div class="conteudoEsquerda">
@@ -62,118 +56,118 @@
                     <option value="Gerente">Gerente</option>
                     <option value="Supervisor">Supervisor</option>
                     <option value="Analista">Analista</option>
-                    <option value="Estagiario">Estágiario</option>
+                    <option value="Estagiário">Estagiário</option>
                   </select>
                 </div>
               </div>
 
               <div class="conteudoDireita">
                 <div class="inputsGerenciarConta">
-                    <span>Senha</span>
-                    <input id="senhaFuncionario" type="text" />
-                  </div>
-  
-                  <div class="inputsGerenciarConta">
-                    <span>Confirmar Senha</span>
-                    <input id="confirmarSenha" type="text"/>
-                    <span id="senhaErrada"></span>
-                  </div>
-                  
+                  <span>Senha</span>
+                  <input id="senhaFuncionario" type="password" />
                 </div>
-                
+
+                <div class="inputsGerenciarConta">
+                  <span>Confirmar Senha</span>
+                  <input id="confirmarSenha" type="password" />
+                  <span id="senhaErrada"></span>
+                </div>
+
               </div>
-              <div class="botaoCriarFunc">
-                <button onclick="validarCadastro()">Cadastrar</button>
-              </div>
+
+            </div>
+            <div class="botaoCriarFunc">
+              <button onclick="validarCadastro()">Cadastrar</button>
             </div>
           </div>
-        </body>
+        </div>
+</body>
 
-    <script>
-        function validarCadastro() {
-          // pegando o valor das duas input
-          var senha = senhaFuncionario.value;
-          var confSenha = confirmarSenha.value;
-          // parte de falar se quer cadastrar mesmo ou não
-            Swal.fire({
-              confirmButtonColor: "#004D02",
-              denyButtonColor: "#b81414",
-              title: "Deseja cadastrar o Funcionário?",
-              showDenyButton: true,
-              showCancelButton: false,
-              confirmButtonText: "Sim",
-              denyButtonText: `Não`,
-            }).then((result) => {
-              if (result.isConfirmed) {
-                if(validaSenha(senha, confSenha)){
-                // se confirma ele valida se as duas são iguais
-                Swal.fire("Funcionário cadastrado!", "", "success");
-                cadastrarFuncionario(senha);
-                }else{
-                  Swal.fire("As senhas são diferentes", "", "error")
-                }
-              } else if (result.isDenied) {
-                Swal.fire("Criação cancelada", "", "info");
-              }
-            });
-          }
-        
-          function cadastrarFuncionario(senha) {
-            console.log("Deu certo");
-              //Recupere o valor da nova input pelo nome do id
-              // Agora vá para o método fetch logo abaixo
-              var tipoUserVar = tipoFunc.value;
-              var fkEmpresaVar = sessionStorage.idEmpresa;
-              var nomeFuncVar = nomeFuncionario.value;
-              var emailVar = emailFuncionario.value;
-              var senhaVar = senha;
-               // Enviando o valor da nova input
+<script>
+  function validarCadastro() {
+    // pegando o valor das duas input
+    var senha = senhaFuncionario.value;
+    var confSenha = confirmarSenha.value;
+    // parte de falar se quer cadastrar mesmo ou não
+    Swal.fire({
+      confirmButtonColor: "#004D02",
+      denyButtonColor: "#b81414",
+      title: "Deseja cadastrar o Funcionário?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Sim",
+      denyButtonText: `Não`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (validaSenha(senha, confSenha)) {
+          // se confirma ele valida se as duas são iguais
+          Swal.fire("Funcionário cadastrado!", "", "success");
+          cadastrarFuncionario(senha);
+        } else {
+          Swal.fire("As senhas são diferentes", "", "error")
+        }
+      } else if (result.isDenied) {
+        Swal.fire("Criação cancelada", "", "info");
+      }
+    });
+  }
 
-               
-               nomeFuncionario.value="";
-               emailFuncionario.value="";
-               senhaFuncionario.value="";
-               confirmarSenha.value="";
-              //senhaErrada.innerHTML = senhaVar!=confVar ? "As senhas são diferentes" : "";
-                fetch("/usuarios/cadastrarFuncionario", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  // crie um atributo que recebe o valor recuperado aqui
-                  // Agora vá para o arquivo routes/usuario.js
-                  tipoUserServer: tipoUserVar,
-                  fkEmpresaServer: fkEmpresaVar,
-                  nomeServer: nomeFuncVar,
-                  emailServer: emailVar,
-                  senhaServer:senhaVar
-                }),
-              })
-                .then(function (resposta) {
-                  console.log("resposta: ", resposta);
-                  console.log("certin")
-                  if (resposta.ok) {
-                    console.log("certin")
-                  } else {
-                    throw "Houve um erro ao tentar realizar o cadastro!";
-                  }
-                })
-                .catch(function (resposta) {
-                  console.log(`#ERRO: ${resposta}`);
-                });
-          
-              return false;
-            }
-          
-            function validaSenha(senha,confSenha){
-              if(senha!=confSenha){
-                senhaErrada.innerHTML="As senhas são diferentes";
-                senhaErrada.style.color="red";
-                return false;
-              }
-              senhaErrada.innerHTML=""
-              return true;
-          }
-  
+  function cadastrarFuncionario(senha) {
+    console.log("Deu certo");
+    //Recupere o valor da nova input pelo nome do id
+    // Agora vá para o método fetch logo abaixo
+    var tipoUserVar = tipoFunc.value;
+    var fkEmpresaVar = sessionStorage.idEmpresa;
+    var nomeFuncVar = nomeFuncionario.value;
+    var emailVar = emailFuncionario.value;
+    var senhaVar = senha;
+    // Enviando o valor da nova input
+
+
+    nomeFuncionario.value = "";
+    emailFuncionario.value = "";
+    senhaFuncionario.value = "";
+    confirmarSenha.value = "";
+    //senhaErrada.innerHTML = senhaVar!=confVar ? "As senhas são diferentes" : "";
+    fetch("/usuarios/cadastrarFuncionario", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        tipoUserServer: tipoUserVar,
+        fkEmpresaServer: fkEmpresaVar,
+        nomeServer: nomeFuncVar,
+        emailServer: emailVar,
+        senhaServer: senhaVar
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+        console.log("certin")
+        if (resposta.ok) {
+          console.log("certin")
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+
+    return false;
+  }
+
+  function validaSenha(senha, confSenha) {
+    if (senha != confSenha) {
+      senhaErrada.innerHTML = "As senhas são diferentes";
+      senhaErrada.style.color = "red";
+      return false;
+    }
+    senhaErrada.innerHTML = ""
+    return true;
+  }
+
 </script>

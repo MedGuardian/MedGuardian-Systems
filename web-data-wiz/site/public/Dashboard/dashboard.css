@@ -179,30 +179,11 @@ body{
     width: 80%;
 }
 
-.cadastrarFunc > a{
-    display: flex;
-    color: #C8C8C8;
-    align-items: center;
-    margin-top: 20%;
-    cursor: pointer;
-}
-
-.cadastrarFunc span {
-    margin-left: 6%;
-    font-size: 15px;
-    width: 90%;
-}
-
-.cadastrarFunc img {
-    margin-left: 2%;
-}
-
-
 .botaoSair{
     display: flex;
     color: #FFFFFF;
     align-items: center;
-    margin-top: 35%;
+    margin-top: 50%;
     cursor: pointer;
 }
 
@@ -367,6 +348,7 @@ body{
     flex-direction: column;
     padding: 1%;
     width: 17.5%;
+    cursor: pointer;
 }
 
 .spanNomeSO{

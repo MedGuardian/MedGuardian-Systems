@@ -6,32 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="../js/funcoes.js"></script>
   <link rel="stylesheet" href="gerenciarconta.css" />
-  <link rel="stylesheet" href="../PaginaInicial/paginaInicial.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <title>Gerenciar dados</title>
 </head>
 
 <body onload="consumirDadosPorId()">
+
+
   <div class="header">
-    <div class="container">
-      <div class="navbar">
-        <img src="../assets/images/navbarCircle.svg">
-        <div class="saudacao">
-          <h1>Olá, </h1>
-          <p>Gerencie sua Conta e Altere seus Dados:</p>
-        </div>
-      </div>
+    <div class="saudacao">
+      <h1>Olá, </h1>
+      <p>Gerencie sua Conta e Altere seus Dados:</p>
     </div>
   </div>
 
   <div class="gerenciarConta">
-    <div class="back">
-      <a onclick="voltarPaginaAnterior()"><p> < voltar</p></a>
-    </div>
     <div class="container">
       <div class="conteudoGerenciarConta">
         <div class="container">
           <div class="conteudoDadosEmpresaGerenciarConta">
+            <div class="botaoVoltar" onclick="voltarPaginaAnterior()">
+              <img src="../../assets/images/voltar.png" alt="">
+            </div>
             <div class="assistenteTituloGerenciarConta">
               <div class="tituloConteudoDadosEmpresaGerenciarConta">
                 <span>Dados Empresa</span>
@@ -105,12 +101,12 @@
 
                 <div class="inputsGerenciarConta">
                   <span>Nome completo</span>
-                  <input type="text" id="nomeFunc" disabled/>
+                  <input type="text" id="nomeFunc" disabled />
                 </div>
 
                 <div class="inputsGerenciarConta">
                   <span>Nível de acesso</span>
-                  <input type="text" id="nivelFunc" disabled/>
+                  <input type="text" id="nivelFunc" disabled />
                 </div>
               </div>
 
@@ -125,7 +121,7 @@
 
                 <div class="inputsGerenciarConta">
                   <span>Nova senha</span>
-                  <input type="password" id="novaSenha"/>
+                  <input type="password" id="novaSenha" />
                 </div>
                 <div class="inputsGerenciarConta">
                   <span>Confirmar senha</span>
@@ -147,9 +143,9 @@
   function consumirDadosPorId() {
     var idFunc = sessionStorage.idFuncionario;
     var idEmpresa;
-    if(sessionStorage.idEmpresa==null){
+    if (sessionStorage.idEmpresa == null) {
       idEmpresa = sessionStorage.fkEmpresa;
-    }else{
+    } else {
       idEmpresa = sessionStorage.idEmpresa;
     }
 
@@ -178,33 +174,33 @@
         console.error(`${error.message}`);
       });
 
-      if(sessionStorage.idFuncionario != null){
-        fetch(`/usuarios/buscar/${idFunc}`, { cache: "no-store" })
-      .then(function (response) {
-        if (response.ok) {
-          response.json().then(function (resposta) {
-            console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-            for (i = 0; i < resposta.length; i++) {
-              var dados = resposta[i];
-              emailFunc.value= dados.emailFuncionario;
-              nomeFunc.value = dados.nomeFuncionario;
-              nivelFunc.value = dados.tipoAcesso;
-              senhaAtual.value = dados.senhaFuncionario;
-            }
-          });
-        } else {
-          console.error("Nenhum dado encontrado ou erro na API");
-        }
-      })
-      .catch(function (error) {
-        console.error(`${error.message}`);
-      });
-      }
+    if (sessionStorage.idFuncionario != null) {
+      fetch(`/usuarios/buscar/${idFunc}`, { cache: "no-store" })
+        .then(function (response) {
+          if (response.ok) {
+            response.json().then(function (resposta) {
+              console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+              for (i = 0; i < resposta.length; i++) {
+                var dados = resposta[i];
+                emailFunc.value = dados.emailFuncionario;
+                nomeFunc.value = dados.nomeFuncionario;
+                nivelFunc.value = dados.tipoAcesso;
+                senhaAtual.value = dados.senhaFuncionario;
+              }
+            });
+          } else {
+            console.error("Nenhum dado encontrado ou erro na API");
+          }
+        })
+        .catch(function (error) {
+          console.error(`${error.message}`);
+        });
+    }
   }
 
 
   function enviarAlteracaoDados() {
-    
+
     Swal.fire({
       confirmButtonColor: "#004D02",
       denyButtonColor: "#b81414",
@@ -224,9 +220,9 @@
       }
     });
   }
-  
+
   function enviarAlteracaoDadosFunc() {
-    
+
     Swal.fire({
       confirmButtonColor: "#004D02",
       denyButtonColor: "#b81414",
@@ -247,7 +243,7 @@
   }
 
   function alterarDados() {
-    if(sessionStorage.idEmpresa){
+    if (sessionStorage.idEmpresa) {
       var idEmpresa = sessionStorage.idEmpresa;
     } else {
       var idEmpresa = sessionStorage.fkEmpresa;
@@ -257,77 +253,77 @@
     cepEmpresaVar = cepEmpresa.value;
     logEmpresaVar = logEmpresa.value;
     numVar = numEmpresa.value;
-    compVar = compEmpresa.value; 
+    compVar = compEmpresa.value;
     idEmpresaVar = idEmpresa;
-    
-    //senhaErrada.innerHTML = senhaVar!=confVar ? "As senhas são diferentes" : "";
-          fetch(`/usuarios/atualizarEmpresa/:${idEmpresa}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            // crie um atributo que recebe o valor recuperado aqui
-            // Agora vá para o arquivo routes/usuario.js
-            emailServer:emailVar,
-            telEmpresaServer:telEmpresaVar,
-            cepServer: cepEmpresaVar,
-            logServer: logEmpresaVar,
-            numServer:numVar,
-            compServer:compVar,
-            idEmpresaServer:idEmpresaVar
-          }),
-        })
-          .then(function (resposta) {
-            console.log("resposta: ", resposta);
-            if (resposta.ok) {
-              console.log("certin")
-            } else {
-              throw "Houve um erro ao tentar realizar o cadastro!";
-            }x
-          })
-          .catch(function (resposta) {
-            console.log(`#ERRO: ${resposta}`);
-          });
-    
-        return false;
-      }
 
-      
-  function alterarDadosFuncionario() {
-     var idFunc = sessionStorage.idFuncionario;
-    emailVar = emailFunc.value;
-    senhaVar = novaSenha.value; 
-    
     //senhaErrada.innerHTML = senhaVar!=confVar ? "As senhas são diferentes" : "";
-          fetch(`/usuarios/atualizarFuncionario/${idFunc}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            // crie um atributo que recebe o valor recuperado aqui
-            // Agora vá para o arquivo routes/usuario.js
-            novoEmailServer:emailVar,
-            novaSenhaServer:senhaVar, 
-            idFuncServer:idFunc
-          }),
-        })
-          .then(function (resposta) {
-            console.log("resposta: ", resposta);
-            if (resposta.ok) {
-              console.log("certin")
-            } else {
-              throw "Houve um erro ao tentar realizar o cadastro!";
-            }
-          })
-          .catch(function (resposta) {
-            console.log(`#ERRO: ${resposta}`);
-          });
-    
-        return false;
-      }
-    
+    fetch(`/usuarios/atualizarEmpresa/:${idEmpresa}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        emailServer: emailVar,
+        telEmpresaServer: telEmpresaVar,
+        cepServer: cepEmpresaVar,
+        logServer: logEmpresaVar,
+        numServer: numVar,
+        compServer: compVar,
+        idEmpresaServer: idEmpresaVar
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+        if (resposta.ok) {
+          console.log("certin")
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        } x
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+
+    return false;
+  }
+
+
+  function alterarDadosFuncionario() {
+    var idFunc = sessionStorage.idFuncionario;
+    emailVar = emailFunc.value;
+    senhaVar = novaSenha.value;
+
+    //senhaErrada.innerHTML = senhaVar!=confVar ? "As senhas são diferentes" : "";
+    fetch(`/usuarios/atualizarFuncionario/${idFunc}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        novoEmailServer: emailVar,
+        novaSenhaServer: senhaVar,
+        idFuncServer: idFunc
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+        if (resposta.ok) {
+          console.log("certin")
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+
+    return false;
+  }
+
 </script>
 <style>
   .swal2-popup {

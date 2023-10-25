@@ -7,4 +7,9 @@ function abrirMenuFlutuante(){
         menuFlutuante.style.display = 'flex'
     }
 }
+
+function voltarPaginaAnterior(){
+    window.history.back();
+}
+
   

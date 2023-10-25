@@ -124,7 +124,7 @@
 
           </div>
 
-          <div class="relatorio">
+          <div class="relatorio" id="divGerarRelatorio">
             <a class="btn" href="#open-modal"> <img width="25" height="25" src="../assets/images/iconPaper.svg" alt="">
               Gerar Relatório</a>
           </div>
@@ -184,18 +184,7 @@
             </div>
           </div>
 
-
-
-
-
-          <div class="cadastrarFunc">
-            <a href="CadastroFuncionario/cadastrofuncionario.html">
-              <img width="25" height="25" src="../assets/images/addFunc.svg" alt="">
-              <span>Cadastrar Funcionário</span>
-            </a>
-          </div>
-
-          <div class="botaoSair" onclick="sairDaDashboard()">
+          <div class="botaoSair" onclick="sairDaDashboard()" id="botaoSair">
             <svg width="25" height="25" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd"
                 d="M16.4415 17.2011L21.0039 11.8777C21.2217 11.6292 21.3332 11.3154 21.3334 11C21.3335 10.7842 21.2815 10.5676 21.1758 10.3706C21.1288 10.2828 21.0715 10.1994 21.0039 10.1223L16.4415 4.79894C15.9623 4.23982 15.1206 4.17502 14.5614 4.65422C14.0023 5.13342 13.9375 5.97515 14.4167 6.53427L17.1013 9.6666L6.77508 9.6666C6.03869 9.6666 5.44174 10.2636 5.44174 10.9999C5.44174 11.7363 6.03869 12.3333 6.77508 12.3333L17.1014 12.3333L14.4167 15.4658C13.9375 16.0249 14.0023 16.8666 14.5614 17.3458C15.1206 17.825 15.9623 17.7602 16.4415 17.2011ZM8.00004 2.99992C8.73642 2.99992 9.33337 3.59687 9.33337 4.33325L9.33337 6.33325C9.33337 7.06963 9.93033 7.66658 10.6667 7.66658C11.4031 7.66659 12 7.06963 12 6.33325L12 4.33325C12 2.12411 10.2092 0.333251 8.00004 0.333251L4.00004 0.333251C1.7909 0.333251 3.9976e-05 2.12411 3.98795e-05 4.33325L3.92967e-05 17.6666C3.92001e-05 19.8757 1.7909 21.6666 4.00004 21.6666L8.00004 21.6666C10.2092 21.6666 12 19.8757 12 17.6666L12 15.6666C12 14.9302 11.4031 14.3333 10.6667 14.3333C9.93033 14.3333 9.33337 14.9302 9.33337 15.6666L9.33337 17.6666C9.33337 18.403 8.73642 18.9999 8.00004 18.9999L4.00004 18.9999C3.26366 18.9999 2.66671 18.403 2.66671 17.6666L2.66671 4.33325C2.66671 3.59687 3.26366 2.99992 4.00004 2.99992L8.00004 2.99992Z"
@@ -282,7 +271,7 @@
 
       <div class="maquinasCadastradas">
 
-        <div id="boxAlertaMaquina" class="boxMaquinaCadastrada">
+        <div id="boxAlertaMaquina" class="boxMaquinaCadastrada" onclick="abrirDashboardEspecifica()">
 
           <div class="spanNomeSO">
             <div class="spanNome">
@@ -338,7 +327,7 @@
 
         </div>
 
-        <div class="boxMaquinaCadastrada">
+        <div class="boxMaquinaCadastrada" onclick="abrirDashboardEspecifica()">
 
           <div class="spanNomeSO">
             <div class="spanNome">
@@ -394,7 +383,7 @@
 
         </div>
 
-        <div class="boxMaquinaCadastrada">
+        <div class="boxMaquinaCadastrada" onclick="abrirDashboardEspecifica()">
 
           <div class="spanNomeSO">
             <div class="spanNome">
@@ -450,234 +439,7 @@
 
         </div>
 
-        <div class="boxMaquinaCadastrada">
-
-          <div class="spanNomeSO">
-            <div class="spanNome">
-              <span>Nome:</span>
-              <span id="spanNome">Notebook-Lucas</span>
-            </div>
-            <div class="spanSO">
-              <span>SO:</span>
-              <span id="spanSO">Windows</span>
-            </div>
-          </div>
-
-          <div class="iconeAlertasMaquinaCadastrada">
-
-            <div class="icone">
-              <svg width="100" height="100" viewBox="0 0 102 102" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M55.25 76.5V85H72.25V93.5H29.75V85H46.75V76.5H12.716C12.1575 76.4967 11.6052 76.3831 11.0908 76.1658C10.5763 75.9485 10.1099 75.6317 9.71817 75.2337C9.32645 74.8356 9.01719 74.3642 8.80814 73.8463C8.59909 73.3285 8.49436 72.7744 8.49997 72.216V17.034C8.49997 14.6667 10.4337 12.75 12.716 12.75H89.284C91.613 12.75 93.5 14.6582 93.5 17.0297V72.216C93.5 74.5833 91.5662 76.5 89.284 76.5H55.25Z"
-                  fill="black" />
-              </svg>
-            </div>
-
-            <div class="alertaMaquinaCadastrada">
-              <div class="spanAlerta">
-                <span>Em alerta:</span>
-              </div>
-
-              <div class="alertas">
-                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
-                    fill="#FF0000" />
-                </svg>
-                <span>CPU</span>
-              </div>
-
-              <div class="alertas">
-                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
-                    fill="#FF0000" />
-                </svg>
-                <span>RAM</span>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="localMaquinaCadastrada">
-            <span>Local:</span>
-            <span id="localMaquinaCadastrada">Rua Haddock Lobo, 999</span>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="maquinasCadastradas">
-
-        <div class="boxMaquinaCadastrada">
-
-          <div class="spanNomeSO">
-            <div class="spanNome">
-              <span>Nome:</span>
-              <span id="spanNome">Notebook-Lucas</span>
-            </div>
-            <div class="spanSO">
-              <span>SO:</span>
-              <span id="spanSO">Windows</span>
-            </div>
-          </div>
-
-          <div class="iconeAlertasMaquinaCadastrada">
-
-            <div class="icone">
-              <svg width="100" height="100" viewBox="0 0 102 102" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M55.25 76.5V85H72.25V93.5H29.75V85H46.75V76.5H12.716C12.1575 76.4967 11.6052 76.3831 11.0908 76.1658C10.5763 75.9485 10.1099 75.6317 9.71817 75.2337C9.32645 74.8356 9.01719 74.3642 8.80814 73.8463C8.59909 73.3285 8.49436 72.7744 8.49997 72.216V17.034C8.49997 14.6667 10.4337 12.75 12.716 12.75H89.284C91.613 12.75 93.5 14.6582 93.5 17.0297V72.216C93.5 74.5833 91.5662 76.5 89.284 76.5H55.25Z"
-                  fill="black" />
-              </svg>
-            </div>
-
-            <div class="alertaMaquinaCadastrada">
-              <div class="spanAlerta">
-                <span>Em alerta:</span>
-              </div>
-
-              <div class="alertas">
-                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
-                    fill="#FF0000" />
-                </svg>
-                <span>CPU</span>
-              </div>
-
-              <div class="alertas">
-                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
-                    fill="#FF0000" />
-                </svg>
-                <span>RAM</span>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="localMaquinaCadastrada">
-            <span>Local:</span>
-            <span id="localMaquinaCadastrada">Rua Haddock Lobo, 999</span>
-          </div>
-
-        </div>
-
-        <div class="boxMaquinaCadastrada">
-
-          <div class="spanNomeSO">
-            <div class="spanNome">
-              <span>Nome:</span>
-              <span id="spanNome">Notebook-Lucas</span>
-            </div>
-            <div class="spanSO">
-              <span>SO:</span>
-              <span id="spanSO">Windows</span>
-            </div>
-          </div>
-
-          <div class="iconeAlertasMaquinaCadastrada">
-
-            <div class="icone">
-              <svg width="100" height="100" viewBox="0 0 102 102" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M55.25 76.5V85H72.25V93.5H29.75V85H46.75V76.5H12.716C12.1575 76.4967 11.6052 76.3831 11.0908 76.1658C10.5763 75.9485 10.1099 75.6317 9.71817 75.2337C9.32645 74.8356 9.01719 74.3642 8.80814 73.8463C8.59909 73.3285 8.49436 72.7744 8.49997 72.216V17.034C8.49997 14.6667 10.4337 12.75 12.716 12.75H89.284C91.613 12.75 93.5 14.6582 93.5 17.0297V72.216C93.5 74.5833 91.5662 76.5 89.284 76.5H55.25Z"
-                  fill="black" />
-              </svg>
-            </div>
-
-            <div class="alertaMaquinaCadastrada">
-              <div class="spanAlerta">
-                <span>Em alerta:</span>
-              </div>
-
-              <div class="alertas">
-                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
-                    fill="#FF0000" />
-                </svg>
-                <span>CPU</span>
-              </div>
-
-              <div class="alertas">
-                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
-                    fill="#FF0000" />
-                </svg>
-                <span>RAM</span>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="localMaquinaCadastrada">
-            <span>Local:</span>
-            <span id="localMaquinaCadastrada">Rua Haddock Lobo, 999</span>
-          </div>
-
-        </div>
-
-        <div class="boxMaquinaCadastrada">
-
-          <div class="spanNomeSO">
-            <div class="spanNome">
-              <span>Nome:</span>
-              <span id="spanNome">Notebook-Lucas</span>
-            </div>
-            <div class="spanSO">
-              <span>SO:</span>
-              <span id="spanSO">Windows</span>
-            </div>
-          </div>
-
-          <div class="iconeAlertasMaquinaCadastrada">
-
-            <div class="icone">
-              <svg width="100" height="100" viewBox="0 0 102 102" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M55.25 76.5V85H72.25V93.5H29.75V85H46.75V76.5H12.716C12.1575 76.4967 11.6052 76.3831 11.0908 76.1658C10.5763 75.9485 10.1099 75.6317 9.71817 75.2337C9.32645 74.8356 9.01719 74.3642 8.80814 73.8463C8.59909 73.3285 8.49436 72.7744 8.49997 72.216V17.034C8.49997 14.6667 10.4337 12.75 12.716 12.75H89.284C91.613 12.75 93.5 14.6582 93.5 17.0297V72.216C93.5 74.5833 91.5662 76.5 89.284 76.5H55.25Z"
-                  fill="black" />
-              </svg>
-            </div>
-
-            <div class="alertaMaquinaCadastrada">
-              <div class="spanAlerta">
-                <span>Em alerta:</span>
-              </div>
-
-              <div class="alertas">
-                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
-                    fill="#FF0000" />
-                </svg>
-                <span>CPU</span>
-              </div>
-
-              <div class="alertas">
-                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
-                    fill="#FF0000" />
-                </svg>
-                <span>RAM</span>
-              </div>
-            </div>
-
-          </div>
-
-          <div class="localMaquinaCadastrada">
-            <span>Local:</span>
-            <span id="localMaquinaCadastrada">Rua Haddock Lobo, 999</span>
-          </div>
-
-        </div>
-
-        <div class="boxMaquinaCadastrada">
+        <div class="boxMaquinaCadastrada" onclick="abrirDashboardEspecifica()">
 
           <div class="spanNomeSO">
             <div class="spanNome">
@@ -736,7 +498,7 @@
 
       <div class="maquinasCadastradas">
 
-        <div class="boxMaquinaCadastrada">
+        <div class="boxMaquinaCadastrada" onclick="abrirDashboardEspecifica()">
 
           <div class="spanNomeSO">
             <div class="spanNome">
@@ -792,7 +554,7 @@
 
         </div>
 
-        <div class="boxMaquinaCadastrada">
+        <div class="boxMaquinaCadastrada" onclick="abrirDashboardEspecifica()">
 
           <div class="spanNomeSO">
             <div class="spanNome">
@@ -848,7 +610,7 @@
 
         </div>
 
-        <div class="boxMaquinaCadastrada">
+        <div class="boxMaquinaCadastrada" onclick="abrirDashboardEspecifica()">
 
           <div class="spanNomeSO">
             <div class="spanNome">
@@ -904,7 +666,234 @@
 
         </div>
 
-        <div class="boxMaquinaCadastrada">
+        <div class="boxMaquinaCadastrada" onclick="abrirDashboardEspecifica()">
+
+          <div class="spanNomeSO">
+            <div class="spanNome">
+              <span>Nome:</span>
+              <span id="spanNome">Notebook-Lucas</span>
+            </div>
+            <div class="spanSO">
+              <span>SO:</span>
+              <span id="spanSO">Windows</span>
+            </div>
+          </div>
+
+          <div class="iconeAlertasMaquinaCadastrada">
+
+            <div class="icone">
+              <svg width="100" height="100" viewBox="0 0 102 102" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M55.25 76.5V85H72.25V93.5H29.75V85H46.75V76.5H12.716C12.1575 76.4967 11.6052 76.3831 11.0908 76.1658C10.5763 75.9485 10.1099 75.6317 9.71817 75.2337C9.32645 74.8356 9.01719 74.3642 8.80814 73.8463C8.59909 73.3285 8.49436 72.7744 8.49997 72.216V17.034C8.49997 14.6667 10.4337 12.75 12.716 12.75H89.284C91.613 12.75 93.5 14.6582 93.5 17.0297V72.216C93.5 74.5833 91.5662 76.5 89.284 76.5H55.25Z"
+                  fill="black" />
+              </svg>
+            </div>
+
+            <div class="alertaMaquinaCadastrada">
+              <div class="spanAlerta">
+                <span>Em alerta:</span>
+              </div>
+
+              <div class="alertas">
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
+                    fill="#FF0000" />
+                </svg>
+                <span>CPU</span>
+              </div>
+
+              <div class="alertas">
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
+                    fill="#FF0000" />
+                </svg>
+                <span>RAM</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="localMaquinaCadastrada">
+            <span>Local:</span>
+            <span id="localMaquinaCadastrada">Rua Haddock Lobo, 999</span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="maquinasCadastradas">
+
+        <div class="boxMaquinaCadastrada" onclick="abrirDashboardEspecifica()">
+
+          <div class="spanNomeSO">
+            <div class="spanNome">
+              <span>Nome:</span>
+              <span id="spanNome">Notebook-Lucas</span>
+            </div>
+            <div class="spanSO">
+              <span>SO:</span>
+              <span id="spanSO">Windows</span>
+            </div>
+          </div>
+
+          <div class="iconeAlertasMaquinaCadastrada">
+
+            <div class="icone">
+              <svg width="100" height="100" viewBox="0 0 102 102" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M55.25 76.5V85H72.25V93.5H29.75V85H46.75V76.5H12.716C12.1575 76.4967 11.6052 76.3831 11.0908 76.1658C10.5763 75.9485 10.1099 75.6317 9.71817 75.2337C9.32645 74.8356 9.01719 74.3642 8.80814 73.8463C8.59909 73.3285 8.49436 72.7744 8.49997 72.216V17.034C8.49997 14.6667 10.4337 12.75 12.716 12.75H89.284C91.613 12.75 93.5 14.6582 93.5 17.0297V72.216C93.5 74.5833 91.5662 76.5 89.284 76.5H55.25Z"
+                  fill="black" />
+              </svg>
+            </div>
+
+            <div class="alertaMaquinaCadastrada">
+              <div class="spanAlerta">
+                <span>Em alerta:</span>
+              </div>
+
+              <div class="alertas">
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
+                    fill="#FF0000" />
+                </svg>
+                <span>CPU</span>
+              </div>
+
+              <div class="alertas">
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
+                    fill="#FF0000" />
+                </svg>
+                <span>RAM</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="localMaquinaCadastrada">
+            <span>Local:</span>
+            <span id="localMaquinaCadastrada">Rua Haddock Lobo, 999</span>
+          </div>
+
+        </div>
+
+        <div class="boxMaquinaCadastrada" onclick="abrirDashboardEspecifica()">
+
+          <div class="spanNomeSO">
+            <div class="spanNome">
+              <span>Nome:</span>
+              <span id="spanNome">Notebook-Lucas</span>
+            </div>
+            <div class="spanSO">
+              <span>SO:</span>
+              <span id="spanSO">Windows</span>
+            </div>
+          </div>
+
+          <div class="iconeAlertasMaquinaCadastrada">
+
+            <div class="icone">
+              <svg width="100" height="100" viewBox="0 0 102 102" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M55.25 76.5V85H72.25V93.5H29.75V85H46.75V76.5H12.716C12.1575 76.4967 11.6052 76.3831 11.0908 76.1658C10.5763 75.9485 10.1099 75.6317 9.71817 75.2337C9.32645 74.8356 9.01719 74.3642 8.80814 73.8463C8.59909 73.3285 8.49436 72.7744 8.49997 72.216V17.034C8.49997 14.6667 10.4337 12.75 12.716 12.75H89.284C91.613 12.75 93.5 14.6582 93.5 17.0297V72.216C93.5 74.5833 91.5662 76.5 89.284 76.5H55.25Z"
+                  fill="black" />
+              </svg>
+            </div>
+
+            <div class="alertaMaquinaCadastrada">
+              <div class="spanAlerta">
+                <span>Em alerta:</span>
+              </div>
+
+              <div class="alertas">
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
+                    fill="#FF0000" />
+                </svg>
+                <span>CPU</span>
+              </div>
+
+              <div class="alertas">
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
+                    fill="#FF0000" />
+                </svg>
+                <span>RAM</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="localMaquinaCadastrada">
+            <span>Local:</span>
+            <span id="localMaquinaCadastrada">Rua Haddock Lobo, 999</span>
+          </div>
+
+        </div>
+
+        <div class="boxMaquinaCadastrada" onclick="abrirDashboardEspecifica()">
+
+          <div class="spanNomeSO">
+            <div class="spanNome">
+              <span>Nome:</span>
+              <span id="spanNome">Notebook-Lucas</span>
+            </div>
+            <div class="spanSO">
+              <span>SO:</span>
+              <span id="spanSO">Windows</span>
+            </div>
+          </div>
+
+          <div class="iconeAlertasMaquinaCadastrada">
+
+            <div class="icone">
+              <svg width="100" height="100" viewBox="0 0 102 102" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M55.25 76.5V85H72.25V93.5H29.75V85H46.75V76.5H12.716C12.1575 76.4967 11.6052 76.3831 11.0908 76.1658C10.5763 75.9485 10.1099 75.6317 9.71817 75.2337C9.32645 74.8356 9.01719 74.3642 8.80814 73.8463C8.59909 73.3285 8.49436 72.7744 8.49997 72.216V17.034C8.49997 14.6667 10.4337 12.75 12.716 12.75H89.284C91.613 12.75 93.5 14.6582 93.5 17.0297V72.216C93.5 74.5833 91.5662 76.5 89.284 76.5H55.25Z"
+                  fill="black" />
+              </svg>
+            </div>
+
+            <div class="alertaMaquinaCadastrada">
+              <div class="spanAlerta">
+                <span>Em alerta:</span>
+              </div>
+
+              <div class="alertas">
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
+                    fill="#FF0000" />
+                </svg>
+                <span>CPU</span>
+              </div>
+
+              <div class="alertas">
+                <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
+                    fill="#FF0000" />
+                </svg>
+                <span>RAM</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="localMaquinaCadastrada">
+            <span>Local:</span>
+            <span id="localMaquinaCadastrada">Rua Haddock Lobo, 999</span>
+          </div>
+
+        </div>
+
+        <div class="boxMaquinaCadastrada" onclick="abrirDashboardEspecifica()">
 
           <div class="spanNomeSO">
             <div class="spanNome">

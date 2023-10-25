@@ -6,34 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="../js/funcoes.js"></script>
     <link rel="stylesheet" href="gerenciarfuncionario.css" />
-    <link rel="stylesheet" href="../../PaginaInicial/paginaInicial.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <title>Gerenciar Funcionário</title>
 </head>
 
 <body onload="consumirDadosPorIdFuncionario()">
     <div class="header">
-        <div class="container">
-            <div class="navbar">
-                <img src="../../assets/images/navbarCircle.svg">
-                <div class="saudacao">
-                    <h1>Olá, <span id="funcionario"></span></h1>
-                    <p>Gerencie sua Conta e Altere seus Dados:</p>
-                </div>
-            </div>
+        <div class="saudacao">
+            <h1>Olá, <span id="funcionario"></span></h1>
+            <p>Gerencie sua Conta e Altere seus Dados:</p>
         </div>
     </div>
 
     <div class="gerenciarConta">
-        <div class="back" onclick="voltarPaginaAnterior()">
-            <a href="#">
-                <p> voltar</p>
-            </a>
-        </div>
         <div class="container">
             <div class="conteudoGerenciarConta">
                 <div class="container">
                     <div class="conteudoDadosEmpresaGerenciarConta">
+                        <div class="botaoVoltar" onclick="voltarPaginaAnterior()">
+                            <img src="../../assets/images/voltar.png" alt="">
+                        </div>
                         <div class="assistenteTituloGerenciarConta">
                             <div class="conteudoDadosPessoaisGerenciarconta">
                                 <div class="tituloDadosPessoaisGerenciarConta">
@@ -156,6 +148,9 @@
                 spanErroSenha.style.display = "none"
             }, "2000");
         } else {
+            if (novaSenhaVar == '' || novaSenhaVar == null) {
+                novaSenhaVar = senhaAtualFunc.value
+            }
             fetch(`/usuarios/atualizarFuncionario/${idFunc}`, {
                 method: "POST",
                 headers: {
@@ -164,8 +159,8 @@
                 body: JSON.stringify({
                     // crie um atributo que recebe o valor recuperado aqui
                     // Agora vá para o arquivo routes/usuario.js
-                    novoEmailServer:novoEmailVar,
-                    novaSenhaServer:novaSenhaVar,
+                    novoEmailServer: novoEmailVar,
+                    novaSenhaServer: novaSenhaVar,
                     idFuncServer: idFunc
                 }),
             })
