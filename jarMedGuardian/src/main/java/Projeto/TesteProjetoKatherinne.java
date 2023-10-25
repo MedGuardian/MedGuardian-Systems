@@ -1,14 +1,11 @@
 package Projeto;
 
-import Projeto.Componente;
-import Projeto.EnviarBD;
 import com.github.britooo.looca.api.core.Looca;
 import java.io.IOException;
 
 import java.util.*;
 
-public class TesteProjetoLucas {
-
+public class TesteProjetoKatherinne {
     public static void main(String[] args) {
 
         Looca looca = new Looca();
@@ -30,38 +27,6 @@ public class TesteProjetoLucas {
         int pid;
 
         do {
-            for(int i = 0; i < looca.getGrupoDeJanelas().getJanelasVisiveis().size(); i++){
-                if(!looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().isEmpty()){
-                    System.out.println(looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo());;
-                }
-            }
-
-            for(int i = 0; i < looca.getGrupoDeProcessos().getProcessos().size(); i++){
-                if(looca.getGrupoDeProcessos().getProcessos().get(i).getNome().contains("word")){
-                    pid = looca.getGrupoDeProcessos().getProcessos().get(i).getPid();
-
-
-                    if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                        // Se estiver em um sistema Windows
-                        try {
-                            Process process = Runtime.getRuntime().exec("taskkill /F /PID " + pid);
-                            process.waitFor();
-                            System.out.println("O processo com PID " + pid + " foi encerrado.");
-                        } catch (IOException | InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    } else {
-                        try {
-                            Process process = Runtime.getRuntime().exec("kill " + pid);
-                            process.waitFor();
-                            System.out.println("O processo com PID " + pid + " foi encerrado.");
-                        } catch (IOException | InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-
             System.out.println("Digite o email: ");
             Scanner leitorEmail = new Scanner(System.in);
             String email = leitorEmail.nextLine();
@@ -169,5 +134,4 @@ public class TesteProjetoLucas {
             }
         }, delay, interval);
     }
-
 }
