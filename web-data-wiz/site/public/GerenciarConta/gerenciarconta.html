@@ -186,7 +186,7 @@
             console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
             for (i = 0; i < resposta.length; i++) {
               var dados = resposta[i];
-              emailFunc.value=dados.emailFuncionario;
+              emailFunc.value= dados.emailFuncionario;
               nomeFunc.value = dados.nomeFuncionario;
               nivelFunc.value = dados.tipoAcesso;
               senhaAtual.value = dados.senhaFuncionario;
@@ -204,6 +204,7 @@
 
 
   function enviarAlteracaoDados() {
+    
     Swal.fire({
       confirmButtonColor: "#004D02",
       denyButtonColor: "#b81414",
@@ -217,6 +218,28 @@
       if (result.isConfirmed) {
         Swal.fire("Alterações salvas!", "", "success");
         alterarDados();
+        alterarDadosFuncionario();
+      } else if (result.isDenied) {
+        Swal.fire("Alterações canceladas", "", "info");
+      }
+    });
+  }
+  
+  function enviarAlteracaoDadosFunc() {
+    
+    Swal.fire({
+      confirmButtonColor: "#004D02",
+      denyButtonColor: "#b81414",
+      title: "Deseja atualizar os dados?",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Sim",
+      denyButtonText: `Não`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire("Alterações salvas!", "", "success");
+        alterarDadosFuncionario();
       } else if (result.isDenied) {
         Swal.fire("Alterações canceladas", "", "info");
       }
@@ -253,6 +276,41 @@
             numServer:numVar,
             compServer:compVar,
             idEmpresaServer:idEmpresaVar
+          }),
+        })
+          .then(function (resposta) {
+            console.log("resposta: ", resposta);
+            if (resposta.ok) {
+              console.log("certin")
+            } else {
+              throw "Houve um erro ao tentar realizar o cadastro!";
+            }x
+          })
+          .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+          });
+    
+        return false;
+      }
+
+      
+  function alterarDadosFuncionario() {
+     var idFunc = sessionStorage.idFuncionario;
+    emailVar = emailFunc.value;
+    senhaVar = novaSenha.value; 
+    
+    //senhaErrada.innerHTML = senhaVar!=confVar ? "As senhas são diferentes" : "";
+          fetch(`/usuarios/atualizarFuncionario/${idFunc}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            // crie um atributo que recebe o valor recuperado aqui
+            // Agora vá para o arquivo routes/usuario.js
+            novoEmailServer:emailVar,
+            novaSenhaServer:senhaVar, 
+            idFuncServer:idFunc
           }),
         })
           .then(function (resposta) {

@@ -47,7 +47,7 @@
                                     <div class="conteudoEsquerda" id="conteudoEsquerdaDadosPessoais">
                                         <div class="inputsGerenciarConta">
                                             <span>E-mail cadastrado</span>
-                                            <input type="text" id="emailFunc" disabled />
+                                            <input type="text" id="emailFunc" />
                                         </div>
 
                                         <div class="inputsGerenciarConta">
@@ -142,6 +142,7 @@
 
     function alterarDadosFuncionario() {
 
+        var novoEmailVar = emailFunc.value;
         var novaSenhaVar = novaSenhaFunc.value;
         var confirmarSenhaVar = confirmarSenhaFunc.value;
         var idFunc = sessionStorage.idFuncionario;
@@ -155,7 +156,7 @@
                 spanErroSenha.style.display = "none"
             }, "2000");
         } else {
-            fetch(`/usuarios/atualizarFuncionario/:${idFunc}`, {
+            fetch(`/usuarios/atualizarFuncionario/${idFunc}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -163,7 +164,8 @@
                 body: JSON.stringify({
                     // crie um atributo que recebe o valor recuperado aqui
                     // Agora vá para o arquivo routes/usuario.js
-                    novaSenhaServer: novaSenhaVar,
+                    novoEmailServer:novoEmailVar,
+                    novaSenhaServer:novaSenhaVar,
                     idFuncServer: idFunc
                 }),
             })

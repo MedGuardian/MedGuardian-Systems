@@ -114,10 +114,11 @@ function atualizarEmpresa(req, res) {
 
 function atualizarFuncionario(req, res) {
     
-    var novaSenha = req.novaSenhaServer
+    var novoEmail = req.body.novoEmailServer;
+    var novaSenha = req.body.novaSenhaServer;
     var idFunc = req.params.idFunc; 
  
-         usuarioModel.atualizarFuncionario(novaSenha, idFunc)
+         usuarioModel.atualizarFuncionario(novoEmail, novaSenha, idFunc)
              .then(
                  function (resultadoAutenticar) {
                      console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
