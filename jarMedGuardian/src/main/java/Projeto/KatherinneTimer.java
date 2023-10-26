@@ -83,7 +83,6 @@ public class KatherinneTimer {
             idComputador = bancoDeDados.selectIdComputador(nomeComputador);
         }
 
-
         Integer finalIdComputador = idComputador;
         return new TimerTask() {
             public void run() {
@@ -133,11 +132,8 @@ public class KatherinneTimer {
                         }
                         case "REDE" ->
                                 bancoDeDados.insertRegistro(redeAtual, "Velocidade", 4);
-                    }
-                }
-            }
-        };
-    }
+                    }}}
+        };}
 
     public void zerarTimer() {
         timer.cancel();
@@ -147,7 +143,6 @@ public class KatherinneTimer {
     public void resetar() {
         timer = new Timer();
         timerTask = criarTask();
-
         executar();
     }
 
