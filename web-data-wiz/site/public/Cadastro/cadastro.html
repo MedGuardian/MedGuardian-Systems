@@ -155,6 +155,13 @@
 
 </html>
 <script>
+
+inputCNPJ.value = "60448040000122"
+inputSenha.value = "12345678"
+inputConfirmarSenha.value = "12345678"
+inputEmail.value = "clinicas@gmail.com"
+
+
   var cnpjPre;
   function cnpjApi(cnpj){
     // https://brasilapi.com.br/api/cnpj/v1/{cnpj}
@@ -171,7 +178,6 @@
         console.log(json)
         inputRazaoSocial.value=json.razao_social
         inputLogradouro.value = json.logradouro
-        inputEmail.value = json.email
         inputComplemento.value = json.complemento
         inputNumero.value = json.numero
         inputContato.value = json.ddd_telefone_1

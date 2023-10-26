@@ -41,9 +41,8 @@ public class TesteProjetoPedro {
         } while (!logado);
 
         if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
-            bancoDeDados.insertComputador(nomeComputador);
+            bancoDeDados.insertComputador(nomeComputador, bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario));
             idComputador = bancoDeDados.selectIdComputador(nomeComputador);
-            bancoDeDados.insertFuncionarioDoDia(idFuncionario, idComputador);
             if(!looca.getGrupoDeDiscos().getVolumes().isEmpty()){
                 for(int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
                     bancoDeDados.insertComponente(HD.getNomeComponente() + (i + 1));

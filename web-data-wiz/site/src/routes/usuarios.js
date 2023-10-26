@@ -31,5 +31,16 @@ router.post("/atualizarFuncionario/:idFunc", function (req, res) {
     usuarioController.atualizarFuncionario(req, res);
 })
 
+router.post("/excluirMaquina", function (req, res) {
+    usuarioController.excluirMaquina(req, res);
+})
+
+router.post("/selectComputador", function (req, res) {
+    usuarioController.selectComputador(req, res);
+})
+
+router.post("/deletarTuplaPeloId", function (req, res) {
+    usuarioController.deletarTuplaPeloId(req, res);
+})
 
 module.exports = router;

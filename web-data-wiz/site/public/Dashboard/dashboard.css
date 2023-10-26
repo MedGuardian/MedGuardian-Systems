@@ -351,9 +351,10 @@ body{
     cursor: pointer;
 }
 
-.spanNomeSO{
+.spanIconesCardDashboard{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .spanNomeSO span {
@@ -386,7 +387,7 @@ body{
 
 .spanAlerta{
     font-weight: 600;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .alertas{
@@ -594,4 +595,169 @@ body{
   .botao-relatorio:hover{
     transition: 0.5s;
     transform: scale(1.05);
+  }
+
+.iconesCardDashboard{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: -5%;
+    gap: 5px;
+}
+
+.modalExcluirMaquina{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    display: flex;
+    background-color: rgb(255, 255, 255);
+    width: 25%;
+    z-index: 2;
+    border-radius: 15px;
+    font-family: LeagueSpartan;
+    display: none;
+}
+
+.modalExcluirMaquina .container{
+    display: flex;
+    width: 90%;
+    margin: auto;
+}
+.conteudoModalExcluirMaquina{
+    display: flex;
+    flex-direction: column;
+}
+
+.iconesModalExcluirMaquina{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.textosModalExcluirMaquina{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10%;
+}
+
+.tituloModalExcluirMaquina{
+    font-size: 25px;
+    font-weight: 600;
+    color: black;
+}
+
+.descricaoModalExcluirMaquina{
+    font-size: 15px;
+    margin-top: 2%;
+}
+
+.botoesModalExcluirMaquina{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10% 0 5% 0 ;
+}
+
+.botoesModalExcluirMaquina button {
+    width: 45%;
+    padding: 3% 0;
+    font-size: 18px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-family: LeagueSpartan;
+}
+
+#botaoCancelarModalExcluirMaquina{
+    background-color: #ffffff;
+    border: 1px solid rgba(0,0,0,0.5);
+}
+
+#botaoConfirmarExcluirMaquina{
+    background-color: #D92D20;
+    color: white;
+}
+
+.AlterarMaquina{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    display: flex;
+    background-color: rgb(255, 255, 255);
+    width: 25%;
+    z-index: 2;
+    border-radius: 15px;
+    font-family: LeagueSpartan;
+    display: none;
+}
+
+.AlterarMaquina .container{
+    display: flex;
+    width: 90%;
+    margin: auto;
+}
+.conteudoAlterarMaquina{
+    display: flex;
+    flex-direction: column;
+}
+
+.iconesAlterarMaquina{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.textosAlterarMaquina{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10%;
+}
+
+.tituloAlterarMaquina{
+    font-size: 25px;
+    font-weight: 600;
+    color: black;
+}
+
+.descricaoAlterarMaquina{
+    font-size: 15px;
+    margin-top: 2%;
+}
+
+.botoesAlterarMaquina{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 10% 0 5% 0 ;
+}
+
+.botoesAlterarMaquina button {
+    width: 45%;
+    padding: 3% 0;
+    font-size: 18px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-family: LeagueSpartan;
+}
+
+#botaoCancelarAlterarMaquina{
+    background-color: #ffffff;
+    border: 1px solid rgba(0,0,0,0.5);
+}
+
+#botaoConfirmarAlterarMaquina{
+    background-color: #D92D20;
+    color: white;
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
   }

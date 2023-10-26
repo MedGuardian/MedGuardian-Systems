@@ -394,3 +394,197 @@ const config_grafico4 = {
 
 const grafico_4 = new Chart(grafico4, config_grafico4);
 
+function fecharModal(){
+    const modalExcluirMaquina = document.getElementById("modalExcluirMaquina");
+    const overlay = document.getElementById("overlay");
+    const AlterarMaquina = document.getElementById("AlterarMaquina");
+  
+    AlterarMaquina.style.display = "none"
+    modalExcluirMaquina.style.display = "none";
+    overlay.style.display = "none";
+  }
+
+  function abrirModalExcluirMaquina(){
+    const modalExcluirMaquina = document.getElementById("modalExcluirMaquina");
+    const overlay = document.getElementById("overlay");
+  
+    modalExcluirMaquina.style.display = "block";
+    overlay.style.display = "block";
+  
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth" 
+    });
+  
+  }
+
+  function abrirModalAlterarMaquina(){
+    const AlterarMaquina = document.getElementById("AlterarMaquina");
+    const overlay = document.getElementById("overlay");
+  
+    AlterarMaquina.style.display = "block";
+    overlay.style.display = "block";
+  
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth" 
+    });
+  
+  }
+
+  const iconeLixeira = document.getElementById('iconeLixeira');
+const maquina1 = document.getElementById('maquina1');
+const iconeAlterarMaquina = document.getElementById('iconeAlterarMaquina')
+
+// Função associada à div exterior
+function funcaoDivExterior() {
+  console.log('Função da Div Exterior');
+}
+
+// Função associada à div interior
+function funcaoDivInterior() {
+  console.log('Função da Div Interior');
+}
+
+maquina1.addEventListener('click', (event) => {
+  if (event.target === maquina1 || maquina1.contains(event.target)) {
+    abrirDashboardEspecifica();
+  }
+});
+
+iconeLixeira.addEventListener('click', (event) => {
+  if (event.target === iconeLixeira) {
+    abrirModalExcluirMaquina();
+  }
+});
+
+iconeAlterarMaquina.addEventListener('click', (event) => {
+    if (event.target === iconeAlterarMaquina) {
+      abrirModalAlterarMaquina();
+    }
+  });
+
+  function excluirMaquina() {
+    
+    var nomeMaquinaVar = "Notebook-Lucas";
+
+    var idComputadorVar = 1;
+    deletarTuplaPeloId(1);
+
+    fetch("/usuarios/excluirMaquina", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            nomeMaquinaServer: nomeMaquinaVar,
+            idComputadorServer: idComputadorVar
+        })
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO entrar()!")
+        if (resposta.ok) {
+            console.log(resposta);
+            resposta.json().then(json => {
+                console.log(json);
+                console.log(JSON.stringify(json));
+                
+                alert("Máquina: Notebook-Lucas excluída")
+
+            });
+
+        } else {
+            alert("Erro na exclusão!")
+
+            resposta.text().then(texto => {
+                console.error(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    })
+
+    return false;
+}
+
+var idComputador;
+
+function selectComputador() {
+    
+    var nomeMaquinaVar = "Notebook-Lucas";
+
+    fetch("/usuarios/excluirMaquina", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            nomeMaquinaServer: nomeMaquinaVar,
+        })
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO entrar()!")
+        if (resposta.ok) {
+            console.log(resposta);
+            resposta.json().then(json => {
+                console.log(json);
+                console.log(JSON.stringify(json));
+                idComputador = json.idComputador
+                alert("Fiz o select do computador! ID: " + idComputador)
+                return idComputador;
+            });
+
+        } else {
+            alert("Erro na exclusão!")
+
+            resposta.text().then(texto => {
+                console.error(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    })
+
+    return false;
+}
+
+function deletarTuplaPeloId(idComputador){
+
+    var fkComputadorVar = idComputador;
+
+    fetch("/usuarios/deletarTuplaPeloId", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            fkComputadorServer: fkComputadorVar,
+        })
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO entrar()!")
+        if (resposta.ok) {
+            console.log(resposta);
+            resposta.json().then(json => {
+                console.log(json);
+                console.log(JSON.stringify(json));
+                idComputador = json.idComputador
+                alert("Deletei a tupla do spec")
+                return idComputador;
+            });
+
+        } else {
+            alert("Erro na exclusão!")
+
+            resposta.text().then(texto => {
+                console.error(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    })
+
+    return false;
+}
+
+

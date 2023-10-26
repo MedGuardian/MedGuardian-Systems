@@ -1,7 +1,5 @@
 package Projeto;
 
-import Projeto.Componente;
-import Projeto.EnviarBD;
 import com.github.britooo.looca.api.core.Looca;
 import java.io.IOException;
 
@@ -37,7 +35,7 @@ public class TesteProjetoLucas {
             }
 
             for(int i = 0; i < looca.getGrupoDeProcessos().getProcessos().size(); i++){
-                if(looca.getGrupoDeProcessos().getProcessos().get(i).getNome().contains("word")){
+                if(looca.getGrupoDeProcessos().getProcessos().get(i).getNome().contains("steam")){
                     pid = looca.getGrupoDeProcessos().getProcessos().get(i).getPid();
 
 
@@ -76,9 +74,8 @@ public class TesteProjetoLucas {
         } while (!logado);
 
         if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
-            bancoDeDados.insertComputador(nomeComputador);
+            bancoDeDados.insertComputador(nomeComputador, bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario));
             idComputador = bancoDeDados.selectIdComputador(nomeComputador);
-            bancoDeDados.insertFuncionarioDoDia(idFuncionario, idComputador);
             if(!looca.getGrupoDeDiscos().getVolumes().isEmpty()){
                 for(int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
                     bancoDeDados.insertComponente(HD.getNomeComponente() + (i + 1));

@@ -219,7 +219,7 @@ function atualizarCoresCardsLaterais(){
 function atualizarValoresCardsLaterais(){
     var numeroAleatorioCpu = Math.floor(Math.random() * 101);
     var numeroAleatorioDisco = Math.floor(Math.random() * 101);
-    var numeroAleatorioRam = (Math.random() * 7.8).toFixed(2);;
+    var numeroAleatorioRam = (Math.random() * 7.8).toFixed(1);;
 
     return [numeroAleatorioCpu, numeroAleatorioDisco, parseFloat(numeroAleatorioRam)]
 }

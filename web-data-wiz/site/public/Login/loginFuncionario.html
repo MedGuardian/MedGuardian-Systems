@@ -48,7 +48,7 @@
                         <input type="text" id="inputEmail">
                         <span>Senha</span>
                         <input type="password" id="inputSenha">
-                        <span id="spanErro"></span>
+                        <span id="spanErro">E-mail ou senha inválido(s)</span>
                     </div>
                     
 
@@ -72,7 +72,10 @@
 
 </html>
 <script>
+    inputEmail.value = "lucas@clinicas.com"
+    inputSenha.value = "12345678"
     function logarUser(){
+        const spanErro = document.getElementById("spanErro")
 
         var emailVar = inputEmail.value;
         var senhaVar = inputSenha.value;
@@ -106,12 +109,15 @@
                     setTimeout(function () {
                         window.location = "../Dashboard/dashboard.html";
                     }, 1000); 
-                    
                 });
                 
             } else {
-
+                spanErro.style.display = "flex";
                 console.log("Houve um erro ao tentar realizar o login!");
+
+                setTimeout(function (){
+                    spanErro.style.display = "none";
+                }, 3000)
 
                 resposta.text().then(texto => {
                     console.error(texto);
