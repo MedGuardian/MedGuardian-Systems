@@ -25,7 +25,7 @@ public class Conexao {
         */
         dataSource.setUrl("jdbc:mysql://localhost:3306/medguardian");
         dataSource.setUsername("root");
-        dataSource.setPassword("@21102002Lu");
+        dataSource.setPassword("272505");
 
         conexaoDoBanco = new JdbcTemplate(dataSource);
     }
