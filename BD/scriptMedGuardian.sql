@@ -80,6 +80,8 @@ SELECT * FROM componente;
 SELECT * FROM especificacao;
 SELECT * FROM registro JOIN especificacao ON fkEspecificacao = idEspecificacao JOIN componente ON fkComponente = idComponente;
 
+delete from especificacao where fkComputador = 1;
+
 select * from registro join especificacao
 	on fkEspecificacao = idEspecificacao
 		join computador
