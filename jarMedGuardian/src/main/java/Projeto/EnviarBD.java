@@ -57,6 +57,7 @@ public class EnviarBD {
 
     public void insertRegistro(Double registro, String tipoCaptura, Integer fkEspecificacao){
         con.update("INSERT INTO registro (dataHoraRegistro, registro, tipoCaptura, fkEspecificacao) VALUES (?,?,?,?)", dataHoraAtual(), registro, tipoCaptura, fkEspecificacao);
+        System.out.println();
     }
 
     public void insertComputador(String nomeComputador){
@@ -80,6 +81,10 @@ public class EnviarBD {
         List<Computador> computador = con.query("SELECT * FROM computador WHERE nomeComputador = ?", new BeanPropertyRowMapper<>(Computador.class), nomeComputador);
 
         return computador.get(0).getIdComputador();
+    }
+
+    public List<Registro> selectRegistro(){
+        return con.query("SELECT * FROM registro", new BeanPropertyRowMapper<>(Registro.class));
     }
 
 
