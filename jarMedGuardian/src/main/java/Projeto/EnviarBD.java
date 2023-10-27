@@ -16,10 +16,7 @@ public class EnviarBD {
     int i = 0;
     public List<Funcionario> autenticarUsuario(String email, String senha){
         List<Funcionario> usuario = con.query("SELECT * FROM funcionario WHERE emailFuncionario = ? AND senhaFuncionario = ?", new BeanPropertyRowMapper<>(Funcionario.class), email, senha);
-        if(i < 1){
             mostrarMensagem(usuario);
-        }
-        i++;
         return usuario;
     }
 
@@ -31,8 +28,11 @@ public class EnviarBD {
     public void insertEspecificacao(Integer fkComputador, Integer fkComponente, Double totalComponente){
         con.update("INSERT INTO especificacao (fkComputador, fkComponente, totalComponente) VALUES (?, ?, ?)", fkComputador, fkComponente, totalComponente);
     }
-    public void insertFuncionarioDoDia(Integer idFuncionario, Integer idComputador){
-        con.update("INSERT INTO funcionarioDoDia (fkFuncionario, fkComputador, dataHora) VALUES (?,?,?)", idFuncionario, idComputador, dataHoraAtual());
+
+    public Integer getFkEmpresaDaMaquinaPeloNome(String nomeComputador){
+        List<Computador> computador = con.query("SELECT * FROM computador WHERE nomeComputador = ?", new BeanPropertyRowMapper<>(Computador.class),nomeComputador);
+
+        return computador.get(0).getFkEmpresa();
     }
 
     public Boolean verificarComputadorCadastrado(String nomeComputador){
@@ -46,13 +46,7 @@ public class EnviarBD {
             System.out.println("""
                 E-MAIL OU SENHA INVÁLIDO, TENTAR NOVAMENTE...
                 """);
-        } else {
-            System.out.println("""
-                USUÁRIO %s AUTENTICADO COM SUCESSO!
-                INICIANDO A CAPTURA DE DADOS DA MÁQUINA...
-                """.formatted(usuario.get(0).getNomeFuncionario()));
         }
-
     }
 
     public void insertRegistro(Double registro, String tipoCaptura, Integer fkEspecificacao){
@@ -60,8 +54,8 @@ public class EnviarBD {
         System.out.println();
     }
 
-    public void insertComputador(String nomeComputador){
-        con.update("INSERT INTO computador (nomeComputador) VALUES (?)",nomeComputador);
+    public void insertComputador(String nomeComputador, Integer fkEmpresa){
+        con.update("INSERT INTO computador (nomeComputador, fkEmpresa) VALUES (?, ?)",nomeComputador, fkEmpresa);
     }
     public String dataHoraAtual(){
         LocalDateTime dataHoraAtual = LocalDateTime.now();
@@ -83,8 +77,15 @@ public class EnviarBD {
         return computador.get(0).getIdComputador();
     }
 
+<<<<<<< HEAD
     public List<Registro> selectRegistro(){
         return con.query("SELECT * FROM registro", new BeanPropertyRowMapper<>(Registro.class));
+=======
+    public Integer getFkEmpresaPorIdFuncionario(Integer idFuncionario){
+        List<Funcionario> funcionario = con.query("SELECT * FROM funcionario WHERE idFuncionario = ?", new BeanPropertyRowMapper<>(Funcionario.class), idFuncionario);
+
+        return funcionario.get(0).getFkEmpresa();
+>>>>>>> 9a3e23351bbc74f5a37b39cd75c15b1d84a26245
     }
 
 

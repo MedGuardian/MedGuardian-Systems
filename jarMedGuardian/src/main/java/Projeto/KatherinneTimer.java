@@ -1,13 +1,21 @@
 package Projeto;
 
 import com.github.britooo.looca.api.core.Looca;
-import java.io.IOException;
 
-import java.util.*;
+import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class TesteProjetoVictor {
-    public static void main(String[] args) {
+public class KatherinneTimer {
+    private Timer timer;
+    private TimerTask timerTask;
 
+    public KatherinneTimer() {
+        timer = new Timer();
+        timerTask = criarTask();
+    }
+
+    private TimerTask criarTask() {
         Looca looca = new Looca();
         EnviarBD bancoDeDados = new EnviarBD();
 
@@ -75,12 +83,8 @@ public class TesteProjetoVictor {
             idComputador = bancoDeDados.selectIdComputador(nomeComputador);
         }
 
-        Timer timer = new Timer();
-        int delay = 0; // Tempo de espera antes da primeira execução (0 significa que será executado imediatamente)
-        int interval = 3000; // Intervalo entre as execuções em milissegundos (5 segundos)
-
         Integer finalIdComputador = idComputador;
-        timer.scheduleAtFixedRate(new TimerTask() {
+        return new TimerTask() {
             public void run() {
                 System.out.println("DADOS SENDO MONITORADOS...");
                 Double discoEmUso = looca.getGrupoDeDiscos().getVolumes().get(0).getDisponivel().doubleValue() / conversorGb;
@@ -128,9 +132,23 @@ public class TesteProjetoVictor {
                         }
                         case "REDE" ->
                                 bancoDeDados.insertRegistro(redeAtual, "Velocidade", 4);
-                    }
-                }
-            }
-        }, delay, interval);
+                    }}}
+        };}
+
+    public void zerarTimer() {
+        timer.cancel();
+        timer.purge();
+    }
+
+    public void resetar() {
+        timer = new Timer();
+        timerTask = criarTask();
+        executar();
+    }
+
+    public void executar() {
+        int delay = 0; // Tempo de espera antes da primeira execução (0 significa que será executado imediatamente)
+        int interval = 3000; // Intervalo entre as execuções em milissegundos (5 segundos)
+        timer.scheduleAtFixedRate(timerTask, delay, interval);
     }
 }

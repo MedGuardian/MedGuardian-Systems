@@ -48,7 +48,7 @@
                         <input type="text" onblur="transformarCnpj(this.value)" id="inputCnpj">
                         <span>Senha</span>
                         <input type="password" id="inputSenha">
-                        <span id="spanErro"></span>
+                        <span id="spanErro">CNPJ ou senha inválido(s)</span>
                     </div>
 
                     <div class="botaoEntrar">
@@ -70,7 +70,11 @@
 
 </html>
 <script>
+    inputCnpj.value = "60.448.040/0001-22";
+    inputSenha.value = "12345678";
     function entrar() {
+        const spanErro = document.getElementById('spanErro');
+
         var cnpjVar = inputCnpj.value.replace(/[^\d]/g, '');;
         var senhaVar = inputSenha.value;
 
@@ -105,8 +109,12 @@
                 });
 
             } else {
-
+                spanErro.style.display = 'flex';
                 console.log("Houve um erro ao tentar realizar o login!");
+
+                setTimeout(function (){
+                    spanErro.style.display = "none";
+                }, 3000)
 
                 resposta.text().then(texto => {
                     console.error(texto);

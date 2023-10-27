@@ -78,6 +78,7 @@ public class TesteProjetoArthur {
             }
         });
 
+<<<<<<< HEAD
         while (!logado[0]) {
             try {
                 Thread.sleep(1000);
@@ -93,6 +94,13 @@ public class TesteProjetoArthur {
 
             if (!looca.getGrupoDeDiscos().getVolumes().isEmpty()) {
                 for (int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
+=======
+        if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
+            bancoDeDados.insertComputador(nomeComputador, bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario));
+            idComputador = bancoDeDados.selectIdComputador(nomeComputador);
+            if(!looca.getGrupoDeDiscos().getVolumes().isEmpty()){
+                for(int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
+>>>>>>> 9a3e23351bbc74f5a37b39cd75c15b1d84a26245
                     bancoDeDados.insertComponente(HD.getNomeComponente() + (i + 1));
                     hd++;
                 }
