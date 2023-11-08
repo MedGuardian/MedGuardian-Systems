@@ -238,16 +238,10 @@
                     <div class="radio-design"></div>
                     <div class="label-text">Mensal</div>
                   </label>
-                  <label class="label">
-                    <input value="anual" onclick="anual()" name="value-radio" id="value-5" class="radio-input"
-                      type="radio">
-                    <div class="radio-design"></div>
-                    <div class="label-text">Anual</div>
-                  </label>
                 </div>
                 <div class="coluna-esquerda">
                   <label class="label">
-                    <input value="personalizado" onclick="personalizado()" name="value-radio" id="value-6"
+                    <input value="personalizado" onclick="personalizado()" name="value-radio" id="value-5"
                       class="radio-input" type="radio">
                     <div class="radio-design"></div>
                     <div class="label-text">Personalizado</div>
@@ -1059,7 +1053,19 @@
 <script>
 
   function abrirPDF() {
+    var inputSelecionada;
+    
+    if(document.getElementById('value-2').checked){
+      inputSelecionada = 1;
+    } else if (document.getElementById('value-3').checked){
+      inputSelecionada = 2;
+    } else if(document.getElementById('value-4').checked){
+      inputSelecionada = 3;
+    } else if(document.getElementById('value-5').checked){
+      inputSelecionada = 4;
+    }
     window.open('PDF.html', '_blank');
+    
   }
 
 
@@ -1165,23 +1171,6 @@
         })
       }
     });
-  }
-
-  function diario() {
-    var modal = document.getElementById('data-input')
-    modal.innerHTML = ' '
-  }
-  function semanal() {
-    var modal = document.getElementById('data-input')
-    modal.innerHTML = ' '
-  }
-  function mensal() {
-    var modal = document.getElementById('data-input')
-    modal.innerHTML = ' '
-  }
-  function anual() {
-    var modal = document.getElementById('data-input')
-    modal.innerHTML = ' '
   }
 
   function trocarCores() {

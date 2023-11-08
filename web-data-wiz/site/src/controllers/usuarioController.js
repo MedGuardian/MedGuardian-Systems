@@ -2,11 +2,11 @@ var usuarioModel = require("../models/usuarioModel");
 
 
 function buscarFuncPorId(req, res) {
-    var idFuncionario = req.params.idFunc; 
-        usuarioModel.listarFuncionario(idFuncionario).then((resultado) => {
-          res.status(200).json(resultado);
-        });
-      };
+    var idFuncionario = req.params.idFunc;
+    usuarioModel.listarFuncionario(idFuncionario).then((resultado) => {
+        res.status(200).json(resultado);
+    });
+};
 
 
 
@@ -116,14 +116,14 @@ function excluirMaquina(req, res) {
 }
 
 function atualizarEmpresa(req, res) {
-    
-   var email = req.body.emailServer;
-   var tel = req.body.telEmpresaServer;
-   var cep = req.body.cepServer;
-   var log = req.body.logServer;
-   var num = req.body.numServer;
-   var comp = req.body.compServer;
-   var idEmpresa = req.body.idEmpresaServer;
+
+    var email = req.body.emailServer;
+    var tel = req.body.telEmpresaServer;
+    var cep = req.body.cepServer;
+    var log = req.body.logServer;
+    var num = req.body.numServer;
+    var comp = req.body.compServer;
+    var idEmpresa = req.body.idEmpresaServer;
 
     if (email == undefined) {
         res.status(400).send("Seu email está undefined!");
@@ -140,7 +140,7 @@ function atualizarEmpresa(req, res) {
                     if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
                         res.json(resultadoAutenticar[0]);
-                   }
+                    }
                 }
             ).catch(
                 function (erro) {
@@ -154,30 +154,30 @@ function atualizarEmpresa(req, res) {
 }
 
 function atualizarFuncionario(req, res) {
-    
+
     var novoEmail = req.body.novoEmailServer;
     var novaSenha = req.body.novaSenhaServer;
-    var idFunc = req.params.idFunc; 
- 
-         usuarioModel.atualizarFuncionario(novoEmail, novaSenha, idFunc)
-             .then(
-                 function (resultadoAutenticar) {
-                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
-                     console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
- 
-                     if (resultadoAutenticar.length == 1) {
-                         console.log(resultadoAutenticar);
-                         res.json(resultadoAutenticar[0]);
-                    }
-                 }
-             ).catch(
-                 function (erro) {
-                     console.log(erro);
-                     console.log("\nHouve um erro ao atualizar os dados do funcionário! Erro: ", erro.sqlMessage);
-                     res.status(500).json(erro.sqlMessage);
-                 }
-             );
- }
+    var idFunc = req.params.idFunc;
+
+    usuarioModel.atualizarFuncionario(novoEmail, novaSenha, idFunc)
+        .then(
+            function (resultadoAutenticar) {
+                console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
+                console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
+
+                if (resultadoAutenticar.length == 1) {
+                    console.log(resultadoAutenticar);
+                    res.json(resultadoAutenticar[0]);
+                }
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao atualizar os dados do funcionário! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
 
 
 function cadastrarFuncionario(req, res) {
@@ -191,12 +191,12 @@ function cadastrarFuncionario(req, res) {
         res.status(400).send("Seu cnpj está undefined!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está indefinida!");
-    } else if(email==undefined){
+    } else if (email == undefined) {
         res.status(400).send("O email ta undefined")
-    } 
+    }
     else {
 
-        usuarioModel.cadastrarFuncionario(nome, email,senha, fkEmpresa, tipo)
+        usuarioModel.cadastrarFuncionario(nome, email, senha, fkEmpresa, tipo)
             .then(
                 function (resultadoAutenticar) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
@@ -205,7 +205,7 @@ function cadastrarFuncionario(req, res) {
                     if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
                         res.json(resultadoAutenticar[0]);
-                   }
+                    }
                 }
             ).catch(
                 function (erro) {
@@ -358,10 +358,119 @@ function cadastrarEndereco(req, res) {
     }
 }
 
+function selectDataDia(req, res) {
+
+    usuarioModel.selectDataDia()
+        .then(
+            function (resultadoDatas) {
+                console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
+                console.log(`Resultados: ${JSON.stringify(resultadoDatas)}`); // transforma JSON em String
+
+                if (resultadoDatas.length > 0) {
+                    console.log(resultadoDatas);
+                    res.status(200).json(resultadoDatas);
+                } else if (resultadoDatas.length == 0) {
+                    res.status(403).send("Erro no select de datas do dia!");
+                } else {
+                    res.status(404).send("Erro no select de datas do dia!!!!");
+                }
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao realizar o select de datas! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function selectDataSemana(req, res) {
+    usuarioModel.selectDataSemana()
+        .then(
+            function (resultadoDatas) {
+                console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
+                console.log(`Resultados: ${JSON.stringify(resultadoDatas)}`); // transforma JSON em String
+
+                if (resultadoDatas.length > 0) {
+                    console.log(resultadoDatas);
+                    res.status(200).json(resultadoDatas);
+                } else if (resultadoDatas.length == 0) {
+                    res.status(403).send("Erro no select de datas do dia!");
+                } else {
+                    res.status(404).send("Erro no select de datas do dia!!!!");
+                }
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao realizar o select de datas! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function selectDataMes(req, res) {
+    usuarioModel.selectDataMes()
+        .then(
+            function (resultadoDatas) {
+                console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
+                console.log(`Resultados: ${JSON.stringify(resultadoDatas)}`); // transforma JSON em String
+
+                if (resultadoDatas.length > 0) {
+                    console.log(resultadoDatas);
+                    res.status(200).json(resultadoDatas);
+                } else if (resultadoDatas.length == 0) {
+                    res.status(403).send("Erro no select de datas do dia!");
+                } else {
+                    res.status(404).send("Erro no select de datas do dia!!!!");
+                }
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao realizar o select de datas! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function selectIntervaloData(req, res) {
+    if ((dataComeco || dataFim) == undefined) {
+        res.status(400).send("Datas inválidas");
+    } else {
+        usuarioModel.selectIntervaloData(dataComeco, dataFim)
+            .then(
+                function (resultadoDatas) {
+                    console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
+                    console.log(`Resultados: ${JSON.stringify(resultadoDatas)}`); // transforma JSON em String
+
+                    if (resultadoDatas.length > 0) {
+                        console.log(resultadoDatas);
+                        res.status(200).json(resultadoDatas);
+                    } else if (resultadoDatas.length == 0) {
+                        res.status(403).send("Erro no select de datas do dia!");
+                    } else {
+                        res.status(404).send("Erro no select de datas do dia!!!!");
+                    }
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao realizar o select de datas! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+
+}
+
+
+
+
 module.exports = {
     autenticar,
     cadastrar,
-    cadastrarEndereco, 
+    cadastrarEndereco,
     cadastrarFuncionario,
     autenticarFuncionario,
     buscarFuncPorId,
@@ -369,5 +478,9 @@ module.exports = {
     atualizarFuncionario,
     excluirMaquina,
     selectComputador,
-    deletarTuplaPeloId
+    deletarTuplaPeloId,
+    selectDataDia,
+    selectDataSemana,
+    selectDataMes,
+    selectIntervaloData
 }

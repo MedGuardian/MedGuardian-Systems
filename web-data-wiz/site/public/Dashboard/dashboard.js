@@ -588,3 +588,151 @@ function deletarTuplaPeloId(idComputador){
 }
 
 
+function diario() {
+    var modal = document.getElementById('data-input')
+    modal.innerHTML = ' '
+    var data = [];
+
+    fetch("/usuarios/selectDataDia", {
+        method: "POST"
+        
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO diario()!")
+        console.log(`Dados atuais do gráfico:`);
+        console.log(resposta);
+        
+        if (resposta.ok) {
+            console.log(resposta);
+            resposta.json().then(json => {
+                console.log(json);
+                console.log(JSON.stringify(json));
+                data.push(json);
+                return data;
+            });
+
+        } else {
+            alert("Erro ao captar os dados!")
+
+            resposta.text().then(texto => {
+                console.error(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    })
+
+    return false;
+
+  }
+  function semanal() {
+    var modal = document.getElementById('data-input')
+    modal.innerHTML = ' '
+    var data = [];
+    fetch("/usuarios/selectDataSemana", {
+        method: "POST"
+        
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO diario()!")
+        console.log(`Dados atuais do gráfico:`);
+        console.log(data);
+        console.log(resposta);
+        
+        if (resposta.ok) {
+            console.log(resposta);
+            resposta.json().then(json => {
+                console.log(json);
+                console.log(JSON.stringify(json));
+                data.push(json);
+                return data;
+            });
+
+        } else {
+            alert("Erro ao captar os dados!")
+
+            resposta.text().then(texto => {
+                console.error(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    })
+
+    return false;
+
+  }
+  function mensal() {
+    var modal = document.getElementById('data-input')
+    modal.innerHTML = ' '
+    var data = [];
+    fetch("/usuarios/selectDataMes", {
+        method: "POST"
+        
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO diario()!")
+        console.log(`Dados atuais do gráfico:`);
+        console.log(data);
+        console.log(resposta);
+        
+        if (resposta.ok) {
+            console.log(resposta);
+            resposta.json().then(json => {
+                console.log(json);
+                console.log(JSON.stringify(json));
+                data.push(json);
+                return data;
+            });
+
+        } else {
+            alert("Erro ao captar os dados!")
+
+            resposta.text().then(texto => {
+                console.error(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    })
+
+    return false;
+  }
+  function personalizado() {
+    var modal = document.getElementById('data-input')
+    modal.innerHTML = ' '
+    var data = [];
+
+    fetch("/usuarios/selectIntervaloData", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO diario()!")
+        if (resposta.ok) {
+            console.log("Estou dentro do IF!")
+
+            console.log(resposta);
+            resposta.json().then(json => {
+                console.log(json);
+                console.log(JSON.stringify(json));
+                data = json.data
+                alert("Fiz o select das Datas! Datas: " + data)
+                return data;
+            });
+
+        } else {
+            alert("Erro ao captar os dados!")
+
+            resposta.text().then(texto => {
+                console.error(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    })
+
+    return false;
+  }

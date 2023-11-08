@@ -11,6 +11,7 @@ import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class TesteProjetoArthur {
     private static JFrame frame2;
@@ -31,7 +32,7 @@ public class TesteProjetoArthur {
 
         int idComputador;
         int hd = 0;
-        final Integer[] idFuncionario = {null};
+        AtomicReference<Integer> idFuncionario = new AtomicReference<>(0);
         final boolean[] logado = {false};
 
         JFrame frame = new JFrame("Monitoramento de Dados");
@@ -68,7 +69,7 @@ public class TesteProjetoArthur {
 
             List<Funcionario> usuarios = bancoDeDados.autenticarUsuario(email, senha);
             if (!usuarios.isEmpty()) {
-                idFuncionario[0] = usuarios.get(0).getIdFuncionario();
+                idFuncionario.set(usuarios.get(0).getIdFuncionario());
                 logado[0] = true;
 
                 // Feche a janela de login
@@ -78,7 +79,6 @@ public class TesteProjetoArthur {
             }
         });
 
-<<<<<<< HEAD
         while (!logado[0]) {
             try {
                 Thread.sleep(1000);
@@ -88,136 +88,139 @@ public class TesteProjetoArthur {
         }
 
         if (bancoDeDados.verificarComputadorCadastrado(nomeComputador)) {
-            bancoDeDados.insertComputador(nomeComputador);
+            bancoDeDados.insertComputador(nomeComputador, 4);
             idComputador = bancoDeDados.selectIdComputador(nomeComputador);
-            bancoDeDados.insertFuncionarioDoDia(idFuncionario[0], idComputador);
 
             if (!looca.getGrupoDeDiscos().getVolumes().isEmpty()) {
                 for (int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
-=======
-        if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
-            bancoDeDados.insertComputador(nomeComputador, bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario));
-            idComputador = bancoDeDados.selectIdComputador(nomeComputador);
-            if(!looca.getGrupoDeDiscos().getVolumes().isEmpty()){
-                for(int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
->>>>>>> 9a3e23351bbc74f5a37b39cd75c15b1d84a26245
-                    bancoDeDados.insertComponente(HD.getNomeComponente() + (i + 1));
-                    hd++;
-                }
-            }
-
-            bancoDeDados.insertComponente(RAM.getNomeComponente());
-            bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
-            bancoDeDados.insertComponente(REDE.getNomeComponente());
-            bancoDeDados.insertComponente(TEMPOATIVIDADE.getNomeComponente());
-        } else {
-            idComputador = bancoDeDados.selectIdComputador(nomeComputador);
-        }
-
-        frame2 = new JFrame("Seleção de Componente para Monitoramento");
-        frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame2.setLayout(new GridBagLayout());
-
-        GridBagConstraints gbc2 = new GridBagConstraints();
-        gbc2.fill = GridBagConstraints.HORIZONTAL;
-        gbc2.insets = new Insets(5, 5, 5, 5);
-
-        JLabel labelListaComponentes = new JLabel("Lista de Componentes Cadastrados:");
-        gbc2.gridx = 0;
-        gbc2.gridy = 0;
-        frame2.add(labelListaComponentes, gbc2);
-
-        ArrayList<String> componentesCadastrados = new ArrayList<>();
-        try {
-            List<Componente> componentes = bancoDeDados.selectComponente();
-            for (Componente componente : componentes) {
-                componentesCadastrados.add(componente.getNomeComponente());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(frame2, "Erro ao recuperar componentes do banco de dados.");
-        }
-        for (int i = 0; i < componentesCadastrados.size(); i++) {
-            JLabel labelComponente = new JLabel(i + 1 + ". " + componentesCadastrados.get(i));
-            gbc2.gridx = 0;
-            gbc2.gridy = i + 1;
-            frame2.add(labelComponente, gbc2);
-        }
-
-        JTextField componenteField = new JTextField(20);
-        JButton adicionarComponenteButton = new JButton("Adicionar Componente");
-
-        gbc2.gridx = 0;
-        gbc2.gridy = componentesCadastrados.size() + 1;
-        frame2.add(new JLabel("Digite o número do componente que você deseja monitorar:"), gbc2);
-        gbc2.gridy = componentesCadastrados.size() + 2;
-        frame2.add(componenteField, gbc2);
-        gbc2.gridy = componentesCadastrados.size() + 3;
-        frame2.add(adicionarComponenteButton, gbc2);
-
-        frame2.pack();
-        frame2.setLocationRelativeTo(null);
-        frame2.setVisible(true);
-
-        JButton monitorarButton = new JButton("Monitorar");
-        gbc2.gridy = componentesCadastrados.size() + 4;
-        frame2.add(monitorarButton, gbc2);
-
-        JButton pararMonitoramentoButton = new JButton("Parar Monitoramento");
-        gbc2.gridy = componentesCadastrados.size() + 5;
-        frame2.add(pararMonitoramentoButton, gbc2);
-
-        Timer timer = new Timer();
-        int delay = 0;
-        int interval = 10000;
-
-        timer.scheduleAtFixedRate(new TimerTask() {
-            public void run() {
-                List<String> componentesSelecionados = new ArrayList<>();
-
-                final boolean[] componenteAdicionado = {false};
-                ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-
-                adicionarComponenteButton.addActionListener(e -> {
-                    if (!componenteAdicionado[0]) {
-                        String componenteSelecionado = componentesCadastrados.get(Integer.parseInt(componenteField.getText()) - 1);
-
-                        componentesSelecionados.add(componenteSelecionado);
-                        componenteAdicionado[0] = true;
-                        JOptionPane.showMessageDialog(frame2, "Componente adicionado: " + componenteSelecionado);
-                    } else {
-                        JOptionPane.showMessageDialog(frame2, "Componente já adicionado.");
-                    }
-                });
-
-                monitorarButton.addActionListener(e2 -> {
-                    if (!monitoramentoAtivo) {
-                        String componenteSelecionado = componentesCadastrados.get(Integer.parseInt(componenteField.getText()) - 1);
-
-                        if (componentesSelecionados.isEmpty()) {
-                            JOptionPane.showMessageDialog(frame2, "Nenhum componente selecionado para monitoramento.");
-                        } else if (componentesSelecionados.contains(componenteSelecionado)) {
-                            if (!monitoramentoAtivo) {
-                                monitoramentoAtivo = true;
-                                iniciarMonitoramentoComponente(componenteSelecionado, looca, bancoDeDados);
-                                JOptionPane.showMessageDialog(frame2, "Monitorando o componente: " + componenteSelecionado);
+                    if (bancoDeDados.verificarComputadorCadastrado(nomeComputador)) {
+                        bancoDeDados.insertComputador(nomeComputador, bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario.get()));
+                        idComputador = bancoDeDados.selectIdComputador(nomeComputador);
+                        if (!looca.getGrupoDeDiscos().getVolumes().isEmpty()) {
+                            for (int j = 0; j < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); j++) {
+                                bancoDeDados.insertComponente(HD.getNomeComponente() + (j + 1));
+                                hd++;
                             }
-                        } else {
-                            JOptionPane.showMessageDialog(frame2, "Componente não encontrado na lista de seleção.");
                         }
-                    }
-                });
 
-                pararMonitoramentoButton.addActionListener(e3 -> {
-                    monitoramentoAtivo = false;
-                    executor.shutdown(); // Pare o agendamento das tarefas
-                    JOptionPane.showMessageDialog(frame2, "Monitoramento interrompido.");
-                });
+                        bancoDeDados.insertComponente(RAM.getNomeComponente());
+                        bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
+                        bancoDeDados.insertComponente(REDE.getNomeComponente());
+                        bancoDeDados.insertComponente(TEMPOATIVIDADE.getNomeComponente());
+                    } else {
+                        idComputador = bancoDeDados.selectIdComputador(nomeComputador);
+                    }
+
+                    frame2 = new JFrame("Seleção de Componente para Monitoramento");
+                    frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    frame2.setLayout(new GridBagLayout());
+
+                    GridBagConstraints gbc2 = new GridBagConstraints();
+                    gbc2.fill = GridBagConstraints.HORIZONTAL;
+                    gbc2.insets = new Insets(5, 5, 5, 5);
+
+                    JLabel labelListaComponentes = new JLabel("Lista de Componentes Cadastrados:");
+                    gbc2.gridx = 0;
+                    gbc2.gridy = 0;
+                    frame2.add(labelListaComponentes, gbc2);
+
+                    ArrayList<String> componentesCadastrados = new ArrayList<>();
+                    try {
+                        List<Componente> componentes = bancoDeDados.selectComponente();
+                        for (Componente componente : componentes) {
+                            componentesCadastrados.add(componente.getNomeComponente());
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        JOptionPane.showMessageDialog(frame2, "Erro ao recuperar componentes do banco de dados.");
+                    }
+                    for (int j = 0; j < componentesCadastrados.size(); j++) {
+                        JLabel labelComponente = new JLabel(j + 1 + ". " + componentesCadastrados.get(j));
+                        gbc2.gridx = 0;
+                        gbc2.gridy = j + 1;
+                        frame2.add(labelComponente, gbc2);
+                    }
+
+                    JTextField componenteField = new JTextField(20);
+                    JButton adicionarComponenteButton = new JButton("Adicionar Componente");
+
+                    gbc2.gridx = 0;
+                    gbc2.gridy = componentesCadastrados.size() + 1;
+                    frame2.add(new JLabel("Digite o número do componente que você deseja monitorar:"), gbc2);
+                    gbc2.gridy = componentesCadastrados.size() + 2;
+                    frame2.add(componenteField, gbc2);
+                    gbc2.gridy = componentesCadastrados.size() + 3;
+                    frame2.add(adicionarComponenteButton, gbc2);
+
+                    frame2.pack();
+                    frame2.setLocationRelativeTo(null);
+                    frame2.setVisible(true);
+
+                    JButton monitorarButton = new JButton("Monitorar");
+                    gbc2.gridy = componentesCadastrados.size() + 4;
+                    frame2.add(monitorarButton, gbc2);
+
+                    JButton pararMonitoramentoButton = new JButton("Parar Monitoramento");
+                    gbc2.gridy = componentesCadastrados.size() + 5;
+                    frame2.add(pararMonitoramentoButton, gbc2);
+
+                    Timer timer = new Timer();
+                    int delay = 0;
+                    int interval = 10000;
+
+                    timer.scheduleAtFixedRate(new TimerTask() {
+                        public void run() {
+                            List<String> componentesSelecionados = new ArrayList<>();
+
+                            final boolean[] componenteAdicionado = {false};
+                            ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+
+                            adicionarComponenteButton.addActionListener(e -> {
+                                if (!componenteAdicionado[0]) {
+                                    String componenteSelecionado = componentesCadastrados.get(Integer.parseInt(componenteField.getText()) - 1);
+
+                                    componentesSelecionados.add(componenteSelecionado);
+                                    componenteAdicionado[0] = true;
+                                    JOptionPane.showMessageDialog(frame2, "Componente adicionado: " + componenteSelecionado);
+                                } else {
+                                    JOptionPane.showMessageDialog(frame2, "Componente já adicionado.");
+                                }
+                            });
+
+                            monitorarButton.addActionListener(e2 -> {
+                                if (!monitoramentoAtivo) {
+                                    String componenteSelecionado = componentesCadastrados.get(Integer.parseInt(componenteField.getText()) - 1);
+
+                                    if (componentesSelecionados.isEmpty()) {
+                                        JOptionPane.showMessageDialog(frame2, "Nenhum componente selecionado para monitoramento.");
+                                    } else if (componentesSelecionados.contains(componenteSelecionado)) {
+                                        if (!monitoramentoAtivo) {
+                                            monitoramentoAtivo = true;
+                                            iniciarMonitoramentoComponente(componenteSelecionado, looca, bancoDeDados);
+                                            JOptionPane.showMessageDialog(frame2, "Monitorando o componente: " + componenteSelecionado);
+                                        }
+                                    } else {
+                                        JOptionPane.showMessageDialog(frame2, "Componente não encontrado na lista de seleção.");
+                                    }
+                                }
+                            });
+
+                            pararMonitoramentoButton.addActionListener(e3 -> {
+                                monitoramentoAtivo = false;
+                                executor.shutdown(); // Pare o agendamento das tarefas
+                                JOptionPane.showMessageDialog(frame2, "Monitoramento interrompido.");
+                            });
+
+                        }
+                    }, delay, interval);
+
+                }
 
             }
-        }, delay, interval);
-    }
 
+        }
+
+    }
     private static void iniciarMonitoramentoComponente(String componenteMonitorado, Looca looca, EnviarBD bancoDeDados) {
         int intervaloMonitoramento = 3;
 
@@ -271,7 +274,7 @@ public class TesteProjetoArthur {
                 Integer conversorMb = 1000000;
 
                 Double redeAtual;
-                    redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(1).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(1).getPacotesRecebidos().doubleValue()) / conversorMb;
+                redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(1).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(1).getPacotesRecebidos().doubleValue()) / conversorMb;
                 bancoDeDados.insertRegistro(redeAtual/conversorMb, "Velocidade", 4);
                 System.out.println(redeAtual);
                 break;

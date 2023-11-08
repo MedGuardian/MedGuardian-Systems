@@ -43,4 +43,21 @@ router.post("/deletarTuplaPeloId", function (req, res) {
     usuarioController.deletarTuplaPeloId(req, res);
 })
 
+router.post("/selectDataDia", function (req, res) {
+    usuarioController.selectDataDia(req, res);
+})
+
+router.post("/selectDataSemana", function (req, res) {
+    usuarioController.selectDataSemana(req, res);
+})
+
+router.post("/selectDataMes", function (req, res) {
+    usuarioController.selectDataMes(req, res);
+})
+
+router.post("/selectIntervaloData", function (req, res) {
+    usuarioController.selectIntervaloData(req, res);
+})
+
+
 module.exports = router;

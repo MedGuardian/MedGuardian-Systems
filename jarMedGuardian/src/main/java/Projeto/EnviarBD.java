@@ -77,15 +77,11 @@ public class EnviarBD {
         return computador.get(0).getIdComputador();
     }
 
-<<<<<<< HEAD
-    public List<Registro> selectRegistro(){
-        return con.query("SELECT * FROM registro", new BeanPropertyRowMapper<>(Registro.class));
-=======
+
     public Integer getFkEmpresaPorIdFuncionario(Integer idFuncionario){
         List<Funcionario> funcionario = con.query("SELECT * FROM funcionario WHERE idFuncionario = ?", new BeanPropertyRowMapper<>(Funcionario.class), idFuncionario);
 
         return funcionario.get(0).getFkEmpresa();
->>>>>>> 9a3e23351bbc74f5a37b39cd75c15b1d84a26245
     }
 
 
