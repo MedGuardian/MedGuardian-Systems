@@ -358,6 +358,81 @@ function cadastrarEndereco(req, res) {
     }
 }
 
+function cadastrarEndereco(req, res) {
+    // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
+    var cep = req.body.cepServer;
+    var log = req.body.logServer;
+    var num = req.body.numServer;
+    var comp = req.body.compServer;
+    console.log(req.body)
+
+    // Faça as validações dos valores
+    if (cep == undefined) {
+        res.status(400).send("Seu cep está undefined!");
+    } else if (log == undefined) {
+        res.status(400).send("Seu logradouro está undefined!");
+    } else if (num == undefined) {
+        res.status(400).send("Seu numero está undefined!");
+    } else {
+
+        // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
+        usuarioModel.cadastrarEnd(cep, log, num, comp)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+function atualizarGrafico(req, res) {
+
+    const limite_linhas = 6;
+    usuarioModel.atualizarGrafico(limite_linhas)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao atualizar o gráfico! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function selectTotalComponentes(req, res) {
+
+    usuarioModel.selectTotalComponentes()
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao buscar os dados totais dos componentes! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
 module.exports = {
     autenticar,
     cadastrar,
@@ -369,5 +444,7 @@ module.exports = {
     atualizarFuncionario,
     excluirMaquina,
     selectComputador,
-    deletarTuplaPeloId
+    deletarTuplaPeloId,
+    atualizarGrafico,
+    selectTotalComponentes
 }

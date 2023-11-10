@@ -1,17 +1,18 @@
+selectTotalComponentes();
+
 function voltarDashboardGeral() {
     window.location.href = '../dashboard.html'
 }
 
-
 const graficoDesempenho = document.getElementById("graficoDesempenho")
-var atual = [91, 12, 62, 73, 14, 73];
 
+var labelsGrafico = [];
 const data_graficoDesempenho = {
-    labels: ['10:53:13','10:53:16','10:53:19','10:53:22','10:53:25','10:53:29'],
+    labels: dataHoraLabels,
     datasets: [
         {
             label: "Desempenho",
-            data: atual,
+            data: [],
             backgroundColor: 'rgba(0, 189, 6, .15)',
             borderColor: 'rgba(0, 189, 6, 1)',
             pointBackgroundColor: '#164018',
@@ -49,11 +50,12 @@ const config_graficoDesempenho = {
                     display: false
                 },
                 ticks: {
+                    display: true,
                     color: '#2E2109;',
                     font: {
-                        size: 0,
+                        size: 12,
                         family: 'LeagueSpartan',
-                        weight: 800
+                        weight: 600
                     }
                 }
             }
@@ -89,24 +91,144 @@ const config_graficoDesempenho = {
 
 const graficoEmUso = new Chart(graficoDesempenho, config_graficoDesempenho);
 
-function escolherGrafico(n) {
-    atualizarGrafico(n)
+const uso_cpu = [];
+const uso_ram = [];
+const uso_disco = [];
+var dataHoraLabels = [];
+const threads = 0;
+const processos = 0;
+const velocidade_de_rede = 0;
+const tempo_atividade_segundos = 0;
+const tempo_atividade_minutos = 0;
+const tempo_atividade_horas = 0;
+const tempo_atividade_dias = 0;
+const velocidade_processador = 0;
+
+
+function atualizarGrafico() {
+
+    fetch("/usuarios/atualizarGrafico", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+        .then(function (resposta) {
+            console.log("Estou buscando dados para popular o gráfico!");
+
+            if (resposta.ok) {
+                console.log(resposta);
+                resposta.json().then((resposta) => {
+                    resposta.reverse();
+                    resposta.forEach((especificacao) => {
+                        especificacao.forEach((objeto) => {
+                            const { fkEspecificacao, tipoCaptura, dataHoraRegistro, registro } = objeto;
+
+                            const hora = dataHoraRegistro.substring(11, 13);    // Extrai a hora da dataHora
+                            const minuto = dataHoraRegistro.substring(14, 16);  // Extrai o minuto da dataHora
+                            const segundo = dataHoraRegistro.substring(17, 19); // Extrai o segundo da dataHora
+
+                            if(fkEspecificacao == 2){
+                                if (uso_ram.length >= 6) {
+                                    uso_ram.shift();
+                                    uso_cpu.shift();
+                                    uso_disco.shift();
+                                    dataHoraLabels.shift();
+                                }
+                                var porcentagemUsoRam = registro * 100 / totalComponenteRam;
+                                uso_ram.push(porcentagemUsoRam);
+                                dataHoraLabels.push(`${hora}:${minuto}:${segundo}`)
+                            }                            
+                        });
+                    });
+
+                });
+
+                plotarGrafico(1);
+            } else {
+                console.log("Houve um erro ao buscar os dados para popular o gráfico!");
+
+                resposta.text().then((texto) => {
+                    console.error(texto);
+                });
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+        });
+
+    return false;
+  }
+
+
+setInterval(atualizarGrafico, 3000)
+
+var totalComponenteRam = 0;
+var totalComponenteCPU = 0;
+var totalComponenteDisco = 0;
+
+function selectTotalComponentes(){
+    fetch("/usuarios/selectTotalComponentes", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+        .then(function (resposta) {
+            console.log("Estou buscando dados referente a capacidade total dos componentes!");
+
+            if (resposta.ok) {
+                console.log(resposta);
+                resposta.json().then((resposta) => {
+                    resposta.forEach((especificacao) => {
+                        especificacao.forEach((objeto) => {
+                            const { fkComponente, totalComponente } = objeto;
+
+                            if(fkComponente == 2){
+                                totalComponenteRam = totalComponente;
+                            }                 
+                            console.log(totalComponenteRam)       
+                        });
+                    });
+                    
+                });
+
+                
+            } else {
+                console.log("Houve um erro ao fazer o select do total dos componentes!");
+
+                resposta.text().then((texto) => {
+                    console.error(texto);
+                });
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+        });
+
+    return false;
 }
 
-function atualizarGrafico(n) {
+function escolherGrafico(n) {
+    plotarGrafico(n)
+}
+
+function plotarGrafico(n) {
     atualizarComponenteEscolhido(n)
     switch (n) {
         case 1:
-            data_graficoDesempenho.datasets[0].data = [62, 74, 13, 75, 12, 64]
+            uso_ram.reverse();
+            dataHoraLabels.reverse();
+            data_graficoDesempenho.datasets[0].data = uso_ram.slice(0,6);
             config_graficoDesempenho.options.plugins.title.text = 'Desempenho CPU'
-
+            data_graficoDesempenho.labels = dataHoraLabels.slice(0,6);
             break;
         case 2:
-            data_graficoDesempenho.datasets[0].data = [93, 26, 31, 65, 36, 14]
+            data_graficoDesempenho.datasets[0].data = uso_ram.slice(0,6)
             config_graficoDesempenho.options.plugins.title.text = 'Uso Disco'
             break;
         case 3:
-            data_graficoDesempenho.datasets[0].data = [78, 23, 16, 53, 14, 75]
+            data_graficoDesempenho.datasets[0].data = uso_ram.slice(0,6)
             config_graficoDesempenho.options.plugins.title.text = 'Uso Memória RAM'
             break;
     }
@@ -118,6 +240,8 @@ function atualizarComponenteEscolhido(n){
     var componenteSelecionado = document.getElementById('componenteSelecionado');
     var tipoValorComponenteSelecionado = document.getElementById('tipoValorComponenteSelecionado')
     var nomeComponente = document.getElementById('nomeComponente')
+
+    graficoDesempenho.style.paddingRight = "-2%"
 
     switch (n) {
         case 1:
@@ -225,4 +349,6 @@ function atualizarValoresCardsLaterais(){
 }
 
 setInterval(atualizarCoresCardsLaterais, 3000)
+
+
 

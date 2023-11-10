@@ -337,6 +337,7 @@ body {
 .graficoInferior canvas {
     background-color: #718672;
     border-radius: 15px;
+    padding-left: 2%;
 }
 
 .conteudoDireitaDashboardMaquina{

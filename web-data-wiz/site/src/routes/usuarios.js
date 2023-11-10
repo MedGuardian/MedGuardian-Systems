@@ -43,4 +43,12 @@ router.post("/deletarTuplaPeloId", function (req, res) {
     usuarioController.deletarTuplaPeloId(req, res);
 })
 
+router.get("/atualizarGrafico", function (req, res) {
+    usuarioController.atualizarGrafico(req, res);
+});
+
+router.get("/selectTotalComponentes", function (req, res) {
+    usuarioController.selectTotalComponentes(req, res);
+});
+
 module.exports = router;

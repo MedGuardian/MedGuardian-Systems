@@ -133,6 +133,57 @@ function deletarTuplaPeloId(idComputador){
     return database.executar(instrucao);
 }
 
+function atualizarGrafico(limite_linhas) {
+
+    return new Promise(function (resolve, reject) {
+        var instrucao1 = `SELECT dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 ORDER BY idRegistro DESC LIMIT ${limite_linhas};`;
+        var instrucao2 = `SELECT dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 2 ORDER BY idRegistro DESC LIMIT ${limite_linhas};`;
+        var instrucao3 = `SELECT dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 3 ORDER BY idRegistro DESC LIMIT ${limite_linhas};`;
+        var instrucao4 = `SELECT dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 4 ORDER BY idRegistro DESC LIMIT ${limite_linhas};`;
+
+        console.log("Executando as instruções SQL...");
+        var selects = [];
+
+        selects.push(database.executar(instrucao1));
+        selects.push(database.executar(instrucao2));
+        selects.push(database.executar(instrucao3));
+        selects.push(database.executar(instrucao4));
+
+        Promise.all(selects)
+            .then(function (res) {
+                resolve(res);
+            })
+            .catch(function (error) {
+                reject(error);
+            });
+    });
+}
+
+function selectTotalComponentes(){
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirMaquina():");
+
+    return new Promise(function (resolve, reject) {
+        var instrucao1 = `SELECT fkComponente, totalComponente FROM especificacao WHERE fkComponente = 1;`;
+        var instrucao2 = `SELECT fkComponente, totalComponente FROM especificacao WHERE fkComponente = 2;`;
+        var instrucao3 = `SELECT fkComponente, totalComponente FROM especificacao WHERE fkComponente = 3;`;
+
+        console.log("Executando as instruções SQL...");
+        var selects = [];
+
+        selects.push(database.executar(instrucao1));
+        selects.push(database.executar(instrucao2));
+        selects.push(database.executar(instrucao3));
+
+        Promise.all(selects)
+            .then(function (res) {
+                resolve(res);
+            })
+            .catch(function (error) {
+                reject(error);
+            });
+    });
+}
+
 
 module.exports = {
     autenticar,
@@ -145,5 +196,7 @@ module.exports = {
     atualizarFuncionario,
     excluirMaquina,
     selectComputador,
-    deletarTuplaPeloId
+    deletarTuplaPeloId,
+    atualizarGrafico,
+    selectTotalComponentes
 };

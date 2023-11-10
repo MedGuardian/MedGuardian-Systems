@@ -120,15 +120,16 @@ public class TesteProjeto {
                 for(int i = 0; i < bancoDeDados.selectComponente().size(); i++){
                     Integer idComponente = bancoDeDados.selectComponente().get(i).getIdComponente();
                     String nomeComponente = bancoDeDados.selectComponente().get(i).getNomeComponente();
+                    String nomeHD = HD.getNomeComponente();
 
-                    switch (nomeComponente) {
-                        case "HD1" -> {
+                    switch (idComponente) {
+                        case  1-> {
                             bancoDeDados.insertRegistro(discoEmUso, "Uso", 1);
                         }
-                        case "RAM" -> {
+                        case 2 -> {
                             bancoDeDados.insertRegistro(memoriaRamEmUso, "Uso", 2);
                         }
-                        case "PROCESSADOR" -> {
+                        case 3 -> {
                             bancoDeDados.insertRegistro(processadorEmUso, "Uso", 3);
                             bancoDeDados.insertRegistro(Double.valueOf(dias), "Dias", 3);
                             bancoDeDados.insertRegistro(Double.valueOf(horas), "Horas", 3);
@@ -137,7 +138,7 @@ public class TesteProjeto {
                             bancoDeDados.insertRegistro(numeroProcessos, "Quantidade", 3);
                             bancoDeDados.insertRegistro(numeroThreads, "Quantidade", 3);
                         }
-                        case "REDE" ->
+                        case 4 ->
                                 bancoDeDados.insertRegistro(redeAtual, "Velocidade", 4);
                     }
                 }

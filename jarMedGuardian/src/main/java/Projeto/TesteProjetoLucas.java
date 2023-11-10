@@ -25,20 +25,24 @@ public class TesteProjetoLucas {
         Integer idComputador;
         Integer idFuncionario = null;
         Integer hd = 0;
+        List<Integer> listaPIDNaoMatar = new ArrayList<>();
         int pid;
+
+
 
         do {
             for(int i = 0; i < looca.getGrupoDeJanelas().getJanelasVisiveis().size(); i++){
                 if(!looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().isEmpty()){
-                    System.out.println(looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo());;
+                    if(looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().contains("Realtek") || looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().contains("Configurações") || looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().contains("Experiência de entrada do Windows") || looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().contains("Program Manager") || looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().contains("Restaurar páginas")){
+                        listaPIDNaoMatar.add(looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getPid().intValue());
+                    }
                 }
             }
 
-            for(int i = 0; i < looca.getGrupoDeProcessos().getProcessos().size(); i++){
-                if(looca.getGrupoDeProcessos().getProcessos().get(i).getNome().contains("steam")){
-                    pid = looca.getGrupoDeProcessos().getProcessos().get(i).getPid();
-
-
+            for(int i = 0; i < listaPIDNaoMatar.size(); i++) {
+                for (int j = 1; j < looca.getGrupoDeProcessos().getProcessos().size(); j++){
+                if (listaPIDNaoMatar.get(i) != looca.getGrupoDeProcessos().getProcessos().get(j).getPid()) {
+                    pid = looca.getGrupoDeProcessos().getProcessos().get(j).getPid();
                     if (System.getProperty("os.name").toLowerCase().contains("win")) {
                         // Se estiver em um sistema Windows
                         try {
@@ -58,6 +62,7 @@ public class TesteProjetoLucas {
                         }
                     }
                 }
+            }
             }
 
             System.out.println("Digite o email: ");
