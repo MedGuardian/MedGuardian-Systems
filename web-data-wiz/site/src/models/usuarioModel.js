@@ -136,7 +136,7 @@ function deletarTuplaPeloId(idComputador){
 function atualizarGrafico(limite_linhas) {
 
     return new Promise(function (resolve, reject) {
-        var instrucao1 = `SELECT dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 ORDER BY idRegistro DESC LIMIT ${limite_linhas};`;
+        var instrucao1 = `SELECT dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 AND tipoCaptura = "UsoCPU" ORDER BY idRegistro DESC LIMIT ${limite_linhas};`;
         var instrucao2 = `SELECT dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 2 ORDER BY idRegistro DESC LIMIT ${limite_linhas};`;
         var instrucao3 = `SELECT dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 3 ORDER BY idRegistro DESC LIMIT ${limite_linhas};`;
         var instrucao4 = `SELECT dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 4 ORDER BY idRegistro DESC LIMIT ${limite_linhas};`;
@@ -184,6 +184,32 @@ function selectTotalComponentes(){
     });
 }
 
+function atualizarIndicadores() {
+
+    return new Promise(function (resolve, reject) {
+        var instrucao1 = `SELECT registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 ORDER BY idRegistro DESC LIMIT 7;`;
+        var instrucao2 = `SELECT registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 2 ORDER BY idRegistro DESC LIMIT 1`;
+        var instrucao3 = `SELECT registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 3 ORDER BY idRegistro DESC LIMIT 1`;
+        var instrucao4 = `SELECT registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 4 ORDER BY idRegistro DESC LIMIT 1`;
+
+        console.log("Executando as instruções SQL...");
+        var selects = [];
+
+        selects.push(database.executar(instrucao1));
+        selects.push(database.executar(instrucao2));
+        selects.push(database.executar(instrucao3));
+        selects.push(database.executar(instrucao4));
+
+        Promise.all(selects)
+            .then(function (res) {
+                resolve(res);
+            })
+            .catch(function (error) {
+                reject(error);
+            });
+    });
+}
+
 
 module.exports = {
     autenticar,
@@ -198,5 +224,6 @@ module.exports = {
     selectComputador,
     deletarTuplaPeloId,
     atualizarGrafico,
-    selectTotalComponentes
+    selectTotalComponentes,
+    atualizarIndicadores
 };
