@@ -5,13 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PDF</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-  <script src="https://html2canvas. html2canvas.jshtml2canvas.min.js"></script>
+  <script src="https://html2canvas.html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"
     integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs"
     crossorigin="anonymous"></script>
-
 
 </head>
 
@@ -174,77 +174,33 @@
 
 
 <script>
-  window.onload(obterDadosGrafico())
-  function obterDadosGrafico() {
 
-    fetch(`/selectDataDia`, { cache: 'no-store' }).then(function (response) {
-        if (response.ok) {
-            response.json().then(function (resposta) {
-                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
-                resposta.reverse();
+  const xValues = [50, 60, 70, 80, 90];
+  const yValues = [15, 63, 72, 42, 60];
 
-                plotarGrafico(resposta);
-
-            });
-        } else {
-            console.error('Nenhum dado encontrado ou erro na API');
-        }
-    })
-        .catch(function (error) {
-            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
-        });
-}
-
-function plotarGrafico(resposta) {
-
-    console.log('iniciando plotagem do gráfico...');
-
-    const xValues = [50, 60, 70, 80, 90];
-    const yValues = [];
-  
-    new Chart("myChart", {
-      type: "line",
-      data: {
-        labels: xValues,
-        datasets: [{
-          fill: false,
-          lineTension: 0,
-          backgroundColor: "rgba(0,0,255,1.0)",
-          borderColor: "rgba(0,0,255,0.1)",
-          data: yValues
-        }]
+  new Chart("myChart", {
+    type: "line",
+    data: {
+      labels: xValues,
+      datasets: [{
+        fill: false,
+        lineTension: 0,
+        backgroundColor: "rgba(0,0,255,1.0)",
+        borderColor: "rgba(0,0,255,0.1)",
+        data: yValues
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: "Gerenciamento de Tarefas"
       },
-      options: {
-        title: {
-          display: true,
-          text: "Gerenciamento de Tarefas"
-        },
-        legend: { display: false },
-        scales: {
-          yAxes: [{ ticks: { min: 6, max: 16 } }],
-        }
+      legend: { display: false },
+      scales: {
+        yAxes: [{ ticks: { min: 6, max: 16 } }],
       }
-    });
-
-    console.log('----------------------------------------------')
-    console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
-    console.log(resposta)
-
-    for (i = 0; i < resposta.length; i++) {
-        var registro = resposta[i];
-        labels.push(registro);
-        dados.datasets[0].yValues.push(registro.temperatura);
     }
-
-    console.log('----------------------------------------------')
-    console.log('O gráfico será plotado com os respectivos valores:')
-    console.log('Labels:')
-    console.log(labels)
-    console.log('Dados:')
-    console.log(dados.datasets)
-    console.log('----------------------------------------------')
-
-}
+  });
 
   var xValues2 = ["HD", "CPU", "Memória", "Rede", "GPU"];
   var yValues2 = [55, 49, 44, 24, 40];
@@ -354,59 +310,125 @@ function plotarGrafico(resposta) {
     }
   });
 
-  //window.onload(showDownloadingMessage())
+  window.onload = function () {
+    showDownloadingMessage();
+    gerarRelatorio();
+  };
 
   function showDownloadingMessage() {
+    return new Promise(resolve => {
+      var modal = document.getElementById('modal');
+      modal.style.display = 'flex';
 
-    var modal = document.getElementById('modal');
-    modal.style.display = 'flex';
-
-    setTimeout(function () {
-      modal.style.display = 'none';
-      gerarRelatorio()
-    }, 3000);
+      setTimeout(function () {
+        modal.style.display = 'none';
+        resolve();
+      }, 3000);
+    });
   }
 
 
-  function gerarRelatorio() {
 
+  async function gerarRelatorio() {
     var pdf = document.getElementById('pdf-content');
     pdf.style.display = 'flex';
 
     var doc = new jsPDF({
-      unit: 'cm',
-      format: 'a4',
-
-    },
-      margins = {
+        unit: 'cm',
+        format: 'a4',
+    }, {
         top: 0,
         bottom: 0,
         left: 0,
-      }
-    );
-
-
-    html2canvas(pdf, {
-      orientation: 'landscape',
-      scale: 2,
-      background: '#282828',
-      useCORS: true
-    }).then(function (canvas) {
-      const imgData = canvas.toDataURL('image/png');
-
-      var pageWidth = doc.internal.pageSize.getWidth();
-      var pageHeight = doc.internal.pageSize.getHeight();
-
-      var imgWidth = pageWidth;
-      var imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-      var x = 0;
-      var y = (pageHeight - imgHeight) / 2;
-
-      doc.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
-      doc.save('relatorio.pdf');
     });
+
+    try {
+        const canvas = await html2canvas(pdf, {
+            orientation: 'landscape',
+            scale: 2,
+            background: '#282828',
+            useCORS: true
+        });
+
+        const imgData = canvas.toDataURL('image/png');
+
+        var pageWidth = doc.internal.pageSize.getWidth();
+        var pageHeight = doc.internal.pageSize.getHeight();
+
+        var imgWidth = pageWidth;
+        var imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        var x = 0;
+        var y = (pageHeight - imgHeight) / 2;
+
+        doc.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
+
+        const blob = doc.output();
+        const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+
+        console.log("Conteúdo do pdfBlob:", pdfBlob);
+        console.log("envio do pdf");
+
+        await makeRequest(pdfBlob);
+        await enviarMensagem();
+
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+
+
+
+  async function enviarMensagem() {
+    console.log("chegou na função da mensagem")
+    let data = JSON.stringify({
+      "channel": "C064MNJC96E",
+      "text": "Aqui está seu PDF :tada:"
+    });
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'http://localhost:3333/app.js',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer xoxb-6157746735458-6180861943392-X6pZkghHkhyAejuY4LrTsbjF'
+      },
+      data: data
+    };
+    axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
+
+  async function makeRequest(pdfBlob) {
+    try {
+        console.log('estou no try do makeRequest() PDF.html');
+        const formData = new FormData();
+        formData.append('file', pdfBlob, 'relatorio.pdf');
+        formData.append('initial_comment', 'Nosso relatório');
+        formData.append('channel', 'C065AMPG2TA');
+
+        const headers = {
+            'Authorization': 'Bearer xoxb-6157746735458-6180861943392-X6pZkghHkhyAejuY4LrTsbjF',
+            'Content-Type': 'multipart/form-data',
+        };
+
+        const response = await axios.post('http://localhost:3333/app', formData, { headers });
+        console.log(JSON.stringify(response.data));
+        return response;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+
+
+
 
 
 </script>

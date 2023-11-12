@@ -138,7 +138,7 @@ function selectDataDia(){
 
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
-    var instrucao = `SELECT registro FROM registro WHERE dataHoraRegistro >= CURDATE();`;
+    var instrucao = `SELECT registro FROM registro WHERE dataHoraRegistro >= CURDATE() limit 5;`;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
@@ -149,7 +149,7 @@ function selectDataSemana(){
 
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
-    var instrucao = `SELECT registro FROM registro WHERE dataHoraRegistro >= SUBDATE(CURDATE(),7);`;
+    var instrucao = `SELECT registro FROM registro WHERE dataHoraRegistro >= SUBDATE(CURDATE(),7) limit 7;`;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
@@ -160,7 +160,7 @@ function selectDataMes(){
 
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
-    var instrucao = `SELECT registro FROM registro WHERE dataHoraRegistro >= SUBDATE(CURDATE(),30);`;
+    var instrucao = `SELECT registro FROM registro WHERE dataHoraRegistro >= SUBDATE(CURDATE(),30) limit 30;`;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
