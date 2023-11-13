@@ -1,6 +1,5 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
-!**/src/test/**/target/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
