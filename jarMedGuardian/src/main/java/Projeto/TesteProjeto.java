@@ -27,6 +27,9 @@ public class TesteProjeto {
         int pid;
 
         do {
+            for (int i = 0; i < looca.getRede().getGrupoDeInterfaces().getInterfaces().size(); i++){
+                System.out.println(looca.getRede().getGrupoDeInterfaces().getInterfaces().get(i));
+            }
             System.out.println("Digite o email: ");
             Scanner leitorEmail = new Scanner(System.in);
             String email = leitorEmail.nextLine();
@@ -111,8 +114,8 @@ public class TesteProjeto {
                 Integer minutos = segundos / 60;
                 segundos = segundos % 60;
 
-                if((looca.getRede().getGrupoDeInterfaces().getInterfaces().get(4).getBytesEnviados().doubleValue() / conversorMb) > 0){
-                    redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(4).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(4).getPacotesRecebidos().doubleValue()) / conversorMb;
+                if((looca.getRede().getGrupoDeInterfaces().getInterfaces().get(2).getBytesEnviados().doubleValue() / conversorMb) > 0){
+                    redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(2).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(2).getPacotesRecebidos().doubleValue()) / conversorMb;
                 } else {
                     redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(3).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(3).getPacotesRecebidos().doubleValue()) / conversorMb;
                 }

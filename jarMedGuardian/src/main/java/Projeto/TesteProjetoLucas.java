@@ -31,7 +31,9 @@ public class TesteProjetoLucas {
 
 
         do {
+
             for(int i = 0; i < looca.getGrupoDeJanelas().getJanelasVisiveis().size(); i++){
+                System.out.println(looca.getGrupoDeJanelas().getJanelasVisiveis());
                 if(!looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().isEmpty()){
                     if(looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().contains("Realtek") || looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().contains("Configurações") || looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().contains("Experiência de entrada do Windows") || looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().contains("Program Manager") || looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().contains("Restaurar páginas")){
                         listaPIDNaoMatar.add(looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getPid().intValue());
