@@ -45,14 +45,15 @@ public class TesteProjeto {
                     Integer fkEmpresaDoFuncionario = bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario);
                     bancoDeDados.insertComputador(nomeComputador, fkEmpresaDoFuncionario);
                     idComputador = bancoDeDados.selectIdComputador(nomeComputador);
+
+                    bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
+                    bancoDeDados.insertComponente(RAM.getNomeComponente());
                     if(!looca.getGrupoDeDiscos().getVolumes().isEmpty()){
                         for(int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
                             bancoDeDados.insertComponente(HD.getNomeComponente() + (i + 1));
                             hd++;
                         }
                     }
-                    bancoDeDados.insertComponente(RAM.getNomeComponente());
-                    bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
                     bancoDeDados.insertComponente(REDE.getNomeComponente());
                     bancoDeDados.insertComponente(TEMPOATIVIDADE.getNomeComponente());
 
@@ -61,13 +62,14 @@ public class TesteProjeto {
 
                         switch (idComponente) {
                             case 1 -> {
-                                bancoDeDados.insertEspecificacao(idComputador, idComponente, looca.getGrupoDeDiscos().getDiscos().get(0).getTamanho().doubleValue() / conversorGb);
+                                bancoDeDados.insertEspecificacao(idComputador, idComponente, 100.);
+
                             }
                             case 2 -> {
                                 bancoDeDados.insertEspecificacao(idComputador, idComponente, looca.getMemoria().getTotal().doubleValue() / conversorGb);
                             }
                             case 3 ->
-                                    bancoDeDados.insertEspecificacao(idComputador, idComponente, 100.);
+                                    bancoDeDados.insertEspecificacao(idComputador, idComponente, looca.getGrupoDeDiscos().getDiscos().get(0).getTamanho().doubleValue() / conversorGb);
                             case 4, 5 ->
                                     bancoDeDados.insertEspecificacao(idComputador, idComponente, null);
                         }
@@ -91,7 +93,7 @@ public class TesteProjeto {
 
         Timer timer = new Timer();
         int delay = 0; // Tempo de espera antes da primeira execução (0 significa que será executado imediatamente)
-        int interval = 3000; // Intervalo entre as execuções em milissegundos (5 segundos)
+        int interval = 5000; // Intervalo entre as execuções em milissegundos (5 segundos)
 
         Integer finalIdComputador = idComputador;
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -127,19 +129,20 @@ public class TesteProjeto {
 
                     switch (idComponente) {
                         case  1-> {
-                            bancoDeDados.insertRegistro(discoEmUso, "Uso", 1);
+                            bancoDeDados.insertRegistro(processadorEmUso, "UsoCpu", 1);
+                            bancoDeDados.insertRegistro(Double.valueOf(dias), "Dias", 1);
+                            bancoDeDados.insertRegistro(Double.valueOf(horas), "Horas", 1);
+                            bancoDeDados.insertRegistro(Double.valueOf(minutos), "Minutos", 1);
+                            bancoDeDados.insertRegistro(Double.valueOf(segundos), "Segundos", 1);
+                            bancoDeDados.insertRegistro(numeroProcessos, "QuantidadeProcessos", 1);
+                            bancoDeDados.insertRegistro(numeroThreads, "QuantidadeThreads", 1);
+
                         }
                         case 2 -> {
                             bancoDeDados.insertRegistro(memoriaRamEmUso, "Uso", 2);
                         }
                         case 3 -> {
-                            bancoDeDados.insertRegistro(processadorEmUso, "Uso", 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(dias), "Dias", 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(horas), "Horas", 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(minutos), "Minutos", 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(segundos), "Segundos", 3);
-                            bancoDeDados.insertRegistro(numeroProcessos, "Quantidade", 3);
-                            bancoDeDados.insertRegistro(numeroThreads, "Quantidade", 3);
+                            bancoDeDados.insertRegistro(discoEmUso, "Uso", 3);
                         }
                         case 4 ->
                                 bancoDeDados.insertRegistro(redeAtual, "Velocidade", 4);

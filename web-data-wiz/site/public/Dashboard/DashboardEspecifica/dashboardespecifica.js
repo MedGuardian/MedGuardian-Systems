@@ -4,11 +4,152 @@ function voltarDashboardGeral() {
     window.location.href = '../dashboard.html'
 }
 
+var divValorBoxLateralCpu = document.getElementById('divValorBoxLateralCpu');
+var divValorBoxLateralDisco = document.getElementById('divValorBoxLateralDisco');
+var divValorBoxLateralRam = document.getElementById('divValorBoxLateralRam');
+
+var spanValorBoxLateralCpu = document.getElementById('spanValorBoxLateralCpu');
+var spanValorBoxLateralDisco = document.getElementById('spanValorBoxLateralDisco');
+var spanValorBoxLateralRam = document.getElementById('spanValorBoxLateralRam');
+var spanTotalComponenteRam = document.getElementById("spanTotalComponenteRam")
+
+var spanDias = document.getElementById("valorCronometroDias")
+var spanHoras = document.getElementById("valorCronometroHoras")
+var spanMinutos = document.getElementById("valorCronometroMinutos")
+var spanSegundos = document.getElementById("valorCronometroSegundos")
+var spanVelocidadeRede = document.getElementById("spanValorVelocidadeRede")
+var spanUtilizacaoCPU = document.getElementById("spanUtilizacaoCPU")
+var spanVelocidadeCPU = document.getElementById("spanVelocidadeCPU")
+var spanProcessos = document.getElementById("spanProcessos")
+var spanThreads = document.getElementById("spanThreads")
+
+var velocidadeCpu = 0;
+var discoDisponivel = 0;
+var usoRamAtual = 0;
+
+var valoresCards = [velocidadeCpu, discoDisponivel, usoRamAtual];
+
+function atualizarSpanIndicadores(){
+    spanDias.innerHTML = Math.trunc(tempo_atividade_dias);
+    spanHoras.innerHTML = Math.trunc(tempo_atividade_horas);
+    spanMinutos.innerHTML = Math.trunc(tempo_atividade_minutos);
+    spanSegundos.innerHTML = Math.trunc(tempo_atividade_segundos);
+    spanVelocidadeRede.innerHTML = (velocidade_de_rede / 1).toFixed(1);
+    spanUtilizacaoCPU.innerHTML = Math.trunc(valoresCards[0]);
+    spanVelocidadeCPU.innerHTML = (valoresCards[0] / 1).toFixed(2) + "GHz";
+    spanProcessos.innerHTML = Math.trunc(processos);
+    spanThreads.innerHTML = Math.trunc(threads);
+}
+
+function atualizarValoresCardsLaterais(){
+    spanValorBoxLateralCpu.innerHTML = valoresCards[0];
+    spanValorBoxLateralDisco.innerHTML = valoresCards[1];
+    spanValorBoxLateralRam.innerHTML = (valoresCards[2] / 1).toFixed(1);
+    spanTotalComponenteRam.innerHTML = (totalComponenteRam / 1).toFixed(1);
+}
+
+function atualizarCoresCardsLaterais(){
+
+    if(valoresCards[0] > 80){
+        divValorBoxLateralCpu.style.backgroundColor = 'rgba(255,0,0,.5)'
+    } else if (valoresCards[0] > 70){
+        divValorBoxLateralCpu.style.backgroundColor = 'yellow'
+    } else {
+        divValorBoxLateralCpu.style.backgroundColor = '#718672'
+    }
+
+    if(valoresCards[1] > 80){
+        divValorBoxLateralDisco.style.backgroundColor = 'rgba(255,0,0,.5)'
+    } else if (valoresCards[1] > 70){
+        divValorBoxLateralDisco.style.backgroundColor = 'yellow'
+    } else {
+        divValorBoxLateralDisco.style.backgroundColor = '#718672'
+    }
+
+    var porcentagemUsoRam = (valoresCards[2] * 100) / 7.8;
+
+    if(porcentagemUsoRam > 90){
+        divValorBoxLateralRam.style.backgroundColor = 'rgba(255,0,0,.5)'
+    } else if (porcentagemUsoRam > 80){
+        divValorBoxLateralRam.style.backgroundColor = 'yellow'
+    } else {
+        divValorBoxLateralRam.style.backgroundColor = '#718672'
+    }
+}
+
+function atualizarIndicadores(){
+   
+    fetch("/usuarios/atualizarIndicadores", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+        .then(function (resposta) {
+            console.log("Estou buscando dados para atualizar os indicadores!");
+
+            if (resposta.ok) {
+                console.log(resposta);
+                resposta.json().then((resposta) => {
+                    resposta.reverse();
+                    resposta.forEach((especificacao) => {
+                        especificacao.forEach((objeto) => {
+                            const { fkEspecificacao, tipoCaptura, registro } = objeto;
+
+                            if (fkEspecificacao == 1){
+                                if(tipoCaptura == "UsoCpu"){
+                                    valoresCards[0] = registro;
+                                } else if (tipoCaptura == "QuantidadeThreads"){
+                                    threads = registro;
+                                } else if (tipoCaptura == "QuantidadeProcessos"){
+                                    processos = registro;
+                                } else {
+                                    if(tipoCaptura == "Dias"){
+                                        tempo_atividade_dias = registro;
+                                    } else if (tipoCaptura == "Horas"){
+                                        tempo_atividade_horas = registro;
+                                    } else if (tipoCaptura == "Minutos"){
+                                        tempo_atividade_minutos = registro;
+                                    } else if (tipoCaptura == "Segundos"){
+                                        tempo_atividade_segundos = registro;
+                                    }
+                                }
+                            } else if(fkEspecificacao == 2){
+                                valoresCards[2] = registro;
+                            } else if(fkEspecificacao == 3){
+                                valoresCards[1] = registro;
+                            } else if(fkEspecificacao == 4){
+                                velocidade_de_rede = registro;
+                            }
+                        });
+                    });
+                });
+                console.log("Consegui retornar os dados para atualizar os indicadores")
+                atualizarSpanIndicadores();
+                atualizarCoresCardsLaterais();
+                atualizarValoresCardsLaterais();
+            } else {
+                console.log("Houve um erro ao buscar os dados para atualizar os indicadores!");
+
+                resposta.text().then((texto) => {
+                    console.error(texto);
+                });
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+        });
+
+    return false;
+}
+
+setInterval(atualizarIndicadores, 5000)
+
 const graficoDesempenho = document.getElementById("graficoDesempenho")
 
 var labelsGrafico = [];
 const data_graficoDesempenho = {
-    labels: dataHoraLabels,
+    labels: dataHoraLabelsRAM,
     datasets: [
         {
             label: "Desempenho",
@@ -31,7 +172,8 @@ const config_graficoDesempenho = {
         maintainAspectRatio: false,
         scales: {
             y: {
-                max: 100,
+                max: 0,
+                min: 0,
                 grid: {
                     display: true
                 },
@@ -91,19 +233,20 @@ const config_graficoDesempenho = {
 
 const graficoEmUso = new Chart(graficoDesempenho, config_graficoDesempenho);
 
-const uso_cpu = [];
-const uso_ram = [];
-const uso_disco = [];
-var dataHoraLabels = [];
-const threads = 0;
-const processos = 0;
-const velocidade_de_rede = 0;
-const tempo_atividade_segundos = 0;
-const tempo_atividade_minutos = 0;
-const tempo_atividade_horas = 0;
-const tempo_atividade_dias = 0;
-const velocidade_processador = 0;
-
+var uso_cpu = [];
+var uso_ram = [];
+var uso_disco = [];
+var dataHoraLabelsCPU = [];
+var dataHoraLabelsDisco = [];
+var dataHoraLabelsRAM = [];
+var threads = 0;
+var processos = 0;
+var velocidade_de_rede = 0;
+var tempo_atividade_segundos = 0;
+var tempo_atividade_minutos = 0;
+var tempo_atividade_horas = 0;
+var tempo_atividade_dias = 0;
+var velocidade_processador = 0;
 
 function atualizarGrafico() {
 
@@ -128,23 +271,43 @@ function atualizarGrafico() {
                             const minuto = dataHoraRegistro.substring(14, 16);  // Extrai o minuto da dataHora
                             const segundo = dataHoraRegistro.substring(17, 19); // Extrai o segundo da dataHora
 
-                            if(fkEspecificacao == 2){
+                            if (fkEspecificacao == 1){
+                                if(uso_cpu.length >= 6){
+                                    uso_cpu.shift();
+                                }
+                                    uso_cpu.push(registro);
+                                    if(dataHoraLabelsCPU.length >= 6){
+                                        dataHoraLabelsCPU.shift()
+                                    }
+                                    dataHoraLabelsCPU.push(`${hora}:${minuto}:${segundo}`)
+                            } else if(fkEspecificacao == 2){
                                 if (uso_ram.length >= 6) {
                                     uso_ram.shift();
-                                    uso_cpu.shift();
-                                    uso_disco.shift();
-                                    dataHoraLabels.shift();
                                 }
                                 var porcentagemUsoRam = registro * 100 / totalComponenteRam;
                                 uso_ram.push(porcentagemUsoRam);
-                                dataHoraLabels.push(`${hora}:${minuto}:${segundo}`)
-                            }                            
+
+                                if(dataHoraLabelsRAM.length >= 6){
+                                    dataHoraLabelsRAM.shift()
+                                }
+                                dataHoraLabelsRAM.push(`${hora}:${minuto}:${segundo}`)
+                            } else if(fkEspecificacao == 3){
+                                if(uso_disco.length >= 6){
+                                    uso_disco.shift();
+                                }
+                                var porcentagemUsoDisco = registro * 100 / totalComponenteDisco;
+                                uso_disco.push(porcentagemUsoDisco)
+                                if(dataHoraLabelsDisco.length >= 6){
+                                    dataHoraLabelsDisco.shift()
+                                }
+                                dataHoraLabelsDisco.push(`${hora}:${minuto}:${segundo}`)
+                            }
                         });
                     });
-
+                    plotarGrafico(valorN);
                 });
 
-                plotarGrafico(1);
+                console.log("Consegui retornar os dados para atualizar o gráfico!")
             } else {
                 console.log("Houve um erro ao buscar os dados para popular o gráfico!");
 
@@ -161,7 +324,7 @@ function atualizarGrafico() {
   }
 
 
-setInterval(atualizarGrafico, 3000)
+setInterval(atualizarGrafico, 5000)
 
 var totalComponenteRam = 0;
 var totalComponenteCPU = 0;
@@ -184,10 +347,13 @@ function selectTotalComponentes(){
                         especificacao.forEach((objeto) => {
                             const { fkComponente, totalComponente } = objeto;
 
-                            if(fkComponente == 2){
+                            if(fkComponente == 1){
+                                totalComponenteCPU = totalComponente;
+                            } else if(fkComponente == 2){
                                 totalComponenteRam = totalComponente;
-                            }                 
-                            console.log(totalComponenteRam)       
+                            } else if (fkComponente == 3){
+                                totalComponenteDisco = totalComponente;
+                            }                  
                         });
                     });
                     
@@ -209,30 +375,44 @@ function selectTotalComponentes(){
     return false;
 }
 
-function escolherGrafico(n) {
-    plotarGrafico(n)
+var valorN = 1;
+
+function escolherGrafico(n){
+    valorN = n;
+    plotarGrafico(valorN)
 }
 
 function plotarGrafico(n) {
     atualizarComponenteEscolhido(n)
     switch (n) {
         case 1:
-            uso_ram.reverse();
-            dataHoraLabels.reverse();
-            data_graficoDesempenho.datasets[0].data = uso_ram.slice(0,6);
+            uso_cpu.reverse();
+            dataHoraLabelsCPU.reverse();
+            data_graficoDesempenho.datasets[0].data = uso_cpu.slice(0,6);
             config_graficoDesempenho.options.plugins.title.text = 'Desempenho CPU'
-            data_graficoDesempenho.labels = dataHoraLabels.slice(0,6);
+            config_graficoDesempenho.options.scales.y.max = 50;
+            config_graficoDesempenho.options.scales.y.min = 0;
+            data_graficoDesempenho.labels = dataHoraLabelsCPU.slice(0,6);
             break;
         case 2:
-            data_graficoDesempenho.datasets[0].data = uso_ram.slice(0,6)
-            config_graficoDesempenho.options.plugins.title.text = 'Uso Disco'
+            uso_disco.reverse();
+            dataHoraLabelsDisco.reverse();
+            data_graficoDesempenho.datasets[0].data = uso_disco.slice(0,6);
+            config_graficoDesempenho.options.plugins.title.text = 'Uso do disco'
+            config_graficoDesempenho.options.scales.y.max = 50;
+            config_graficoDesempenho.options.scales.y.min = 25;
+            data_graficoDesempenho.labels = dataHoraLabelsDisco.slice(0,6);
             break;
         case 3:
-            data_graficoDesempenho.datasets[0].data = uso_ram.slice(0,6)
-            config_graficoDesempenho.options.plugins.title.text = 'Uso Memória RAM'
+            uso_ram.reverse();
+            dataHoraLabelsRAM.reverse();
+            data_graficoDesempenho.datasets[0].data = uso_ram.slice(0,6);
+            config_graficoDesempenho.options.plugins.title.text = 'Uso da RAM';
+            config_graficoDesempenho.options.scales.y.max = 100;
+            config_graficoDesempenho.options.scales.y.min = 80;
+            data_graficoDesempenho.labels = dataHoraLabelsRAM.slice(0,6);
             break;
     }
-
     graficoEmUso.update();
 }
 
@@ -261,94 +441,6 @@ function atualizarComponenteEscolhido(n){
             break;
     }
 }
-
-var dias = 0;
-var horas = 23;
-var minutos = 59;
-var segundos = 55;
-
-function atualizarTempoAtividade() {
-    const valorCronometroDias = document.getElementById('valorCronometroDias');
-    const valorCronometroHoras = document.getElementById('valorCronometroHoras');
-    const valorCronometroMinutos = document.getElementById('valorCronometroMinutos');
-    const valorCronometroSegundos = document.getElementById('valorCronometroSegundos');
-
-    segundos++
-    
-    if (segundos == 60) {
-        segundos = 0
-        minutos++
-    }
-
-    if (minutos == 60) {
-        minutos = 0
-        horas++
-    }
-
-    if (horas == 24) {
-        horas = 0
-        dias++
-    }
-
-    valorCronometroDias.innerHTML = dias;
-    valorCronometroHoras.innerHTML = horas;
-    valorCronometroMinutos.innerHTML = minutos;
-    valorCronometroSegundos.innerHTML = segundos;
-}
-
-setInterval(atualizarTempoAtividade, 1000);
-
-function atualizarCoresCardsLaterais(){
-    var divValorBoxLateralCpu = document.getElementById('divValorBoxLateralCpu');
-    var divValorBoxLateralDisco = document.getElementById('divValorBoxLateralDisco');
-    var divValorBoxLateralRam = document.getElementById('divValorBoxLateralRam');
-
-    var spanValorBoxLateralCpu = document.getElementById('spanValorBoxLateralCpu');
-    var spanValorBoxLateralDisco = document.getElementById('spanValorBoxLateralDisco');
-    var spanValorBoxLateralRam = document.getElementById('spanValorBoxLateralRam');
-
-    var vetorValores = atualizarValoresCardsLaterais();
-
-    spanValorBoxLateralCpu.innerHTML = vetorValores[0];
-    spanValorBoxLateralDisco.innerHTML = vetorValores[1];
-    spanValorBoxLateralRam.innerHTML = vetorValores[2];
-
-    if(vetorValores[0] > 80){
-        divValorBoxLateralCpu.style.backgroundColor = 'rgba(255,0,0,.5)'
-    } else if (vetorValores[0] > 70){
-        divValorBoxLateralCpu.style.backgroundColor = 'yellow'
-    } else {
-        divValorBoxLateralCpu.style.backgroundColor = '#718672'
-    }
-
-    if(vetorValores[1] > 80){
-        divValorBoxLateralDisco.style.backgroundColor = 'rgba(255,0,0,.5)'
-    } else if (vetorValores[1] > 70){
-        divValorBoxLateralDisco.style.backgroundColor = 'yellow'
-    } else {
-        divValorBoxLateralDisco.style.backgroundColor = '#718672'
-    }
-
-    var porcentagemUsoRam = (vetorValores[2] * 100) / 7.8;
-
-    if(porcentagemUsoRam > 90){
-        divValorBoxLateralRam.style.backgroundColor = 'rgba(255,0,0,.5)'
-    } else if (porcentagemUsoRam > 80){
-        divValorBoxLateralRam.style.backgroundColor = 'yellow'
-    } else {
-        divValorBoxLateralRam.style.backgroundColor = '#718672'
-    }
-}
-
-function atualizarValoresCardsLaterais(){
-    var numeroAleatorioCpu = Math.floor(Math.random() * 101);
-    var numeroAleatorioDisco = Math.floor(Math.random() * 101);
-    var numeroAleatorioRam = (Math.random() * 7.8).toFixed(1);;
-
-    return [numeroAleatorioCpu, numeroAleatorioDisco, parseFloat(numeroAleatorioRam)]
-}
-
-setInterval(atualizarCoresCardsLaterais, 3000)
 
 
 
