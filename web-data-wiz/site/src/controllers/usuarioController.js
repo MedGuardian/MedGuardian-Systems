@@ -433,6 +433,25 @@ function selectTotalComponentes(req, res) {
         );
 }
 
+function atualizarIndicadores(req, res) {
+
+    usuarioModel.atualizarIndicadores()
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao buscar os dados para atualizar os indicadores! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
 module.exports = {
     autenticar,
     cadastrar,
@@ -446,5 +465,6 @@ module.exports = {
     selectComputador,
     deletarTuplaPeloId,
     atualizarGrafico,
-    selectTotalComponentes
+    selectTotalComponentes,
+    atualizarIndicadores
 }

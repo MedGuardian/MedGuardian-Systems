@@ -51,4 +51,8 @@ router.get("/selectTotalComponentes", function (req, res) {
     usuarioController.selectTotalComponentes(req, res);
 });
 
+router.get("/atualizarIndicadores", function (req, res) {
+    usuarioController.atualizarIndicadores(req, res);
+});
+
 module.exports = router;
