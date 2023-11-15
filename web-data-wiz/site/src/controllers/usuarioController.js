@@ -439,6 +439,25 @@ function excluirMaquina(req, res) {
 
 }
 
+function selectFuncionarios(req, res) {
+    var fkEmpresa = req.body.fkEmpresaServer
+        usuarioModel.selectFuncionarios(fkEmpresa)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o select de Funcionários! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+
 module.exports = {
     autenticar,
     cadastrar,
@@ -452,5 +471,6 @@ module.exports = {
     atualizarGrafico,
     selectTotalComponentes,
     atualizarIndicadores,
-    selectComputador
+    selectComputador,
+    selectFuncionarios
 }
