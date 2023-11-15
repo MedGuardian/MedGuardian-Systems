@@ -218,73 +218,6 @@ function cadastrarFuncionario(req, res) {
 
 }
 
-function selectComputador(req, res) {
-    var nomeMaquina = req.body.nomeMaquinaServer;
-    var idComputador = req.body.idComputadorServer;
-
-    if (nomeMaquina == undefined) {
-        res.status(400).send("O nome da máquina está undefined!");
-    } else {
-
-        usuarioModel.excluirMaquina(nomeMaquina, idComputador)
-            .then(
-                function (resultadoExclusaoMaquina) {
-                    console.log(`\nResultados encontrados: ${resultadoExclusaoMaquina.length}`);
-                    console.log(`Resultados: ${JSON.stringify(resultadoExclusaoMaquina)}`); // transforma JSON em String
-
-                    if (resultadoExclusaoMaquina.length == 1) {
-                        console.log(resultadoExclusaoMaquina);
-                        res.json(resultadoExclusaoMaquina[0]);
-                    } else if (resultadoExclusaoMaquina.length == 0) {
-                        res.status(403).send("Erro no select do computador!");
-                    } else {
-                        res.status(403).send("Erro no select do computador!");
-                    }
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log("\nHouve um erro ao realizar o select da máquina! Erro: ", erro.sqlMessage);
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
-    }
-
-}
-
-function deletarTuplaPeloId(req, res) {
-    var idComputador = req.body.fkComputadorServer;
-
-    if (nomeMaquina == undefined) {
-        res.status(400).send("O nome da máquina está undefined!");
-    } else {
-
-        usuarioModel.deletarTuplaPeloId(idComputador)
-            .then(
-                function (resultadoExclusaoMaquina) {
-                    console.log(`\nResultados encontrados: ${resultadoExclusaoMaquina.length}`);
-                    console.log(`Resultados: ${JSON.stringify(resultadoExclusaoMaquina)}`); // transforma JSON em String
-
-                    if (resultadoExclusaoMaquina.length == 1) {
-                        console.log(resultadoExclusaoMaquina);
-                        res.json(resultadoExclusaoMaquina[0]);
-                    } else if (resultadoExclusaoMaquina.length == 0) {
-                        res.status(403).send("Erro no select do computador!");
-                    } else {
-                        res.status(403).send("Erro no select do computador!");
-                    }
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log("\nHouve um erro ao realizar o select da máquina! Erro: ", erro.sqlMessage);
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
-    }
-
-}
-
 function cadastrar(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var razaoSocial = req.body.razaoServer;
@@ -452,6 +385,60 @@ function atualizarIndicadores(req, res) {
         );
 }
 
+function selectComputador(req, res) {
+
+    var nomeMaquina = req.body.nomeMaquinaServer
+    usuarioModel.selectComputador(nomeMaquina)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao fazer o select do computador! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function excluirMaquina(req, res) {
+    var nomeMaquina = req.body.nomeMaquinaServer;
+    var idComputador = req.body.idComputadorServer;
+
+    if (nomeMaquina == undefined || idComputador == undefined) {
+        res.status(400).send("O nome da máquina ou o ID dela está undefined!");
+    } else {
+
+        usuarioModel.excluirMaquina(nomeMaquina, idComputador)
+            .then(
+                function (resultadoExclusaoMaquina) {
+                    console.log(`\nResultados encontrados: ${resultadoExclusaoMaquina.length}`);
+                    console.log(`Resultados: ${JSON.stringify(resultadoExclusaoMaquina)}`); // transforma JSON em String
+
+                    if (resultadoExclusaoMaquina.length == 1) {
+                        console.log(resultadoExclusaoMaquina);
+                        res.status(403).send("Erro na exclusão da máquina!");
+                    } else if (resultadoExclusaoMaquina.length == 0) {
+                        res.status(403).send("Erro na exclusão da máquina!");
+                    } else {
+                        res.json(resultadoExclusaoMaquina[0]);
+                    }
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao realizar a exclusão da máquina! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+
+}
+
 module.exports = {
     autenticar,
     cadastrar,
@@ -462,9 +449,8 @@ module.exports = {
     atualizarEmpresa,
     atualizarFuncionario,
     excluirMaquina,
-    selectComputador,
-    deletarTuplaPeloId,
     atualizarGrafico,
     selectTotalComponentes,
-    atualizarIndicadores
+    atualizarIndicadores,
+    selectComputador
 }

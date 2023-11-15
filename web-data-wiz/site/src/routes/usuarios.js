@@ -39,10 +39,6 @@ router.post("/selectComputador", function (req, res) {
     usuarioController.selectComputador(req, res);
 })
 
-router.post("/deletarTuplaPeloId", function (req, res) {
-    usuarioController.deletarTuplaPeloId(req, res);
-})
-
 router.get("/atualizarGrafico", function (req, res) {
     usuarioController.atualizarGrafico(req, res);
 });

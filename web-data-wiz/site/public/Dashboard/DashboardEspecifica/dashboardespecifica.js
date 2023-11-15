@@ -19,7 +19,7 @@ var spanMinutos = document.getElementById("valorCronometroMinutos")
 var spanSegundos = document.getElementById("valorCronometroSegundos")
 var spanVelocidadeRede = document.getElementById("spanValorVelocidadeRede")
 var spanUtilizacaoCPU = document.getElementById("spanUtilizacaoCPU")
-var spanVelocidadeCPU = document.getElementById("spanVelocidadeCPU")
+var spanSwapDisponivel = document.getElementById("spanSwapDisponivel")
 var spanProcessos = document.getElementById("spanProcessos")
 var spanThreads = document.getElementById("spanThreads")
 
@@ -35,8 +35,8 @@ function atualizarSpanIndicadores(){
     spanMinutos.innerHTML = Math.trunc(tempo_atividade_minutos);
     spanSegundos.innerHTML = Math.trunc(tempo_atividade_segundos);
     spanVelocidadeRede.innerHTML = (velocidade_de_rede / 1).toFixed(1);
-    spanUtilizacaoCPU.innerHTML = Math.trunc(valoresCards[0]);
-    spanVelocidadeCPU.innerHTML = (valoresCards[0] / 1).toFixed(2) + "GHz";
+    spanUtilizacaoCPU.innerHTML = (valoresCards[0] / 1).toFixed(1) + "%";
+    spanSwapDisponivel.innerHTML = swapDisponivel + "GB";
     spanProcessos.innerHTML = Math.trunc(processos);
     spanThreads.innerHTML = Math.trunc(threads);
 }
@@ -117,7 +117,9 @@ function atualizarIndicadores(){
                             } else if(fkEspecificacao == 2){
                                 valoresCards[2] = registro;
                             } else if(fkEspecificacao == 3){
-                                valoresCards[1] = registro;
+                                if(tipoCaptura == "Uso"){
+                                    valoresCards[1] = registro;
+                                }
                             } else if(fkEspecificacao == 4){
                                 velocidade_de_rede = registro;
                             }
@@ -247,6 +249,7 @@ var tempo_atividade_minutos = 0;
 var tempo_atividade_horas = 0;
 var tempo_atividade_dias = 0;
 var velocidade_processador = 0;
+var swapDisponivel = 0;
 
 function atualizarGrafico() {
 
@@ -292,15 +295,21 @@ function atualizarGrafico() {
                                 }
                                 dataHoraLabelsRAM.push(`${hora}:${minuto}:${segundo}`)
                             } else if(fkEspecificacao == 3){
-                                if(uso_disco.length >= 6){
-                                    uso_disco.shift();
+
+                                if(tipoCaptura == "SwapDisponivel"){
+                                    swapDisponivel = registro;
+                                } else {
+                                    valoresCards[1] = registro;
+                                    if(uso_disco.length >= 6){
+                                        uso_disco.shift();
+                                    }
+                                    var porcentagemUsoDisco = 100 - (registro * 100 / totalComponenteDisco);
+                                    uso_disco.push(porcentagemUsoDisco)
+                                    if(dataHoraLabelsDisco.length >= 6){
+                                        dataHoraLabelsDisco.shift()
+                                    }
+                                    dataHoraLabelsDisco.push(`${hora}:${minuto}:${segundo}`)
                                 }
-                                var porcentagemUsoDisco = registro * 100 / totalComponenteDisco;
-                                uso_disco.push(porcentagemUsoDisco)
-                                if(dataHoraLabelsDisco.length >= 6){
-                                    dataHoraLabelsDisco.shift()
-                                }
-                                dataHoraLabelsDisco.push(`${hora}:${minuto}:${segundo}`)
                             }
                         });
                     });
@@ -358,7 +367,7 @@ function selectTotalComponentes(){
                     });
                     
                 });
-
+                console.log("Consegui buscar o total dos componentes!")
                 
             } else {
                 console.log("Houve um erro ao fazer o select do total dos componentes!");
@@ -399,8 +408,8 @@ function plotarGrafico(n) {
             dataHoraLabelsDisco.reverse();
             data_graficoDesempenho.datasets[0].data = uso_disco.slice(0,6);
             config_graficoDesempenho.options.plugins.title.text = 'Uso do disco'
-            config_graficoDesempenho.options.scales.y.max = 50;
-            config_graficoDesempenho.options.scales.y.min = 25;
+            config_graficoDesempenho.options.scales.y.max = 100;
+            config_graficoDesempenho.options.scales.y.min = 0;
             data_graficoDesempenho.labels = dataHoraLabelsDisco.slice(0,6);
             break;
         case 3:
