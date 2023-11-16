@@ -2,15 +2,22 @@ function voltar() {
     history.back();
 }
 
-function gerarDIVFuncionario() {
-
+function gerarDIVFuncionario(nome, email, cargo) {
+    var div = document.getElementById("containerFuncionarios")
+    div.innerHTML += `<div class="dadosFuncionarios2">
+                <label>${nome}</label>
+                <label>|</label>
+                <label>${email}</label>
+                <label>|</label>
+                <label>${cargo}</label>
+            </div>`
 }
 
 
 function selectFuncionarios() {
-    var fkEmpresaVar = 1;
+    var fkEmpresaVar = sessionStorage.fkEmpresa;
 
-    fetch("/usuarios/a", {
+    fetch("/usuarios/selectFuncionarios", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -25,18 +32,17 @@ function selectFuncionarios() {
 
             if (resposta.ok) {
                 console.log(resposta);
-                /*
-                resposta.json().then((resposta) => {
-                    resposta.reverse();
-                    resposta.forEach((funcionario) => {
-                        funcionario.forEach((objeto) => {
-                            const { fkEspecificacao, tipoCaptura, dataHoraRegistro, registro } = objeto;
 
-                          
-                        });
+                resposta.json().then((resposta) => {
+                    resposta.forEach((funcionario) => {
+                        const { nomeFuncionario, emailFuncionario, tipoAcesso } = funcionario;
+                        nome = nomeFuncionario;
+                        email = emailFuncionario;
+                        cargo = tipoAcesso;
+                        gerarDIVFuncionario(nome, email, cargo);
                     });
+
                 });
-*/
                 console.log("Deu certo seu select de funcionários!")
             } else {
                 throw "Houve um erro no select de funcionários(FrontEnd)!";
@@ -48,3 +54,6 @@ function selectFuncionarios() {
 
     return false;
 }
+var nome = "";
+var email = "";
+var cargo = "";

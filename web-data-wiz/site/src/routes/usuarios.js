@@ -51,7 +51,7 @@ router.get("/atualizarIndicadores", function (req, res) {
     usuarioController.atualizarIndicadores(req, res);
 });
 
-router.post("/a", function (req, res) {
+router.post("/selectFuncionarios", function (req, res) {
     usuarioController.selectFuncionarios(req, res);
 });
 
