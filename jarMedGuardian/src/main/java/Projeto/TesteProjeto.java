@@ -115,7 +115,11 @@ public class TesteProjeto {
                 Integer minutos = segundos / 60;
                 segundos = segundos % 60;
 
-                if((looca.getRede().getGrupoDeInterfaces().getInterfaces().get(2).getBytesEnviados().doubleValue() / conversorMb) > 100000){
+                if((looca.getRede().getGrupoDeInterfaces().getInterfaces().get(0).getBytesEnviados().doubleValue() / conversorMb) > 100000){
+                    redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(0).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(0).getPacotesRecebidos().doubleValue()) / conversorMb;
+                } else if((looca.getRede().getGrupoDeInterfaces().getInterfaces().get(1).getBytesEnviados().doubleValue() / conversorMb) > 100000){
+                    redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(1).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(1).getPacotesRecebidos().doubleValue()) / conversorMb;
+                } else if((looca.getRede().getGrupoDeInterfaces().getInterfaces().get(2).getBytesEnviados().doubleValue() / conversorMb) > 100000){
                     redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(2).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(2).getPacotesRecebidos().doubleValue()) / conversorMb;
                 } else if((looca.getRede().getGrupoDeInterfaces().getInterfaces().get(3).getBytesEnviados().doubleValue() / conversorMb) > 100000){
                     redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(3).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(3).getPacotesRecebidos().doubleValue()) / conversorMb;
