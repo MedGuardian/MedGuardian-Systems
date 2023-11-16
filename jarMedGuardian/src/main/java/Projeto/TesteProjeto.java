@@ -103,7 +103,7 @@ public class TesteProjeto {
                 Double swapDisponivel = ObterMemoriaSwap.ObterMemoriaSwap().get(0).doubleValue() / conversorGb;
                 Double numeroThreads = looca.getGrupoDeProcessos().getTotalThreads().doubleValue();
                 Double numeroProcessos = looca.getGrupoDeProcessos().getTotalProcessos().doubleValue();
-                Double redeAtual;
+                Double redeAtual = 0.;
                 Integer segundos = looca.getSistema().getTempoDeAtividade().intValue();
 
                 Integer dias = segundos / 86400;
@@ -122,8 +122,6 @@ public class TesteProjeto {
                 } else if((looca.getRede().getGrupoDeInterfaces().getInterfaces().get(2).getBytesEnviados().doubleValue() / conversorMb) > 100000){
                     redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(2).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(2).getPacotesRecebidos().doubleValue()) / conversorMb;
                 } else if((looca.getRede().getGrupoDeInterfaces().getInterfaces().get(3).getBytesEnviados().doubleValue() / conversorMb) > 100000){
-                    redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(3).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(3).getPacotesRecebidos().doubleValue()) / conversorMb;
-                } else {
                     redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(3).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(3).getPacotesRecebidos().doubleValue()) / conversorMb;
                 }
 
