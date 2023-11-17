@@ -4,12 +4,14 @@ function voltar() {
 
 function gerarDIVFuncionario(nome, email, cargo) {
     var div = document.getElementById("containerFuncionarios")
-    div.innerHTML += `<div class="dadosFuncionarios2">
-                <label>${nome}</label>
-                <label>|</label>
-                <label>${email}</label>
-                <label>|</label>
-                <label>${cargo}</label>
+    div.innerHTML += `            <div class="dadosFuncionarios3">
+                <div class="dadosFuncionarios2">
+                <input type="checkbox">
+                    <label>${nome}</label>
+                    <label>${email}</label>
+                    <label>${cargo}</label>
+                </div>
+                <label class="tracoSeparacao"></label>
             </div>`
 }
 
