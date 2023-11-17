@@ -102,16 +102,48 @@ p {
 }
 
 .dadosFuncionarios {
-    width: 90%;
+    width: 100%;
+    background-color: rgb(147, 255, 147);
+    padding: 3px;
+    border-radius: 10px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 
+.dadosFuncionarios label {
+    width: 30%;
+
+    align-items: center;
+    text-align: center;
+}
+
+.dadosFuncionarios3 {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tracoSeparacao {
+    width: 100%;
+    height: 5px;
+    border-radius: 98%;
+    background-color: rgb(147, 255, 147);
+}
+
 .dadosFuncionarios2 {
-    width: 90%;
+    width: 100%;
+    margin: 5px;
     display: flex;
     font-size: 20px;
     justify-content: space-between;
+}
+
+.dadosFuncionarios2 label {
+    width: 30%;
+    align-items: center;
+    text-align: center;
 }
 
 .botaoVoltar {
@@ -122,6 +154,11 @@ p {
     width: 100%;
     align-items: center;
 }
+
+#labeltraco {
+    width: 2%;
+}
+
 
 .botaoVoltar span {
     font-size: 30px;
