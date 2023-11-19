@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="dashboard.css" />
   <link rel="stylesheet" href="../PaginaInicial/paginaInicial.css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../js/sessao.js"></script>
   <script src="../js/funcoes.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/litepicker.js"></script>
@@ -22,8 +23,8 @@
   <title>Dashboard</title>
 </head>
 
-<body onload="validarSessao(), alertaCores()">
-
+<body onload="validarMetricas(), validarSessao(), alertaCores()"> 
+  <div class="" id="pagina">
   <div class="AlterarMaquina" id="AlterarMaquina">
     <div class="container">
       <div class="conteudoAlterarMaquina">
@@ -1051,17 +1052,129 @@
 
   </div>
   </div>
-
+</div>
+  <div class="" id="modalMetric" style="z-index: -1
+  ;">
+    <span>Grave cpu</span>
+    <input type="text" id="vermCpu">
+    <span>Médio cpu</span>
+    <input type="text" id="amCpu">
+    <span>Grave disco</span>
+    <input type="text" id="vermDisco">
+    <span>Médio disco</span>
+    <input type="text" id="amDisco">
+    <span>Grave ram</span>
+    <input type="text" id="vermRam">
+    <span>Médio ram</span>
+    <input type="text" id="amRam">
+    <button onclick="cadastrarMetricas()">Cadastrar</button>
+  </div>
+  
 </body>
 
 </html>
 
 <script>
 
+  function cadastrarMetricas(){
+    var idEmpresa;
+    
+    var graveCpu = vermCpu.value
+    var medioCpu = amCpu.value
+    var graveDisco = vermDisco.value
+    var medioDisco = amDisco.value
+    var graveRam = vermRam.value
+    var medioRam = amRam.value
+    
+    if (sessionStorage.idEmpresa == null) {
+      idEmpresa = sessionStorage.fkEmpresa;
+    } else {
+      idEmpresa = sessionStorage.idEmpresa;
+    }
+
+    fetch("/empresas/cadastrarMetrica", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        graveCpuServer: graveCpu,
+        medioCpuServer: medioCpu,
+        graveDiscoServer: graveDisco,
+        medioDiscoServer: medioDisco,
+        graveRamServer: graveRam,
+        medioRamServer: medioRam,
+        idEmpresaServer: idEmpresa
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+
+    return false;
+
+    
+  }
   function abrirPDF() {
     window.open('PDF.html', '_blank');
   }
 
+  function validarMetricas(){
+    var idEmpresa;
+    if (sessionStorage.idEmpresa == null) {
+      idEmpresa = sessionStorage.fkEmpresa;
+    } else {
+      idEmpresa = sessionStorage.idEmpresa;
+    }
+    fetch(`/empresas/validarMetrica/${idEmpresa}`,{ cache: "no-store" }).then(function (resposta) {
+      console.log("ESTOU NO THEN DO entrar()!")
+      if (resposta.ok) {
+        resposta.json().then(function (resposta) {
+          console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+          if(resposta.length==0){
+            Swal.fire({
+              title: "Suas métricas ainda não foram cadastradas!",
+              showDenyButton: true,
+              showCancelButton: false,
+              confirmButtonText: "Cadastrar",
+              denyButtonText: `Voltar ao inicio`
+            }).then((result) => {
+              /* Read more about isConfirmed, isDenied below */
+              if (result.isConfirmed) {
+                modalMetricas()
+              } else if (result.isDenied) {
+                window.location("../../index.html")
+              }
+            });
+          }
+        });
+      } else {
+        console.error("Nenhum dado encontrado ou erro na API");
+      }
+    })
+    .catch(function (error) {
+      console.error(`${error.message}`);
+    });
+
+  return false;
+
+  }
+
+  function modalMetricas(){
+    var modal = document.getElementById('modalMetric')
+    var pag = document.getElementById('pagina')
+    modal.style.zIndex=10;
+    pag.style.opacity="0.5";
+  }
 
   function alertaCores() {
     var divMaquina = document.getElementById('boxAlertaMaquina')
