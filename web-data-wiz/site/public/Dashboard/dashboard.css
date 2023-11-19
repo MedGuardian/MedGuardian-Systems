@@ -1,22 +1,22 @@
-body{
+body {
     font-family: LeagueSpartan;
     margin: 0;
 }
 
-.headerElipse{
+.headerElipse {
     display: flex;
     flex-direction: row;
     width: 100%;
     color: white;
 }
 
-.conteudoHeaderElipse{
+.conteudoHeaderElipse {
     display: flex;
     flex-direction: row;
     width: 100%;
 }
 
-.headerEsquerdaLogo{
+.headerEsquerdaLogo {
     position: fixed;
     align-items: center;
     justify-content: center;
@@ -33,7 +33,7 @@ body{
     cursor: pointer;
 }
 
-.headerDireitaTitulo{
+.headerDireitaTitulo {
     display: flex;
     flex-direction: column;
     background-image: url(../assets/images/navbarCircle.svg);
@@ -41,7 +41,7 @@ body{
     width: 88%;
 }
 
-.spansHeader{
+.spansHeader {
     display: flex;
     flex-direction: column;
     margin: 2.5% 0 2.5% 5%;
@@ -52,7 +52,7 @@ body{
     font-weight: 600;
 }
 
-#saudacaoDashboard{
+#saudacaoDashboard {
     font-size: 35px;
     margin-bottom: 1%;
 }
@@ -64,13 +64,13 @@ body{
     width: 100%;
 }
 
-.conteudoDashboard{
+.conteudoDashboard {
     display: flex;
     flex-direction: row;
     width: 100%;
 }
 
-.menuLateral{
+.menuLateral {
     display: flex;
     flex-direction: column;
     background-color: #004D02;
@@ -79,7 +79,7 @@ body{
     width: 12%;
 }
 
-.containerMenuLateral{
+.containerMenuLateral {
     width: 88%;
     margin: 0 12%;
 }
@@ -94,13 +94,13 @@ body{
     flex-direction: column;
 }
 
-.botaoHome{
+.botaoHome {
     color: #C8C8C8;
     margin-top: 10%;
     cursor: pointer;
 }
 
-.botaoDashboard{
+.botaoDashboard {
     display: flex;
     margin-top: 10%;
     color: #FFFFFF;
@@ -109,7 +109,7 @@ body{
     border-radius: 5px 0 0 5px;
 }
 
-.botaoDashboard svg{
+.botaoDashboard svg {
     width: 15%;
     margin-right: 10%;
     padding: 5% 0 5% 5%;
@@ -119,7 +119,7 @@ body{
     padding: 5% 0;
 }
 
-.linha{
+.linha {
     height: 1px;
     width: 88%;
     background-color: #E9ECEF;
@@ -137,7 +137,7 @@ body{
     margin-right: 10%;
 }
 
-.boxFiltros{
+.boxFiltros {
     display: flex;
     flex-direction: column;
     background-color: #c8c8c8c6;
@@ -146,7 +146,7 @@ body{
     border-radius: 7.5px;
 }
 
-.filtroRow{
+.filtroRow {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -162,7 +162,7 @@ body{
     padding-left: 10%;
 }
 
-.relatorio  a{
+.relatorio a {
     display: flex;
     color: #C8C8C8;
     align-items: center;
@@ -179,7 +179,7 @@ body{
     width: 80%;
 }
 
-.botaoSair{
+.botaoSair {
     display: flex;
     color: #FFFFFF;
     align-items: center;
@@ -198,14 +198,14 @@ body{
 
 /* MÁQUINAS */
 
-.dashboardMaquinas{
+.dashboardMaquinas {
     margin-left: 12%;
     width: 88%;
     display: flex;
     background-color: #DAF3EA;
 }
 
-.conteudoDashboardMaquinas{
+.conteudoDashboardMaquinas {
     display: flex;
     flex-direction: column;
     margin-top: 2.5%;
@@ -214,13 +214,13 @@ body{
     width: 100%;
 }
 
-.tituloDashboardMaquinas{
+.tituloDashboardMaquinas {
     font-size: 40px;
     color: #0A8100;
     font-weight: 600;
 }
 
-.boxesIndicadoresMaquinas{
+.boxesIndicadoresMaquinas {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -228,17 +228,17 @@ body{
     margin: 2% 0;
 }
 
-.boxIndicador{
+.boxIndicador {
     display: flex;
     flex-direction: row;
     background-color: #C8C8C8;
     border-radius: 12px;
     padding: 0.5% 0;
     width: 15%;
-    box-shadow: -20px 20px 40px 0px rgba(0,0,0,0.75), 20px -20px 40px 0px rgba(255,255,255, 0.75);
+    box-shadow: -20px 20px 40px 0px rgba(0, 0, 0, 0.75), 20px -20px 40px 0px rgba(255, 255, 255, 0.75);
 }
 
-.circuloBoxIndicador{
+.circuloBoxIndicador {
     width: 40px;
     height: 40px;
     border-radius: 100%;
@@ -247,14 +247,14 @@ body{
     margin-left: 5%;
 }
 
-.tooltipIndicador{
+.tooltipIndicador {
     display: none;
     position: relative;
     left: 90%;
     top: 5%;
 }
 
-.spanBoxIndicador{
+.spanBoxIndicador {
     width: 70%;
     display: flex;
     flex-direction: column;
@@ -264,14 +264,14 @@ body{
 }
 
 
-#spanBaixoBoxIndicador{
+#spanBaixoBoxIndicador {
     margin-top: 12%;
     padding-bottom: 2%;
     font-size: 25px;
     font-weight: 400;
 }
 
-#boxTodasMaquinas{
+#boxTodasMaquinas {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -287,34 +287,34 @@ body{
     background-color: #91E384;
 }
 
-#boxAlerta{
+#boxAlerta {
     background-color: #EE9663;
 }
 
-#boxCritico{
+#boxCritico {
     background-color: #FC8374;
 }
 
-#boxIdeal .circuloBoxIndicador{
+#boxIdeal .circuloBoxIndicador {
     background-color: #47C133;
 }
 
-#boxAlerta .circuloBoxIndicador{
+#boxAlerta .circuloBoxIndicador {
     background-color: #F16A1B;
 }
 
-#boxCritico .circuloBoxIndicador{
+#boxCritico .circuloBoxIndicador {
     background-color: #C03221;
 }
 
-.tituloDashboards{
+.tituloDashboards {
     display: flex;
     width: 100%;
     justify-content: center;
     margin: 1% 0;
 }
 
-.auxiliarTituloDashboards{
+.auxiliarTituloDashboards {
     background-color: #057D1D;
     border-radius: 20px;
     text-align: center;
@@ -326,7 +326,7 @@ body{
     letter-spacing: 5px;
 }
 
-.spanSelecionarMaquina{
+.spanSelecionarMaquina {
     margin: 1% 0;
     color: black;
     font-size: 22px;
@@ -334,14 +334,14 @@ body{
     text-align: center;
 }
 
-.maquinasCadastradas{
+.maquinasCadastradas {
     display: flex;
     width: 100%;
     justify-content: space-evenly;
     margin: 1% 0;
 }
 
-.boxMaquinaCadastrada{
+.boxMaquinaCadastrada {
     background-color: #FC8374;
     border-radius: 10px;
     display: flex;
@@ -351,7 +351,7 @@ body{
     cursor: pointer;
 }
 
-.spanIconesCardDashboard{
+.spanIconesCardDashboard {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -370,7 +370,7 @@ body{
     font-weight: 400;
 }
 
-.iconeAlertasMaquinaCadastrada{
+.iconeAlertasMaquinaCadastrada {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -380,17 +380,17 @@ body{
     margin-right: 15%;
 }
 
-.alertaMaquinaCadastrada{
+.alertaMaquinaCadastrada {
     width: 100%;
     margin-top: -20%;
 }
 
-.spanAlerta{
+.spanAlerta {
     font-weight: 600;
     font-size: 18px;
 }
 
-.alertas{
+.alertas {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -400,7 +400,7 @@ body{
     margin-right: 10%;
 }
 
-.localMaquinaCadastrada{
+.localMaquinaCadastrada {
     display: flex;
     flex-direction: row;
     margin: 1.5% 0;
@@ -409,7 +409,7 @@ body{
     align-items: center;
 }
 
-#localMaquinaCadastrada{
+#localMaquinaCadastrada {
     font-size: 15px;
     font-weight: 400;
     margin-left: 2%;
@@ -427,30 +427,34 @@ body{
     opacity: 0;
     pointer-events: none;
     transition: all 0.3s;
+
     &:target {
-      visibility: visible;
-      opacity: 1;
-      pointer-events: auto;
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
     }
-    & > div {
-      width: 600px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 2em;
-      background: white;
+
+    &>div {
+        width: 600px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 2em;
+        background: white;
     }
+
     header {
-      font-weight: bold;
+        font-weight: bold;
     }
+
     h1 {
-      font-size: 150%;
-      margin: 0 0 15px;
+        font-size: 150%;
+        margin: 0 0 15px;
     }
-  }
-  
-  .modal-close {
+}
+
+.modal-close {
     color: #aaa;
     line-height: 50px;
     font-size: 80%;
@@ -460,28 +464,29 @@ body{
     top: 0;
     width: 70px;
     text-decoration: none;
+
     &:hover {
-      color: black;
+        color: black;
     }
-  }
-  
-  
-  
-  .modal-window {
-    & > div {
-      border-radius: 1rem;
+}
+
+
+
+.modal-window {
+    &>div {
+        border-radius: 1rem;
     }
-  }
-  
-  .modal-window div:not(:last-of-type) {
+}
+
+.modal-window div:not(:last-of-type) {
     margin-bottom: 15px;
-  }
-  
-  .logo {
+}
+
+.logo {
     max-width: 150px;
     display: block;
-  }
-  
+}
+
 .label {
     display: flex;
     align-items: center;
@@ -491,16 +496,16 @@ body{
     cursor: pointer;
     transition: .3s;
     width: 100%;
-  }
-  
-  .label:hover,
-  .label:focus-within,
-  .label:active {
+}
+
+.label:hover,
+.label:focus-within,
+.label:active {
 
     background: hsla(0, 0%, 80%, 0.288);
-  }
-  
-  .radio-input {
+}
+
+.radio-input {
     position: absolute;
     left: 0;
     top: 0;
@@ -508,17 +513,17 @@ body{
     height: 1px;
     opacity: 0;
     z-index: -1;
-  }
-  
-  .radio-design {
+}
+
+.radio-design {
     width: 12px;
     height: 12px;
     border-radius: 100px;
     background: linear-gradient(to right bottom, #9aff8a, #0A8100);
     position: relative;
-  }
-  
-  .radio-design::before {
+}
+
+.radio-design::before {
     content: '';
     display: inline-block;
     width: inherit;
@@ -527,13 +532,13 @@ body{
     background: hsl(0, 0%, 90%);
     transform: scale(1.1);
     transition: .3s;
-  }
-  
-  .radio-input:checked+.radio-design::before {
+}
+
+.radio-input:checked+.radio-design::before {
     transform: scale(0);
-  }
-  
-  .label-text {
+}
+
+.label-text {
     color: hsl(0, 0%, 60%);
     margin-left: 14px;
     letter-spacing: 3px;
@@ -541,63 +546,63 @@ body{
     font-size: 12px;
     font-weight: 900;
     transition: .3s;
-  }
-  
-  .radio-input:checked~.label-text {
-    color: hsl(0, 0%, 40%);
-  }
+}
 
-  #radio-input-wrapper{
+.radio-input:checked~.label-text {
+    color: hsl(0, 0%, 40%);
+}
+
+#radio-input-wrapper {
     display: flex;
     flex-direction: row;
-  }
+}
 
-  #radio-input-wrapper .coluna-direita{
+#radio-input-wrapper .coluna-direita {
     margin-left: 5%;
 
-  }
+}
 
-  #radio-input-wrapper .coluna-esquerda {
+#radio-input-wrapper .coluna-esquerda {
     margin-left: 35%;
-  }
+}
 
-  .coluna-esquerda{
+.coluna-esquerda {
     display: flex;
     position: relative;
     flex-direction: column;
 
-  }
+}
 
-  .coluna-esquerda input{
+.coluna-esquerda input {
     margin-left: 15%;
-  }
+}
 
-  .gerar-relatorio{
+.gerar-relatorio {
     display: flex;
     position: relative;
     justify-content: center;
-  }
+}
 
-  .botao{
+.botao {
     display: flex;
     position: relative;
     justify-content: center;
     margin-top: 15%;
 }
 
-  .botao .botao-relatorio{
+.botao .botao-relatorio {
     border-radius: 16px;
     padding: 10px;
     background-color: #47C133;
     color: #FFFFFF;
-  }
+}
 
-  .botao-relatorio:hover{
+.botao-relatorio:hover {
     transition: 0.5s;
     transform: scale(1.05);
-  }
+}
 
-.iconesCardDashboard{
+.iconesCardDashboard {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -605,7 +610,7 @@ body{
     gap: 5px;
 }
 
-.modalExcluirMaquina{
+.modalExcluirMaquina {
     position: absolute;
     transform: translate(-50%, -50%);
     left: 50%;
@@ -619,44 +624,45 @@ body{
     display: none;
 }
 
-.modalExcluirMaquina .container{
+.modalExcluirMaquina .container {
     display: flex;
     width: 90%;
     margin: auto;
 }
-.conteudoModalExcluirMaquina{
+
+.conteudoModalExcluirMaquina {
     display: flex;
     flex-direction: column;
 }
 
-.iconesModalExcluirMaquina{
+.iconesModalExcluirMaquina {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.textosModalExcluirMaquina{
+.textosModalExcluirMaquina {
     display: flex;
     flex-direction: column;
     margin-top: 10%;
 }
 
-.tituloModalExcluirMaquina{
+.tituloModalExcluirMaquina {
     font-size: 25px;
     font-weight: 600;
     color: black;
 }
 
-.descricaoModalExcluirMaquina{
+.descricaoModalExcluirMaquina {
     font-size: 15px;
     margin-top: 2%;
 }
 
-.botoesModalExcluirMaquina{
+.botoesModalExcluirMaquina {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 10% 0 5% 0 ;
+    margin: 10% 0 5% 0;
 }
 
 .botoesModalExcluirMaquina button {
@@ -668,17 +674,17 @@ body{
     font-family: LeagueSpartan;
 }
 
-#botaoCancelarModalExcluirMaquina{
+#botaoCancelarModalExcluirMaquina {
     background-color: #ffffff;
-    border: 1px solid rgba(0,0,0,0.5);
+    border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
-#botaoConfirmarExcluirMaquina{
+#botaoConfirmarExcluirMaquina {
     background-color: #D92D20;
     color: white;
 }
 
-.AlterarMaquina{
+.AlterarMaquina {
     position: absolute;
     transform: translate(-50%, -50%);
     left: 50%;
@@ -692,44 +698,45 @@ body{
     display: none;
 }
 
-.AlterarMaquina .container{
+.AlterarMaquina .container {
     display: flex;
     width: 90%;
     margin: auto;
 }
-.conteudoAlterarMaquina{
+
+.conteudoAlterarMaquina {
     display: flex;
     flex-direction: column;
 }
 
-.iconesAlterarMaquina{
+.iconesAlterarMaquina {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.textosAlterarMaquina{
+.textosAlterarMaquina {
     display: flex;
     flex-direction: column;
     margin-top: 10%;
 }
 
-.tituloAlterarMaquina{
+.tituloAlterarMaquina {
     font-size: 25px;
     font-weight: 600;
     color: black;
 }
 
-.descricaoAlterarMaquina{
+.descricaoAlterarMaquina {
     font-size: 15px;
     margin-top: 2%;
 }
 
-.botoesAlterarMaquina{
+.botoesAlterarMaquina {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 10% 0 5% 0 ;
+    margin: 10% 0 5% 0;
 }
 
 .botoesAlterarMaquina button {
@@ -741,12 +748,12 @@ body{
     font-family: LeagueSpartan;
 }
 
-#botaoCancelarAlterarMaquina{
+#botaoCancelarAlterarMaquina {
     background-color: #ffffff;
-    border: 1px solid rgba(0,0,0,0.5);
+    border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
-#botaoConfirmarAlterarMaquina{
+#botaoConfirmarAlterarMaquina {
     background-color: #D92D20;
     color: white;
 }
@@ -760,7 +767,7 @@ body{
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 1;
-  }
+}
 
 .iconFecharModal svg {
     cursor: pointer;
@@ -774,9 +781,9 @@ body{
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 5;
-  }
-  
-  #modal {
+}
+
+#modal {
     position: fixed;
     left: 50%;
     top: 50%;
@@ -787,45 +794,132 @@ body{
     padding: 1.2rem;
     border-radius: 0.5rem;
     z-index: 10;
-  }
-  
-  #fade,
-  #modal {
+}
+
+#fade,
+#modal {
     transition: 0.5s;
     opacity: 1;
     pointer-events: all;
-  }
-  
-  .modal-header {
+}
+
+.modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #ccc;
     margin-bottom: 1rem;
     padding-bottom: 1rem;
-  }
-  
-  .modal-body p {
+}
+
+.modal-body p {
     margin-bottom: 1rem;
-  }
-  
-  #modal.hide,
-  #fade.hide {
+}
+
+#modal.hide,
+#fade.hide {
     opacity: 0;
     pointer-events: none;
-  }
-  
-  #modal.hide {
+}
+
+#modal.hide {
     top: 0;
-  }
-  
-  #modalMetric{
-    background-color: #004D02;
-    position:absolute;
-    left: 35%;
-    top: 30%;
+}
+
+
+
+#modalMetric {
+    top: 15%;
+    left: 25%;
+    width: 50%;
+    height: 500px;
+    display: flex;
+    position: absolute;
     align-self: center;
-    height: 400px;
-    width: 700px;
-    border-radius: 50px;
-  }
+    align-items: center;
+    border-radius: 20px;
+
+    background-color: #004D02;
+}
+
+.metricaSeparacaoColuna h2 {
+    margin: 2%;
+    font-size: 30px;
+
+    color: white;
+}
+
+.inputModalMetricas {
+    display: flex;
+    margin: 20% 0 10% 0;
+    width: 100%;
+    font-size: 18px;
+    align-content: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+    color: #aaa;
+}
+
+.inputModalMetricas span {
+    display: flex;
+    width: 75%;
+    margin: 0 0 5% 0;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#modalMetric input {
+    width: 85%;
+    height: 30%;
+    cursor: text;
+    font-size: 16px;
+    font-weight: 400;
+    border-radius: 5px;
+    padding: 3% 0 3% 5%;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+
+    color: white;
+    border-bottom: 3px solid white;
+}
+
+#modalMetric input:focus {
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+
+    border-bottom: 3px solid white;
+}
+
+
+.metricaSeparacaoColuna {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+}
+
+.metricaSeparacaoColuna2 {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.metricaSeparacaoColuna button {
+    width: 18%;
+    padding: 3px;
+    margin-top: 5%;
+    cursor: pointer;
+    font-size: 20px;
+    border-radius: 10px;
+    outline: 2px solid #14FF00;
+
+    color: #ffff;
+    background-color: #00A006;
+}
