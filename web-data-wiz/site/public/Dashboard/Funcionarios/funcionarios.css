@@ -1,0 +1,172 @@
+@font-face {
+    font-family: LeagueSpartan;
+    src: url(../../assets/fonts/LeagueSpartan-VariableFont_wght.ttf);
+}
+
+* {
+    font-family: LeagueSpartan;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: LeagueSpartan;
+    background-color: #DAF3EA;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    width: 100%;
+    background-image: url(../../assets/images/navbarCircle.svg);
+}
+
+.saudacao {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 15%;
+}
+
+.saudacao h1,
+p {
+    color: #FFF;
+    font-style: normal;
+    line-height: normal;
+}
+
+.saudacao h1 {
+    font-size: 50px;
+    font-weight: 500;
+}
+
+.saudacao p {
+    font-size: 30px;
+    font-weight: 300;
+    margin-top: -2.5%;
+}
+
+.containerGeral {
+    width: 95%;
+    margin-top: 1%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: #D9D9D9;
+}
+
+.headerAlteracoes {
+    width: 95%;
+    padding: 1%;
+    display: flex;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    border-radius: 5px;
+    align-items: center;
+    font-size: 23px;
+
+    color: #527E4A;
+    background-color: #FFF;
+}
+
+#checkbox {
+    border: 2px solid #527E4A;
+    background-color: #527E4A;
+}
+
+.headerAlteracoesExpecifico {
+    display: flex;
+    width: 15%;
+    align-items: center;
+    margin: 0 1% 0 1%;
+}
+
+.containerFuncionarios {
+    width: 95%;
+    padding: 1%;
+    display: flex;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    border-radius: 5px;
+    align-items: center;
+    font-size: 23px;
+    flex-direction: column;
+    justify-content: center;
+
+
+    background-color: #FFF;
+}
+
+.dadosFuncionarios {
+    width: 100%;
+    background-color: rgb(147, 255, 147);
+    padding: 3px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dadosFuncionarios label {
+    width: 30%;
+
+    align-items: center;
+    text-align: center;
+}
+
+.dadosFuncionarios3 {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tracoSeparacao {
+    width: 100%;
+    height: 5px;
+    border-radius: 98%;
+    background-color: rgb(147, 255, 147);
+}
+
+.dadosFuncionarios2 {
+    width: 100%;
+    margin: 5px;
+    display: flex;
+    font-size: 20px;
+    justify-content: space-between;
+}
+
+.dadosFuncionarios2 label {
+    width: 30%;
+    align-items: center;
+    text-align: center;
+}
+
+.botaoVoltar {
+    margin: 1% 0;
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    width: 100%;
+    align-items: center;
+}
+
+#labeltraco {
+    width: 2%;
+}
+
+
+.botaoVoltar span {
+    font-size: 30px;
+}
+
+.botaoVoltar img {
+    margin-top: 1%;
+    margin-left: 5%;
+    height: 30px;
+    width: 30px;
+}

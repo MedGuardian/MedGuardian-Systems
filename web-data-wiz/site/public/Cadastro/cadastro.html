@@ -2,168 +2,168 @@
 <html lang="pt-br">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
-    <link rel="stylesheet" href="../PaginaInicial/paginaInicial.css">
-    <link rel="stylesheet" href="../Cadastro/cadastro.css">
-    <script src="cadastro.js"></script>
-    <script src="../js/funcoes.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="shortcut icon" href="../assets/images/LOGO.png" type="image/x-icon">
-    <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
-    <link rel="stylesheet" href="../../assets/fonts/Poppins-Regular.ttf">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro</title>
+  <link rel="stylesheet" href="../PaginaInicial/paginaInicial.css">
+  <link rel="stylesheet" href="../Cadastro/cadastro.css">
+  <script src="cadastro.js"></script>
+  <script src="../js/funcoes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="shortcut icon" href="../assets/images/LOGO.png" type="image/x-icon">
+  <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
+  <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
+  <link rel="stylesheet" href="../../assets/fonts/Poppins-Regular.ttf">
 
 </head>
 
 <body>
-    <div class="header">
-        <div class="container">
+  <div class="header">
+    <div class="container">
 
-            <div class="tituloHeader">
-                <span id="tituloHeader"><a href="../index.html">MedGuardian</a></span>
+      <div class="tituloHeader">
+        <span id="tituloHeader"><a href="../index.html">MedGuardian</a></span>
+      </div>
+
+      <div class="conteudoHeader">
+        <li class="liHeader"><a href="../index.html">Home</a></li>
+
+
+        <div class="botoesHeader">
+          <button id="botaoLogin" onclick="telaLogin()">Login</button>
+          <button id="botaoCadastro" onclick="telaCadastro()">Cadastre-se</button>
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class="inputs">
+    <div class="container">
+      <div class="conteudoSuperiorInputs">
+
+
+        <div class="inputsEsquerda">
+
+          <div class="spanInput">
+            <span>CNPJ</span>
+            <input id="inputCNPJ" onblur="cnpjApi()">
+          </div>
+
+
+          <div class="spanInput">
+            <span>Senha</span>
+            <input type="password" id="inputSenha">
+          </div>
+          <div class="spanInput">
+            <span>Confirmar Senha</span>
+            <input type="password" id="inputConfirmarSenha">
+            <div class="erroConfirmarSenha">
+              <span id="spanErroSenha"></span>
+            </div>
+          </div>
+
+          <div class="spanInput">
+            <span>Email</span>
+            <input type="text" id="inputEmail">
+
+          </div>
+
+
+          <div class="spanInput">
+            <span>Razão social</span>
+            <input type="text" id="inputRazaoSocial">
+          </div>
+
+          <div class="spanInput">
+            <span>Contato</span>
+            <input type="text" id="inputContato">
+          </div>
+
+          <div class="spanInput">
+            <span>CEP</span>
+            <input type="text" id="inputCEP" maxlength="8" onkeyup="formataCep(this.value)">
+          </div>
+
+          <div class="spanInput">
+            <span>Logradouro</span>
+            <input type="text" id="inputLogradouro">
+          </div>
+
+          <div class="spanInput" id="divInputEnderecoCelular">
+            <span>Nº</span>
+            <input type="text" id="inputNumeroMob">
+          </div>
+
+          <div id="inputRowCelular">
+
+            <div class="spanInput" id="divInputNumeroEndereco">
+              <span>Complemento</span>
+              <input type="text" id="inputComplementoMob">
             </div>
 
-            <div class="conteudoHeader">
-                <li class="liHeader"><a href="../index.html">Home</a></li>
 
 
-                <div class="botoesHeader">
-                    <button id="botaoLogin" onclick="telaLogin()">Login</button>
-                    <button id="botaoCadastro" onclick="telaCadastro()">Cadastre-se</button>
-                </div>
+          </div>
 
-            </div>
+
+          <div class="spanErro">
+            <span id="spanErroCelular"></span>
+          </div>
 
 
         </div>
-    </div>
-
-    <div class="inputs">
-        <div class="container">
-            <div class="conteudoSuperiorInputs">
-
-
-            <div class="inputsEsquerda">
-
-              <div class="spanInput">
-                <span >CNPJ</span>
-                <input id="inputCNPJ" onblur="cnpjApi()">
-            </div>
-
-
-                <div class="spanInput">
-                  <span >Senha</span>
-                  <input type="password" id="inputSenha">
-              </div>
-              <div class="spanInput">
-                <span >Confirmar Senha</span>
-                <input type="password" id="inputConfirmarSenha">
-              <div class="erroConfirmarSenha">
-                <span id="spanErroSenha"></span>
-              </div>
-            </div>
-                
-                <div class="spanInput">
-                  <span>Email</span>
-                    <input type="text" id="inputEmail">
-                    
-                </div>
-                
-                
-                <div class="spanInput">
-                  <span>Razão social</span>
-                  <input type="text" id="inputRazaoSocial">
-                </div>
-                
-                <div class="spanInput">
-                    <span>Contato</span>
-                    <input type="text" id="inputContato">
-                </div>
-                
-                <div class="spanInput">
-                    <span>CEP</span>
-                    <input type="text" id="inputCEP" maxlength="8" onkeyup="formataCep(this.value)">
-                </div>
-                
-                <div class="spanInput">
-                    <span>Logradouro</span>
-                    <input type="text" id="inputLogradouro">
-                </div>
-            
-                <div class="spanInput" id="divInputEnderecoCelular">
-                    <span>Nº</span>
-                    <input type="text" id="inputNumeroMob">
-                </div>
-
-                <div id="inputRowCelular">
-                    
-                    <div class="spanInput" id="divInputNumeroEndereco">
-                        <span>Complemento</span>
-                        <input type="text" id="inputComplementoMob">
-                    </div>
-    
-                    
-
-                </div>
-
-
-                <div class="spanErro">
-                    <span id="spanErroCelular"></span>
-                </div>
-
-                
-            </div>
-
-                
 
 
 
 
 
-                <div class="imgHosp">
-                    <div class="container">
-                        <img height="450px" id="img" src="../assets/images/hospital.svg" alt="">
-                    </div>
-                </div>
-            </div>
 
-            <div id="inputRow">
 
-                <div class="spanInput" id="divInputEndereco">
-                    <span>Complemento</span>
-                    <input type="text" id="inputComplemento">
-                </div>
-
-                <div class="spanInput" id="divInputNumeroEndereco">
-                    <span>Nº</span>
-                    <input type="text" id="inputNumero">
-                </div>
-
-            </div>
-            <span id="spanErro"></span>
+        <div class="imgHosp">
+          <div class="container">
+            <img height="450px" id="img" src="../assets/images/hospital.svg" alt="">
+          </div>
         </div>
-    </div>
+      </div>
 
-    <div class="botaoCadastro">
-        <button onclick="cadastrar()">Cadastrar</button>
+      <div id="inputRow">
+
+        <div class="spanInput" id="divInputEndereco">
+          <span>Complemento</span>
+          <input type="text" id="inputComplemento">
+        </div>
+
+        <div class="spanInput" id="divInputNumeroEndereco">
+          <span>Nº</span>
+          <input type="text" id="inputNumero">
+        </div>
+
+      </div>
+      <span id="spanErro"></span>
     </div>
-    
+  </div>
+
+  <div class="botaoCadastro">
+    <button onclick="cadastrar()">Cadastrar</button>
+  </div>
+
 
 </body>
 
 </html>
 <script>
 
-inputCNPJ.value = "60448040000122"
-inputSenha.value = "12345678"
-inputConfirmarSenha.value = "12345678"
-inputEmail.value = "clinicas@gmail.com"
+  inputCNPJ.value = "60448040000122"
+  inputSenha.value = "12345678"
+  inputConfirmarSenha.value = "12345678"
+  inputEmail.value = "clinicas@gmail.com"
 
 
   var cnpjPre;
-  function cnpjApi(cnpj){
+  function cnpjApi(cnpj) {
     // https://brasilapi.com.br/api/cnpj/v1/{cnpj}
     var cnpj = inputCNPJ.value
     cnpjPre = inputCNPJ.value
@@ -172,11 +172,11 @@ inputEmail.value = "clinicas@gmail.com"
       headers: {
         "Content-Type": "application/json",
       }
-  }).then(function(resposta){
+    }).then(function (resposta) {
       //console.log(json)
-      resposta.json().then(function(json){
+      resposta.json().then(function (json) {
         console.log(json)
-        inputRazaoSocial.value=json.razao_social
+        inputRazaoSocial.value = json.razao_social
         inputLogradouro.value = json.logradouro
         inputComplemento.value = json.complemento
         inputNumero.value = json.numero
@@ -185,147 +185,147 @@ inputEmail.value = "clinicas@gmail.com"
 
         transformarCnpj(cnpj)
       }
-        
-    )
-  })
-}
- 
-    function cadEndereco(){
-            //Recupere o valor da nova input pelo nome do id
-            // Agora vá para o método fetch logo abaixo
-            var cepVar = inputCEP.value;
-            var logVar = inputLogradouro.value;
-            var numVar = inputNumero.value;
-            var compVar = inputComplemento.value;
-             // Enviando o valor da nova input
-            fetch("/usuarios/cadastrarEndereco", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                // crie um atributo que recebe o valor recuperado aqui
-                // Agora vá para o arquivo routes/usuario.js
-                cepServer: cepVar,
-                logServer: logVar,
-                numServer: numVar,
-                compServer: compVar
-              }),
-            })
-              .then(function (resposta) {
-                console.log("resposta: ", resposta);
-        
-                if (resposta.ok) {
-                    console.log("certin")
-                } else {
-                  throw "Houve um erro ao tentar realizar o cadastro!";
-                }
-              })
-              .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
-              });
-        
-            return false;
-          }
 
-          document.addEventListener("DOMContentLoaded", function () {
-            // ...
-            // Adicione o evento onkeyup ao campo inputConfirmarSenha
-            inputConfirmarSenha.addEventListener("keyup", verificarSenha);
-          });
-          
-          function verificarSenha() {
-            var senhaVar = inputSenha.value;
-            var confirmarSenhaVar = inputConfirmarSenha.value;
-            
-            if (senhaVar !== confirmarSenhaVar) {
-              spanErroSenha.innerHTML = "As senhas não coincidem.";
-            } else {
-              spanErroSenha.innerHTML = ""; // Limpar a mensagem de erro se as senhas coincidirem.
-            }
-          }
+      )
+    })
+  }
 
-          function cadastrar(){
-            var razaoSocialVar = inputRazaoSocial.value;
-            var cnpjVar = cnpjPre;
-            var emailVar = inputEmail.value;
-            var contatoVar = inputContato.value;
-            var confirmarSenhaVar = inputConfirmarSenha.value;
-            var senhaVar = inputSenha.value;
+  function cadEndereco() {
+    //Recupere o valor da nova input pelo nome do id
+    // Agora vá para o método fetch logo abaixo
+    var cepVar = inputCEP.value;
+    var logVar = inputLogradouro.value;
+    var numVar = inputNumero.value;
+    var compVar = inputComplemento.value;
+    // Enviando o valor da nova input
+    fetch("/usuarios/cadastrarEndereco", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        cepServer: cepVar,
+        logServer: logVar,
+        numServer: numVar,
+        compServer: compVar
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
 
-            if (
-              emailVar == "" ||
-              senhaVar == "" ||
-              confirmarSenhaVar == ""
-            ) {
-              return false;
-            }
-
-
-            if (senhaVar != confirmarSenhaVar) {
-              spanErroSenha.innerHTML = "As senhas não coincidem.";
-              return false; 
-            }
-          
-
-            // Enviando o valor da nova input
-            fetch("/usuarios/cadastrar", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                // crie um atributo que recebe o valor recuperado aqui
-                // Agora vá para o arquivo routes/usuario.js
-                razaoServer: razaoSocialVar,
-                cnpjServer: cnpjVar,
-                emailServer: emailVar,
-                contatoServer: contatoVar,
-                senhaServer: senhaVar
-              }),
-            })
-              .then(function (resposta) {
-                console.log("resposta: ", resposta);
-        
-                if (resposta.ok) {
-                    cadEndereco()
-                    Swal.fire(
-                        'Cadastro realizado com sucesso!',
-                        'Aguarde enquanto redirecionamos para o login',
-                        'success'
-                      )
-
-                  setTimeout(() => {
-                  window.location = "../Login/login.html";
-                  }, "2000"); 
-        
-                } else {
-                  throw "Houve um erro ao tentar realizar o cadastro!";
-                }
-              })
-              .catch(function (resposta) {
-                console.log(`#ERRO: ${resposta}`);
-              });
-        
-            return false;
-
-          }
-        function telaLogin(){
-            window.location.href = '../Login/tipoLogin.html'
+        if (resposta.ok) {
+          console.log("certin")
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
         }
-        
-        function telaCadastro(){
-            window.location.href = 'cadastro.html'
-        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
 
-          window.addEventListener("keyup", capturarTecla)
-function capturarTecla(event) {
-      if (event.key === "Enter") {
-        cadastrar();
-      }
-}
-        
-    
+    return false;
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // ...
+    // Adicione o evento onkeyup ao campo inputConfirmarSenha
+    inputConfirmarSenha.addEventListener("keyup", verificarSenha);
+  });
+
+  function verificarSenha() {
+    var senhaVar = inputSenha.value;
+    var confirmarSenhaVar = inputConfirmarSenha.value;
+
+    if (senhaVar !== confirmarSenhaVar) {
+      spanErroSenha.innerHTML = "As senhas não coincidem.";
+    } else {
+      spanErroSenha.innerHTML = ""; // Limpar a mensagem de erro se as senhas coincidirem.
+    }
+  }
+
+  function cadastrar() {
+    var razaoSocialVar = inputRazaoSocial.value;
+    var cnpjVar = cnpjPre;
+    var emailVar = inputEmail.value;
+    var contatoVar = inputContato.value;
+    var confirmarSenhaVar = inputConfirmarSenha.value;
+    var senhaVar = inputSenha.value;
+
+    if (
+      emailVar == "" ||
+      senhaVar == "" ||
+      confirmarSenhaVar == ""
+    ) {
+      return false;
+    }
+
+
+    if (senhaVar != confirmarSenhaVar) {
+      spanErroSenha.innerHTML = "As senhas não coincidem.";
+      return false;
+    }
+
+
+    // Enviando o valor da nova input
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        razaoServer: razaoSocialVar,
+        cnpjServer: cnpjVar,
+        emailServer: emailVar,
+        contatoServer: contatoVar,
+        senhaServer: senhaVar
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          cadEndereco()
+          Swal.fire(
+            'Cadastro realizado com sucesso!',
+            'Aguarde enquanto redirecionamos para o login',
+            'success'
+          )
+
+          setTimeout(() => {
+            window.location = "../Login/login.html";
+          }, "2000");
+
+        } else {
+          throw "Houve um erro ao tentar realizar o cadastro!";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+      });
+
+    return false;
+
+  }
+  function telaLogin() {
+    window.location.href = '../Login/tipoLogin.html'
+  }
+
+  function telaCadastro() {
+    window.location.href = 'cadastro.html'
+  }
+
+  window.addEventListener("keyup", capturarTecla)
+  function capturarTecla(event) {
+    if (event.key === "Enter") {
+      cadastrar();
+    }
+  }
+
+
 </script>
 <style>
   .swal2-popup {

@@ -7,82 +7,118 @@ comandos para mysql - banco local - ambiente de desenvolvimento
 */
 
 
+DROP DATABASE IF EXISTS medguardian;
+CREATE DATABASE medguardian;
+USE medguardian;
 
-CREATE DATABASE medGuard;
-USE medGuard;
-CREATE TABLE Empresa (
-  idEmpresa INT NOT NULL auto_increment,
-  razaoSocial VARCHAR(45) NOT NULL,
+CREATE TABLE IF NOT EXISTS empresa (
+  idEmpresa INT AUTO_INCREMENT NOT NULL,
+  razaoSocial VARCHAR(255) NOT NULL,
   cnpjEmpresa VARCHAR(18) NOT NULL,
-  emailEmpresa VARCHAR(45) NOT NULL,
-  contatoEmpresa VARCHAR(45) NOT NULL,
-  senhaEmpresa VARCHAR(45) NOT NULL,
+  emailEmpresa VARCHAR(255) NOT NULL,
+  contatoEmpresa VARCHAR(255) NOT NULL,
+  senhaEmpresa VARCHAR(255) NOT NULL,
   PRIMARY KEY (idEmpresa));
 
-CREATE TABLE Endereco (
-  idEndereco INT NOT NULL auto_increment,
-  cep CHAR(9) NOT NULL,
-  logradouro VARCHAR(45) NOT NULL,
+CREATE TABLE IF NOT EXISTS endereco (
+  idEndereco INT AUTO_INCREMENT NOT NULL,
+  cep CHAR(8) NOT NULL,
+  logradouro VARCHAR(255) NULL,
   numeroEmpresa INT NOT NULL,
-  complementoEmpresa VARCHAR(45) NOT NULL,
+  complementoEmpresa VARCHAR(255) NULL,
   fkEmpresa INT NOT NULL,
   PRIMARY KEY (idEndereco),
   CONSTRAINT fk_Endereco_Empresa
     FOREIGN KEY (fkEmpresa)
     REFERENCES Empresa (idEmpresa));
 
-CREATE TABLE Funcionario (
-  idFuncionario INT NOT NULL,
-  nomeFuncionario VARCHAR(45) NOT NULL,
+CREATE TABLE IF NOT EXISTS funcionario (
+  idFuncionario INT AUTO_INCREMENT NOT NULL,
+  nomeFuncionario VARCHAR(255) NOT NULL,
   fkEmpresa INT NOT NULL,
-  cpfFuncionario VARCHAR(45) NOT NULL,
-  emailFuncionario VARCHAR(45) NOT NULL,
-  senhaFuncionario VARCHAR(45) NOT NULL,
-  fkSupervisor INT NOT NULL,
+  emailFuncionario VARCHAR(255) NOT NULL,
+  senhaFuncionario VARCHAR(255) NOT NULL,
+  tipoAcesso VARCHAR(255) NOT NULL,
+  CONSTRAINT chk_tipoAcesso CHECK (tipoAcesso IN ('Gerente', 'Supervisor', 'Analista', 'Estagiário')),
   PRIMARY KEY (idFuncionario),
-  CONSTRAINT fkFuncionarioEmpresa
+  CONSTRAINT fk_Funcionario_Empresa1
     FOREIGN KEY (fkEmpresa)
-    REFERENCES Empresa (idEmpresa),
-    CONSTRAINT fkFuncionarioSupervisor
-    FOREIGN KEY (fkSupervisor)
-    REFERENCES Funcionario (idFuncionario));
+    REFERENCES Empresa (idEmpresa));
 
-CREATE TABLE Computador (
-  idComputador INT NOT NULL,
-  nomeComputador VARCHAR(45) NOT NULL,
+CREATE TABLE IF NOT EXISTS computador (
+  idComputador INT AUTO_INCREMENT NOT NULL,
+  nomeComputador VARCHAR(255) NOT NULL,
+  fkEmpresa INT,
+  CONSTRAINT fk_computador_empresa FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa),
   PRIMARY KEY (idComputador));
 
-CREATE TABLE FuncionarioDoDia (
-  fkFuncionario INT NOT NULL,
-  fkComputador INT NOT NULL,
-  dia DATE NOT NULL,
-  PRIMARY KEY (fkFuncionario, fkComputador),
-  CONSTRAINT fkFuncionarioComputador
-    FOREIGN KEY (fkFuncionario)
-    REFERENCES Funcionario (idFuncionario),
-  CONSTRAINT fkComputadorFuncionario
-    FOREIGN KEY (fkComputador)
-    REFERENCES Computador (idComputador));
-
-CREATE TABLE Componente (
-  idComponente INT NOT NULL,
-  nomeComponente VARCHAR(45) NOT NULL,
+CREATE TABLE IF NOT EXISTS componente (
+  idComponente INT AUTO_INCREMENT NOT NULL,
+  nomeComponente VARCHAR(225) NOT NULL,
   PRIMARY KEY (idComponente));
+  
+CREATE TABLE IF NOT EXISTS especificacao(
+idEspecificacao INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+fkComputador INT NOT NULL,
+fkComponente INT NOT NULL,
+totalComponente DECIMAL(6,2) NULL,
+CONSTRAINT fk_computador_especificacao FOREIGN KEY (fkComputador)
+	REFERENCES computador(idComputador),
+CONSTRAINT fk_componente_especificacao FOREIGN KEY (fkComponente) 
+	REFERENCES componente(idComponente)
+);
 
-CREATE TABLE Registro (
-  idregistro INT NOT NULL,
-  dataRegistro DATE NOT NULL,
-  registro DECIMAL NOT NULL,
-  tipoCaptura VARCHAR(45) NOT NULL,
-  fkComputador INT NOT NULL,
-  fkComponente INT NOT NULL,
-  PRIMARY KEY (idregistro),
-  CONSTRAINT fkRegistroComputador
-    FOREIGN KEY (fkComputador)
-    REFERENCES Computador (idComputador),
-  CONSTRAINT fkRegistroComponente
-    FOREIGN KEY (fkComponente)
-    REFERENCES Componente (idComponente));
+CREATE TABLE IF NOT EXISTS registro (
+  idregistro INT AUTO_INCREMENT NOT NULL,
+  dataHoraRegistro DATETIME NOT NULL,
+  registro DECIMAL(6,2) NOT NULL,
+  tipoCaptura VARCHAR(255) NULL,
+	fkEspecificacao INT NOT NULL,
+  PRIMARY KEY (idregistro)
+);
+      
+INSERT INTO empresa (razaoSocial, cnpjEmpresa, emailEmpresa, contatoEmpresa, senhaEmpresa) VALUES ('a', 1, 'lucasa@gmail.com', '21102002', '1');
+INSERT INTO funcionario (nomeFuncionario, fkEmpresa, emailFuncionario, senhaFuncionario, tipoAcesso) VALUES ('lucas', 1, 'lucas@gmail.com', '21102002', "Estagiário");
+
+SELECT * FROM empresa;
+SELECT * FROM endereco;
+SELECT * FROM funcionario;
+SELECT * FROM computador;
+SELECT * FROM componente;
+SELECT * FROM especificacao;
+SELECT * FROM registro JOIN especificacao ON fkEspecificacao = idEspecificacao JOIN componente ON fkComponente = idComponente;
+
+delete from especificacao where fkComputador = 1;
+
+select * from registro join especificacao
+	on fkEspecificacao = idEspecificacao
+		join computador
+			on idComputador = fkComputador
+		where idComputador = 1;
+        
+ UPDATE endereco SET cep = 05882000, Logradouro = 'bla', numeroEmpresa = 1263, complementoEmpresa = 'bla' WHERE fkEmpresa = 1;
+ 
+ select * from endereco join empresa
+	on fkEmpresa = idEmpresa;
+	
+select dataHoraRegistro, registro, tipoCaptura from registro join especificacao
+	on fkEspecificacao = idEspecificacao where fkEspecificacao = 5;
+    
+    SELECT * FROM registro;
+    
+    SELECT dataHoraRegistro, registro, tipoCaptura FROM registro WHERE fkEspecificacao = 1 ORDER BY idRegistro DESC LIMIT 6;
+    
+SELECT fkComponente, totalComponente FROM especificacao WHERE fkComponente = 1;
+
+select * from especificacao;
+SELECT dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 AND tipoCaptura = "UsoCPU" ORDER BY idRegistro DESC LIMIT 6;
+SELECT registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 ORDER BY idRegistro DESC LIMIT 7;
+
+select * from computador;
+select * from especificacao where fkComputador = 1;
+select * from registro;
+select * from componente;
+SELECT * FROM computador WHERE nomeComputador = 'Notebook-Lucas';
     
 
 /*

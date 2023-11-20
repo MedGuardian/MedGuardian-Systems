@@ -362,14 +362,8 @@
         var y = (pageHeight - imgHeight) / 2;
 
         doc.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
-
-        const blob = doc.output();
-        const pdfBlob = new Blob([blob], { type: 'application/pdf' });
-
-        console.log("Conteúdo do pdfBlob:", pdfBlob);
         console.log("envio do pdf");
 
-        await makeRequest(pdfBlob);
         await enviarMensagem();
 
     } catch (error) {
@@ -392,7 +386,7 @@
       url: 'http://localhost:3333/app.js',
       headers: {
         'Content-type': 'application/json',
-        'Authorization': 'Bearer xoxb-6157746735458-6180861943392-X6pZkghHkhyAejuY4LrTsbjF'
+        'Authorization': 'Bearer xoxb-6157746735458-6180861943392-hntLdQ74OAlMXOWCxHEGNm6t'
       },
       data: data
     };
@@ -404,31 +398,4 @@
         console.log(error);
       });
   }
-
-  async function makeRequest(pdfBlob) {
-    try {
-        console.log('estou no try do makeRequest() PDF.html');
-        const formData = new FormData();
-        formData.append('file', pdfBlob, 'relatorio.pdf');
-        formData.append('initial_comment', 'Nosso relatório');
-        formData.append('channel', 'C065AMPG2TA');
-
-        const headers = {
-            'Authorization': 'Bearer xoxb-6157746735458-6180861943392-X6pZkghHkhyAejuY4LrTsbjF',
-            'Content-Type': 'multipart/form-data',
-        };
-
-        const response = await axios.post('http://localhost:3333/app', formData, { headers });
-        console.log(JSON.stringify(response.data));
-        return response;
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
-}
-
-
-
-
-
 </script>

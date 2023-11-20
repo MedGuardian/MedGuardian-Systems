@@ -17,6 +17,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
   <script src="https://html2canvas. html2canvas.jshtml2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 
   <title>Dashboard</title>
@@ -1148,30 +1149,6 @@
 
   }
 
-  function personalizado() {
-    var modal = document.getElementById('data-input')
-    modal.innerHTML = ''
-    modal.innerHTML = ` <input type="text" name="datetimes" id="litepicker"/>`
-
-    let input = document.getElementById('litepicker');
-    let now = new Date();
-    let picker = new Litepicker({
-      element: input,
-      format: 'YYYY-MM-DD',
-      singleMode: false,
-      numberOfMonths: 2,
-      numberOfColumns: 2,
-      showTooltip: true,
-      scrollToDate: true,
-      startDate: new Date(now).setDate(now.getDate() - 1),
-      endDate: new Date(now),
-      setup: function (picker) {
-        picker.on('selected', function (date1, date2) {
-          console.log(`${date1.toDateString()}, ${date2.toDateString()}`)
-        })
-      }
-    });
-  }
 
   function trocarCores() {
   const classes = ["maquina1", "maquina2", "maquina3", "maquina4", "maquina5", "maquina6", "maquina7", "maquina8", "maquina9", "maquina10", "maquina11", "maquina12"];

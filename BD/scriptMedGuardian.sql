@@ -95,6 +95,15 @@ select * from registro join especificacao
 	
 select dataHoraRegistro, registro, tipoCaptura from registro join especificacao
 	on fkEspecificacao = idEspecificacao where fkEspecificacao = 5;
+    
+    SELECT * FROM registro;
+    
+    SELECT dataHoraRegistro, registro, tipoCaptura FROM registro WHERE fkEspecificacao = 1 ORDER BY idRegistro DESC LIMIT 6;
+    
+SELECT fkComponente, totalComponente FROM especificacao WHERE fkComponente = 1;
 
+select * from especificacao;
+SELECT dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 AND tipoCaptura = "UsoCPU" ORDER BY idRegistro DESC LIMIT 6;
+SELECT registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 ORDER BY idRegistro DESC LIMIT 7;
 
 

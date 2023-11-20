@@ -1,4 +1,4 @@
-process.env.AMBIENTE_PROCESSO = "desenvolvimento";
+ process.env.AMBIENTE_PROCESSO = "desenvolvimento";
 // process.env.AMBIENTE_PROCESSO = "producao";
 
 var express = require("express");
@@ -60,48 +60,34 @@ async function enviarMensagem(data) {
     const config = {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer xoxb-6157746735458-6180861943392-X6pZkghHkhyAejuY4LrTsbjF',
+            'Authorization': 'Bearer xoxb-6157746735458-6180861943392-hntLdQ74OAlMXOWCxHEGNm6t',
             "Access-Control-Allow-Headers" : "true",
         }
     };
     console.log("ta indo a msg")
     return await axios.post(slackUrl, data, config);
-}  
-
-app.post('/app', async (req, res) => {
-    try {
-        const response = await makeRequest(req.body.pdfBlob);
-        res.json(response.data);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Internal Server Error' });
-    }
-    console.log("ta indo o post da msg");
-});
-
-
-async function makeRequest(pdfBlob) {
-    try {
-        console.log('estou no try do makeRequest() app.js');
-
-        const formData = new FormData();
-        const blobData = new Blob([pdfBlob], { type: 'application/pdf' });
-        formData.append('file', blobData, 'relatorio.pdf'); 
-        formData.append('initial_comment', 'Nosso relatório');
-        formData.append('channel', 'C065AMPG2TA');
-
-        const headers = {
-            'Authorization': 'Bearer xoxb-6157746735458-6180861943392-X6pZkghHkhyAejuY4LrTsbjF',
-            'Content-Type': 'multipart/form-data',
-        };
-
-        const response = await axios.post('https://slack.com/api/files.upload', formData, { headers });
-
-        response.data.file.downloadLink = response.data.file.url_private_download;
-        console.log(JSON.stringify(response.data));
-        return response;
-    } catch (error) {
-        console.log(error);
-        throw error;
-    }
 }
+
+let data = new FormData();
+data.append('file', fs.createReadStream('../../../../../relatorio13_11_2023.pdf'));
+data.append('initial_comment', 'Shakes the cat');
+data.append('channels', 'C064MNJC96E');
+
+let config = {
+  method: 'post',
+  maxBodyLength: Infinity,
+  url: 'https://slack.com/api/files.upload',
+  headers: {
+    'Content-type': 'multipart/form-data', 
+    'Authorization': 'Bearer xoxb-6157746735458-6180861943392-hntLdQ74OAlMXOWCxHEGNm6t', 
+  },
+  data : data
+};
+
+axios.request(config)
+.then((response) => {
+  console.log(JSON.stringify(response.data));
+})
+.catch((error) => {
+  console.log(error);
+});
