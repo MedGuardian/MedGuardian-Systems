@@ -458,6 +458,45 @@ function selectFuncionarios(req, res) {
             );
     }
 
+    function selectComputadores(req, res) {
+        var fkEmpresa = req.body.fkEmpresaServer
+            usuarioModel.selectComputadores(fkEmpresa)
+                .then(
+                    function (resultado) {
+                        res.json(resultado);
+                    }
+                ).catch(
+                    function (erro) {
+                        console.log(erro);
+                        console.log(
+                            "\nHouve um erro ao realizar o select dos computadores! Erro: ",
+                            erro.sqlMessage
+                        );
+                        res.status(500).json(erro.sqlMessage);
+                    }
+                );
+        }
+
+        function selectLocalComputador(req, res) {
+            var fkEmpresa = req.body.fkEmpresaServer
+                usuarioModel.selectLocalComputador(fkEmpresa)
+                    .then(
+                        function (resultado) {
+                            res.json(resultado);
+                        }
+                    ).catch(
+                        function (erro) {
+                            console.log(erro);
+                            console.log(
+                                "\nHouve um erro ao realizar o select do local dos computadores! Erro: ",
+                                erro.sqlMessage
+                            );
+                            res.status(500).json(erro.sqlMessage);
+                        }
+                    );
+            }
+    
+
 module.exports = {
     autenticar,
     cadastrar,
@@ -472,5 +511,7 @@ module.exports = {
     selectTotalComponentes,
     atualizarIndicadores,
     selectComputador,
-    selectFuncionarios
+    selectFuncionarios,
+    selectComputadores,
+    selectLocalComputador
 }

@@ -59,4 +59,12 @@ router.post("/selectFuncionarios", function (req, res) {
     usuarioController.selectFuncionarios(req, res);
 });
 
+router.post("/selectComputadores", function (req, res) {
+    usuarioController.selectComputadores(req, res);
+});
+
+router.post("/selectLocalComputador", function (req, res) {
+    usuarioController.selectLocalComputador(req, res);
+});
+
 module.exports = router;

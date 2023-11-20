@@ -30,8 +30,8 @@ function cadastrar(razaoSocial, cnpj) {
 }
 function cadMetrica(graveCpu, medioCpu, graveDisco, medioDisco, graveRam, medioRam, fkEmpresa){
   console.log(graveCpu, medioCpu, graveDisco, medioDisco, graveRam, medioRam, fkEmpresa)
-  var instrucaoSQL = `INSERT INTO metrica VALUES
-    (null, ${graveRam}, ${medioRam}, ${graveCpu}, ${medioCpu}, ${graveDisco}, ${medioDisco}, ${fkEmpresa}, null);
+  var instrucaoSQL = `INSERT INTO metrica (graveRam, MedioRam, graveCPU, medioCPU, graveDisco, medioDisco, fkEmpresa, fkComputador) VALUES
+    (${graveRam}, ${medioRam}, ${graveCpu}, ${medioCpu}, ${graveDisco}, ${medioDisco}, ${fkEmpresa}, null);
     `
     return database.executar(instrucaoSQL)
   

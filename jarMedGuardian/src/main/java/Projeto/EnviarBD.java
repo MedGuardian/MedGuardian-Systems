@@ -10,7 +10,7 @@ import java.util.List;
 public class EnviarBD {
 
     // Criar o objeto conexão.
-    Conexao conexao = new Conexao();
+    Conexao conexao = new ConexaoLocal();
     JdbcTemplate con = conexao.getConexaoDoBanco();
 
     int i = 0;
@@ -53,8 +53,8 @@ public class EnviarBD {
         con.update("INSERT INTO registro (dataHoraRegistro, registro, tipoCaptura, fkEspecificacao) VALUES (?,?,?,?)", dataHoraAtual(), registro, tipoCaptura, fkEspecificacao);
     }
 
-    public void insertComputador(String nomeComputador, Integer fkEmpresa){
-        con.update("INSERT INTO computador (nomeComputador, fkEmpresa) VALUES (?, ?)",nomeComputador, fkEmpresa);
+    public void insertComputador(String nomeComputador, Integer fkEmpresa, String sistemaOperacional){
+        con.update("INSERT INTO computador (nomeComputador, fkEmpresa, sistemaOperacional) VALUES (?, ?, ?)",nomeComputador, fkEmpresa, sistemaOperacional);
     }
     public String dataHoraAtual(){
         LocalDateTime dataHoraAtual = LocalDateTime.now();

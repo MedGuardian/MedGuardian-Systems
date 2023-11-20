@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS funcionario (
 CREATE TABLE IF NOT EXISTS computador (
   idComputador INT AUTO_INCREMENT NOT NULL,
   nomeComputador VARCHAR(255) NOT NULL,
+  sistemaOperacional VARCHAR(255) NOT NULL,
   fkEmpresa INT,
   CONSTRAINT fk_computador_empresa FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa),
   PRIMARY KEY (idComputador));
@@ -67,7 +68,23 @@ CREATE TABLE IF NOT EXISTS registro (
 	fkEspecificacao INT NOT NULL,
   PRIMARY KEY (idregistro)
 );
-    
+
+CREATE TABLE IF NOT EXISTS metrica(
+idMetrica INT PRIMARY KEY AUTO_INCREMENT,
+graveRam DECIMAL(4,2) NOT NULL,
+medioRam DECIMAL(4,2) NOT NULL,
+graveCPU DECIMAL(4,2) NOT NULL,
+medioCPU DECIMAL(4,2) NOT NULL,
+graveDisco DECIMAL(4,2) NOT NULL,
+medioDisco DECIMAL(4,2) NOT NULL,
+fkEmpresa INT NOT NULL,
+fkComputador INT NULL
+);
+
+CREATE TABLE IF NOT EXISTS alertas(
+idAlerta INT PRIMARY KEY NOT NULL,
+tipoAlerta VARCHAR(255) NOT NULL,
+fkComputador INT NOT NULL);
     
 INSERT INTO empresa (razaoSocial, cnpjEmpresa, emailEmpresa, contatoEmpresa, senhaEmpresa) VALUES ('a', 1, 'lucasa@gmail.com', '21102002', '1');
 INSERT INTO funcionario (nomeFuncionario, fkEmpresa, emailFuncionario, senhaFuncionario, tipoAcesso) VALUES ('lucas', 1, 'lucas@gmail.com', '21102002', "Estagiário");
@@ -105,5 +122,15 @@ SELECT fkComponente, totalComponente FROM especificacao WHERE fkComponente = 1;
 select * from especificacao;
 SELECT dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 AND tipoCaptura = "UsoCPU" ORDER BY idRegistro DESC LIMIT 6;
 SELECT registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 ORDER BY idRegistro DESC LIMIT 7;
+SELECT * FROM computador WHERE fkEmpresa = '2';
+select * from empresa;
+select * from funcionario;
+insert into computador (nomeComputador, sistemaOperacional, fkEmpresa) values 
+('notebook-kat', 'windows', 2),
+('notebook-pedro', 'windows', 2),
+('notebook-victor', 'linux', 2);
+
+select * from registro join especificacao on idEspecificacao = fkEspecificacao 
+join computador on idComputador = fkComputador join empresa on fkEmpresa = idEmpresa;
 
 
