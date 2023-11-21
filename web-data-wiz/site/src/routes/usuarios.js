@@ -67,4 +67,8 @@ router.post("/selectLocalComputador", function (req, res) {
     usuarioController.selectLocalComputador(req, res);
 });
 
+router.post("/atualizarDashboardGeral", function (req, res) {
+    usuarioController.atualizarDashboardGeral(req, res);
+});
+
 module.exports = router;

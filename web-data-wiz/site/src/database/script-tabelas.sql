@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS endereco (
   PRIMARY KEY (idEndereco),
   CONSTRAINT fk_Endereco_Empresa
     FOREIGN KEY (fkEmpresa)
-    REFERENCES Empresa (idEmpresa));
+    REFERENCES empresa (idEmpresa));
 
 CREATE TABLE IF NOT EXISTS funcionario (
   idFuncionario INT AUTO_INCREMENT NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS funcionario (
   PRIMARY KEY (idFuncionario),
   CONSTRAINT fk_Funcionario_Empresa1
     FOREIGN KEY (fkEmpresa)
-    REFERENCES Empresa (idEmpresa));
+    REFERENCES empresa (idEmpresa));
 
 CREATE TABLE IF NOT EXISTS computador (
   idComputador INT AUTO_INCREMENT NOT NULL,

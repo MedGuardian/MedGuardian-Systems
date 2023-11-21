@@ -1,7 +1,58 @@
-const { atualizarGrafico } = require("../../src/models/usuarioModel");
-
 selectComputadores();
+selectTotalComponentes();
 setInterval(trocarCores, 3000);
+setInterval(atualizarDashboardGeral, 3000)
+
+var totalComponenteRam = 0;
+var totalComponenteCPU = 0;
+var totalComponenteDisco = 0;
+
+function selectTotalComponentes(){
+  fetch("/usuarios/selectTotalComponentes", {
+      method: "GET",
+      headers: {
+          "Content-Type": "application/json",
+      },
+  })
+      .then(function (resposta) {
+          console.log("Estou buscando dados referente a capacidade total dos componentes!");
+
+          if (resposta.ok) {
+              console.log(resposta);
+              resposta.json().then((resposta) => {
+                  resposta.forEach((especificacao) => {
+                      especificacao.forEach((objeto) => {
+                          const { fkComponente, totalComponente } = objeto;
+
+                          if(fkComponente == 1){
+                              totalComponenteCPU = totalComponente;
+                          } else if(fkComponente == 2){
+                              totalComponenteRam = totalComponente;
+                          } else if (fkComponente == 3){
+                              totalComponenteDisco = totalComponente;
+                          }                
+                      });
+                  });
+                  
+              });
+              console.log("Consegui buscar o total dos componentes!")
+              
+          } else {
+              console.log("Houve um erro ao fazer o select do total dos componentes!");
+
+              resposta.text().then((texto) => {
+                  console.error(texto);
+              });
+          }
+      })
+      .catch(function (erro) {
+          console.log(erro);
+      });
+
+  return false;
+}
+
+
 
 function voltarIndex() {
   window.location.href = '../index.html'
@@ -212,12 +263,12 @@ async function selectComputadores() {
       const data = await resposta.json();
       var contador = 0;
       data.forEach((computador, i) => {
-        const {idComputador, nomeComputador, sistemaOperacional} = computador;
-          if(i % 4 == 0){
-            contador++
-            gerarDivPaiComputadoresCadastrados(contador)
-          }
-          gerarDivFilhoComputadoresCadastrados(idComputador, nomeComputador, sistemaOperacional, endereco, i, contador)
+        const { idComputador, nomeComputador, sistemaOperacional } = computador;
+        if (i % 4 == 0) {
+          contador++
+          gerarDivPaiComputadoresCadastrados(contador)
+        }
+        gerarDivFilhoComputadoresCadastrados(idComputador, nomeComputador, sistemaOperacional, endereco, i, contador)
       });
       console.log("Deu certo seu select dos computadores!");
     } else {
@@ -236,9 +287,9 @@ function gerarDivPaiComputadoresCadastrados(contador) {
   console.log("Criei o bloco horizontal")
 }
 
-function gerarDivFilhoComputadoresCadastrados(idComputador, nomeComputador, sistemaOperacional, endereco, i, contador){
+function gerarDivFilhoComputadoresCadastrados(idComputador, nomeComputador, sistemaOperacional, endereco, i, contador) {
   var maquinasCadastradas = document.getElementById(`maquinasCadastradas${contador}`);
-  maquinasCadastradas.innerHTML += `<div id="maquina${i + 1}" class="boxMaquinaCadastrada" id="idComputador${idComputador}>
+  maquinasCadastradas.innerHTML += `<div id="maquina${i + 1}" class="boxMaquinaCadastrada" id="idComputador${idComputador}">
   <div class="spanIconesCardDashboard">
     <div class="spansCardDashboard" onclick="abrirDashboardEspecifica(${idComputador})">
       <div class="spanNome">
@@ -317,85 +368,76 @@ function abrirDashboardEspecifica(idComputador) {
   window.location.href = 'DashboardEspecifica/dashboardespecifica.html?parametro=' + idComputador;
 }
 
+var arrayUsoCpu = [];
+var arrayUsoRam = [];
+var arrayUsoDisco = [];
 
-function atualizarDashboardGeral(){
-  fetch("/usuarios/atualizarGrafico", {
-    method: "GET",
+function atualizarDashboardGeral() {
+  var idEmpresa;
+
+  if (sessionStorage.idEmpresa == null) {
+    idEmpresa = sessionStorage.fkEmpresa
+  } else {
+    idEmpresa = sessionStorage.idEmpresa
+  }
+
+  fetch("/usuarios/atualizarDashboardGeral", {
+    method: "POST",
     headers: {
-        "Content-Type": "application/json",
+      "Content-Type": "application/json",
     },
-})
-    .then(function (resposta) {
-        console.log("Estou buscando dados para popular o gráfico!");
+    body: JSON.stringify({
+      fkEmpresaServer: idEmpresa,
+    }),
+  }).then(function (resposta) {
+    console.log("Estou buscando dados para atualizar a dashboard geral!");
 
-        if (resposta.ok) {
-            console.log(resposta);
-            resposta.json().then((resposta) => {
-                resposta.reverse();
-                resposta.forEach((especificacao) => {
-                    especificacao.forEach((objeto) => {
-                        const { fkEspecificacao, tipoCaptura, registro } = objeto;
+    if (resposta.ok) {
+      console.log(resposta);
+      resposta.json().then((resposta) => {
+        console.log(resposta)
+        resposta.forEach((especificacao) => {
+          especificacao.forEach((objeto) => {
+            const { fkEspecificacao, tipoCaptura, registro } = objeto;
 
-                        const hora = dataHoraRegistro.substring(11, 13);    // Extrai a hora da dataHora
-                        const minuto = dataHoraRegistro.substring(14, 16);  // Extrai o minuto da dataHora
-                        const segundo = dataHoraRegistro.substring(17, 19); // Extrai o segundo da dataHora
+            if (fkEspecificacao == 1) {
+              if (arrayUsoCpu.length >= 6) {
+                arrayUsoCpu.shift();
+              }
+              arrayUsoCpu.push(registro);
+            } else if (fkEspecificacao == 2) {
+              if (arrayUsoRam.length >= 6) {
+                arrayUsoRam.shift();
+              }
+              var porcentagemUsoRam = registro * 100 / totalComponenteRam;
+              arrayUsoRam.push(porcentagemUsoRam);
+            } else if (fkEspecificacao == 3) {
+              arrayUsoDisco = registro;
+              if (arrayUsoDisco.length >= 6) {
+                arrayUsoDisco.shift();
+              }
+              var porcentagemUsoDisco = 100 - (registro * 100 / totalComponenteDisco);
+              arrayUsoDisco.push(porcentagemUsoDisco)
+            }
+          });
+        });
+        plotarGrafico(valorN);
+      });
 
-                        if (fkEspecificacao == 1){
-                            if(uso_cpu.length >= 6){
-                                uso_cpu.shift();
-                            }
-                                uso_cpu.push(registro);
-                                if(dataHoraLabelsCPU.length >= 6){
-                                    dataHoraLabelsCPU.shift()
-                                }
-                                dataHoraLabelsCPU.push(`${hora}:${minuto}:${segundo}`)
-                        } else if(fkEspecificacao == 2){
-                            if (uso_ram.length >= 6) {
-                                uso_ram.shift();
-                            }
-                            var porcentagemUsoRam = registro * 100 / totalComponenteRam;
-                            uso_ram.push(porcentagemUsoRam);
+      console.log("Consegui retornar os dados para atualizar a dashboard geral!")
+    } else {
+      console.log("Houve um erro ao buscar os dados para atualizar a dashboard geral!");
 
-                            if(dataHoraLabelsRAM.length >= 6){
-                                dataHoraLabelsRAM.shift()
-                            }
-                            dataHoraLabelsRAM.push(`${hora}:${minuto}:${segundo}`)
-                        } else if(fkEspecificacao == 3){
-
-                            if(tipoCaptura == "SwapDisponivel"){
-                                swapDisponivel = registro;
-                            } else {
-                                valoresCards[1] = registro;
-                                if(uso_disco.length >= 6){
-                                    uso_disco.shift();
-                                }
-                                var porcentagemUsoDisco = 100 - (registro * 100 / totalComponenteDisco);
-                                uso_disco.push(porcentagemUsoDisco)
-                                if(dataHoraLabelsDisco.length >= 6){
-                                    dataHoraLabelsDisco.shift()
-                                }
-                                dataHoraLabelsDisco.push(`${hora}:${minuto}:${segundo}`)
-                            }
-                        }
-                    });
-                });
-                plotarGrafico(valorN);
-            });
-
-            console.log("Consegui retornar os dados para atualizar o gráfico!")
-        } else {
-            console.log("Houve um erro ao buscar os dados para popular o gráfico!");
-
-            resposta.text().then((texto) => {
-                console.error(texto);
-            });
-        }
-    })
+      resposta.text().then((texto) => {
+        console.error(texto);
+      });
+    }
+  })
     .catch(function (erro) {
-        console.log(erro);
+      console.log(erro);
     });
 
-return false;
+  return false;
 }
 
 function trocarCores() {

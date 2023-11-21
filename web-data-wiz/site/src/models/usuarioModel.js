@@ -130,7 +130,7 @@ function excluirMaquina(nomeComputador, idComputador) {
         });
 }
 
-function selectComputador(nomeMaquina){
+function selectComputador(nomeMaquina) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirMaquina():");
 
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
@@ -167,7 +167,7 @@ function atualizarGrafico(limite_linhas) {
     });
 }
 
-function selectTotalComponentes(){
+function selectTotalComponentes() {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirMaquina():");
 
     return new Promise(function (resolve, reject) {
@@ -245,6 +245,43 @@ function selectLocalComputador(fkEmpresa) {
     return database.executar(instrucao);
 }
 
+function atualizarDashboardGeral(fkEmpresa) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
+
+    return new Promise(function (resolve, reject) {
+        var instrucao1 = `
+    select * from registro join especificacao on idEspecificacao = fkEspecificacao 
+join computador on idComputador = fkComputador join empresa on fkEmpresa = idEmpresa where fkEmpresa = ${fkEmpresa} and fkEspecificacao = 1 and tipoCaptura = 'UsoCpu'
+order by idRegistro desc limit 6;`;
+        var instrucao2 = `
+    select * from registro join especificacao on idEspecificacao = fkEspecificacao 
+join computador on idComputador = fkComputador join empresa on fkEmpresa = idEmpresa where fkEmpresa = ${fkEmpresa} and fkEspecificacao = 2
+order by idRegistro desc limit 6;`;
+        var instrucao3 = `
+    select * from registro join especificacao on idEspecificacao = fkEspecificacao 
+join computador on idComputador = fkComputador join empresa on fkEmpresa = idEmpresa where fkEmpresa = ${fkEmpresa} and fkEspecificacao = 3 and tipoCaptura = 'Uso'
+order by idRegistro desc limit 6;`;
+
+        console.log("Executando as instruções SQL...");
+        var selects = [];
+
+        selects.push(database.executar(instrucao1));
+        selects.push(database.executar(instrucao2));
+        selects.push(database.executar(instrucao3));
+
+        Promise.all(selects)
+            .then(function (res) {
+                resolve(res);
+            })
+            .catch(function (error) {
+                reject(error);
+            });
+    });
+
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     autenticar,
     cadastrar,
@@ -261,5 +298,6 @@ module.exports = {
     selectComputador,
     selectFuncionarios,
     selectComputadores,
-    selectLocalComputador
+    selectLocalComputador,
+    atualizarDashboardGeral
 };
