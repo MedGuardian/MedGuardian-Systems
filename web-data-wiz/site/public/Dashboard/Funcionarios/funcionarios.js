@@ -17,7 +17,12 @@ function gerarDIVFuncionario(nome, email, cargo) {
 
 
 function selectFuncionarios() {
-    var fkEmpresaVar = sessionStorage.fkEmpresa;
+    var idEmpresa;
+    if (sessionStorage.idEmpresa == null) {
+      idEmpresa = sessionStorage.fkEmpresa;
+    } else {
+      idEmpresa = sessionStorage.idEmpresa;
+    }
 
     fetch("/usuarios/selectFuncionarios", {
         method: "POST",
@@ -26,7 +31,7 @@ function selectFuncionarios() {
         },
         body: JSON.stringify({
 
-            fkEmpresaServer: fkEmpresaVar
+            fkEmpresaServer: idEmpresa
         }),
     })
         .then(function (resposta) {

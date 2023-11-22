@@ -60,6 +60,7 @@
                 <span onclick="abrirDashboardMenuFlutuante()">Dashboard</span>
                 <span onclick="abrirGerenciamentoMenuFlutuante()">Gerenciamento</span>
                 <span onclick="abrirCadastrarFuncionario()" id="spanCadastrarFuncionario">Cadastrar funcionário</span>
+                <span onclick="abrirAlterarFuncionario()"> Alterar Funcionários</span>
                 <div class="linhaMenuFlutuante"></div>
                 <span onclick="fazerLogout()">Fazer Logout</span>
             </div>
@@ -460,6 +461,10 @@
     
     function telaCadastro(){
         window.location.href = 'Cadastro/cadastro.html'
+    }
+
+    function abrirAlterarFuncionario(){
+        window.location.href = './Dashboard/Funcionarios/funcionarios.html'
     }
 </script>
 

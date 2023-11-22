@@ -6,17 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="funcionarios.js"></script>
     <link rel="stylesheet" href="funcionarios.css">
+    <script src="../../js/funcoes.js"></script>
     <title>Alterar Funcionários - MedGuardian</title>
 </head>
 
-<body>
+<body onload="selectFuncionarios(), validarSessao()">
     <div class="header">
         <div class="saudacao">
             <h1>Olá, <span id="funcionario"></span></h1>
             <p>Gerencie seus funcionários:</p>
         </div>
     </div>
-    <div class="botaoVoltar" onclick="selectFuncionarios()">
+    <div class="botaoVoltar" onclick="voltarIndex()">
         <img src="../../assets/images/voltar.png" alt="">
         <!--<span>Voltar</span>-->
     </div>
@@ -47,4 +48,9 @@
         </div>
     </div>
 </body>
+<script>
+    function voltarIndex(){
+        window.location.href = '../../index.html';
+    }
+</script>
 </html>
