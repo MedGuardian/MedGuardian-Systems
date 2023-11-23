@@ -39,10 +39,6 @@ router.post("/selectComputador", function (req, res) {
     usuarioController.selectComputador(req, res);
 })
 
-router.post("/deletarTuplaPeloId", function (req, res) {
-    usuarioController.deletarTuplaPeloId(req, res);
-})
-
 router.get("/atualizarGrafico", function (req, res) {
     usuarioController.atualizarGrafico(req, res);
 });
@@ -53,6 +49,10 @@ router.get("/selectTotalComponentes", function (req, res) {
 
 router.get("/atualizarIndicadores", function (req, res) {
     usuarioController.atualizarIndicadores(req, res);
+});
+
+router.post("/selectFuncionarios", function (req, res) {
+    usuarioController.selectFuncionarios(req, res);
 });
 
 module.exports = router;

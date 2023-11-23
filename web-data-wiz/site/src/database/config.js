@@ -3,11 +3,7 @@ var sql = require('mssql');
 
 // CONEXÃO DO SQL SERVER - AZURE (NUVEM)
 var sqlServerConfig = {
-<<<<<<< HEAD
-    server: "35.175.71.162",
-=======
     server: "localhost",
->>>>>>> 91d51aa917565cafd19d2b0c36fa40c169a7424c
     database: "MedGuard",
     user: "sa",
     password: "123",
@@ -18,13 +14,17 @@ var sqlServerConfig = {
     },
     options: {
         encrypt: false, // for azure
-        trustedConnection: true
-    
+        trustServerCertificate: true
     }
 }
 
 // CONEXÃO DO MYSQL WORKBENCH
-
+var mySqlConfig = {
+    host: "127.0.0.1",
+    database: "medguardian",
+    user: "root",
+    password: "272505",
+};
 
 function executar(instrucao) {
     // VERIFICA A VARIÁVEL DE AMBIENTE SETADA EM app.js
