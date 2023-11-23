@@ -10,7 +10,7 @@ import java.util.List;
 public class EnviarBD {
 
     // Criar o objeto conexão.
-    ConexaoAws conexao = new ConexaoAws();
+    Conexao conexao = new Conexao();
     JdbcTemplate con = conexao.getConexaoDoBanco();
 
     int i = 0;

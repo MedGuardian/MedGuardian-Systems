@@ -87,12 +87,6 @@ public class TesteProjetoArthur {
             }
         }
 
-        if (bancoDeDados.verificarComputadorCadastrado(nomeComputador)) {
-            bancoDeDados.insertComputador(nomeComputador, 4);
-            idComputador = bancoDeDados.selectIdComputador(nomeComputador);
-
-            if (!looca.getGrupoDeDiscos().getVolumes().isEmpty()) {
-                for (int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
                     if (bancoDeDados.verificarComputadorCadastrado(nomeComputador)) {
                         bancoDeDados.insertComputador(nomeComputador, bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario.get()));
                         idComputador = bancoDeDados.selectIdComputador(nomeComputador);
@@ -215,12 +209,6 @@ public class TesteProjetoArthur {
                     }, delay, interval);
 
                 }
-
-            }
-
-        }
-
-    }
     private static void iniciarMonitoramentoComponente(String componenteMonitorado, Looca looca, EnviarBD bancoDeDados) {
         int intervaloMonitoramento = 3;
 
@@ -245,7 +233,7 @@ public class TesteProjetoArthur {
             case "RAM":
                 // Monitoramento da RAM
                 Double memoriaRamEmUso = looca.getMemoria().getEmUso().doubleValue() / conversorGb;
-                bancoDeDados.insertRegistro(memoriaRamEmUso, "Uso da RAM", 2);
+                bancoDeDados.insertRegistro(memoriaRamEmUso, "Uso da RAM", 1);
                 break;
 
             case "PROCESSADOR":

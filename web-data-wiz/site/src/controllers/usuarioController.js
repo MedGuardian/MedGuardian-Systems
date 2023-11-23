@@ -292,8 +292,8 @@ function cadastrarEndereco(req, res) {
 }
 
 function selectDataDia(req, res) {
-
-    usuarioModel.selectDataDia()
+    var idVar = req.body.idDiaVar;
+    usuarioModel.selectDataDia(idVar)
         .then(
             function (resultadoDatas) {
                 console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
@@ -318,7 +318,8 @@ function selectDataDia(req, res) {
 }
 
 function selectDataSemana(req, res) {
-    usuarioModel.selectDataSemana()
+    var idVar = req.body.idSemanaVar;
+    usuarioModel.selectDataSemana(idVar)
         .then(
             function (resultadoDatas) {
                 console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
@@ -343,7 +344,9 @@ function selectDataSemana(req, res) {
 }
 
 function selectDataMes(req, res) {
-    usuarioModel.selectDataMes()
+    var idMes = req.body.idMesVar;
+
+    usuarioModel.selectDataMes(idMes)
         .then(
             function (resultadoDatas) {
                 console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
@@ -365,6 +368,34 @@ function selectDataMes(req, res) {
                 res.status(500).json(erro.sqlMessage);
             }
         );
+}
+
+function atualizarDatas(req, res){
+    var idServer = req.body.idServer;
+   
+    usuarioModel.atualizarDatas(idServer)
+    .then(
+        function (resultadoDatas) {
+            console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
+            console.log(`Resultados: ${JSON.stringify(resultadoDatas)}`); // transforma JSON em String
+
+            if (resultadoDatas.length > 0) {
+                console.log(resultadoDatas);
+                res.status(200).json(resultadoDatas);
+            } else if (resultadoDatas.length == 0) {
+                res.status(403).send("Erro no select de datas do dia!");
+            } else {
+                res.status(404).send("Erro no select de datas do dia!!!!");
+            }
+        }
+    ).catch(
+        function (erro) {
+            console.log(erro);
+            console.log("\nHouve um erro ao realizar o select de datas! Erro: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        }
+    );
+    
 }
 
 function selectIntervaloData(req, res) {
@@ -591,5 +622,6 @@ module.exports = {
     selectDataSemana,
     selectDataMes,
     selectIntervaloData,
-    selectFuncionarios
+    selectFuncionarios,
+    atualizarDatas
 }

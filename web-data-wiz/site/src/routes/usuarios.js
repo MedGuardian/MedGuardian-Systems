@@ -8,6 +8,10 @@ router.post("/cadastrar", function (req, res) {
     usuarioController.cadastrar(req, res);
 })
 
+router.post("/cadastrarMetrica", function (req, res) {
+    usuarioController.cadastrarMetrica(req, res);
+})
+
 router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });
@@ -59,7 +63,7 @@ router.post("/selectDataDia", function (req, res) {
     usuarioController.selectDataDia(req, res);
 })
 
-router.post("/selectDataSemana", function (req, res) {
+router.get("/selectDataSemana", function (req, res) {
     usuarioController.selectDataSemana(req, res);
 })
 
@@ -71,5 +75,8 @@ router.post("/selectIntervaloData", function (req, res) {
     usuarioController.selectIntervaloData(req, res);
 })
 
+router.post("/atualizarDatas", function (req, res) {
+    usuarioController.atualizarDatas(req, res);
+})
 
 module.exports = router;

@@ -12,6 +12,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"
     integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs"
     crossorigin="anonymous"></script>
+  <script src="dashboard.js"></script>
 
 </head>
 
@@ -174,33 +175,223 @@
 
 
 <script>
+  const graficoDesempenho = document.getElementById("myChart")
 
-  const xValues = [50, 60, 70, 80, 90];
-  const yValues = [15, 63, 72, 42, 60];
+  var labelsGrafico = [];
+  const data_graficoDesempenho = {
+    labels: dataHoraLabelsRAM,
+    datasets: [
+      {
+        label: "Desempenho",
+        data: [],
+        backgroundColor: 'rgba(0, 189, 6, .15)',
+        borderColor: 'rgba(0, 189, 6, 1)',
+        pointBackgroundColor: '#164018',
+        pointBorderColor: 'rgba(255,255,255,.8',
+        pointRadius: 5,
+        borderWidth: 1,
+        fill: true
+      }
+    ]
+  };
 
-  new Chart("myChart", {
-    type: "line",
-    data: {
-      labels: xValues,
-      datasets: [{
-        fill: false,
-        lineTension: 0,
-        backgroundColor: "rgba(0,0,255,1.0)",
-        borderColor: "rgba(0,0,255,0.1)",
-        data: yValues
-      }]
-    },
+  const config_graficoDesempenho = {
+    type: 'line',
+    data: data_graficoDesempenho,
     options: {
-      title: {
-        display: true,
-        text: "Gerenciamento de Tarefas"
-      },
-      legend: { display: false },
+      maintainAspectRatio: false,
       scales: {
-        yAxes: [{ ticks: { min: 6, max: 16 } }],
+        y: {
+          max: 0,
+          min: 0,
+          grid: {
+            display: true
+          },
+          ticks: {
+            beginAtZero: true,
+            color: '#2E2109;',
+            font: {
+              size: 20,
+              family: 'LeagueSpartan',
+              weight: 400
+            }
+          },
+        },
+        x: {
+          grid: {
+            display: false
+          },
+          ticks: {
+            display: true,
+            color: '#2E2109;',
+            font: {
+              size: 12,
+              family: 'LeagueSpartan',
+              weight: 600
+            }
+          }
+        }
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Desempenho da CPU',
+          color: 'black',
+          font: {
+            size: 25,
+            color: 'black',
+            family: 'LeagueSpartan',
+            weight: 600
+          }
+
+        },
+        legend: {
+          display: false,
+          labels: {
+            font: {
+              size: 20,
+              color: 'white',
+              family: 'LeagueSpartan',
+              weight: 600,
+              padding: 20
+            }
+          }
+        }
       }
     }
-  });
+  };
+
+  const graficoEmUso = new Chart(graficoDesempenho, config_graficoDesempenho);
+
+  var uso_cpu = [];
+  var uso_ram = [];
+  var uso_disco = [];
+  var dataHoraLabelsCPU = [];
+  var dataHoraLabelsDisco = [];
+  var dataHoraLabelsRAM = [];
+  var threads = 0;
+  var processos = 0;
+  var velocidade_de_rede = 0;
+  var tempo_atividade_segundos = 0;
+  var tempo_atividade_minutos = 0;
+  var tempo_atividade_horas = 0;
+  var tempo_atividade_dias = 0;
+  var velocidade_processador = 0;
+  var swapDisponivel = 0;
+
+  async function atualizarGrafico() {
+    fetch("/usuarios/atualizarDatas", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        idServer: 3,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("Estou buscando dados para popular o gráfico!");
+  
+        if (resposta.ok) {
+          console.log(resposta);
+          resposta.json().then((resposta) => {
+            resposta.reverse();
+            resposta.forEach((especificacao) => {
+              if (Array.isArray(especificacao)) {
+                especificacao.forEach((objeto) => {
+                  const { fkEspecificacao, tipoCaptura, dataHoraRegistro, registro } = objeto;
+  
+                  const date = new Date(dataHoraRegistro);
+                  const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
+  
+                  if (tipoCaptura == "UsoCpu") {
+                    if (uso_cpu.length >= 6) {
+                      uso_cpu.shift();
+                    }
+                    uso_cpu.push(registro);
+                  }
+                  else if (tipoCaptura == "Uso da RAM") {
+                    if (uso_ram.length >= 6) {
+                      uso_ram.shift();
+                    }
+                    uso_ram.push(registro);
+                  }
+                  else if (tipoCaptura == "Uso") {
+                    if (uso_disco.length >= 6) {
+                      uso_disco.shift();
+                    }
+                    uso_disco.push(registro);
+                  }
+  
+                  var dataGrafico = document.getElementById('dataRelatorio');
+                  dataGrafico.innerHTML = formattedDate;
+                });
+              } else {
+                console.error('O objeto não é um array:', especificacao);
+              }
+            });
+            plotarGrafico(valorN);
+          });
+  
+          console.log("Consegui retornar os dados para atualizar o gráfico!");
+        } else {
+          console.log("Houve um erro ao buscar os dados para popular o gráfico!");
+  
+          resposta.text().then((texto) => {
+            console.error(texto);
+          });
+        }
+      })
+      .catch(function (erro) {
+        console.log(erro);
+      });
+  
+    return false;
+  }
+  
+
+  setInterval(atualizarGrafico, 5000)
+
+
+  var valorN = 1;
+
+  function escolherGrafico(n) {
+    valorN = n;
+    plotarGrafico(valorN)
+  }
+
+  async function plotarGrafico(n) {
+    switch (n) {
+      case 1:
+        uso_cpu.reverse();
+        dataHoraLabelsCPU.reverse();
+        data_graficoDesempenho.datasets[0].data = uso_cpu.slice(0, 6);
+        config_graficoDesempenho.options.plugins.title.text = 'Desempenho CPU'
+        config_graficoDesempenho.options.scales.y.max = 50;
+        config_graficoDesempenho.options.scales.y.min = 0;
+        data_graficoDesempenho.labels = dataHoraLabelsCPU.slice(0, 6);
+        break;
+      case 2:
+        uso_disco.reverse();
+        dataHoraLabelsDisco.reverse();
+        data_graficoDesempenho.datasets[0].data = uso_disco.slice(0, 6);
+        config_graficoDesempenho.options.plugins.title.text = 'Uso do disco'
+        config_graficoDesempenho.options.scales.y.max = 100;
+        config_graficoDesempenho.options.scales.y.min = 0;
+        data_graficoDesempenho.labels = dataHoraLabelsDisco.slice(0, 6);
+        break;
+      case 3:
+        uso_ram.reverse();
+        dataHoraLabelsRAM.reverse();
+        data_graficoDesempenho.datasets[0].data = uso_ram.slice(0, 6);
+        config_graficoDesempenho.options.plugins.title.text = 'Uso da RAM';
+        config_graficoDesempenho.options.scales.y.max = 100;
+        config_graficoDesempenho.options.scales.y.min = 80;
+        data_graficoDesempenho.labels = dataHoraLabelsRAM.slice(0, 6);
+        break;
+    }
+    graficoEmUso.update();
+  }
 
   var xValues2 = ["HD", "CPU", "Memória", "Rede", "GPU"];
   var yValues2 = [55, 49, 44, 24, 40];
@@ -278,7 +469,10 @@
 
 
 
-  var yValues5 = [55, 20, 45, 35, 24];
+  var data = [sessionStorage.getItem('dataSemana')];
+  console.log(data)
+
+  var yValues5 = data;
   var yValues6 = [25, 40, 44, 22, 18];
   var yValues7 = [15, 36, 64, 54, 15];
 
@@ -323,7 +517,7 @@
       setTimeout(function () {
         modal.style.display = 'none';
         resolve();
-      }, 3000);
+      }, 5000);
     });
   }
 
@@ -334,42 +528,42 @@
     pdf.style.display = 'flex';
 
     var doc = new jsPDF({
-        unit: 'cm',
-        format: 'a4',
+      unit: 'cm',
+      format: 'a4',
     }, {
-        top: 0,
-        bottom: 0,
-        left: 0,
+      top: 0,
+      bottom: 0,
+      left: 0,
     });
 
     try {
-        const canvas = await html2canvas(pdf, {
-            orientation: 'landscape',
-            scale: 2,
-            background: '#282828',
-            useCORS: true
-        });
+      const canvas = await html2canvas(pdf, {
+        orientation: 'landscape',
+        scale: 2,
+        background: '#282828',
+        useCORS: true
+      });
 
-        const imgData = canvas.toDataURL('image/png');
+      const imgData = canvas.toDataURL('image/png');
 
-        var pageWidth = doc.internal.pageSize.getWidth();
-        var pageHeight = doc.internal.pageSize.getHeight();
+      var pageWidth = doc.internal.pageSize.getWidth();
+      var pageHeight = doc.internal.pageSize.getHeight();
 
-        var imgWidth = pageWidth;
-        var imgHeight = (canvas.height * imgWidth) / canvas.width;
+      var imgWidth = pageWidth;
+      var imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-        var x = 0;
-        var y = (pageHeight - imgHeight) / 2;
+      var x = 0;
+      var y = (pageHeight - imgHeight) / 2;
 
-        doc.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
-        console.log("envio do pdf");
-
-        await enviarMensagem();
+      doc.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
+      //await doc.save('relatorio.pdf')
+      console.log("envio do pdf");
+      await enviarMensagem();
 
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-}
+  }
 
 
 
@@ -386,7 +580,7 @@
       url: 'http://localhost:3333/app.js',
       headers: {
         'Content-type': 'application/json',
-        'Authorization': 'Bearer xoxb-6157746735458-6180861943392-hntLdQ74OAlMXOWCxHEGNm6t'
+        'Authorization': 'Bearer xoxb-6157746735458-6180861943392-qWz3CvCQpp476wdayPkyoR8F'
       },
       data: data
     };

@@ -60,7 +60,7 @@ async function enviarMensagem(data) {
     const config = {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer xoxb-6157746735458-6180861943392-hntLdQ74OAlMXOWCxHEGNm6t',
+            'Authorization': 'Bearer xoxb-6157746735458-6180861943392-qWz3CvCQpp476wdayPkyoR8F',
             "Access-Control-Allow-Headers" : "true",
         }
     };
@@ -79,7 +79,7 @@ let config = {
   url: 'https://slack.com/api/files.upload',
   headers: {
     'Content-type': 'multipart/form-data', 
-    'Authorization': 'Bearer xoxb-6157746735458-6180861943392-hntLdQ74OAlMXOWCxHEGNm6t', 
+    'Authorization': 'Bearer xoxb-6157746735458-6180861943392-qWz3CvCQpp476wdayPkyoR8F', 
   },
   data : data
 };

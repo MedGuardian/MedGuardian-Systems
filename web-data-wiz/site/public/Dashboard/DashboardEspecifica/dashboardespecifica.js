@@ -362,7 +362,7 @@ function selectTotalComponentes(){
                                 totalComponenteRam = totalComponente;
                             } else if (fkComponente == 3){
                                 totalComponenteDisco = totalComponente;
-                            }                  
+                            }                
                         });
                     });
                     

@@ -157,117 +157,6 @@ function selectComputador() {
     });
 }
 
-
-function diario() {
-    var modal = document.getElementById('data-input')
-    modal.innerHTML = ' '
-    var data = [];
-
-    fetch("/usuarios/selectDataDia", {
-        method: "POST"
-        
-    }).then(function (resposta) {
-        console.log("ESTOU NO THEN DO diario()!")
-        console.log(`Dados atuais do gráfico:`);
-        console.log(resposta);
-        
-        if (resposta.ok) {
-            console.log(resposta);
-            resposta.json().then(json => {
-                console.log(json);
-                console.log(JSON.stringify(json));
-                data.push(json);
-                return data;
-            });
-
-        } else {
-            alert("Erro ao captar os dados!")
-
-            resposta.text().then(texto => {
-                console.error(texto);
-            });
-        }
-
-    }).catch(function (erro) {
-        console.log(erro);
-    })
-
-    return false;
-
-  }
-  function semanal() {
-    var modal = document.getElementById('data-input')
-    modal.innerHTML = ' '
-    var data = [];
-    fetch("/usuarios/selectDataSemana", {
-        method: "POST"
-        
-    }).then(function (resposta) {
-        console.log("ESTOU NO THEN DO diario()!")
-        console.log(`Dados atuais do gráfico:`);
-        console.log(data);
-        console.log(resposta);
-        
-        if (resposta.ok) {
-            console.log(resposta);
-            resposta.json().then(json => {
-                console.log(json);
-                console.log(JSON.stringify(json));
-                data.push(json);
-                return data;
-            });
-
-        } else {
-            alert("Erro ao captar os dados!")
-
-            resposta.text().then(texto => {
-                console.error(texto);
-            });
-        }
-
-    }).catch(function (erro) {
-        console.log(erro);
-    })
-
-    return false;
-
-  }
-  function mensal() {
-    var modal = document.getElementById('data-input')
-    modal.innerHTML = ' '
-    var data = [];
-    fetch("/usuarios/selectDataMes", {
-        method: "POST"
-        
-    }).then(function (resposta) {
-        console.log("ESTOU NO THEN DO diario()!")
-        console.log(`Dados atuais do gráfico:`);
-        console.log(data);
-        console.log(resposta);
-        
-        if (resposta.ok) {
-            console.log(resposta);
-            resposta.json().then(json => {
-                console.log(json);
-                console.log(JSON.stringify(json));
-                data.push(json);
-                return data;
-            });
-
-        } else {
-            alert("Erro ao captar os dados!")
-
-            resposta.text().then(texto => {
-                console.error(texto);
-            });
-        }
-
-    }).catch(function (erro) {
-        console.log(erro);
-    })
-
-    return false;
-  }
   function personalizado() {
     var modal = document.getElementById('data-input');
     modal.innerHTML = ' ';
@@ -299,15 +188,16 @@ function diario() {
 
   function fazerRequisicao(data1, data2){
     var data = [];
+    sessionStorage.setItem('Personalizado', data);
 
     fetch("/usuarios/selectIntervaloData", {
-        method: "POST",
+        method: "GET",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
             date1Server: data1,
-            date2Server: data2
+            date2Server: data2,
         })
     }).then(function (resposta) {
         console.log("ESTOU NO THEN DO intervalo()!")
