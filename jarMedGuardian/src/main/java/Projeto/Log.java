@@ -67,4 +67,32 @@ public class Log {
             e.printStackTrace();
         }
     }
+
+
+
+    public void gravarErros() {
+        try {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss");
+            String dataHoraAtual = dateFormat.format(new Date());
+
+            String nomeDoArquivo = "Erros_" + dataHoraAtual;
+            String caminhoDoArquivo = "C:\\Users\\sarah\\OneDrive\\Área de Trabalho\\Logs\\" + nomeDoArquivo + ".txt";
+
+            FileWriter arq = new FileWriter(caminhoDoArquivo);
+            PrintWriter gravarArq = new PrintWriter(arq);
+
+            gravarArq.printf(dataHoraAtual + "\n");
+            gravarArq.printf("ERROR!");
+
+
+
+            System.out.println("\nErro gravado com sucesso em: " + caminhoDoArquivo);
+        } catch (IOException ex) {
+            // Em caso de falha ao gravar o erro, imprime no console
+            ex.printStackTrace();
+        }
+    }
+
+
 }
