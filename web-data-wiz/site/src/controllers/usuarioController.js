@@ -367,7 +367,6 @@ function selectTotalComponentes(req, res) {
 }
 
 function atualizarIndicadores(req, res) {
-
     usuarioModel.atualizarIndicadores()
         .then(
             function (resultado) {
@@ -514,6 +513,25 @@ function selectFuncionarios(req, res) {
                             }
                         );
                 }
+
+                function excluirFuncionario(req,res){
+                    var funcionario = req.body.idFuncionarioServer;
+                    usuarioModel.excluirFuncionario(funcionario)
+                    .then(
+                        function(resultado) {
+                            res.json(resultado)
+                        }
+                    ).catch(
+                        function(erro) {
+                            console.log(erro);
+                            console.log(
+                                "\n Houve um erro ao tentar excluir o Funcionário.",
+                                erro.sqlMessage
+                            )
+                            res.status(500).json(erro.sqlMessage)
+                        }
+                    )
+                }
     
 
 module.exports = {
@@ -533,5 +551,6 @@ module.exports = {
     selectFuncionarios,
     selectComputadores,
     selectLocalComputador,
-    atualizarDashboardGeral
+    atualizarDashboardGeral,
+    excluirFuncionario
 }

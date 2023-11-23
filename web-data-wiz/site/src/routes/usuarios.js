@@ -71,4 +71,9 @@ router.post("/atualizarDashboardGeral", function (req, res) {
     usuarioController.atualizarDashboardGeral(req, res);
 });
 
+router.post("/excluirFuncionario", function (req, res) {
+    usuarioController.excluirFuncionario(req, res);
+});
+
+
 module.exports = router;

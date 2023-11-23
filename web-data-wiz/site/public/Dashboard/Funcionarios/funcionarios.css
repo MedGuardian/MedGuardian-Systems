@@ -192,3 +192,8 @@ input[type="checkbox"]::before {
     height: 30px;
     width: 30px;
 }
+
+.headerAlteracoesExpecifico a {
+    cursor: pointer;
+    text-decoration: none;
+}
