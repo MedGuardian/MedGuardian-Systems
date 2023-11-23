@@ -451,5 +451,11 @@ function atualizarComponenteEscolhido(n){
     }
 }
 
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+const grafico_selecionado = getQueryParam("parametro")
 
 

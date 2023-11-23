@@ -23,7 +23,7 @@ public class TesteProjetoPedro {
         Boolean logado = false;
         Integer idComputador;
         Integer idFuncionario = null;
-        Integer hd = 0;
+        String sistemaOperacional;
         int pid;
 
         do {
@@ -41,12 +41,16 @@ public class TesteProjetoPedro {
         } while (!logado);
 
         if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
-            bancoDeDados.insertComputador(nomeComputador, bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario));
+            if(System.getProperty("os.name").toLowerCase().contains("win")){
+                sistemaOperacional = "Windows";
+            } else {
+                sistemaOperacional = "Linux";
+            }
+            bancoDeDados.insertComputador(nomeComputador, bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario), sistemaOperacional);
             idComputador = bancoDeDados.selectIdComputador(nomeComputador);
             if(!looca.getGrupoDeDiscos().getVolumes().isEmpty()){
                 for(int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
                     bancoDeDados.insertComponente(HD.getNomeComponente() + (i + 1));
-                    hd++;
                 }
             }
             bancoDeDados.insertComponente(RAM.getNomeComponente());

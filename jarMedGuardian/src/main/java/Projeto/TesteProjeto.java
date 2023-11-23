@@ -20,6 +20,7 @@ public class TesteProjeto {
         Boolean logado = false;
         Integer idComputador = null;
         Integer idFuncionario = null;
+        String sistemaOperacional;
 
         do {
             ObterMemoriaSwap.ObterMemoriaSwap();
@@ -34,9 +35,15 @@ public class TesteProjeto {
                 logado = true;
                 idFuncionario = bancoDeDados.autenticarUsuario(email, senha).get(0).getIdFuncionario();
 
+                if(System.getProperty("os.name").toLowerCase().contains("win")){
+                    sistemaOperacional = "Windows";
+                } else {
+                    sistemaOperacional = "Linux";
+                }
+
                 if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
                     Integer fkEmpresaDoFuncionario = bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario);
-                    bancoDeDados.insertComputador(nomeComputador, fkEmpresaDoFuncionario);
+                    bancoDeDados.insertComputador(nomeComputador, fkEmpresaDoFuncionario, sistemaOperacional);
                     idComputador = bancoDeDados.selectIdComputador(nomeComputador);
 
                     bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
@@ -44,7 +51,6 @@ public class TesteProjeto {
                     if(!looca.getGrupoDeDiscos().getVolumes().isEmpty()){
                         for(int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
                             bancoDeDados.insertComponente(HD.getNomeComponente() + (i + 1));
-                            //hd++;
                         }
                     }
                     bancoDeDados.insertComponente(TEMPOATIVIDADE.getNomeComponente());

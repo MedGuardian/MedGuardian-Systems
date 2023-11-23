@@ -269,16 +269,7 @@
   var dataHoraLabelsCPU = [];
   var dataHoraLabelsDisco = [];
   var dataHoraLabelsRAM = [];
-  var threads = 0;
-  var processos = 0;
-  var velocidade_de_rede = 0;
-  var tempo_atividade_segundos = 0;
-  var tempo_atividade_minutos = 0;
-  var tempo_atividade_horas = 0;
-  var tempo_atividade_dias = 0;
-  var velocidade_processador = 0;
-  var swapDisponivel = 0;
-
+  
   async function atualizarGrafico() {
     fetch("/usuarios/atualizarDatas", {
       method: "POST",
@@ -301,9 +292,13 @@
                 especificacao.forEach((objeto) => {
                   const { fkEspecificacao, tipoCaptura, dataHoraRegistro, registro } = objeto;
   
+                  const thirtyDaysAgo = new Date(dataHoraRegistro);
+                  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+                  
                   const date = new Date(dataHoraRegistro);
                   const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
-  
+                  const formattedDate30 = `${thirtyDaysAgo.getDate().toString().padStart(2, '0')}-${(thirtyDaysAgo.getMonth() + 1).toString().padStart(2, '0')}-${thirtyDaysAgo.getFullYear()}`;
+
                   if (tipoCaptura == "UsoCpu") {
                     if (uso_cpu.length >= 6) {
                       uso_cpu.shift();
@@ -324,7 +319,7 @@
                   }
   
                   var dataGrafico = document.getElementById('dataRelatorio');
-                  dataGrafico.innerHTML = formattedDate;
+                  dataGrafico.innerHTML = formattedDate30 + " - " + formattedDate;
                 });
               } else {
                 console.error('O objeto não é um array:', especificacao);
@@ -468,11 +463,7 @@
   });
 
 
-
-  var data = [sessionStorage.getItem('dataSemana')];
-  console.log(data)
-
-  var yValues5 = data;
+  var yValues5 = uso_cpu.slice(0, 6);
   var yValues6 = [25, 40, 44, 22, 18];
   var yValues7 = [15, 36, 64, 54, 15];
 
@@ -504,10 +495,10 @@
     }
   });
 
-  window.onload = function () {
+  /*window.onload = function () {
     showDownloadingMessage();
     gerarRelatorio();
-  };
+  };*/
 
   function showDownloadingMessage() {
     return new Promise(resolve => {

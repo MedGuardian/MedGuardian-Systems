@@ -84,24 +84,26 @@ public class TesteProjetoArthur {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+
+        if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
+            if(System.getProperty("os.name").toLowerCase().contains("win")){
+                sistemaOperacional = "Windows";
+            } else {
+                sistemaOperacional = "Linux";
             }
-        }
 
-                    if (bancoDeDados.verificarComputadorCadastrado(nomeComputador)) {
-                        bancoDeDados.insertComputador(nomeComputador, bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario.get()));
-                        idComputador = bancoDeDados.selectIdComputador(nomeComputador);
-                        if (!looca.getGrupoDeDiscos().getVolumes().isEmpty()) {
-                            for (int j = 0; j < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); j++) {
-                                bancoDeDados.insertComponente(HD.getNomeComponente() + (j + 1));
-                                hd++;
-                            }
-                        }
-
-                        bancoDeDados.insertComponente(RAM.getNomeComponente());
-                        bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
-                        bancoDeDados.insertComponente(REDE.getNomeComponente());
-                        bancoDeDados.insertComponente(TEMPOATIVIDADE.getNomeComponente());
-                    } else {
+            bancoDeDados.insertComputador(nomeComputador, bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario), sistemaOperacional);
+            bancoDeDados.insertComponente(RAM.getNomeComponente());
+            bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
+            bancoDeDados.insertComponente(REDE.getNomeComponente());
+            bancoDeDados.insertComponente(TEMPOATIVIDADE.getNomeComponente());
+            idComputador = bancoDeDados.selectIdComputador(nomeComputador);
+            if(!looca.getGrupoDeDiscos().getVolumes().isEmpty()){
+                for(int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
+                    bancoDeDados.insertComponente(HD.getNomeComponente() + (i + 1));
+                }
+            }
+       } else {
                         idComputador = bancoDeDados.selectIdComputador(nomeComputador);
                     }
 
@@ -209,26 +211,26 @@ public class TesteProjetoArthur {
                     }, delay, interval);
 
                 }
-    private static void iniciarMonitoramentoComponente(String componenteMonitorado, Looca looca, EnviarBD bancoDeDados) {
+
+    private static void iniciarMonitoramentoComponente(String componenteMonitorado, Looca looca,
+            EnviarBD bancoDeDados) {
         int intervaloMonitoramento = 3;
 
         ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-        executor.scheduleAtFixedRate(() -> monitorarComponente(componenteMonitorado, looca, bancoDeDados), 0, intervaloMonitoramento, TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(() -> monitorarComponente(componenteMonitorado, looca, bancoDeDados), 0,
+                intervaloMonitoramento, TimeUnit.SECONDS);
     }
-
-
-
 
     private static void monitorarComponente(String componenteMonitorado, Looca looca, EnviarBD bancoDeDados) {
         int conversorGb = 1000000000;
 
-        switch (componenteMonitorado){
+        switch (componenteMonitorado) {
             case "HD":
                 // Monitoramento do HD
-                Double discoEmUso = looca.getGrupoDeDiscos().getVolumes().get(0).getDisponivel().doubleValue() / conversorGb;
+                Double discoEmUso = looca.getGrupoDeDiscos().getVolumes().get(0).getDisponivel().doubleValue()
+                        / conversorGb;
                 bancoDeDados.insertRegistro(discoEmUso, "Uso do HD", 1);
                 break;
-
 
             case "RAM":
                 // Monitoramento da RAM
@@ -262,8 +264,12 @@ public class TesteProjetoArthur {
                 Integer conversorMb = 1000000;
 
                 Double redeAtual;
-                redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(1).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(1).getPacotesRecebidos().doubleValue()) / conversorMb;
-                bancoDeDados.insertRegistro(redeAtual/conversorMb, "Velocidade", 4);
+                redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(1).getPacotesEnviados()
+                        .doubleValue()
+                        + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(1).getPacotesRecebidos()
+                                .doubleValue())
+                        / conversorMb;
+                bancoDeDados.insertRegistro(redeAtual / conversorMb, "Velocidade", 4);
                 System.out.println(redeAtual);
                 break;
         }

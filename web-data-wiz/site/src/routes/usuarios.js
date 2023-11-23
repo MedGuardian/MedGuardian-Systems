@@ -77,6 +77,22 @@ router.post("/selectIntervaloData", function (req, res) {
 
 router.post("/atualizarDatas", function (req, res) {
     usuarioController.atualizarDatas(req, res);
-})
+});
+
+router.post("/selectComputadores", function (req, res) {
+    usuarioController.selectComputadores(req, res);
+});
+
+router.post("/selectLocalComputador", function (req, res) {
+    usuarioController.selectLocalComputador(req, res);
+});
+
+router.post("/atualizarDashboardGeral", function (req, res) {
+    usuarioController.atualizarDashboardGeral(req, res);
+});
+
+router.post("/excluirFuncionario", function (req, res) {
+    usuarioController.excluirFuncionario(req, res);
+});
 
 module.exports = router;
