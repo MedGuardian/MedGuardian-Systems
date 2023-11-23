@@ -33,14 +33,16 @@ public class Log {
         Integer horas = segundos / 3600;
         segundos = segundos % 3600;
 
-        FileWriter arq = new FileWriter("C:\\Users\\sarah\\OneDrive\\Área de Trabalho\\TempoDeAtividade.txt");
-        PrintWriter gravarArq = new PrintWriter(arq);
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy_HH:mm:ss");
         String dataHoraAtual = dateFormat.format(new Date());
 
+        FileWriter arq = new FileWriter("C:\\Users\\sarah\\OneDrive\\Área de Trabalho\\" + dataHoraAtual + ".txt");
+        PrintWriter gravarArq = new PrintWriter(arq);
 
-        gravarArq.printf("+--Tempo atividade--+%n");
+
+
+
+        gravarArq.printf(dataHoraAtual);
 
         gravarArq.printf( dias + "dias" + dataHoraAtual);
 
