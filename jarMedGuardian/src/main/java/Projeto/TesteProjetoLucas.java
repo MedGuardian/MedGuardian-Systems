@@ -1,6 +1,8 @@
 package Projeto;
 
 import com.github.britooo.looca.api.core.Looca;
+import com.github.britooo.looca.api.group.janelas.Janela;
+
 import java.io.IOException;
 
 import java.util.*;
@@ -31,6 +33,24 @@ public class TesteProjetoLucas {
 
 
         do {
+
+            List<Janela> listaJanelas = new ArrayList<>();
+
+            for(int i = 0; i< looca.getGrupoDeJanelas().getJanelasVisiveis().size(); i++){
+                if(!looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().isEmpty()){
+                    listaJanelas.add(looca.getGrupoDeJanelas().getJanelasVisiveis().get(i));
+                }
+            }
+
+            for(int i = 0; i < listaJanelas.size(); i++){
+                for(int j = 0; j < looca.getGrupoDeJanelas().getJanelasVisiveis().size(); j++){
+                    if(listaJanelas.get(i).getComando() != looca.getGrupoDeJanelas().getJanelasVisiveis().get(j).getComando()){
+                        System.out.println("Não tem na lista");
+                    } else {
+                        System.out.println("Tem na lista");
+                    }
+                }
+            }
 
             for(int i = 0; i < looca.getGrupoDeJanelas().getJanelasVisiveis().size(); i++){
                 System.out.println(looca.getGrupoDeJanelas().getJanelasVisiveis());

@@ -21,6 +21,12 @@ public class TesteProjeto {
         Integer idComputador = null;
         Integer idFuncionario = null;
         String sistemaOperacional;
+        Double graveRam;
+        Double medioRam;
+        Double graveCPU;
+        Double medioCPU;
+        Double graveDisco;
+        Double medioDisco;
 
         do {
             ObterMemoriaSwap.ObterMemoriaSwap();
