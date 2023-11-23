@@ -49,7 +49,7 @@ public class TesteProjeto {
                 }
 
                 if(bancoDeDadosAws.verificarComputadorCadastrado(nomeComputador)){
-                    Integer fkEmpresaDoFuncionario = bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario);
+                    Integer fkEmpresaDoFuncionario = bancoDeDadosAws.getFkEmpresaPorIdFuncionario(idFuncionario);
                     bancoDeDados.insertComputador(nomeComputador, fkEmpresaDoFuncionario, sistemaOperacional);
                     bancoDeDadosAws.insertComputador(nomeComputador, fkEmpresaDoFuncionario, sistemaOperacional);
                     idComputador = bancoDeDadosAws.selectIdComputador(nomeComputador);
