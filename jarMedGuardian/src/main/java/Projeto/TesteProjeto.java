@@ -144,6 +144,7 @@ public class TesteProjeto {
         Integer finalIdComputador = idComputador;
         Integer finalIdFuncionario = idFuncionario;
         Integer finalFkEmpresa = fkEmpresa;
+        Integer finalIdComputador1 = idComputador;
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 System.out.println("DADOS SENDO MONITORADOS...");
@@ -167,48 +168,36 @@ public class TesteProjeto {
                 segundos = segundos % 60;
 
                 for(int i = 0; i < bancoDeDadosAws.selectComponente().size(); i++){
-                    Integer idComponente = bancoDeDadosAws.selectComponente().get(i).getIdComponente();
+                    Integer idComponenteAws = bancoDeDadosAws.selectComponente().get(i).getIdComponente();
 
-                    switch (idComponente) {
+                    switch (idComponenteAws) {
                         case  1-> {
-                            bancoDeDadosAws.insertRegistro(processadorEmUso, "UsoCpu", 1);
-                            bancoDeDadosAws.insertRegistro(Double.valueOf(dias), "Dias", 1);
-                            bancoDeDadosAws.insertRegistro(Double.valueOf(horas), "Horas", 1);
-                            bancoDeDadosAws.insertRegistro(Double.valueOf(minutos), "Minutos", 1);
-                            bancoDeDadosAws.insertRegistro(Double.valueOf(segundos), "Segundos", 1);
-                            bancoDeDadosAws.insertRegistro(numeroProcessos, "QuantidadeProcessos", 1);
-                            bancoDeDadosAws.insertRegistro(numeroThreads, "QuantidadeThreads", 1);
-
-                            bancoDeDados.insertRegistro(processadorEmUso, "UsoCpu", 1);
-                            bancoDeDados.insertRegistro(Double.valueOf(dias), "Dias", 1);
-                            bancoDeDados.insertRegistro(Double.valueOf(horas), "Horas", 1);
-                            bancoDeDados.insertRegistro(Double.valueOf(minutos), "Minutos", 1);
-                            bancoDeDados.insertRegistro(Double.valueOf(segundos), "Segundos", 1);
-                            bancoDeDados.insertRegistro(numeroProcessos, "QuantidadeProcessos", 1);
-                            bancoDeDados.insertRegistro(numeroThreads, "QuantidadeThreads", 1);
+                            bancoDeDadosAws.insertRegistro(processadorEmUso, "UsoCpu", finalIdComputador * 4 - 3);
+                            bancoDeDadosAws.insertRegistro(Double.valueOf(dias), "Dias", finalIdComputador * 4 - 3);
+                            bancoDeDadosAws.insertRegistro(Double.valueOf(horas), "Horas", finalIdComputador * 4 - 3);
+                            bancoDeDadosAws.insertRegistro(Double.valueOf(minutos), "Minutos", finalIdComputador * 4 - 3);
+                            bancoDeDadosAws.insertRegistro(Double.valueOf(segundos), "Segundos", finalIdComputador * 4 - 3);
+                            bancoDeDadosAws.insertRegistro(numeroProcessos, "QuantidadeProcessos", finalIdComputador * 4 - 3);
+                            bancoDeDadosAws.insertRegistro(numeroThreads, "QuantidadeThreads", finalIdComputador * 4 - 3);
 
                             if(processadorEmUso >= metrica.get(0).getGraveCPU()){
-                                bancoDeDadosAws.insertAlertas("Crítico", 1, finalIdComputador);
+                                bancoDeDadosAws.insertAlertas("Crítico",finalIdComputador * 4 - 3, finalIdComputador);
                             } else if(processadorEmUso >= metrica.get(0).getMedioCPU()){
-                                bancoDeDadosAws.insertAlertas("Médio", 1, finalIdComputador);
+                                bancoDeDadosAws.insertAlertas("Médio", finalIdComputador * 4 - 3, finalIdComputador);
                             }
                         }
                         case 2 -> {
-                            bancoDeDados.insertRegistro(memoriaRamEmUso, "Uso", 2);
-                            bancoDeDadosAws.insertRegistro(memoriaRamEmUso, "Uso", 2);
+                            bancoDeDadosAws.insertRegistro(memoriaRamEmUso, "Uso", finalIdComputador * 4 - 2);
 
                             if(memoriaRamEmUso >= (looca.getMemoria().getTotal().doubleValue() / conversorGb) * (metrica.get(0).getGraveRam() / 100)){
-                                bancoDeDadosAws.insertAlertas("Crítico", 2, finalIdComputador);
+                                bancoDeDadosAws.insertAlertas("Crítico", finalIdComputador * 4 - 2, finalIdComputador);
                             } else if(memoriaRamEmUso >= (looca.getMemoria().getTotal().doubleValue() / conversorGb) * (metrica.get(0).getMedioRam() / 100)){
-                                bancoDeDadosAws.insertAlertas("Médio", 2, finalIdComputador);
+                                bancoDeDadosAws.insertAlertas("Médio", finalIdComputador * 4 - 2, finalIdComputador);
                             }
                         }
                         case 3 -> {
-                            bancoDeDados.insertRegistro(discoDisponivel, "Uso", 3);
-                            bancoDeDados.insertRegistro(swapDisponivel, "SwapDisponivel", 3);
-
-                            bancoDeDadosAws.insertRegistro(discoDisponivel, "Uso", 3);
-                            bancoDeDadosAws.insertRegistro(swapDisponivel, "SwapDisponivel", 3);
+                            bancoDeDadosAws.insertRegistro(discoDisponivel, "Uso", finalIdComputador * 4 - 1);
+                            bancoDeDadosAws.insertRegistro(swapDisponivel, "SwapDisponivel", finalIdComputador * 4 - 1);
 
                             Double tamanhoDiscoGb = looca.getGrupoDeDiscos().getVolumes().get(0).getTotal().doubleValue() / conversorGb;
                             Double porcentagemMedio = metrica.get(0).getMedioDisco() / 100;
@@ -216,10 +205,34 @@ public class TesteProjeto {
 
 
                             if(discoDisponivel < (tamanhoDiscoGb - (tamanhoDiscoGb * porcentagemGrave))){
-                                bancoDeDadosAws.insertAlertas("Crítico", 3, finalIdComputador);
+                                bancoDeDadosAws.insertAlertas("Crítico", finalIdComputador * 4 - 1, finalIdComputador);
                             } else if(discoDisponivel < (tamanhoDiscoGb - (tamanhoDiscoGb * porcentagemMedio))){
-                                bancoDeDadosAws.insertAlertas("Médio", 3, finalIdComputador);
+                                bancoDeDadosAws.insertAlertas("Médio", finalIdComputador * 4 - 1, finalIdComputador);
                             }
+                        }
+                    }
+                }
+
+                for(int i = 0; i < bancoDeDados.selectComponente().size() - 1; i++){
+
+                    Integer idComponenteLocal = bancoDeDados.selectComponente().get(i).getIdComponente();
+
+                    switch (idComponenteLocal) {
+                        case  1-> {
+                            bancoDeDados.insertRegistro(processadorEmUso, "UsoCpu", finalIdComputador * 4 - 3);
+                            bancoDeDados.insertRegistro(Double.valueOf(dias), "Dias", finalIdComputador * 4 - 3);
+                            bancoDeDados.insertRegistro(Double.valueOf(horas), "Horas", finalIdComputador * 4 - 3);
+                            bancoDeDados.insertRegistro(Double.valueOf(minutos), "Minutos", finalIdComputador * 4 - 3);
+                            bancoDeDados.insertRegistro(Double.valueOf(segundos), "Segundos", finalIdComputador * 4 - 3);
+                            bancoDeDados.insertRegistro(numeroProcessos, "QuantidadeProcessos", finalIdComputador * 4 - 3);
+                            bancoDeDados.insertRegistro(numeroThreads, "QuantidadeThreads", finalIdComputador * 4 - 3);
+                        }
+                        case 2 -> {
+                            bancoDeDados.insertRegistro(memoriaRamEmUso, "Uso", finalIdComputador * 4 - 2);
+                        }
+                        case 3 -> {
+                            bancoDeDados.insertRegistro(discoDisponivel, "Uso", finalIdComputador * 4 - 1);
+                            bancoDeDados.insertRegistro(swapDisponivel, "SwapDisponivel", finalIdComputador * 4 - 1);
                         }
                     }
                 }
