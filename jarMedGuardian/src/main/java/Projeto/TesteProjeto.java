@@ -19,6 +19,7 @@ public class TesteProjeto {
         Integer conversorGb = 1000000000;
         Boolean logado = false;
         Integer idComputador = null;
+        Integer idComputadorLocal = null;
         Integer idFuncionario = null;
         Integer fkEmpresa = null;
         String sistemaOperacional = null;
@@ -51,8 +52,6 @@ public class TesteProjeto {
 
                 if(bancoDeDadosAws.verificarComputadorCadastrado(nomeComputador)){
                     bancoDeDadosAws.insertComputador(nomeComputador, fkEmpresa, sistemaOperacional);
-                    idComputador = bancoDeDadosAws.selectIdComputador(nomeComputador);
-
                     bancoDeDadosAws.insertComponente(PROCESSADOR.getNomeComponente());
                     bancoDeDadosAws.insertComponente(RAM.getNomeComponente());
 
@@ -81,9 +80,9 @@ public class TesteProjeto {
                             }
                         }
                     }
-                } else {
-                    idComputador = bancoDeDadosAws.selectIdComputador(nomeComputador);
                 }
+
+                idComputador = bancoDeDadosAws.selectIdComputador(nomeComputador);
 
                 if(bancoDeDadosAws.getFkEmpresaPorIdFuncionario(idFuncionario) != bancoDeDadosAws.getFkEmpresaDaMaquinaPeloNome(nomeComputador)){
                     logado = false;
@@ -103,8 +102,6 @@ public class TesteProjeto {
 
         if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
             bancoDeDados.insertComputador(nomeComputador, sistemaOperacional);
-            idComputador = bancoDeDados.selectIdComputador(nomeComputador);
-
             bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
             bancoDeDados.insertComponente(RAM.getNomeComponente());
 
@@ -133,18 +130,18 @@ public class TesteProjeto {
                     }
                 }
             }
-        } else {
-            idComputador = bancoDeDados.selectIdComputador(nomeComputador);
         }
+
+        idComputadorLocal = bancoDeDados.selectIdComputador(nomeComputador);
 
         Timer timer = new Timer();
         int delay = 0; // Tempo de espera antes da primeira execução (0 significa que será executado imediatamente)
         int interval = 5000; // Intervalo entre as execuções em milissegundos (5 segundos)
 
         Integer finalIdComputador = idComputador;
-        Integer finalIdFuncionario = idFuncionario;
+        Integer finalIdComputadorLocal = idComputadorLocal;
         Integer finalFkEmpresa = fkEmpresa;
-        Integer finalIdComputador1 = idComputador;
+
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 System.out.println("DADOS SENDO MONITORADOS...");
@@ -219,20 +216,20 @@ public class TesteProjeto {
 
                     switch (idComponenteLocal) {
                         case  1-> {
-                            bancoDeDados.insertRegistro(processadorEmUso, "UsoCpu", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(dias), "Dias", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(horas), "Horas", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(minutos), "Minutos", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(segundos), "Segundos", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(numeroProcessos, "QuantidadeProcessos", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(numeroThreads, "QuantidadeThreads", finalIdComputador * 4 - 3);
+                            bancoDeDados.insertRegistro(processadorEmUso, "UsoCpu", finalIdComputadorLocal * 4 - 3);
+                            bancoDeDados.insertRegistro(Double.valueOf(dias), "Dias", finalIdComputadorLocal * 4 - 3);
+                            bancoDeDados.insertRegistro(Double.valueOf(horas), "Horas", finalIdComputadorLocal * 4 - 3);
+                            bancoDeDados.insertRegistro(Double.valueOf(minutos), "Minutos", finalIdComputadorLocal * 4 - 3);
+                            bancoDeDados.insertRegistro(Double.valueOf(segundos), "Segundos", finalIdComputadorLocal * 4 - 3);
+                            bancoDeDados.insertRegistro(numeroProcessos, "QuantidadeProcessos", finalIdComputadorLocal * 4 - 3);
+                            bancoDeDados.insertRegistro(numeroThreads, "QuantidadeThreads", finalIdComputadorLocal * 4 - 3);
                         }
                         case 2 -> {
-                            bancoDeDados.insertRegistro(memoriaRamEmUso, "Uso", finalIdComputador * 4 - 2);
+                            bancoDeDados.insertRegistro(memoriaRamEmUso, "Uso", finalIdComputadorLocal * 4 - 2);
                         }
                         case 3 -> {
-                            bancoDeDados.insertRegistro(discoDisponivel, "Uso", finalIdComputador * 4 - 1);
-                            bancoDeDados.insertRegistro(swapDisponivel, "SwapDisponivel", finalIdComputador * 4 - 1);
+                            bancoDeDados.insertRegistro(discoDisponivel, "Uso", finalIdComputadorLocal * 4 - 1);
+                            bancoDeDados.insertRegistro(swapDisponivel, "SwapDisponivel", finalIdComputadorLocal * 4 - 1);
                         }
                     }
                 }
