@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS endereco (
   PRIMARY KEY (idEndereco),
   CONSTRAINT fk_Endereco_Empresa
     FOREIGN KEY (fkEmpresa)
-    REFERENCES Empresa (idEmpresa));
+    REFERENCES empresa (idEmpresa));
 
 CREATE TABLE IF NOT EXISTS funcionario (
   idFuncionario INT AUTO_INCREMENT NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS funcionario (
   PRIMARY KEY (idFuncionario),
   CONSTRAINT fk_Funcionario_Empresa1
     FOREIGN KEY (fkEmpresa)
-    REFERENCES Empresa (idEmpresa));
+    REFERENCES empresa (idEmpresa));
 
 CREATE TABLE IF NOT EXISTS computador (
   idComputador INT AUTO_INCREMENT NOT NULL,
@@ -131,6 +131,9 @@ insert into computador (nomeComputador, sistemaOperacional, fkEmpresa) values
 ('notebook-victor', 'linux', 2);
 
 select * from registro join especificacao on idEspecificacao = fkEspecificacao 
-join computador on idComputador = fkComputador join empresa on fkEmpresa = idEmpresa;
+join computador on idComputador = fkComputador join empresa on fkEmpresa = idEmpresa where fkEmpresa = 2 and fkEspecificacao = 3 and tipoCaptura = 'Uso'
+order by idRegistro desc limit 6;
+use medguardian;
+select * from registro;
 
 
