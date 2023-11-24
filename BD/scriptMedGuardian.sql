@@ -84,7 +84,13 @@ fkComputador INT NULL
 CREATE TABLE IF NOT EXISTS alertas(
 idAlerta INT PRIMARY KEY NOT NULL,
 tipoAlerta VARCHAR(255) NOT NULL,
-fkComputador INT NOT NULL);
+fkEspecificacao INT NOT NULL,
+CONSTRAINT fkEspecificacao_alertas FOREIGN KEY (fkEspecificacao)
+	REFERENCES especificacao(idEspecificacao),
+fkComputador INT NOT NULL,
+CONSTRAINT fkComputador_alertas FOREIGN KEY (fkComputador)
+	REFERENCES computador(idComputador),
+    dataHoraAlerta DATETIME NOT NULL);
     
 INSERT INTO empresa (razaoSocial, cnpjEmpresa, emailEmpresa, contatoEmpresa, senhaEmpresa) VALUES ('a', 1, 'lucasa@gmail.com', '21102002', '1');
 INSERT INTO funcionario (nomeFuncionario, fkEmpresa, emailFuncionario, senhaFuncionario, tipoAcesso) VALUES ('lucas', 1, 'lucas@gmail.com', '21102002', "Estagiário");
@@ -95,6 +101,8 @@ SELECT * FROM funcionario;
 SELECT * FROM computador;
 SELECT * FROM componente;
 SELECT * FROM especificacao;
+select * from metrica;
+select * from alertas;
 SELECT * FROM registro JOIN especificacao ON fkEspecificacao = idEspecificacao JOIN componente ON fkComponente = idComponente;
 
 delete from especificacao where fkComputador = 1;

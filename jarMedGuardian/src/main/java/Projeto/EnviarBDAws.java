@@ -13,7 +13,6 @@ public class EnviarBDAws {
     ConexaoAws conexao = new ConexaoAws();
     JdbcTemplate con = conexao.getConexaoDoBanco();
 
-    int i = 0;
     public List<Funcionario> autenticarUsuario(String email, String senha){
         List<Funcionario> usuario = con.query("SELECT * FROM funcionario WHERE emailFuncionario = ? AND senhaFuncionario = ?", new BeanPropertyRowMapper<>(Funcionario.class), email, senha);
         mostrarMensagem(usuario);
@@ -82,5 +81,16 @@ public class EnviarBDAws {
         return funcionario.get(0).getFkEmpresa();
     }
 
+    public List<Metrica> getMetricasPorFkEmpresa(Integer fkEmpresa, Integer fkComputador){
+        List<Metrica> metricas =  con.query("SELECT * FROM metrica WHERE fkEmpresa = ?", new BeanPropertyRowMapper<>(Metrica.class), fkEmpresa);
+        if(metricas.size() > 1){
+            metricas = con.query("SELECT * FROM metrica WHERE fkEmpresa = ? AND fkComputador = ?", new BeanPropertyRowMapper<>(Metrica.class), fkEmpresa, fkComputador);
+        }
+        return metricas;
+    }
+
+    public void insertAlertas(String tipoAlerta, Integer fkEspecificacao, Integer fkComputador){
+        con.update("INSERT INTO alertas (tipoAlerta, fkEspecificacao, fkComputador, dataHoraAlerta) VALUES (?, ?, ?, ?)", tipoAlerta, fkEspecificacao, fkComputador, dataHoraAtual());
+    }
 
 }
