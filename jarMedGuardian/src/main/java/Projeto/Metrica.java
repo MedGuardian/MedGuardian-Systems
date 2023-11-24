@@ -23,6 +23,8 @@ public class Metrica {
         this.fkComputador = fkComputador;
     }
 
+    public Metrica(){};
+
     public Integer getIdMetrica() {
         return idMetrica;
     }

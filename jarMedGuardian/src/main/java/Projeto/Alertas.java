@@ -11,6 +11,8 @@ public class Alertas {
         this.fkComputador = fkComputador;
     }
 
+    public Alertas(){};
+
     public Integer getIdAlerta() {
         return idAlerta;
     }

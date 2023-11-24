@@ -54,7 +54,7 @@ public class EnviarBDLocal {
     }
 
     public void insertComputador(String nomeComputador, String sistemaOperacional){
-        con.update("INSERT INTO computador (nomeComputador, sistemaOperacional) VALUES (?, ?, ?)",nomeComputador, sistemaOperacional);
+        con.update("INSERT INTO computador (nomeComputador, sistemaOperacional) VALUES (?, ?)",nomeComputador, sistemaOperacional);
     }
     public String dataHoraAtual(){
         LocalDateTime dataHoraAtual = LocalDateTime.now();

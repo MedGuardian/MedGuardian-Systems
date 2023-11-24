@@ -54,6 +54,7 @@ public class EnviarBDAws {
 
     public void insertComputador(String nomeComputador, Integer fkEmpresa, String sistemaOperacional){
         con.update("INSERT INTO computador (nomeComputador, fkEmpresa, sistemaOperacional) VALUES (?, ?, ?)",nomeComputador, fkEmpresa, sistemaOperacional);
+        System.out.println("Computador: " + nomeComputador + " cadastrado!");
     }
     public String dataHoraAtual(){
         LocalDateTime dataHoraAtual = LocalDateTime.now();
@@ -91,6 +92,16 @@ public class EnviarBDAws {
 
     public void insertAlertas(String tipoAlerta, Integer fkEspecificacao, Integer fkComputador){
         con.update("INSERT INTO alertas (tipoAlerta, fkEspecificacao, fkComputador, dataHoraAlerta) VALUES (?, ?, ?, ?)", tipoAlerta, fkEspecificacao, fkComputador, dataHoraAtual());
+        String componente;
+
+        if(fkEspecificacao == 1){
+            componente = "CPU";
+        } else if (fkEspecificacao == 3){
+            componente = "RAM";
+        } else {
+            componente = "Disco";
+        }
+        System.out.println("Inserindo alerta do tipo: " + tipoAlerta + " no computador de Id: " + fkComputador + " e se trata do componente " + componente);
     }
 
 }
