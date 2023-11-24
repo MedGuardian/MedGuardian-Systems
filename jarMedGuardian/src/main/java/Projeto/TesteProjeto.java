@@ -52,8 +52,11 @@ public class TesteProjeto {
 
                 if(bancoDeDadosAws.verificarComputadorCadastrado(nomeComputador)){
                     bancoDeDadosAws.insertComputador(nomeComputador, fkEmpresa, sistemaOperacional);
+                    idComputador = bancoDeDadosAws.selectIdComputador(nomeComputador);
+
                     bancoDeDadosAws.insertComponente(PROCESSADOR.getNomeComponente());
                     bancoDeDadosAws.insertComponente(RAM.getNomeComponente());
+
 
                     if(!looca.getGrupoDeDiscos().getVolumes().isEmpty()){
                         for(int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
@@ -80,9 +83,10 @@ public class TesteProjeto {
                             }
                         }
                     }
+                } else {
+                    idComputador = bancoDeDadosAws.selectIdComputador(nomeComputador);
                 }
 
-                idComputador = bancoDeDadosAws.selectIdComputador(nomeComputador);
 
                 if(bancoDeDadosAws.getFkEmpresaPorIdFuncionario(idFuncionario) != bancoDeDadosAws.getFkEmpresaDaMaquinaPeloNome(nomeComputador)){
                     logado = false;
@@ -102,6 +106,8 @@ public class TesteProjeto {
 
         if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
             bancoDeDados.insertComputador(nomeComputador, sistemaOperacional);
+            idComputadorLocal = bancoDeDados.selectIdComputador(nomeComputador);
+
             bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
             bancoDeDados.insertComponente(RAM.getNomeComponente());
 
@@ -117,22 +123,23 @@ public class TesteProjeto {
 
                 switch (idComponente) {
                     case 1 -> {
-                        bancoDeDados.insertEspecificacao(idComputador, idComponente, 100.);
+                        bancoDeDados.insertEspecificacao(idComputadorLocal, idComponente, 100.);
                     }
                     case 2 -> {
-                        bancoDeDados.insertEspecificacao(idComputador, idComponente, looca.getMemoria().getTotal().doubleValue() / conversorGb);
+                        bancoDeDados.insertEspecificacao(idComputadorLocal, idComponente, looca.getMemoria().getTotal().doubleValue() / conversorGb);
                     }
                     case 3 -> {
-                        bancoDeDados.insertEspecificacao(idComputador, idComponente, ((looca.getGrupoDeDiscos().getVolumes().get(0).getTotal().doubleValue() / conversorGb)) - 30);
+                        bancoDeDados.insertEspecificacao(idComputadorLocal, idComponente, ((looca.getGrupoDeDiscos().getVolumes().get(0).getTotal().doubleValue() / conversorGb)));
                     }
                     case 4 -> {
-                        bancoDeDados.insertEspecificacao(idComputador, idComponente, null);
+                        bancoDeDados.insertEspecificacao(idComputadorLocal, idComponente, null);
                     }
                 }
             }
+        } else {
+            idComputadorLocal = bancoDeDados.selectIdComputador(nomeComputador);
         }
 
-        idComputadorLocal = bancoDeDados.selectIdComputador(nomeComputador);
 
         Timer timer = new Timer();
         int delay = 0; // Tempo de espera antes da primeira execução (0 significa que será executado imediatamente)
