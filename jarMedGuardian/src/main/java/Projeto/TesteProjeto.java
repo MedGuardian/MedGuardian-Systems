@@ -98,7 +98,7 @@ public class TesteProjeto {
             }
         } while (!logado);
 
-
+        System.out.println("Id: " + idComputador + "Nome da máquina: " + nomeComputador);
         EnviarBDLocal bancoDeDados = new EnviarBDLocal();
 
         if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
