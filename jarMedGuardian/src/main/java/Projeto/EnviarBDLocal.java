@@ -1,5 +1,6 @@
 package Projeto;
 
+import com.github.britooo.looca.api.group.janelas.Janela;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -53,8 +54,8 @@ public class EnviarBDLocal {
         con.update("INSERT INTO registro (dataHoraRegistro, registro, tipoCaptura, fkEspecificacao) VALUES (?,?,?,?)", dataHoraAtual(), registro, tipoCaptura, fkEspecificacao);
     }
 
-    public void insertComputador(String nomeComputador, String sistemaOperacional){
-        con.update("INSERT INTO computador (nomeComputador, sistemaOperacional) VALUES (?, ?)",nomeComputador, sistemaOperacional);
+    public void insertComputador(String nomeComputador, Integer fkEmpresa, String sistemaOperacional){
+        con.update("INSERT INTO computador (nomeComputador, fkEmpresa, sistemaOperacional) VALUES (?,?, ?)",nomeComputador, fkEmpresa, sistemaOperacional);
     }
     public String dataHoraAtual(){
         LocalDateTime dataHoraAtual = LocalDateTime.now();
@@ -82,5 +83,32 @@ public class EnviarBDLocal {
         return funcionario.get(0).getFkEmpresa();
     }
 
+    public void insertAlertas(String tipoAlerta, Integer fkEspecificacao, Integer fkComputador){
+        con.update("INSERT INTO alertas (tipoAlerta, fkEspecificacao, fkComputador, dataHoraAlerta) VALUES (?, ?, ?, ?)", tipoAlerta, fkEspecificacao, fkComputador, dataHoraAtual());
+        String componente;
+
+        if(fkEspecificacao == 1){
+            componente = "CPU";
+        } else if (fkEspecificacao == 3){
+            componente = "RAM";
+        } else {
+            componente = "Disco";
+        }
+        System.out.println("Inserindo alerta do tipo: " + tipoAlerta + " no computador de Id: " + fkComputador + " e se trata do componente " + componente);
+    }
+
+    public void insertJanelas(String titulo, String comando, Integer fkComputador, Boolean matar){
+        con.update("INSERT INTO janelas (titulo, comando, fkComputador, matar) VALUES (?,?,?,?)", titulo, comando, fkComputador, matar);
+        System.out.println("Inseri a janela de comando: " + comando);
+    }
+
+    public List<Janelas> selectJanelas(Integer fkComputador){
+        return con.query("SELECT * FROM janelas WHERE fkComputador = ?", new BeanPropertyRowMapper<>(Janelas.class), fkComputador);
+    }
+
+    public void excluirJanela(String comando, Integer fkComputador){
+        con.update("DELETE FROM janelas WHERE comando = ? AND fkComputador = ?", comando, fkComputador);
+        System.out.println("Exclui a janela de comando: " + comando);
+    }
 
 }
