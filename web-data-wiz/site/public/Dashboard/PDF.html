@@ -19,6 +19,9 @@
 <body>
 
   <style>
+    *{
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
     body {
       margin: 0;
       padding: 0;
@@ -306,7 +309,7 @@
                     uso_cpu.push(registro);
                   }
                   else if (tipoCaptura == "Uso da RAM") {
-                    if (uso_ram.length >= 6) {
+                    if (uso_cpu.length >= 6) {
                       uso_ram.shift();
                     }
                     uso_ram.push(registro);
@@ -344,7 +347,6 @@
     return false;
   }
   
-
   setInterval(atualizarGrafico, 5000)
 
 
@@ -410,19 +412,16 @@
     }
   });
 
-  var yValues3 = [55, 49, 44, 24, 15];
+  var yValues3 = [51, 49];
   var barColors = [
     "#b91d47",
     "#00aba9",
-    "#2b5797",
-    "#e8c3b9",
-    "#1e7145"
   ];
 
   new Chart("myChart3", {
     type: "pie",
     data: {
-      labels: [50, 60, 70, 80, 90],
+      labels: ["Usado RAM", "Total RAM"],
       datasets: [{
         backgroundColor: barColors,
         data: yValues3
@@ -436,19 +435,16 @@
     }
   });
 
-  var yValues4 = [55, 49, 44, 24, 15];
+  var yValues4 = [60, 40];
   var barColors = [
     "#b91d47",
     "#00aba9",
-    "#2b5797",
-    "#e8c3b9",
-    "#1e7145"
   ];
 
   new Chart("myChart4", {
     type: "doughnut",
     data: {
-      labels: [50, 60, 70, 80, 90],
+      labels: ["Usado HD", "Total HD"],
       datasets: [{
         backgroundColor: barColors,
         data: yValues4
@@ -495,10 +491,10 @@
     }
   });
 
-  /*window.onload = function () {
+  window.onload = function () {
     showDownloadingMessage();
     gerarRelatorio();
-  };*/
+  };
 
   function showDownloadingMessage() {
     return new Promise(resolve => {
