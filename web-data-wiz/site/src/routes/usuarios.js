@@ -8,6 +8,10 @@ router.post("/cadastrar", function (req, res) {
     usuarioController.cadastrar(req, res);
 })
 
+router.post("/cadastrarMetrica", function (req, res) {
+    usuarioController.cadastrarMetrica(req, res);
+})
+
 router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });
@@ -54,5 +58,26 @@ router.get("/atualizarIndicadores", function (req, res) {
 router.post("/selectFuncionarios", function (req, res) {
     usuarioController.selectFuncionarios(req, res);
 });
+
+router.post("/selectComputadores", function (req, res) {
+    usuarioController.selectComputadores(req, res);
+});
+
+router.post("/selectLocalComputador", function (req, res) {
+    usuarioController.selectLocalComputador(req, res);
+});
+
+router.post("/atualizarDashboardGeral", function (req, res) {
+    usuarioController.atualizarDashboardGeral(req, res);
+});
+
+router.post("/excluirFuncionario", function (req, res) {
+    usuarioController.excluirFuncionario(req, res);
+});
+
+router.post("/selectAlertas", function (req, res) {
+    usuarioController.selectAlertas(req, res);
+});
+
 
 module.exports = router;

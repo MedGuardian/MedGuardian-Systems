@@ -1,6 +1,8 @@
 package Projeto;
 
 import com.github.britooo.looca.api.core.Looca;
+import com.github.britooo.looca.api.group.janelas.Janela;
+
 import java.io.IOException;
 
 import java.util.*;
@@ -24,13 +26,31 @@ public class TesteProjetoLucas {
         Boolean logado = false;
         Integer idComputador;
         Integer idFuncionario = null;
-        Integer hd = 0;
         List<Integer> listaPIDNaoMatar = new ArrayList<>();
         int pid;
+        String sistemaOperacional;
 
 
 
         do {
+
+            List<Janela> listaJanelas = new ArrayList<>();
+
+            for(int i = 0; i< looca.getGrupoDeJanelas().getJanelasVisiveis().size(); i++){
+                if(!looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().isEmpty()){
+                    listaJanelas.add(looca.getGrupoDeJanelas().getJanelasVisiveis().get(i));
+                }
+            }
+
+            for(int i = 0; i < listaJanelas.size(); i++){
+                for(int j = 0; j < looca.getGrupoDeJanelas().getJanelasVisiveis().size(); j++){
+                    if(listaJanelas.get(i).getComando() != looca.getGrupoDeJanelas().getJanelasVisiveis().get(j).getComando()){
+                        System.out.println("Não tem na lista");
+                    } else {
+                        System.out.println("Tem na lista");
+                    }
+                }
+            }
 
             for(int i = 0; i < looca.getGrupoDeJanelas().getJanelasVisiveis().size(); i++){
                 System.out.println(looca.getGrupoDeJanelas().getJanelasVisiveis());
@@ -81,12 +101,16 @@ public class TesteProjetoLucas {
         } while (!logado);
 
         if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
-            bancoDeDados.insertComputador(nomeComputador, bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario));
+            if(System.getProperty("os.name").toLowerCase().contains("win")){
+                sistemaOperacional = "Windows";
+            } else {
+                sistemaOperacional = "Linux";
+            }
+            bancoDeDados.insertComputador(nomeComputador, bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario), sistemaOperacional);
             idComputador = bancoDeDados.selectIdComputador(nomeComputador);
             if(!looca.getGrupoDeDiscos().getVolumes().isEmpty()){
                 for(int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
                     bancoDeDados.insertComponente(HD.getNomeComponente() + (i + 1));
-                    hd++;
                 }
             }
             bancoDeDados.insertComponente(RAM.getNomeComponente());

@@ -33,6 +33,7 @@ public class KatherinneTimer {
         Integer idFuncionario = null;
         Integer hd = 0;
         int pid;
+        String sistemaOperacional;
 
         do {
             System.out.println("Digite o email: ");
@@ -49,7 +50,12 @@ public class KatherinneTimer {
         } while (!logado);
 
         if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
-            bancoDeDados.insertComputador(nomeComputador, bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario));
+            if(System.getProperty("os.name").toLowerCase().contains("win")){
+                sistemaOperacional = "Windows";
+            } else {
+                sistemaOperacional = "Linux";
+            }
+            bancoDeDados.insertComputador(nomeComputador, bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario), sistemaOperacional);
             idComputador = bancoDeDados.selectIdComputador(nomeComputador);
             if(!looca.getGrupoDeDiscos().getVolumes().isEmpty()){
                 for(int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
