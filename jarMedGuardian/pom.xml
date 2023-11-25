@@ -51,8 +51,27 @@
         <artifactId>mysql-connector-j</artifactId>
         <version>8.1.0</version>
     </dependency>
+        <dependency>
+            <groupId>com.github.jalasoft</groupId>
+            <artifactId>HttpClient</artifactId>
+            <version>1.0.5</version>
+        </dependency>
 
-
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>5.0.0-alpha.11</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jalasoft</groupId>
+            <artifactId>HttpClient</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.noobdogcloud</groupId>
+            <artifactId>HttpClient</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>

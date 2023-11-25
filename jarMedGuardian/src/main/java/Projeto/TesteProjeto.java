@@ -9,6 +9,8 @@ public class TesteProjeto {
 
         Looca looca = new Looca();
         EnviarBD bancoDeDados = new EnviarBD();
+        Log log = new Log();
+
 
         Componente HD = new Componente(looca.getGrupoDeDiscos().getDiscos().get(0).getModelo());
         Componente RAM = new Componente("RAM");
@@ -120,7 +122,7 @@ public class TesteProjeto {
 
                     switch (idComponente) {
                         case  1-> {
-                            bancoDeDados.insertRegistro(processadorEmUso, "UsoCpu", 1);
+                            bancoDeDados.insertRegistro(processadorEmUso, "UsoProcessador", 1);
                             bancoDeDados.insertRegistro(Double.valueOf(dias), "Dias", 1);
                             bancoDeDados.insertRegistro(Double.valueOf(horas), "Horas", 1);
                             bancoDeDados.insertRegistro(Double.valueOf(minutos), "Minutos", 1);
@@ -129,10 +131,10 @@ public class TesteProjeto {
                             bancoDeDados.insertRegistro(numeroThreads, "QuantidadeThreads", 1);
                         }
                         case 2 -> {
-                            bancoDeDados.insertRegistro(memoriaRamEmUso, "Uso", 2);
+                            bancoDeDados.insertRegistro(memoriaRamEmUso, "UsoMemoria", 2);
                         }
                         case 3 -> {
-                            bancoDeDados.insertRegistro(discoDisponivel, "Uso", 3);
+                            bancoDeDados.insertRegistro(discoDisponivel, "UsoDisco", 3);
                             bancoDeDados.insertRegistro(swapDisponivel, "SwapDisponivel", 3);
                         }
                     }
