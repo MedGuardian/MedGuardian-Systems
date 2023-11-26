@@ -184,7 +184,7 @@ const config_graficoDesempenho = {
                     color: '#2E2109;',
                     font: {
                         size: 20,
-                        family: 'LeagueSpartan',
+                        family: 'Poppins',
                         weight: 400
                     }
                 },
@@ -198,7 +198,7 @@ const config_graficoDesempenho = {
                     color: '#2E2109;',
                     font: {
                         size: 12,
-                        family: 'LeagueSpartan',
+                        family: 'Poppins',
                         weight: 600
                     }
                 }
@@ -210,10 +210,10 @@ const config_graficoDesempenho = {
                 text: 'Desempenho da CPU',
                 color: 'black',
                 font: {
-                    size: 25,
+                    size: 20,
                     color: 'black',
-                    family: 'LeagueSpartan',
-                    weight: 600
+                    family: 'Poppins',
+                    weight: 500
                 }
 
             },
@@ -221,11 +221,11 @@ const config_graficoDesempenho = {
                 display: false,
                 labels: {
                     font: {
-                        size: 20,
+                        size: 10,
                         color: 'white',
-                        family: 'LeagueSpartan',
+                        family: 'Poppins',
                         weight: 600,
-                        padding: 20
+                        padding: 15
                     }
                 }
             }

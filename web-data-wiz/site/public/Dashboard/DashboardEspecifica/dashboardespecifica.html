@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="dashboardespecifica.css">
+    <link rel="shortcut icon" href="../../assets/images/LOGO.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-    <title>MedGuardian|Especifica</title>
+    <title>MedGuardian | Especifica</title>
 </head>
 
 <body>
@@ -16,22 +17,23 @@
             <div class="spansHeader">
                 <div class="saudacaoVoltar">
                     <div class="botaoVoltar" onclick="voltarDashboardGeral()">
-                        <img src="../../assets/images/voltar.png" alt="Voltar">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M8 7v4L2 6l6-5v4h5a8 8 0 1 1 0 16H4v-2h9a6 6 0 0 0 0-12z" />
+                        </svg>
                     </div>
-                    <svg width="31" height="35" viewBox="0 0 51 55" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M15.9375 14.896C15.9375 20.5816 20.2279 25.2085 25.5 25.2085C30.7721 25.2085 35.0625 20.5816 35.0625 14.896C35.0625 9.21037 30.7721 4.5835 25.5 4.5835C20.2279 4.5835 15.9375 9.21037 15.9375 14.896ZM42.5 48.1252H44.625V45.8335C44.625 36.99 37.9504 29.7918 29.75 29.7918H21.25C13.0475 29.7918 6.375 36.99 6.375 45.8335V48.1252H42.5Z"
-                            fill="white" />
-                    </svg>
-                    <span id="saudacaoDashboard">Bem vindo, <span class="usuario">MedGuardian</span> | Verifique aqui ás
+                    <span id="saudacaoDashboard"><svg width="31" height="35" viewBox="0 0 51 55" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M15.9375 14.896C15.9375 20.5816 20.2279 25.2085 25.5 25.2085C30.7721 25.2085 35.0625 20.5816 35.0625 14.896C35.0625 9.21037 30.7721 4.5835 25.5 4.5835C20.2279 4.5835 15.9375 9.21037 15.9375 14.896ZM42.5 48.1252H44.625V45.8335C44.625 36.99 37.9504 29.7918 29.75 29.7918H21.25C13.0475 29.7918 6.375 36.99 6.375 45.8335V48.1252H42.5Z"
+                                fill="currentColor" />
+                        </svg>
+                        Bem vindo, <span class="usuario"> MedGuardian |</span> Verifique aqui ás
                         métricas de sua
                         máquina:</span>
                 </div>
-
                 <div class="tituloDashboardMaquina">
                     <span>Você selecionou a</span> <span id="maquinaSelecionada">Máquina 27</span>
                 </div>
-
             </div>
         </div>
 
@@ -125,7 +127,13 @@
 
                                 <div class="informacoesMaquinaGrafico">
                                     <div class="opcaoSelecionadaGraficoLegenda">
-                                        <span id="componenteSelecionado">CPU</span>
+
+                                        <span id="componenteSelecionado">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                width="24" height="24" viewBox="0 0 24 24">
+                                                <path fill="currentColor"
+                                                    d="M1 3h22v15H13v2h4v2H7v-2h4v-2H1zm2 2v11h18V5z" />
+                                            </svg>CPU</span>
                                         <span id="tipoValorComponenteSelecionado">% Utilização</span>
                                     </div>
 
@@ -139,6 +147,7 @@
                                         <canvas id="graficoDesempenho"></canvas>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
 
@@ -194,5 +203,6 @@
         </div>
     </div>
 </body>
+
 </html>
 <script src="dashboardespecifica.js"></script>

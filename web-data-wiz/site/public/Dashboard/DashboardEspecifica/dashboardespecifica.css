@@ -11,22 +11,19 @@
 body {
     font-family: LeagueSpartan;
     margin: 0;
+    padding: 1% 0 0 0;
     width: 100%;
     height: 100%;
     display: flex;
-    padding: 1% 0 0 0;
+    overflow: hidden;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: rgb(59, 102, 59);
+    background-color: rgb(63, 88, 63);
 }
 
 .divGeral {
     width: 90%;
-    margin-bottom: 1%;
-    padding: 2% 0;
+    padding: 1%;
     border-radius: 20px;
     background-color: rgba(34, 34, 34, 0.642);
 }
@@ -38,29 +35,38 @@ body {
 .headerDashboardEspecifica {
     display: flex;
     width: 100%;
+    padding: 1%;
     flex-direction: column;
 }
 
 .spansHeader {
     display: flex;
-    margin-left: 17%;
+    margin-left: 3%;
     font-weight: 400;
-    margin: 1% 0 1% 3%;
+    margin-top: 1%;
     flex-direction: column;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
 }
 
 .saudacaoVoltar {
     display: flex;
-    width: 50%;
+    width: 100%;
+    text-align: left;
     align-items: center;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 
 #saudacaoDashboard {
+    width: 90%;
+    display: flex;
+    align-items: center;
     font-size: 18px;
+}
+
+#saudacaoDashboard svg {
+    margin: 0 1% 0 0;
 }
 
 .botaoVoltar {
@@ -71,16 +77,8 @@ body {
     transition: 0.5s;
 }
 
-.botaoVoltar span {
-    font-size: 25px;
-}
-
-.botaoVoltar img {
-    width: 20px;
-    height: 20px;
-}
-
 .botaoVoltar:hover {
+    color: rgb(34, 255, 0);
     transition: 0.5s;
     transform: scale(1.3);
 }
@@ -105,15 +103,17 @@ body {
 }
 
 .usuario {
+    display: flex;
+    margin: 5px;
     font-weight: 800;
 }
 
 .tituloDashboardMaquina {
-    width: 100%;
-    margin-top: 1%;
+    width: 30%;
+    margin: 2% 0 0 0%;
     font-size: 18px;
     text-align: left;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
 }
 
 #maquinaSelecionada {
@@ -157,7 +157,7 @@ body {
 
 .tempoAtividadeMaquina {
     display: flex;
-    width: 30%;
+    width: 40%;
     padding: 10px;
     border-radius: 10px;
     flex-direction: column;
@@ -168,7 +168,7 @@ body {
 }
 
 .tituloTempoAtividade {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 400;
     margin-bottom: 3%;
     text-align: center;
@@ -194,14 +194,14 @@ body {
 }
 
 .valorCronometro {
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 300;
     color: rgb(0, 0, 0);
 }
 
 .medidaCronometro {
     font-weight: 400;
-    font-size: 18px;
+    font-size: 13px;
 }
 
 
@@ -237,22 +237,22 @@ body {
 
 .box div {
     display: flex;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 400;
     align-items: center;
     justify-content: center;
 }
 
 .valorBox span {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 400;
 }
 
 .graficoInferiorGeral {
     display: flex;
-    width: 98%;
+    width: 95%;
     padding: 2%;
-    margin: 3% 0;
+    margin: 3% 0 2% 0;
     border-radius: 15px;
     flex-direction: column;
     background-color: #c4d7bb;
@@ -280,13 +280,19 @@ body {
 }
 
 #componenteSelecionado {
-    font-size: 25px;
-    font-weight: 400;
+    display: flex;
+    font-size: 20px;
+    font-weight: 600;
+    align-items: center;
+}
+
+#componenteSelecionado svg {
+    margin: 0 15% 0 0;
 }
 
 #tipoValorComponenteSelecionado {
-    font-size: 15px;
-    font-weight: 200;
+    font-size: 17px;
+    font-weight: 600;
 }
 
 #nomeComponente {
@@ -296,10 +302,9 @@ body {
 
 .graficoInferior {
     width: 100%;
-    margin: auto;
-    height: 330px;
-    background-color: rgb(104, 171, 104);
+    height: 290px;
     border-radius: 15px;
+    background-color: green;
 }
 
 .conteudoCanvas {
@@ -308,20 +313,20 @@ body {
 }
 
 .graficoInferior canvas {
-    background-color: #3e3e3e;
-    border-radius: 15px;
+    background-color: rgb(129, 149, 129);
     padding-left: 2%;
+    border-radius: 15px;
 }
 
 .conteudoDireitaDashboardMaquina {
     display: flex;
-    flex-direction: column;
     height: 100%;
+    flex-direction: column;
 }
 
 .boxesLaterais {
-    width: 100%;
     display: flex;
+    width: 100%;
     height: 90%;
     margin: auto;
     flex-direction: column;
@@ -331,14 +336,14 @@ body {
 
 .boxLateral {
     width: 100%;
+    padding: 2%;
+    transition: 0.5s;
+    transition: 0.40s;
+    border-radius: 10px;
     display: flex;
     cursor: pointer;
     flex-direction: column;
-    border-radius: 10px;
-    padding: 2%;
-    transition: 0.40s;
     background-color: #909f89;
-    transition: 0.5s;
 
     -webkit-box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
     -moz-box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
@@ -352,10 +357,10 @@ body {
 
 .spanBoxLateral {
     width: 100%;
-    text-align: center;
     font-size: 18px;
-    color: rgb(255, 255, 255);
     font-weight: 400;
+    text-align: center;
+    color: rgb(255, 255, 255);
 }
 
 @keyframes animacaoBorda {
@@ -375,7 +380,7 @@ body {
 
 .animacaoBorda {
     animation-name: animacaoBorda;
-    animation-duration: 1s;
+    animation-duration: 2s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
 }
@@ -384,7 +389,7 @@ body {
     font-size: 20px;
     font-weight: 600;
     text-align: center;
-    margin: 5% 0;
+    margin: 3% 0;
 }
 
 .divValorBoxLateral {
