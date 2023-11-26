@@ -322,6 +322,18 @@ body {
     background-color: #C03221;
 }
 
+.corIdeal{
+    background-color: #47C133;
+}
+
+.corMedio{
+    background-color: #F16A1B;
+}
+
+.corAlerta{
+    background-color: #C03221;
+}
+
 .tituloDashboards {
     display: flex;
     width: 100%;
@@ -357,7 +369,6 @@ body {
 }
 
 .boxMaquinaCadastrada {
-    background-color: #FC8374;
     border-radius: 10px;
     display: flex;
     flex-direction: column;

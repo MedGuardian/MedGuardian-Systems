@@ -57,7 +57,7 @@ public class TesteProjetoLucas {
                 }
 
                 if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
-                    bancoDeDados.insertComputador(nomeComputador, fkEmpresa, sistemaOperacional);
+                    bancoDeDados.insertComputador(nomeComputador, sistemaOperacional);
                     idComputador = bancoDeDados.selectIdComputador(nomeComputador);
 
                     bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
@@ -109,7 +109,7 @@ public class TesteProjetoLucas {
         System.out.println("Id: " + idComputador + "Nome da máquina: " + nomeComputador);
 
         if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
-            bancoDeDados.insertComputador(nomeComputador, fkEmpresa, sistemaOperacional);
+            bancoDeDados.insertComputador(nomeComputador, sistemaOperacional);
             idComputadorLocal = bancoDeDados.selectIdComputador(nomeComputador);
 
             bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
@@ -222,6 +222,14 @@ public class TesteProjetoLucas {
 
                     List<Janelas> listaJanelasSelect = bancoDeDados.selectJanelas(finalIdComputador);
                     List<Janela> listaJanelasLooca = new ArrayList<>();
+                    MatarProcesso matarProcesso = new MatarProcesso();
+
+                    for(int k = 0; k < listaJanelasSelect.size(); k++){
+                        if(listaJanelasSelect.get(k).getMatar().equals(true)){
+                            String nomeProcesso = matarProcesso.pegarNomeProcessoPeloComando(listaJanelasSelect.get(k).getComando());
+                            matarProcesso.matarProcessoPorNome(nomeProcesso);
+                        }
+                    }
 
                     for (int j = 0; j < looca.getGrupoDeJanelas().getJanelasVisiveis().size(); j++) {
                         Janela janelaLooca = looca.getGrupoDeJanelas().getJanelasVisiveis().get(j);
@@ -261,8 +269,6 @@ public class TesteProjetoLucas {
                             bancoDeDados.insertJanelas(janelaLooca.getTitulo(), janelaLooca.getComando(), finalIdComputador, false);
                         }
                     }
-
-
                 }
 
                 for(int i = 0; i < bancoDeDados.selectComponente().size() - 1; i++){

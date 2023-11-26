@@ -28,32 +28,6 @@
 </head>
 
 <body onload="validarMetricas(), validarSessao(), alertaCores(), selectComputadores()">
-  <div class="menuFlutuante" id="menuFlutuante" style="display: none;">
-    <div class="conteudoMenuFlutuante">
-      <div class="headerMenuFlutuante">
-        <div class="esquerdaHeaderMenuFlutuante">
-          <div class="circuloMenuFlutuante"></div>
-        </div>
-        <div class="direitaHeaderMenuFlutuante">
-          <div class="nomeCargoRow">
-            <span id="nomeMenuFlutuante">Lucas</span>
-            <span id="cargoMenuFlutuante">(Admin)</span>
-          </div>
-          <div class="emailRow">
-            <span id="emailMenuFlutuante">lucas.flima@sptech.school</span>
-          </div>
-        </div>
-      </div>
-      <div class="opcoesMenuFlutuante">
-        <span onclick="abrirDashboardMenuFlutuante()">Dashboard</span>
-        <span onclick="abrirGerenciamentoMenuFlutuante()">Gerenciamento</span>
-        <span onclick="abrirCadastrarFuncionario()" id="spanCadastrarFuncionario">Cadastrar funcionário</span>
-        <span onclick="abrirAlterarFuncionario()"> Alterar Funcionários</span>
-        <div class="linhaMenuFlutuante"></div>
-        <span onclick="fazerLogout()">Fazer Logout</span>
-      </div>
-    </div>
-  </div>
   <div class="" id="pagina">
     <div class="AlterarMaquina" id="AlterarMaquina">
       <div class="container">
@@ -580,7 +554,7 @@
           </div>
 
           <div class="alertaMaquinaCadastrada">
-            <div class="spanAlerta">
+            <div id="componentesALerta" class="spanAlerta">
               <span>Em alerta:</span>
             </div>
 
@@ -656,4 +630,21 @@
     var modal = document.getElementById('data-input')
     modal.innerHTML = ' '
   }
+
+   /* Dados recebidos: [{"idAlerta":2898,
+   "tipoAlerta":"Crítico",
+   "fkEspecificacao":3,
+   "fkComputador":1,
+   "dataHoraAlerta":
+   "2023-11-24T19:14:40.000Z"},
+   {"idAlerta":2897,
+   "tipoAlerta":"Crítico",
+   "fkEspecificacao":2,
+   "fkComputador":1,
+   "dataHoraAlerta":"2023-11-24T19:14:39.000Z"},
+   {"idAlerta":2896,"tipoAlerta":"Crítico","fkEspecificacao":1,"fkComputador":1,"dataHoraAlerta"
+   :"2023-11-24T19:14:37.000Z"}] */
+
+
+  
 </script>

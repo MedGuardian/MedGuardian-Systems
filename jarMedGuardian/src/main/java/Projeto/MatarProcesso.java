@@ -2,7 +2,7 @@ package Projeto;
 
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.processos.Processo;
-
+import java.io.File;
 import java.io.IOException;
 
 public class MatarProcesso {
@@ -27,6 +27,28 @@ public class MatarProcesso {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    public String pegarNomeProcessoPeloComando(String comando){
+
+        // Criar um objeto File com o caminho
+        File caminho = new File(comando);
+
+        // Obter o nome do arquivo sem a extensão
+        System.out.println(caminhoSemExtensao(caminho));
+        return caminhoSemExtensao(caminho);
+    }
+
+    // Método para obter o nome do arquivo sem a extensão
+    private static String caminhoSemExtensao(File file) {
+        String nomeCaminho = file.getName();
+        int ultimoPontoIndex = nomeCaminho.lastIndexOf('.');
+
+        if (ultimoPontoIndex > 0) {
+            return nomeCaminho.substring(0, ultimoPontoIndex);
+        } else {
+            return nomeCaminho;
         }
     }
 }

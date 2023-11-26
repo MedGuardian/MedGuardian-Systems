@@ -47,7 +47,7 @@ public class TesteProjetoVictor {
 
                 if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
                     Integer fkEmpresaDoFuncionario = bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario);
-                    bancoDeDados.insertComputador(nomeComputador, fkEmpresaDoFuncionario,sistemaOperacional);
+                    bancoDeDados.insertComputador(nomeComputador, sistemaOperacional);
                     idComputador = bancoDeDados.selectIdComputador(nomeComputador);
 
                     bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
