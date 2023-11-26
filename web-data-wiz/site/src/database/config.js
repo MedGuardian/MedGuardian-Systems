@@ -13,8 +13,7 @@ var sqlServerConfig = {
         idleTimeoutMillis: 30000
     },
     options: {
-        encrypt: false, // for azure
-        TrustServerCertificate: true
+        encrypt: true, // for azure
     }
 }
 
