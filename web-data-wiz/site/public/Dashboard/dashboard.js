@@ -1,6 +1,6 @@
 selectComputadores();
 selectTotalComponentes();
-setInterval(atualizarDashboardGeral, 3000)
+setInterval(selectAlertas, 3000)
 
 var totalComponenteRam = 0;
 var totalComponenteCPU = 0;
@@ -132,18 +132,17 @@ iconeAlterarMaquina.addEventListener('click', (event) => {
   }
 });
 
-function excluirMaquina() {
-  var nomeMaquinaVar = "Notebook-Lucas";
+function excluirMaquina(idComputador) {
+
+  var idComputadorVar = idComputador;
 
   // Chama selectComputador e aguarda a resolução da Promessa
-  selectComputador().then(idComputadorVar => {
     fetch("/usuarios/excluirMaquina", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        nomeMaquinaServer: nomeMaquinaVar,
         idComputadorServer: idComputadorVar
       })
     }).then(function (resposta) {
@@ -157,7 +156,7 @@ function excluirMaquina() {
           fecharModal();
         });
       } else {
-        alert("Erro na exclusão da maquina!")
+        alert("Erro na exclusão da maquina! ")
         resposta.text().then(texto => {
           console.error(texto);
         });
@@ -165,7 +164,6 @@ function excluirMaquina() {
     }).catch(function (erro) {
       console.log(erro);
     });
-  });
 
   return false;
 }
@@ -309,7 +307,7 @@ function gerarDivFilhoComputadoresCadastrados(idComputador, nomeComputador, sist
             fill="black" />
         </svg>
       </div>
-      <div class="iconeRemoverMaquina" id="iconeLixeira" onclick="abrirModalExcluirMaquina()">
+      <div class="iconeRemoverMaquina" id="iconeLixeira" onclick="abrirModalExcluirMaquina(${idComputador})">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M7 21C6.45 21 5.979 20.804 5.587 20.412C5.195 20.02 4.99933 19.5493 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.804 20.021 18.412 20.413C18.02 20.805 17.5493 21.0007 17 21H7ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z"
@@ -367,11 +365,7 @@ function abrirDashboardEspecifica(idComputador) {
   window.location.href = 'DashboardEspecifica/dashboardespecifica.html?parametro=' + idComputador;
 }
 
-var arrayUsoCpu = [];
-var arrayUsoRam = [];
-var arrayUsoDisco = [];
-
-function atualizarDashboardGeral() {
+function selectAlertas() {
   var idEmpresa;
 
   if (sessionStorage.idEmpresa == null) {

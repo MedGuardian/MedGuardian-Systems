@@ -405,14 +405,13 @@ function selectComputador(req, res) {
 }
 
 function excluirMaquina(req, res) {
-    var nomeMaquina = req.body.nomeMaquinaServer;
     var idComputador = req.body.idComputadorServer;
 
-    if (nomeMaquina == undefined || idComputador == undefined) {
+    if (idComputador == undefined) {
         res.status(400).send("O nome da máquina ou o ID dela está undefined!");
     } else {
 
-        usuarioModel.excluirMaquina(nomeMaquina, idComputador)
+        usuarioModel.excluirMaquina(idComputador)
             .then(
                 function (resultadoExclusaoMaquina) {
                     console.log(`\nResultados encontrados: ${resultadoExclusaoMaquina.length}`);

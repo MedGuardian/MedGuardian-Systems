@@ -100,13 +100,13 @@ function atualizarFuncionario(novoEmail, novaSenha, idFunc) {
     return database.executar(instrucao);
 }
 
-function excluirMaquina(nomeComputador, idComputador) {
+function excluirMaquina(idComputador) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirMaquina():");
 
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
     var instrucao1 = `DELETE FROM especificacao WHERE fkComputador = '${idComputador}';`;
-    var instrucao2 = `DELETE FROM computador WHERE idComputador = '${idComputador}' AND nomeComputador = '${nomeComputador}';`;
+    var instrucao2 = `DELETE FROM computador WHERE idComputador = '${idComputador}';`;
 
     console.log("Executando a instrução SQL 1: \n" + instrucao1);
 
