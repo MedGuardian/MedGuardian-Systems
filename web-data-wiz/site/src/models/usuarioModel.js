@@ -323,7 +323,7 @@ function selectAlertas(idEmpresa) {
       )
       SELECT *
       FROM AlertasNumerados
-      WHERE NumeroLinha = 1;;`;
+      WHERE NumeroLinha = 1;`;
 
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
