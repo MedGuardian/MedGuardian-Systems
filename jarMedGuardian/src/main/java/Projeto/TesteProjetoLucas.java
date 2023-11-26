@@ -57,7 +57,7 @@ public class TesteProjetoLucas {
                 }
 
                 if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
-                    bancoDeDados.insertComputador(nomeComputador, fkEmpresa, sistemaOperacional);
+                    bancoDeDados.insertComputador(nomeComputador, sistemaOperacional);
                     idComputador = bancoDeDados.selectIdComputador(nomeComputador);
 
                     bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
@@ -109,7 +109,7 @@ public class TesteProjetoLucas {
         System.out.println("Id: " + idComputador + "Nome da máquina: " + nomeComputador);
 
         if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
-            bancoDeDados.insertComputador(nomeComputador, fkEmpresa, sistemaOperacional);
+            bancoDeDados.insertComputador(nomeComputador, sistemaOperacional);
             idComputadorLocal = bancoDeDados.selectIdComputador(nomeComputador);
 
             bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
