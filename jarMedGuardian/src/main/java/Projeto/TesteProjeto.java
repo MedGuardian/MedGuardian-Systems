@@ -177,7 +177,7 @@ public class TesteProjeto {
                 for(int i = 0; i < bancoDeDados.selectComponente().size(); i++){
                     Integer idComponente = bancoDeDados.selectComponente().get(i).getIdComponente();
 
-                    switch (idComponenteAws) {
+                    switch (idComponente) {
                         case  1-> {
                             bancoDeDadosAws.insertRegistro(processadorEmUso, "UsoCpu", finalIdComputador * 4 - 3);
                             bancoDeDadosAws.insertRegistro(Double.valueOf(dias), "Dias", finalIdComputador * 4 - 3);
