@@ -1,6 +1,5 @@
 selectComputadores();
 selectTotalComponentes();
-setInterval(trocarCores, 3000);
 setInterval(atualizarDashboardGeral, 3000)
 
 var totalComponenteRam = 0;
@@ -289,7 +288,7 @@ function gerarDivPaiComputadoresCadastrados(contador) {
 
 function gerarDivFilhoComputadoresCadastrados(idComputador, nomeComputador, sistemaOperacional, endereco, i, contador) {
   var maquinasCadastradas = document.getElementById(`maquinasCadastradas${contador}`);
-  maquinasCadastradas.innerHTML += `<div id="maquina${i + 1}" class="boxMaquinaCadastrada" id="idComputador${idComputador}">
+  maquinasCadastradas.innerHTML += `<div onload="procurarAlertasPorId(${idComputador})" id="maquina${i + 1}" class="boxMaquinaCadastrada" id="idComputador${idComputador}">
   <div class="spanIconesCardDashboard">
     <div class="spansCardDashboard" onclick="abrirDashboardEspecifica(${idComputador})">
       <div class="spanNome">
@@ -440,7 +439,7 @@ function atualizarDashboardGeral() {
   return false;
 }
 
-function trocarCores() {
+/*function trocarCores() {
   const classes = ["maquina1", "maquina2", "maquina3", "maquina4", "maquina5", "maquina6", "maquina7", "maquina8", "maquina9", "maquina10", "maquina11", "maquina12"];
   const cores = ["#FC8374", "#EE9663", "#91E384"];
 
@@ -464,6 +463,44 @@ function trocarCores() {
     }
   }
 }
+*/
+function procurarAlertasPorId(idComputador){
+  fetch(`/empresas/alertaPorId/${idComputador}`, { cache: "no-store" }).then(function (resposta) {
+    console.log(resposta)
+    console.log("ESTOU NO THEN DO entrar()!")
+    resposta.json().then(function (resposta){
+      if(resposta.length==0){
+        var computador = document.getElementById(`maquina${idComputador}`)
+        computador.classList.add("corIdeal")
+      }else{
+        var computador = document.getElementById(`maquina${idComputador}`)
+       for(var i=0;i<resposta.length;i++){
+        var dados = resposta[i]
 
+        if(dados.tipoAlerta =="Crítico"){
+          computador.classList.add("corAlerta")
+          computador.classList.remove("corMedio")
+          computador.classList.remove("corIdeal")
+        }else if(dados.tipoAlerta=="Médio"){
+          computador.classList.remove("corAlerta")
+          computador.classList.add("corMedio")
+          computador.classList.remove("corIdeal")                
+        }else{
+          computador.classList.remove("corAlerta")
+          computador.classList.remove("corMedio")
+          computador.classList.add("corIdeal")
+        }
+      }
+      
+        // componentesALerta
+
+      }
+
+    })
+          
+  })
+
+
+}
 
 
