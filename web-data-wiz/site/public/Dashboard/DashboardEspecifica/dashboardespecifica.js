@@ -4,6 +4,26 @@ function voltarDashboardGeral() {
     window.location.href = '../dashboard.html'
 }
 
+function abrirListaJanelas() {
+    const modalListaJanelas = document.getElementById("modalListaJanelas");
+    const sombreamento = document.getElementById("sombreamento");
+    modalListaJanelas.style.display = "flex"
+    sombreamento.style.display = "block";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+function fecharModalListarJanelas() {
+    const modalListaJanelas = document.getElementById("modalListaJanelas");
+    const sombreamento = document.getElementById("sombreamento");
+
+    modalListaJanelas.style.display = "none"
+    sombreamento.style.display = "none";
+}
+
 var divValorBoxLateralCpu = document.getElementById('divValorBoxLateralCpu');
 var divValorBoxLateralDisco = document.getElementById('divValorBoxLateralDisco');
 var divValorBoxLateralRam = document.getElementById('divValorBoxLateralRam');

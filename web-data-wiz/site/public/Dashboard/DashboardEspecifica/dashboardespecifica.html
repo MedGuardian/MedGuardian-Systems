@@ -12,6 +12,56 @@
 </head>
 
 <body>
+
+    <div id="sombreamento"></div>
+
+    <div class="modalListaJanelas" id="modalListaJanelas" style="display: none;">
+        <div class="conteudoModalListaJanelas">
+
+            <div class="iconFecharModalListaJanelas">
+                <div class="iconFecharModal" onclick="fecharModalListarJanelas()">
+                    <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M28 16L16 28M16 16L28 28" stroke="#667085" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    </svg>
+                  </div>
+            </div>
+
+            <div class="tituloModalListaJanelas">
+                <span>LISTA DE JANELAS</span>
+            </div>
+
+            <div class="subtituloModalListaJanelas">
+                <span>Para fechar uma janela, clique no quadrado verde à esquerda e aguarde</span>
+            </div>
+
+            <div class="janelasAbertas">
+                <div class="janelaAberta">
+                    <div class="bloquinhoEsquerdaJanelaAberta"></div>
+                    <div class="nomeJanelaAberta">
+                        <span>Discord</span>
+                    </div>
+                </div>
+    
+                <div class="janelaAberta">
+                    <div class="bloquinhoEsquerdaJanelaAberta"></div>
+                    <div class="nomeJanelaAberta">
+                        <span>MySql</span>
+                    </div>
+                </div>
+    
+                <div class="janelaAberta">
+                    <div class="bloquinhoEsquerdaJanelaAberta"></div>
+                    <div class="nomeJanelaAberta">
+                        <span>Notepad</span>
+                    </div>
+                </div>
+            </div>
+        
+
+        </div>
+    </div>
+
     <div class="divGeral">
         <div class="headerDashboardEspecifica">
             <div class="spansHeader">
@@ -32,7 +82,12 @@
                         máquina:</span>
                 </div>
                 <div class="tituloDashboardMaquina">
-                    <span>Você selecionou a</span> <span id="maquinaSelecionada">Máquina 27</span>
+                    <div class="spanTituloDashboardMaquina">
+                        <span>Você selecionou a</span> <span id="maquinaSelecionada">Máquina 27</span>
+                    </div>
+                    <div class="botaoListarJanelas" onclick="abrirListaJanelas()">
+                        <button onclick="abrirListaJanelas()">Janelas abertas</button>
+                    </div>
                 </div>
             </div>
         </div>
