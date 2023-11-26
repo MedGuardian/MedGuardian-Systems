@@ -1,6 +1,6 @@
 selectComputadores();
 selectTotalComponentes();
-setInterval(selectAlertas, 3000)
+// setInterval(selectAlertas, 3000)
 
 var totalComponenteRam = 0;
 var totalComponenteCPU = 0;
