@@ -203,9 +203,9 @@ const config_graficoDesempenho = {
                     beginAtZero: true,
                     color: '#2E2109;',
                     font: {
-                        size: 20,
+                        size: 10,
                         family: 'Poppins',
-                        weight: 400
+                        weight: 600
                     }
                 },
             },
@@ -217,7 +217,7 @@ const config_graficoDesempenho = {
                     display: true,
                     color: '#2E2109;',
                     font: {
-                        size: 12,
+                        size: 10,
                         family: 'Poppins',
                         weight: 600
                     }
@@ -230,10 +230,10 @@ const config_graficoDesempenho = {
                 text: 'Desempenho da CPU',
                 color: 'black',
                 font: {
-                    size: 20,
+                    size: 10,
                     color: 'black',
                     family: 'Poppins',
-                    weight: 500
+                    weight: 600
                 }
 
             },
@@ -245,7 +245,6 @@ const config_graficoDesempenho = {
                         color: 'white',
                         family: 'Poppins',
                         weight: 600,
-                        padding: 15
                     }
                 }
             }
@@ -465,17 +464,17 @@ function atualizarComponenteEscolhido(n) {
     switch (n) {
         case 1:
             componenteSelecionado.innerHTML = "CPU"
-            tipoValorComponenteSelecionado.innerHTML = "% de utilização"
+            tipoValorComponenteSelecionado.innerHTML = "% de Utilização"
             nomeComponente.innerHTML = "13th Gen Intel(R) Core(TM) i5-13450HX"
             break;
         case 2:
             componenteSelecionado.innerHTML = "DISCO"
-            tipoValorComponenteSelecionado.innerHTML = "% utilizado"
+            tipoValorComponenteSelecionado.innerHTML = "% de Utilização"
             nomeComponente.innerHTML = "NVMe KBG50ZNS512G NVMe KIOXIA 512GB"
             break;
         case 3:
             componenteSelecionado.innerHTML = "RAM"
-            tipoValorComponenteSelecionado.innerHTML = "% de utilização"
+            tipoValorComponenteSelecionado.innerHTML = "% de Utilização"
             nomeComponente.innerHTML = "";
             break;
     }
