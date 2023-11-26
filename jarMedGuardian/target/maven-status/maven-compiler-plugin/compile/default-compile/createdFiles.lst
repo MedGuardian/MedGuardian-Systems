@@ -1,5 +1,6 @@
 Projeto\ObterMemoriaSwap.class
 Projeto\TesteProjetoVictor.class
+Projeto\Janelas.class
 Projeto\ConexaoAws.class
 Projeto\KatherinneTimer.class
 Projeto\TesteProjetoPedro.class
@@ -10,6 +11,7 @@ Projeto\TesteProjetoArthur.class
 Projeto\TesteProjeto.class
 Projeto\Computador.class
 Projeto\TesteProjetoSarah$1.class
+Projeto\MatarProcesso.class
 Projeto\Componente.class
 Projeto\TesteProjetoKatherinne$1.class
 Projeto\Especificacao.class

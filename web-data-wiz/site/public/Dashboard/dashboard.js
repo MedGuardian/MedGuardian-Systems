@@ -1,7 +1,6 @@
 selectComputadores();
 selectTotalComponentes();
-setInterval(trocarCores, 3000);
-setInterval(atualizarDashboardGeral, 3000)
+setInterval(selectAlertas, 3000)
 
 var totalComponenteRam = 0;
 var totalComponenteCPU = 0;
@@ -72,7 +71,11 @@ function fecharModal() {
   overlay.style.display = "none";
 }
 
-function abrirModalExcluirMaquina() {
+var idMaquinaExcluida = null;
+
+function abrirModalExcluirMaquina(idComputador) {
+
+  idMaquinaExcluida = idComputador;
 
   const modalExcluirMaquina = document.getElementById("modalExcluirMaquina");
   const overlay = document.getElementById("overlay");
@@ -84,6 +87,8 @@ function abrirModalExcluirMaquina() {
     top: 0,
     behavior: "smooth"
   });
+
+
 
 }
 
@@ -134,17 +139,16 @@ iconeAlterarMaquina.addEventListener('click', (event) => {
 });
 
 function excluirMaquina() {
-  var nomeMaquinaVar = "Notebook-Lucas";
+
+  var idComputadorVar = idMaquinaExcluida;
 
   // Chama selectComputador e aguarda a resolução da Promessa
-  selectComputador().then(idComputadorVar => {
     fetch("/usuarios/excluirMaquina", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        nomeMaquinaServer: nomeMaquinaVar,
         idComputadorServer: idComputadorVar
       })
     }).then(function (resposta) {
@@ -158,7 +162,7 @@ function excluirMaquina() {
           fecharModal();
         });
       } else {
-        alert("Erro na exclusão da maquina!")
+        alert("Erro na exclusão da maquina! ")
         resposta.text().then(texto => {
           console.error(texto);
         });
@@ -166,7 +170,6 @@ function excluirMaquina() {
     }).catch(function (erro) {
       console.log(erro);
     });
-  });
 
   return false;
 }
@@ -289,7 +292,7 @@ function gerarDivPaiComputadoresCadastrados(contador) {
 
 function gerarDivFilhoComputadoresCadastrados(idComputador, nomeComputador, sistemaOperacional, endereco, i, contador) {
   var maquinasCadastradas = document.getElementById(`maquinasCadastradas${contador}`);
-  maquinasCadastradas.innerHTML += `<div id="maquina${i + 1}" class="boxMaquinaCadastrada" id="idComputador${idComputador}">
+  maquinasCadastradas.innerHTML += `<div id="maquina${i + 1}" class="boxMaquinaCadastrada">
   <div class="spanIconesCardDashboard">
     <div class="spansCardDashboard" onclick="abrirDashboardEspecifica(${idComputador})">
       <div class="spanNome">
@@ -310,7 +313,7 @@ function gerarDivFilhoComputadoresCadastrados(idComputador, nomeComputador, sist
             fill="black" />
         </svg>
       </div>
-      <div class="iconeRemoverMaquina" id="iconeLixeira" onclick="abrirModalExcluirMaquina()">
+      <div class="iconeRemoverMaquina" id="iconeLixeira" onclick="abrirModalExcluirMaquina(${idComputador})">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M7 21C6.45 21 5.979 20.804 5.587 20.412C5.195 20.02 4.99933 19.5493 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.804 20.021 18.412 20.413C18.02 20.805 17.5493 21.0007 17 21H7ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z"
@@ -368,11 +371,7 @@ function abrirDashboardEspecifica(idComputador) {
   window.location.href = 'DashboardEspecifica/dashboardespecifica.html?parametro=' + idComputador;
 }
 
-var arrayUsoCpu = [];
-var arrayUsoRam = [];
-var arrayUsoDisco = [];
-
-function atualizarDashboardGeral() {
+function selectAlertas() {
   var idEmpresa;
 
   if (sessionStorage.idEmpresa == null) {
@@ -381,7 +380,7 @@ function atualizarDashboardGeral() {
     idEmpresa = sessionStorage.idEmpresa
   }
 
-  fetch("/usuarios/atualizarDashboardGeral", {
+  fetch("/usuarios/selectAlertas", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -399,34 +398,14 @@ function atualizarDashboardGeral() {
         resposta.forEach((especificacao) => {
           especificacao.forEach((objeto) => {
             const { fkEspecificacao, tipoCaptura, registro } = objeto;
-
-            if (fkEspecificacao == 1) {
-              if (arrayUsoCpu.length >= 6) {
-                arrayUsoCpu.shift();
-              }
-              arrayUsoCpu.push(registro);
-            } else if (fkEspecificacao == 2) {
-              if (arrayUsoRam.length >= 6) {
-                arrayUsoRam.shift();
-              }
-              var porcentagemUsoRam = registro * 100 / totalComponenteRam;
-              arrayUsoRam.push(porcentagemUsoRam);
-            } else if (fkEspecificacao == 3) {
-              arrayUsoDisco = registro;
-              if (arrayUsoDisco.length >= 6) {
-                arrayUsoDisco.shift();
-              }
-              var porcentagemUsoDisco = 100 - (registro * 100 / totalComponenteDisco);
-              arrayUsoDisco.push(porcentagemUsoDisco)
-            }
+            console.log(objeto)
           });
         });
-        plotarGrafico(valorN);
       });
 
-      console.log("Consegui retornar os dados para atualizar a dashboard geral!")
+      console.log("Consegui retornar os dados para validar os alertas das máquinas!")
     } else {
-      console.log("Houve um erro ao buscar os dados para atualizar a dashboard geral!");
+      console.log("Houve um erro ao buscar os dados para validar os alertas das máquinas!");
 
       resposta.text().then((texto) => {
         console.error(texto);
@@ -440,7 +419,7 @@ function atualizarDashboardGeral() {
   return false;
 }
 
-function trocarCores() {
+/*function trocarCores() {
   const classes = ["maquina1", "maquina2", "maquina3", "maquina4", "maquina5", "maquina6", "maquina7", "maquina8", "maquina9", "maquina10", "maquina11", "maquina12"];
   const cores = ["#FC8374", "#EE9663", "#91E384"];
 
@@ -463,6 +442,43 @@ function trocarCores() {
       }
     }
   }
+}
+*/
+function procurarAlertasPorId(idComputador){
+  fetch(`/empresas/alertaPorId/${idComputador}`, { cache: "no-store" }).then(function (resposta) {
+    console.log(resposta)
+    console.log("ESTOU NO THEN DO entrar()!")
+    resposta.json().then(function (resposta){
+      if(resposta.length==0){
+        var computador = document.getElementById(`maquina${idComputador}`)
+        computador.classList.add("corIdeal")
+      }else{
+        var computador = document.getElementById(`maquina${idComputador}`)
+       for(var i=0;i<resposta.length;i++){
+        var dados = resposta[i]
+
+        if(dados.tipoAlerta =="Crítico"){
+          computador.classList.add("corAlerta")
+          computador.classList.remove("corMedio")
+          computador.classList.remove("corIdeal")
+        }else if(dados.tipoAlerta=="Médio"){
+          computador.classList.remove("corAlerta")
+          computador.classList.add("corMedio")
+          computador.classList.remove("corIdeal")                
+        }else{
+          computador.classList.remove("corAlerta")
+          computador.classList.remove("corMedio")
+          computador.classList.add("corIdeal")
+        }
+      }
+      
+        // componentesALerta
+
+      }
+
+    })
+          
+  })
 }
 
   function personalizado() {

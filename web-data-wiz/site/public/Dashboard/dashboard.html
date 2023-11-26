@@ -24,7 +24,7 @@
   <title>Dashboard</title>
 </head>
 
-<body onload="validarMetricas(), validarSessao(), alertaCores(), selectComputadores()">
+<body onload="validarMetricas(), validarSessao(), alertaCores(), selectComputadores(), selectAlertas()">
   <div class="" id="pagina">
     <div class="AlterarMaquina" id="AlterarMaquina">
       <div class="container">
@@ -709,7 +709,7 @@
           </div>
 
           <div class="alertaMaquinaCadastrada">
-            <div class="spanAlerta">
+            <div id="componentesALerta" class="spanAlerta">
               <span>Em alerta:</span>
             </div>
 

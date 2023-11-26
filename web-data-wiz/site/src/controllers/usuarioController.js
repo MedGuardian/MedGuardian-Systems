@@ -549,14 +549,13 @@ function selectComputador(req, res) {
 }
 
 function excluirMaquina(req, res) {
-    var nomeMaquina = req.body.nomeMaquinaServer;
     var idComputador = req.body.idComputadorServer;
 
-    if (nomeMaquina == undefined || idComputador == undefined) {
+    if (idComputador == undefined) {
         res.status(400).send("O nome da máquina ou o ID dela está undefined!");
     } else {
 
-        usuarioModel.excluirMaquina(nomeMaquina, idComputador)
+        usuarioModel.excluirMaquina(idComputador)
             .then(
                 function (resultadoExclusaoMaquina) {
                     console.log(`\nResultados encontrados: ${resultadoExclusaoMaquina.length}`);
@@ -586,99 +585,120 @@ function excluirMaquina(req, res) {
 
 function selectFuncionarios(req, res) {
     var fkEmpresa = req.body.fkEmpresaServer
-        usuarioModel.selectFuncionarios(fkEmpresa)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao realizar o select de Funcionários! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
-    }
-
-    function selectComputadores(req, res) {
-        var fkEmpresa = req.body.fkEmpresaServer
-            usuarioModel.selectComputadores(fkEmpresa)
-                .then(
-                    function (resultado) {
-                        res.json(resultado);
-                    }
-                ).catch(
-                    function (erro) {
-                        console.log(erro);
-                        console.log(
-                            "\nHouve um erro ao realizar o select dos computadores! Erro: ",
-                            erro.sqlMessage
-                        );
-                        res.status(500).json(erro.sqlMessage);
-                    }
-                );
-        }
-
-        function selectLocalComputador(req, res) {
-            var fkEmpresa = req.body.fkEmpresaServer
-                usuarioModel.selectLocalComputador(fkEmpresa)
-                    .then(
-                        function (resultado) {
-                            res.json(resultado);
-                        }
-                    ).catch(
-                        function (erro) {
-                            console.log(erro);
-                            console.log(
-                                "\nHouve um erro ao realizar o select do local dos computadores! Erro: ",
-                                erro.sqlMessage
-                            );
-                            res.status(500).json(erro.sqlMessage);
-                        }
-                    );
+    usuarioModel.selectFuncionarios(fkEmpresa)
+        .then(
+            function (resultado) {
+                res.json(resultado);
             }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao realizar o select de Funcionários! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
 
-            function atualizarDashboardGeral(req, res) {
-                var fkEmpresa = req.body.fkEmpresaServer
-                    usuarioModel.atualizarDashboardGeral(fkEmpresa)
-                        .then(
-                            function (resultado) {
-                                res.json(resultado);
-                            }
-                        ).catch(
-                            function (erro) {
-                                console.log(erro);
-                                console.log(
-                                    "\nHouve um erro ao realizar o select que atualiza os gráficos da dashboard geral! Erro: ",
-                                    erro.sqlMessage
-                                );
-                                res.status(500).json(erro.sqlMessage);
-                            }
-                        );
-                }
+function selectComputadores(req, res) {
+    var fkEmpresa = req.body.fkEmpresaServer
+    usuarioModel.selectComputadores(fkEmpresa)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao realizar o select dos computadores! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
 
-                function excluirFuncionario(req,res){
-                    var funcionario = req.body.idFuncionarioServer;
-                    usuarioModel.excluirFuncionario(funcionario)
-                    .then(
-                        function(resultado) {
-                            res.json(resultado)
-                        }
-                    ).catch(
-                        function(erro) {
-                            console.log(erro);
-                            console.log(
-                                "\n Houve um erro ao tentar excluir o Funcionário.",
-                                erro.sqlMessage
-                            )
-                            res.status(500).json(erro.sqlMessage)
-                        }
-                    )
-                }
-    
+function selectLocalComputador(req, res) {
+    var fkEmpresa = req.body.fkEmpresaServer
+    usuarioModel.selectLocalComputador(fkEmpresa)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao realizar o select do local dos computadores! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function atualizarDashboardGeral(req, res) {
+    var fkEmpresa = req.body.fkEmpresaServer
+    usuarioModel.atualizarDashboardGeral(fkEmpresa)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao realizar o select que atualiza os gráficos da dashboard geral! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function excluirFuncionario(req, res) {
+    var funcionario = req.body.idFuncionarioServer;
+    usuarioModel.excluirFuncionario(funcionario)
+        .then(
+            function (resultado) {
+                res.json(resultado)
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\n Houve um erro ao tentar excluir o Funcionário.",
+                    erro.sqlMessage
+                )
+                res.status(500).json(erro.sqlMessage)
+            }
+        )
+}
+
+function selectAlertas(req, res) {
+
+    var idEmpresa = req.body.fkEmpresaServer
+    usuarioModel.selectAlertas(idEmpresa)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao fazer o select dos alertas! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+
 
 module.exports = {
     autenticar,
@@ -704,5 +724,6 @@ module.exports = {
     selectComputadores,
     selectLocalComputador,
     atualizarDashboardGeral,
-    excluirFuncionario
+    excluirFuncionario,
+    selectAlertas
 }
