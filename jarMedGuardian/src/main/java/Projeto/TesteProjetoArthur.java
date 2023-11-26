@@ -187,45 +187,45 @@ public class TesteProjetoArthur {
                     }
                 } while (numeroDoComponente < 1 || numeroDoComponente > componentesCadastrados.size());
 
-                 finalIdComputador = idComputador;
-                 finalIdComputadorLocal = idComputadorLocal;
-                 finalFkEmpresa = fkEmpresa;
+                finalIdComputador = idComputador;
+                finalIdComputadorLocal = idComputadorLocal;
+                finalFkEmpresa = fkEmpresa;
 
-                     Integer finalNumeroDoComponente = numeroDoComponente;
-                     timer.scheduleAtFixedRate(new TimerTask() {
-                         public void run() {
-                             if (!continuarMonitoramento) {
-                                 System.out.println("Monitoramento parado.\n");
+                Integer finalNumeroDoComponente = numeroDoComponente;
+                timer.scheduleAtFixedRate(new TimerTask() {
+                    public void run() {
+                        if (!continuarMonitoramento) {
+                            System.out.println("Monitoramento parado.\n");
 
-                                 System.out.println("Deseja voltar com o monitoramento? \n 1 - Sim \n 2 - Não");
+                            System.out.println("Deseja voltar com o monitoramento? \n 1 - Sim \n 2 - Não");
 
-                                 Scanner voltarMonitoramento = new Scanner(System.in);
-                                 Integer numBack = voltarMonitoramento.nextInt();
-                                 if (numBack == 1) {
-                                     continuarMonitoramento = true;
-                                     System.out.println("Monitoramento reativado\n");
-                                 } else {
-                                     System.out.println("Até Mais\n");
-                                     System.exit(0);
-                                     timer.cancel();
-                                 }
+                            Scanner voltarMonitoramento = new Scanner(System.in);
+                            Integer numBack = voltarMonitoramento.nextInt();
+                            if (numBack == 1) {
+                                continuarMonitoramento = true;
+                                System.out.println("Monitoramento reativado\n");
+                            } else {
+                                System.out.println("Até Mais\n");
+                                System.exit(0);
+                                timer.cancel();
+                            }
 
-                             } else{
-                                 continuarMonitoramento = true;
+                        } else{
+                            continuarMonitoramento = true;
 
-                                 String componenteSelecionado = componentesCadastrados.get(finalNumeroDoComponente - 1);
-                                 if (componenteSelecionado.isEmpty()) {
-                                     System.out.println("Nenhum componente selecionado para monitoramento.\n");
-                                 } else if (componentesCadastrados.contains(componenteSelecionado)) {
-                                     System.out.println("Monitorando o componente: " + componenteSelecionado);
-                                     iniciarMonitoramento(finalNumeroDoComponente, looca, bancoDeDados);
-                                 } else {
-                                     System.out.println("Componente não encontrado na lista de seleção.\n");
-                                 }
-                             }
-                         }
-                     }, delay, interval);
-                 }
+                            String componenteSelecionado = componentesCadastrados.get(finalNumeroDoComponente - 1);
+                            if (componenteSelecionado.isEmpty()) {
+                                System.out.println("Nenhum componente selecionado para monitoramento.\n");
+                            } else if (componentesCadastrados.contains(componenteSelecionado)) {
+                                System.out.println("Monitorando o componente: " + componenteSelecionado);
+                                iniciarMonitoramento(finalNumeroDoComponente, looca, bancoDeDados);
+                            } else {
+                                System.out.println("Componente não encontrado na lista de seleção.\n");
+                            }
+                        }
+                    }
+                }, delay, interval);
+            }
             Scanner opcao = new Scanner(System.in);
             System.out.println("Deseja parar o monitoramento? \n 1 - Sim");
             Integer monitoramento = opcao.nextInt();
