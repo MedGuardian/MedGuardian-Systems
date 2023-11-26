@@ -4,6 +4,26 @@ function voltarDashboardGeral() {
     window.location.href = '../dashboard.html'
 }
 
+function abrirListaJanelas() {
+    const modalListaJanelas = document.getElementById("modalListaJanelas");
+    const sombreamento = document.getElementById("sombreamento");
+    modalListaJanelas.style.display = "flex"
+    sombreamento.style.display = "block";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+function fecharModalListarJanelas() {
+    const modalListaJanelas = document.getElementById("modalListaJanelas");
+    const sombreamento = document.getElementById("sombreamento");
+
+    modalListaJanelas.style.display = "none"
+    sombreamento.style.display = "none";
+}
+
 var divValorBoxLateralCpu = document.getElementById('divValorBoxLateralCpu');
 var divValorBoxLateralDisco = document.getElementById('divValorBoxLateralDisco');
 var divValorBoxLateralRam = document.getElementById('divValorBoxLateralRam');
@@ -158,7 +178,7 @@ const data_graficoDesempenho = {
             data: [],
             backgroundColor: 'rgba(0, 189, 6, .15)',
             borderColor: 'rgba(0, 189, 6, 1)',
-            pointBackgroundColor: '#164018',
+            pointBackgroundColor: '#090909',
             pointBorderColor: 'rgba(255,255,255,.8',
             pointRadius: 5,
             borderWidth: 1,
@@ -184,7 +204,7 @@ const config_graficoDesempenho = {
                     color: '#2E2109;',
                     font: {
                         size: 20,
-                        family: 'LeagueSpartan',
+                        family: 'Poppins',
                         weight: 400
                     }
                 },
@@ -198,7 +218,7 @@ const config_graficoDesempenho = {
                     color: '#2E2109;',
                     font: {
                         size: 12,
-                        family: 'LeagueSpartan',
+                        family: 'Poppins',
                         weight: 600
                     }
                 }
@@ -210,10 +230,10 @@ const config_graficoDesempenho = {
                 text: 'Desempenho da CPU',
                 color: 'black',
                 font: {
-                    size: 25,
+                    size: 20,
                     color: 'black',
-                    family: 'LeagueSpartan',
-                    weight: 600
+                    family: 'Poppins',
+                    weight: 500
                 }
 
             },
@@ -221,11 +241,11 @@ const config_graficoDesempenho = {
                 display: false,
                 labels: {
                     font: {
-                        size: 20,
+                        size: 10,
                         color: 'white',
-                        family: 'LeagueSpartan',
+                        family: 'Poppins',
                         weight: 600,
-                        padding: 20
+                        padding: 15
                     }
                 }
             }
@@ -386,31 +406,42 @@ function selectTotalComponentes() {
 
 var valorN = 1;
 
-function escolherGrafico(n) {
-    valorN = n;
-    plotarGrafico(valorN)
+
+
+function unchekedTodos() {
+    ['cpu', 'Disco', 'ram'].forEach((container) => document.getElementById(container).classList.remove("animacaoBorda"));
 }
+
+function escolherGrafico(n, container) {
+    unchekedTodos();
+    var boxSelecionada = document.getElementById(container);
+    boxSelecionada.classList.add("animacaoBorda");
+
+    valorN = n;
+    plotarGrafico(valorN);
+}
+
 
 function plotarGrafico(n) {
     atualizarComponenteEscolhido(n)
+
+
     switch (n) {
         case 1:
             uso_cpu.reverse();
             dataHoraLabelsCPU.reverse();
             data_graficoDesempenho.datasets[0].data = uso_cpu.slice(0, 6);
-            config_graficoDesempenho.options.plugins.title.text = 'Desempenho CPU'
+            config_graficoDesempenho.options.plugins.title.text = 'Desempenho CPU';
             config_graficoDesempenho.options.scales.y.max = 50;
             config_graficoDesempenho.options.scales.y.min = 0;
-            data_graficoDesempenho.labels = dataHoraLabelsCPU.slice(0, 6);
             break;
         case 2:
             uso_disco.reverse();
             dataHoraLabelsDisco.reverse();
             data_graficoDesempenho.datasets[0].data = uso_disco.slice(0, 6);
-            config_graficoDesempenho.options.plugins.title.text = 'Uso do disco'
+            config_graficoDesempenho.options.plugins.title.text = 'Uso do disco';
             config_graficoDesempenho.options.scales.y.max = 100;
             config_graficoDesempenho.options.scales.y.min = 0;
-            data_graficoDesempenho.labels = dataHoraLabelsDisco.slice(0, 6);
             break;
         case 3:
             uso_ram.reverse();
@@ -419,9 +450,9 @@ function plotarGrafico(n) {
             config_graficoDesempenho.options.plugins.title.text = 'Uso da RAM';
             config_graficoDesempenho.options.scales.y.max = 100;
             config_graficoDesempenho.options.scales.y.min = 80;
-            data_graficoDesempenho.labels = dataHoraLabelsRAM.slice(0, 6);
             break;
     }
+
     graficoEmUso.update();
 }
 
@@ -457,5 +488,3 @@ function getQueryParam(param) {
 }
 
 const grafico_selecionado = getQueryParam("parametro")
-
-
