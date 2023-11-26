@@ -380,7 +380,7 @@ function atualizarDashboardGeral() {
     idEmpresa = sessionStorage.idEmpresa
   }
 
-  fetch("/usuarios/atualizarDashboardGeral", {
+  fetch("/usuarios/selectAlertas", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -398,34 +398,14 @@ function atualizarDashboardGeral() {
         resposta.forEach((especificacao) => {
           especificacao.forEach((objeto) => {
             const { fkEspecificacao, tipoCaptura, registro } = objeto;
-
-            if (fkEspecificacao == 1) {
-              if (arrayUsoCpu.length >= 6) {
-                arrayUsoCpu.shift();
-              }
-              arrayUsoCpu.push(registro);
-            } else if (fkEspecificacao == 2) {
-              if (arrayUsoRam.length >= 6) {
-                arrayUsoRam.shift();
-              }
-              var porcentagemUsoRam = registro * 100 / totalComponenteRam;
-              arrayUsoRam.push(porcentagemUsoRam);
-            } else if (fkEspecificacao == 3) {
-              arrayUsoDisco = registro;
-              if (arrayUsoDisco.length >= 6) {
-                arrayUsoDisco.shift();
-              }
-              var porcentagemUsoDisco = 100 - (registro * 100 / totalComponenteDisco);
-              arrayUsoDisco.push(porcentagemUsoDisco)
-            }
+            console.log(objeto)
           });
         });
-        plotarGrafico(valorN);
       });
 
-      console.log("Consegui retornar os dados para atualizar a dashboard geral!")
+      console.log("Consegui retornar os dados para validar os alertas das máquinas!")
     } else {
-      console.log("Houve um erro ao buscar os dados para atualizar a dashboard geral!");
+      console.log("Houve um erro ao buscar os dados para validar os alertas das máquinas!");
 
       resposta.text().then((texto) => {
         console.error(texto);

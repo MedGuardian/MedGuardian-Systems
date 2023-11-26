@@ -222,6 +222,14 @@ public class TesteProjetoLucas {
 
                     List<Janelas> listaJanelasSelect = bancoDeDados.selectJanelas(finalIdComputador);
                     List<Janela> listaJanelasLooca = new ArrayList<>();
+                    MatarProcesso matarProcesso = new MatarProcesso();
+
+                    for(int k = 0; k < listaJanelasSelect.size(); k++){
+                        if(listaJanelasSelect.get(k).getMatar().equals(true)){
+                            String nomeProcesso = matarProcesso.pegarNomeProcessoPeloComando(listaJanelasSelect.get(k).getComando());
+                            matarProcesso.matarProcessoPorNome(nomeProcesso);
+                        }
+                    }
 
                     for (int j = 0; j < looca.getGrupoDeJanelas().getJanelasVisiveis().size(); j++) {
                         Janela janelaLooca = looca.getGrupoDeJanelas().getJanelasVisiveis().get(j);
@@ -261,8 +269,6 @@ public class TesteProjetoLucas {
                             bancoDeDados.insertJanelas(janelaLooca.getTitulo(), janelaLooca.getComando(), finalIdComputador, false);
                         }
                     }
-
-
                 }
 
                 for(int i = 0; i < bancoDeDados.selectComponente().size() - 1; i++){
