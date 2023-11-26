@@ -308,18 +308,6 @@
                     }
                     uso_cpu.push(registro);
                   }
-                  else if (tipoCaptura == "Uso da RAM") {
-                    if (uso_cpu.length >= 6) {
-                      uso_ram.shift();
-                    }
-                    uso_ram.push(registro);
-                  }
-                  else if (tipoCaptura == "Uso") {
-                    if (uso_disco.length >= 6) {
-                      uso_disco.shift();
-                    }
-                    uso_disco.push(registro);
-                  }
   
                   var dataGrafico = document.getElementById('dataRelatorio');
                   dataGrafico.innerHTML = formattedDate30 + " - " + formattedDate;
@@ -394,7 +382,7 @@
   var yValues2 = [55, 49, 44, 24, 40];
   var barColors = ["red", "green", "blue", "orange", "brown"];
 
-  new Chart("myChart2", {
+  var graficoBarras = new Chart("myChart2", {
     type: "bar",
     data: {
       labels: xValues2,
@@ -418,10 +406,10 @@
     "#00aba9",
   ];
 
-  new Chart("myChart3", {
+  var graficoPizza = new Chart("myChart3", {
     type: "pie",
     data: {
-      labels: ["Usado RAM", "Total RAM"],
+      labels: ["Usado CPU", "Total CPU"],
       datasets: [{
         backgroundColor: barColors,
         data: yValues3
@@ -441,9 +429,10 @@
     "#00aba9",
   ];
 
-  new Chart("myChart4", {
+  var graficoRosca = new Chart("myChart4", {
     type: "doughnut",
     data: {
+      label: "Uso",
       labels: ["Usado HD", "Total HD"],
       datasets: [{
         backgroundColor: barColors,
@@ -464,7 +453,7 @@
   var yValues7 = [15, 36, 64, 54, 15];
 
 
-  new Chart("myChart5", {
+  var graficoComparacao = new Chart("myChart5", {
     type: "line",
     data: {
       labels: [50, 60, 70, 80, 90],
