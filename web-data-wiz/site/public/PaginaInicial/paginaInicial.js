@@ -1,5 +1,4 @@
 
-  // Função para verificar a largura da janela e atualizar o texto da div com base na resolução
   function atualizarTextoComBaseNaResolucao() {
     const spanConteudoSuperiorEsquerdaSobreNos = document.getElementById('conteudoSuperiorEsquerdaSobreNos');
     const spanConteudoMeioEsquerdaSobreNos = document.getElementById("conteudoMeioEsquerdaSobreNos");
@@ -40,7 +39,6 @@
     }
   }
 
-  // Chame a função uma vez para configurar o texto inicial com base na resolução atual
   setInterval (atualizarTextoComBaseNaResolucao, 1)
 
 function telaContato(){

@@ -21,10 +21,10 @@
             <div class="iconFecharModalListaJanelas">
                 <div class="iconFecharModal" onclick="fecharModalListarJanelas()">
                     <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M28 16L16 28M16 16L28 28" stroke="#667085" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" />
+                        <path d="M28 16L16 28M16 16L28 28" stroke="#667085" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
                     </svg>
-                  </div>
+                </div>
             </div>
 
             <div class="tituloModalListaJanelas">
@@ -42,14 +42,14 @@
                         <span>Discord</span>
                     </div>
                 </div>
-    
+
                 <div class="janelaAberta">
                     <div class="bloquinhoEsquerdaJanelaAberta"></div>
                     <div class="nomeJanelaAberta">
                         <span>MySql</span>
                     </div>
                 </div>
-    
+
                 <div class="janelaAberta">
                     <div class="bloquinhoEsquerdaJanelaAberta"></div>
                     <div class="nomeJanelaAberta">
@@ -57,7 +57,7 @@
                     </div>
                 </div>
             </div>
-        
+
 
         </div>
     </div>
@@ -77,16 +77,13 @@
                                 d="M15.9375 14.896C15.9375 20.5816 20.2279 25.2085 25.5 25.2085C30.7721 25.2085 35.0625 20.5816 35.0625 14.896C35.0625 9.21037 30.7721 4.5835 25.5 4.5835C20.2279 4.5835 15.9375 9.21037 15.9375 14.896ZM42.5 48.1252H44.625V45.8335C44.625 36.99 37.9504 29.7918 29.75 29.7918H21.25C13.0475 29.7918 6.375 36.99 6.375 45.8335V48.1252H42.5Z"
                                 fill="currentColor" />
                         </svg>
-                        Bem vindo, <span class="usuario"> MedGuardian |</span> Verifique aqui ás
+                        Bem-vindo, <span class="usuario"> MedGuardian |</span> Verifique aqui ás
                         métricas de sua
                         máquina:</span>
                 </div>
                 <div class="tituloDashboardMaquina">
                     <div class="spanTituloDashboardMaquina">
                         <span>Você selecionou a</span> <span id="maquinaSelecionada">Máquina 27</span>
-                    </div>
-                    <div class="botaoListarJanelas" onclick="abrirListaJanelas()">
-                        <button onclick="abrirListaJanelas()">Janelas abertas</button>
                     </div>
                 </div>
             </div>
@@ -182,13 +179,15 @@
 
                                 <div class="informacoesMaquinaGrafico">
                                     <div class="opcaoSelecionadaGraficoLegenda">
-
-                                        <span id="componenteSelecionado">
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                                width="24" height="24" viewBox="0 0 24 24">
+                                        <div class="opcaoSelecionadaGraficoLegenda2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                viewBox="0 0 24 24">
                                                 <path fill="currentColor"
                                                     d="M1 3h22v15H13v2h4v2H7v-2h4v-2H1zm2 2v11h18V5z" />
-                                            </svg>CPU</span>
+                                            </svg>
+                                            <span id="componenteSelecionado">CPU</span>
+                                        </div>
+
                                         <span id="tipoValorComponenteSelecionado">% Utilização</span>
                                     </div>
 
@@ -208,6 +207,9 @@
 
                         <div class="conteudoDireitaDashboardMaquina">
                             <div class="boxesLaterais">
+                                <div class="botaoListarJanelas" onclick="abrirListaJanelas()">
+                                    <button onclick="abrirListaJanelas()">Janelas abertas</button>
+                                </div>
                                 <span class="spanBoxLateral">Selecione um componente:</span>
                                 <div class="boxLateral" id="cpu" onclick="escolherGrafico(1, 'cpu')"
                                     onclick="atualizarGrafico()">

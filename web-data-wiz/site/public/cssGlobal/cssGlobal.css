@@ -1,24 +1,25 @@
-.menuFlutuante{
-    display: flex;
-    background-color: #004D02;
-    position: absolute;
-    left: 70.5%;
+.menuFlutuante {
+    display: none;
+    width: 300px;
     top: 9%;
     z-index: 9;
-    font-family: LeagueSpartan;
-    color: white;
-    width: 300px;
+    left: 70.5%;
+    position: absolute;
+    font-family: Poppins;
     border-radius: 15px;
+
+    color: rgb(0, 0, 0);
+    background-color: #8c948c;
 }
 
-.conteudoMenuFlutuante{
+.conteudoMenuFlutuante {
     display: flex;
     flex-direction: column;
     padding: 10% 5% 5% 5%;
     width: 100%;
 }
 
-.headerMenuFlutuante{
+.headerMenuFlutuante {
     display: flex;
     flex-direction: row;
 }
@@ -30,14 +31,14 @@
     width: 40px;
 }
 
-.direitaHeaderMenuFlutuante{
+.direitaHeaderMenuFlutuante {
     display: flex;
     flex-direction: column;
     margin-left: 10%;
     width: 100%;
 }
 
-.nomeCargoRow{
+.nomeCargoRow {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -45,8 +46,8 @@
     width: 100%;
 }
 
-#nomeMenuFlutuante{
-    font-size: 20px;
+#nomeMenuFlutuante {
+    font-size: 15px;
 }
 
 #cargoMenuFlutuante {
@@ -54,30 +55,32 @@
     margin-left: 2.5%;
 }
 
-.emailRow{
+.emailRow {
     margin-top: 5%;
+    font-size: 12px;
+    font-weight: 600;
 }
 
-.opcoesMenuFlutuante{
+.opcoesMenuFlutuante {
     display: flex;
     flex-direction: column;
     margin-top: 10%;
 }
 
 .opcoesMenuFlutuante span {
-    font-weight: 600;
-    font-size: 20px;
+    font-weight: 400;
+    font-size: 15px;
     margin-bottom: 7.5%;
     cursor: pointer;
 }
 
-.linhaMenuFlutuante{
+.linhaMenuFlutuante {
     height: 1px;
     width: 100%;
     background-color: white;
     margin-bottom: 7.5%;
 }
 
-#spanLogout{
+#spanLogout {
     margin-bottom: 5%;
 }
