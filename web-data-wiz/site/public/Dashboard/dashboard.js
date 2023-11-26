@@ -178,7 +178,12 @@ function excluirMaquina() {
 function removerDivMaquinaExcluida(idComputador){
 
 var divRemovida = document.getElementById(`maquina${idComputador}`)
-divRemovida.remove();
+
+if(divRemovida){
+  divRemovida.remove();
+} else {
+  console.log("Num achei a div nao")
+}
 
 }
 
