@@ -105,7 +105,7 @@ public class TesteProjeto {
         EnviarBDLocal bancoDeDados = new EnviarBDLocal();
 
         if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
-            bancoDeDados.insertComputador(nomeComputador, fkEmpresa, sistemaOperacional);
+            bancoDeDados.insertComputador(nomeComputador, sistemaOperacional);
             idComputadorLocal = bancoDeDados.selectIdComputador(nomeComputador);
 
             bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
