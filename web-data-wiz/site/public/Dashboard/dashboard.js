@@ -158,8 +158,9 @@ function excluirMaquina() {
         resposta.json().then(json => {
           console.log(json);
           console.log(JSON.stringify(json));
-          alert("Máquina: Notebook-Lucas excluída")
+          alert("Máquina de ID: " + idComputadorVar + "excluída!")
           fecharModal();
+          selectComputadores();
         });
       } else {
         alert("Erro na exclusão da maquina! ")
