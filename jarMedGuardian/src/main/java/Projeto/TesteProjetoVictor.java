@@ -1,7 +1,6 @@
 package Projeto;
 
 import com.github.britooo.looca.api.core.Looca;
-import com.github.britooo.looca.api.group.janelas.Janela;
 
 import java.io.IOException;
 import java.util.*;
@@ -10,87 +9,25 @@ public class TesteProjetoVictor {
     public static void main(String[] args) {
 
         Looca looca = new Looca();
-        EnviarBDAws bancoDeDadosAws = new EnviarBDAws();
         EnviarBDLocal bancoDeDados = new EnviarBDLocal();
 
         Componente HD = new Componente(looca.getGrupoDeDiscos().getDiscos().get(0).getModelo());
         Componente RAM = new Componente("RAM");
         Componente PROCESSADOR = new Componente(looca.getProcessador().getNome());
+        Componente REDE = new Componente("REDE");
         Componente TEMPOATIVIDADE = new Componente("TEMPO DE ATIVIDADE");
 
         String nomeComputador = looca.getRede().getParametros().getNomeDeDominio();
         Integer conversorGb = 1000000000;
+        Integer conversorMb = 1000000;
         Boolean logado = false;
         Integer idComputador = null;
-        Integer idComputadorLocal = null;
         Integer idFuncionario = null;
-        Integer fkEmpresa = null;
-        String sistemaOperacional = null;
-        List<Integer> listaPIDNaoMatar = new ArrayList<>();
-        Integer pid;
-        Double graveRam;
-        Double medioRam;
-        Double graveCPU;
-        Double medioCPU;
-        Double graveDisco;
-        Double medioDisco;
+        Integer hd = 0;
+        String sistemaOperacional;
+        int pid;
 
         do {
-
-            List<Janela> listaJanelas = new ArrayList<>();
-
-            for(int i = 0; i< looca.getGrupoDeJanelas().getJanelasVisiveis().size(); i++){
-                if(!looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().isEmpty()){
-                    listaJanelas.add(looca.getGrupoDeJanelas().getJanelasVisiveis().get(i));
-                }
-                System.out.println(listaJanelas);
-            }
-
-            for(int i = 0; i < listaJanelas.size(); i++){
-                for(int j = 0; j < looca.getGrupoDeJanelas().getJanelasVisiveis().size(); j++){
-                    if(listaJanelas.get(i).getComando() != looca.getGrupoDeJanelas().getJanelasVisiveis().get(j).getComando()){
-                        System.out.println("Não tem na lista");
-                    } else {
-                        System.out.println("Tem na lista");
-                    }
-                }
-            }
-
-            for(int i = 0; i < looca.getGrupoDeJanelas().getJanelasVisiveis().size(); i++){
-                System.out.println(looca.getGrupoDeJanelas().getJanelasVisiveis());
-                if(!looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().isEmpty()){
-                    if(looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().contains("Realtek") || looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().contains("Configurações") || looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().contains("Experiência de entrada do Windows") || looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().contains("Program Manager") || looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getTitulo().contains("Restaurar páginas")){
-                        listaPIDNaoMatar.add(looca.getGrupoDeJanelas().getJanelasVisiveis().get(i).getPid().intValue());
-                    }
-                }
-            }
-
-            for(int i = 0; i < listaPIDNaoMatar.size(); i++) {
-                for (int j = 1; j < looca.getGrupoDeProcessos().getProcessos().size(); j++) {
-                    if (listaPIDNaoMatar.get(i) != looca.getGrupoDeProcessos().getProcessos().get(j).getPid()) {
-                        pid = looca.getGrupoDeProcessos().getProcessos().get(j).getPid();
-                        if (System.getProperty("os.name").toLowerCase().contains("win")) {
-                            // Se estiver em um sistema Windows
-                            try {
-                                Process process = Runtime.getRuntime().exec("taskkill /F /PID " + pid);
-                                process.waitFor();
-                                System.out.println("O processo com PID " + pid + " foi encerrado.");
-                            } catch (IOException | InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        } else {
-                            try {
-                                Process process = Runtime.getRuntime().exec("kill " + pid);
-                                process.waitFor();
-                                System.out.println("O processo com PID " + pid + " foi encerrado.");
-                            } catch (IOException | InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }
-            }
-
             ObterMemoriaSwap.ObterMemoriaSwap();
             System.out.println("Digite o email: ");
             Scanner leitorEmail = new Scanner(System.in);
@@ -102,8 +39,6 @@ public class TesteProjetoVictor {
             if(!bancoDeDados.autenticarUsuario(email, senha).isEmpty()){
                 logado = true;
                 idFuncionario = bancoDeDados.autenticarUsuario(email, senha).get(0).getIdFuncionario();
-                fkEmpresa = bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario);
-
                 if(System.getProperty("os.name").toLowerCase().contains("win")){
                     sistemaOperacional = "Windows";
                 } else {
@@ -111,18 +46,19 @@ public class TesteProjetoVictor {
                 }
 
                 if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
-                    bancoDeDados.insertComputador(nomeComputador, fkEmpresa, sistemaOperacional);
+                    Integer fkEmpresaDoFuncionario = bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario);
+                    bancoDeDados.insertComputador(nomeComputador, fkEmpresaDoFuncionario,sistemaOperacional);
                     idComputador = bancoDeDados.selectIdComputador(nomeComputador);
 
                     bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
                     bancoDeDados.insertComponente(RAM.getNomeComponente());
-
-
                     if(!looca.getGrupoDeDiscos().getVolumes().isEmpty()){
                         for(int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
                             bancoDeDados.insertComponente(HD.getNomeComponente() + (i + 1));
+                            hd++;
                         }
                     }
+                    bancoDeDados.insertComponente(REDE.getNomeComponente());
                     bancoDeDados.insertComponente(TEMPOATIVIDADE.getNomeComponente());
 
                     for(int i = 0; i < bancoDeDados.selectComponente().size(); i++){
@@ -130,23 +66,22 @@ public class TesteProjetoVictor {
 
                         switch (idComponente) {
                             case 1 -> {
-                                bancoDeDados.insertEspecificacao(idComputador, idComponente, 100.);
+                                bancoDeDados.insertEspecificacao(idComputador, idComponente, looca.getGrupoDeDiscos().getDiscos().get(0).getTamanho().doubleValue() / conversorGb);
+                                bancoDeDados.insertEspecificacao(idComputador, idComponente, looca.getGrupoDeDiscos().getDiscos().get(1).getTamanho().doubleValue() / conversorGb);
                             }
                             case 2 -> {
                                 bancoDeDados.insertEspecificacao(idComputador, idComponente, looca.getMemoria().getTotal().doubleValue() / conversorGb);
                             }
                             case 3 -> {
-                                bancoDeDados.insertEspecificacao(idComputador, idComponente, ((looca.getGrupoDeDiscos().getVolumes().get(0).getTotal().doubleValue() / conversorGb)) - 30);
+                                bancoDeDados.insertEspecificacao(idComputador, idComponente, 100.);
                             }
-                            case 4 -> {
-                                bancoDeDados.insertEspecificacao(idComputador, idComponente, null);
-                            }
+                            case 4, 5 ->
+                                    bancoDeDados.insertEspecificacao(idComputador, idComponente, null);
                         }
                     }
                 } else {
                     idComputador = bancoDeDados.selectIdComputador(nomeComputador);
                 }
-
 
                 if(bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario) != bancoDeDados.getFkEmpresaDaMaquinaPeloNome(nomeComputador)){
                     logado = false;
@@ -156,70 +91,29 @@ public class TesteProjetoVictor {
                     System.out.println("""
                 USUÁRIO %s AUTENTICADO COM SUCESSO!
                 INICIANDO A CAPTURA DE DADOS DA MÁQUINA...
-                """.formatted(bancoDeDadosAws.autenticarUsuario(email, senha).get(0).getNomeFuncionario()));
+                """.formatted(bancoDeDados.autenticarUsuario(email, senha).get(0).getNomeFuncionario()));
                 }
             }
         } while (!logado);
-
-        System.out.println("Id: " + idComputador + "Nome da máquina: " + nomeComputador);
-
-        if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
-            bancoDeDados.insertComputador(nomeComputador, fkEmpresa, sistemaOperacional);
-            idComputadorLocal = bancoDeDados.selectIdComputador(nomeComputador);
-
-            bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
-            bancoDeDados.insertComponente(RAM.getNomeComponente());
-
-            if(!looca.getGrupoDeDiscos().getVolumes().isEmpty()){
-                for(int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
-                    bancoDeDados.insertComponente(HD.getNomeComponente() + (i + 1));
-                }
-            }
-            bancoDeDados.insertComponente(TEMPOATIVIDADE.getNomeComponente());
-
-            for(int i = 0; i < bancoDeDados.selectComponente().size(); i++){
-                Integer idComponente = bancoDeDados.selectComponente().get(i).getIdComponente();
-
-                switch (idComponente) {
-                    case 1 -> {
-                        bancoDeDados.insertEspecificacao(idComputadorLocal, idComponente, 100.);
-                    }
-                    case 2 -> {
-                        bancoDeDados.insertEspecificacao(idComputadorLocal, idComponente, looca.getMemoria().getTotal().doubleValue() / conversorGb);
-                    }
-                    case 3 -> {
-                        bancoDeDados.insertEspecificacao(idComputadorLocal, idComponente, ((looca.getGrupoDeDiscos().getVolumes().get(0).getTotal().doubleValue() / conversorGb)));
-                    }
-                    case 4 -> {
-                        bancoDeDados.insertEspecificacao(idComputadorLocal, idComponente, null);
-                    }
-                }
-            }
-        } else {
-            idComputadorLocal = bancoDeDados.selectIdComputador(nomeComputador);
-        }
-
 
         Timer timer = new Timer();
         int delay = 0; // Tempo de espera antes da primeira execução (0 significa que será executado imediatamente)
         int interval = 5000; // Intervalo entre as execuções em milissegundos (5 segundos)
 
         Integer finalIdComputador = idComputador;
-        Integer finalIdComputadorLocal = idComputadorLocal;
-        Integer finalFkEmpresa = fkEmpresa;
-
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 System.out.println("DADOS SENDO MONITORADOS...");
 
-                Double discoDisponivel = looca.getGrupoDeDiscos().getVolumes().get(0).getDisponivel().doubleValue() / conversorGb;
+                Double discoDisponivel1 = looca.getGrupoDeDiscos().getVolumes().get(0).getDisponivel().doubleValue() / conversorGb;
+                Double discoDisponivel2 = looca.getGrupoDeDiscos().getVolumes().get(1).getDisponivel().doubleValue() / conversorGb;
                 Double memoriaRamEmUso = looca.getMemoria().getEmUso().doubleValue() / conversorGb;
                 Double processadorEmUso = looca.getProcessador().getUso();
                 Double swapDisponivel = ObterMemoriaSwap.ObterMemoriaSwap().get(0).doubleValue() / conversorGb;
                 Double numeroThreads = looca.getGrupoDeProcessos().getTotalThreads().doubleValue();
                 Double numeroProcessos = looca.getGrupoDeProcessos().getTotalProcessos().doubleValue();
+                Double redeAtual = 0.;
                 Integer segundos = looca.getSistema().getTempoDeAtividade().intValue();
-                List<Metrica> metrica = bancoDeDadosAws.getMetricasPorFkEmpresa(finalFkEmpresa, finalIdComputador);
 
                 Integer dias = segundos / 86400;
                 segundos = segundos % 86400;
@@ -230,77 +124,71 @@ public class TesteProjetoVictor {
                 Integer minutos = segundos / 60;
                 segundos = segundos % 60;
 
-                for(int i = 0; i < bancoDeDadosAws.selectComponente().size(); i++){
-                    Integer idComponenteAws = bancoDeDadosAws.selectComponente().get(i).getIdComponente();
-
-                    switch (idComponenteAws) {
-                        case  1-> {
-                            bancoDeDados.insertRegistro(processadorEmUso, "UsoCpu", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(dias), "Dias", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(horas), "Horas", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(minutos), "Minutos", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(segundos), "Segundos", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(numeroProcessos, "QuantidadeProcessos", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(numeroThreads, "QuantidadeThreads", finalIdComputador * 4 - 3);
-
-                            if(processadorEmUso >= metrica.get(0).getGraveCPU()){
-                                bancoDeDados.insertAlertas("Crítico",finalIdComputador * 4 - 3, finalIdComputador);
-                            } else if(processadorEmUso >= metrica.get(0).getMedioCPU()){
-                                bancoDeDados.insertAlertas("Médio", finalIdComputador * 4 - 3, finalIdComputador);
-                            }
-                        }
-                        case 2 -> {
-                            bancoDeDados.insertRegistro(memoriaRamEmUso, "Uso", finalIdComputador * 4 - 2);
-
-                            if(memoriaRamEmUso >= (looca.getMemoria().getTotal().doubleValue() / conversorGb) * (metrica.get(0).getGraveRam() / 100)){
-                                bancoDeDados.insertAlertas("Crítico", finalIdComputador * 4 - 2, finalIdComputador);
-                            } else if(memoriaRamEmUso >= (looca.getMemoria().getTotal().doubleValue() / conversorGb) * (metrica.get(0).getMedioRam() / 100)){
-                                bancoDeDados.insertAlertas("Médio", finalIdComputador * 4 - 2, finalIdComputador);
-                            }
-                        }
-                        case 3 -> {
-                            bancoDeDados.insertRegistro(discoDisponivel, "Uso", finalIdComputador * 4 - 1);
-                            bancoDeDados.insertRegistro(swapDisponivel, "SwapDisponivel", finalIdComputador * 4 - 1);
-
-                            Double tamanhoDiscoGb = looca.getGrupoDeDiscos().getVolumes().get(0).getTotal().doubleValue() / conversorGb;
-                            Double porcentagemMedio = metrica.get(0).getMedioDisco() / 100;
-                            Double porcentagemGrave = metrica.get(0).getGraveDisco() / 100;
-
-
-                            if(discoDisponivel < (tamanhoDiscoGb - (tamanhoDiscoGb * porcentagemGrave))){
-                                bancoDeDados.insertAlertas("Crítico", finalIdComputador * 4 - 1, finalIdComputador);
-                            } else if(discoDisponivel < (tamanhoDiscoGb - (tamanhoDiscoGb * porcentagemMedio))){
-                                bancoDeDados.insertAlertas("Médio", finalIdComputador * 4 - 1, finalIdComputador);
-                            }
-                        }
-                    }
+                if((looca.getRede().getGrupoDeInterfaces().getInterfaces().get(0).getBytesEnviados().doubleValue() / conversorMb) > 100000){
+                    redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(0).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(0).getPacotesRecebidos().doubleValue()) / conversorMb;
+                } else if((looca.getRede().getGrupoDeInterfaces().getInterfaces().get(1).getBytesEnviados().doubleValue() / conversorMb) > 100000){
+                    redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(1).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(1).getPacotesRecebidos().doubleValue()) / conversorMb;
+                } else if((looca.getRede().getGrupoDeInterfaces().getInterfaces().get(2).getBytesEnviados().doubleValue() / conversorMb) > 100000){
+                    redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(2).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(2).getPacotesRecebidos().doubleValue()) / conversorMb;
+                } else if((looca.getRede().getGrupoDeInterfaces().getInterfaces().get(3).getBytesEnviados().doubleValue() / conversorMb) > 100000){
+                    redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(3).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(3).getPacotesRecebidos().doubleValue()) / conversorMb;
                 }
 
-                for(int i = 0; i < bancoDeDados.selectComponente().size() - 1; i++){
+                Boolean parar = false;
+                do{
+                    System.out.println("""
+                       *-----------------------*       
+                       | O que quer monitorar: |
+                       | 1 - HD'S              |
+                       | 2 - RAM               |
+                       | 3 - PROCESSADOR       |
+                       | 4 - REDE              |
+                       | 5 - Sair              |
+                       *-----------------------*
+                        """);
+                    Scanner leitorOpcao = new Scanner(System.in);
+                    Integer opcao = leitorOpcao.nextInt();
 
-                    Integer idComponenteLocal = bancoDeDados.selectComponente().get(i).getIdComponente();
+                    switch (opcao){
+                        case 1:
+                            bancoDeDados.insertRegistro(discoDisponivel1, "Uso", 1);
+                            bancoDeDados.insertRegistro(discoDisponivel2, "Uso", 2);
+                            System.out.println("Disco sendo usado: " + discoDisponivel1);
+                            System.out.println("Disco sendo usado: " + discoDisponivel2);
+                            break;
+                        case 2:
+                            bancoDeDados.insertRegistro(memoriaRamEmUso, "Uso", 3);
+                            System.out.println("Memoria RAM sendo usada: " + memoriaRamEmUso);
+                            break;
+                        case 3:
+                            bancoDeDados.insertRegistro(processadorEmUso, "Uso", 4);
+                            bancoDeDados.insertRegistro(Double.valueOf(dias), "Dias", 4);
+                            bancoDeDados.insertRegistro(Double.valueOf(horas), "Horas", 4);
+                            bancoDeDados.insertRegistro(Double.valueOf(minutos), "Minutos", 4);
+                            bancoDeDados.insertRegistro(Double.valueOf(segundos), "Segundos", 4);
+                            bancoDeDados.insertRegistro(numeroProcessos, "Quantidade", 4);
+                            bancoDeDados.insertRegistro(numeroThreads, "Quantidade", 4);
+                            System.out.println("Processador em uso: " + processadorEmUso);
+                            System.out.println("Dias em uso: " + Double.valueOf(dias));
+                            System.out.println("Horas :" + Double.valueOf(horas));
+                            System.out.println("Minutos: " + Double.valueOf(minutos));
+                            System.out.println("Segundos: " + Double.valueOf(segundos));
+                            System.out.println("Quantidade de processos: " + numeroProcessos);
+                            System.out.println("Therads: " + numeroThreads);
 
-                    switch (idComponenteLocal) {
-                        case  1-> {
-                            bancoDeDados.insertRegistro(processadorEmUso, "UsoCpu", finalIdComputadorLocal * 4 - 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(dias), "Dias", finalIdComputadorLocal * 4 - 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(horas), "Horas", finalIdComputadorLocal * 4 - 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(minutos), "Minutos", finalIdComputadorLocal * 4 - 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(segundos), "Segundos", finalIdComputadorLocal * 4 - 3);
-                            bancoDeDados.insertRegistro(numeroProcessos, "QuantidadeProcessos", finalIdComputadorLocal * 4 - 3);
-                            bancoDeDados.insertRegistro(numeroThreads, "QuantidadeThreads", finalIdComputadorLocal * 4 - 3);
-                        }
-                        case 2 -> {
-                            bancoDeDados.insertRegistro(memoriaRamEmUso, "Uso", finalIdComputadorLocal * 4 - 2);
-                        }
-                        case 3 -> {
-                            bancoDeDados.insertRegistro(discoDisponivel, "Uso", finalIdComputadorLocal * 4 - 1);
-                            bancoDeDados.insertRegistro(swapDisponivel, "SwapDisponivel", finalIdComputadorLocal * 4 - 1);
-                        }
+                            break;
+                        case 4:
+                            bancoDeDados.insertRegistro(redeAtual, "Velocidade", 5);
+                            System.out.println("Rede atual: " + redeAtual);
+                            break;
+                        case 5:
+                            System.out.println("Até logo!");
+                            parar = true;
+                            break;
                     }
-                }
+
+                }while(!parar);
             }
         }, delay, interval);
-
     }
 }
