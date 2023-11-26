@@ -158,9 +158,9 @@ function excluirMaquina() {
         resposta.json().then(json => {
           console.log(json);
           console.log(JSON.stringify(json));
-          alert("Máquina de ID: " + idComputadorVar + "excluída!")
+          alert("Máquina de ID: " + idComputadorVar + " excluída!")
           fecharModal();
-          selectComputadores();
+          removerDivMaquinaExcluida(idComputadorVar);
         });
       } else {
         alert("Erro na exclusão da maquina! ")
@@ -174,6 +174,17 @@ function excluirMaquina() {
 
   return false;
 }
+
+function removerDivMaquinaExcluida(idComputador) {
+  var divRemovida = document.getElementById(`maquina${idComputador}`);
+  
+  if (divRemovida && divRemovida.parentNode) {
+    divRemovida.parentNode.removeChild(divRemovida);
+  } else {
+    console.log("Não foi possível encontrar ou remover a div.");
+  }
+}
+
 
 function selectComputador() {
   var nomeMaquinaVar = "Notebook-Lucas";

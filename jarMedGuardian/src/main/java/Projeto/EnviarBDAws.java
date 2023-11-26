@@ -96,9 +96,9 @@ public class EnviarBDAws {
         con.update("INSERT INTO alertas (tipoAlerta, fkEspecificacao, fkComputador, dataHoraAlerta) VALUES (?, ?, ?, ?)", tipoAlerta, fkEspecificacao, fkComputador, dataHoraAtual());
         String componente;
 
-        if(fkEspecificacao == 1){
+        if(fkEspecificacao == (fkComputador * 4 - 3)){
             componente = "CPU";
-        } else if (fkEspecificacao == 3){
+        } else if (fkEspecificacao == (fkComputador * 4 - 2)){
             componente = "RAM";
         } else {
             componente = "Disco";
