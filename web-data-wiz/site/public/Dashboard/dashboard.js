@@ -175,17 +175,16 @@ function excluirMaquina() {
   return false;
 }
 
-function removerDivMaquinaExcluida(idComputador){
-
-var divRemovida = document.getElementById(`maquina${idComputador}`)
-
-if(divRemovida){
-  divRemovida.remove();
-} else {
-  console.log("Num achei a div nao")
+function removerDivMaquinaExcluida(idComputador) {
+  var divRemovida = document.getElementById(`maquina${idComputador}`);
+  
+  if (divRemovida && divRemovida.parentNode) {
+    divRemovida.parentNode.removeChild(divRemovida);
+  } else {
+    console.log("Não foi possível encontrar ou remover a div.");
+  }
 }
 
-}
 
 function selectComputador() {
   var nomeMaquinaVar = "Notebook-Lucas";
