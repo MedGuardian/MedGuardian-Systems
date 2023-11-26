@@ -22,7 +22,7 @@ public class Log {
     public static void main(String[] args) throws IOException {
 
         Looca looca = new Looca();
-
+        Slack slack = new Slack();
         Double processadorEmUso = looca.getProcessador().getUso();
 
         Integer segundos = looca.getSistema().getTempoDeAtividade().intValue();
@@ -33,7 +33,7 @@ public class Log {
         Integer horas = segundos / 3600;
         segundos = segundos % 3600;
 
-        FileWriter arq = new FileWriter("C:\\Users\\sarah\\OneDrive\\Área de Trabalho\\TempoDeAtividade.txt");
+        FileWriter arq = new FileWriter("C:\\Users\\Aluno\\Downloads\\TempoDeAtividade.txt");
         PrintWriter gravarArq = new PrintWriter(arq);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
@@ -46,7 +46,8 @@ public class Log {
 
         arq.close();
 
-        System.out.printf("\nO alerta de  uso foi gravado com sucesso \"C:\\Users\\sarah\\OneDrive\\Área de Trabalho\\TempoDeAtividade.txt");
+        System.out.printf("\nO alerta de  uso foi gravado com sucesso \"C:\\Users\\sarah\\OneDrive\\Área de Trabalho\\TempoDeAtividade.txt \n");
+        slack.enviarArquivoSlack("Log", "C:\\Users\\Aluno\\Downloads\\TempoDeAtividade.txt", "Aqui está o log");
     }
 }
 
