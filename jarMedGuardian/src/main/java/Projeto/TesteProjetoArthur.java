@@ -1,19 +1,10 @@
 package Projeto;
 
 import com.github.britooo.looca.api.core.Looca;
-import okhttp3.*;
 
-import javax.swing.*;
-import com.github.britooo.looca.api.group.janelas.Janela;
-
-import java.io.IOException;
 import java.util.*;
 import java.util.List;
 import java.util.Timer;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 public class TesteProjetoArthur {
     private static Looca looca = new Looca();
     static Boolean continuarMonitoramento = true;
@@ -60,7 +51,7 @@ public class TesteProjetoArthur {
                 }
 
                 if (bancoDeDados.verificarComputadorCadastrado(nomeComputador)) {
-                    bancoDeDados.insertComputador(nomeComputador, fkEmpresa, sistemaOperacional);
+                    bancoDeDados.insertComputador(nomeComputador, sistemaOperacional);
                     idComputador = bancoDeDados.selectIdComputador(nomeComputador);
 
                     bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
@@ -113,7 +104,7 @@ public class TesteProjetoArthur {
         System.out.println("Id: " + idComputador + "Nome da máquina: " + nomeComputador);
 
         if (bancoDeDados.verificarComputadorCadastrado(nomeComputador)) {
-            bancoDeDados.insertComputador(nomeComputador, fkEmpresa, sistemaOperacional);
+            bancoDeDados.insertComputador(nomeComputador, sistemaOperacional);
             idComputadorLocal = bancoDeDados.selectIdComputador(nomeComputador);
 
             bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
