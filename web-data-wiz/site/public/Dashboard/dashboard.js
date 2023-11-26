@@ -71,7 +71,11 @@ function fecharModal() {
   overlay.style.display = "none";
 }
 
-function abrirModalExcluirMaquina() {
+var idMaquinaExcluida = null;
+
+function abrirModalExcluirMaquina(idComputador) {
+
+  idMaquinaExcluida = idComputador;
 
   const modalExcluirMaquina = document.getElementById("modalExcluirMaquina");
   const overlay = document.getElementById("overlay");
@@ -83,6 +87,8 @@ function abrirModalExcluirMaquina() {
     top: 0,
     behavior: "smooth"
   });
+
+
 
 }
 
@@ -132,9 +138,9 @@ iconeAlterarMaquina.addEventListener('click', (event) => {
   }
 });
 
-function excluirMaquina(idComputador) {
+function excluirMaquina() {
 
-  var idComputadorVar = idComputador;
+  var idComputadorVar = idMaquinaExcluida;
 
   // Chama selectComputador e aguarda a resolução da Promessa
     fetch("/usuarios/excluirMaquina", {
@@ -286,7 +292,7 @@ function gerarDivPaiComputadoresCadastrados(contador) {
 
 function gerarDivFilhoComputadoresCadastrados(idComputador, nomeComputador, sistemaOperacional, endereco, i, contador) {
   var maquinasCadastradas = document.getElementById(`maquinasCadastradas${contador}`);
-  maquinasCadastradas.innerHTML += `<div onload="procurarAlertasPorId(${idComputador})" id="maquina${i + 1}" class="boxMaquinaCadastrada" id="idComputador${idComputador}">
+  maquinasCadastradas.innerHTML += `<div id="maquina${i + 1}" class="boxMaquinaCadastrada">
   <div class="spanIconesCardDashboard">
     <div class="spansCardDashboard" onclick="abrirDashboardEspecifica(${idComputador})">
       <div class="spanNome">
