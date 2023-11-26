@@ -1,18 +1,9 @@
--- Arquivo de apoio, caso você queira criar tabelas como as aqui criadas para a API funcionar.
--- Você precisa executar os comandos no banco de dados para criar as tabelas,
--- ter este arquivo aqui não significa que a tabela em seu BD estará como abaixo!
-
-/*
-comandos para mysql - banco local - ambiente de desenvolvimento
-*/
-
-
-DROP DATABASE IF EXISTS medguardian;
+DROP DATABASE medguardian;
 CREATE DATABASE medguardian;
 USE medguardian;
 
-CREATE TABLE IF NOT EXISTS empresa (
-  idEmpresa INT AUTO_INCREMENT NOT NULL,
+CREATE TABLE  empresa (
+  idEmpresa INT identity(1,1) NOT NULL,
   razaoSocial VARCHAR(255) NOT NULL,
   cnpjEmpresa VARCHAR(18) NOT NULL,
   emailEmpresa VARCHAR(255) NOT NULL,
@@ -20,8 +11,8 @@ CREATE TABLE IF NOT EXISTS empresa (
   senhaEmpresa VARCHAR(255) NOT NULL,
   PRIMARY KEY (idEmpresa));
 
-CREATE TABLE IF NOT EXISTS endereco (
-  idEndereco INT AUTO_INCREMENT NOT NULL,
+CREATE TABLE  endereco (
+  idEndereco INT identity(1,1) NOT NULL,
   cep CHAR(8) NOT NULL,
   logradouro VARCHAR(255) NULL,
   numeroEmpresa INT NOT NULL,
@@ -32,8 +23,8 @@ CREATE TABLE IF NOT EXISTS endereco (
     FOREIGN KEY (fkEmpresa)
     REFERENCES empresa (idEmpresa));
 
-CREATE TABLE IF NOT EXISTS funcionario (
-  idFuncionario INT AUTO_INCREMENT NOT NULL,
+CREATE TABLE  funcionario (
+  idFuncionario INT identity(1,1) NOT NULL,
   nomeFuncionario VARCHAR(255) NOT NULL,
   fkEmpresa INT NOT NULL,
   emailFuncionario VARCHAR(255) NOT NULL,
@@ -45,21 +36,21 @@ CREATE TABLE IF NOT EXISTS funcionario (
     FOREIGN KEY (fkEmpresa)
     REFERENCES empresa (idEmpresa));
 
-CREATE TABLE IF NOT EXISTS computador (
-  idComputador INT AUTO_INCREMENT NOT NULL,
+CREATE TABLE  computador (
+  idComputador INT identity(1,1) NOT NULL,
   nomeComputador VARCHAR(255) NOT NULL,
   sistemaOperacional VARCHAR(255) NOT NULL,
   fkEmpresa INT,
   CONSTRAINT fk_computador_empresa FOREIGN KEY (fkEmpresa) REFERENCES empresa(idEmpresa),
   PRIMARY KEY (idComputador));
 
-CREATE TABLE IF NOT EXISTS componente (
-  idComponente INT AUTO_INCREMENT NOT NULL,
+CREATE TABLE  componente (
+  idComponente INT identity(1,1) NOT NULL,
   nomeComponente VARCHAR(225) NOT NULL,
   PRIMARY KEY (idComponente));
   
-CREATE TABLE IF NOT EXISTS especificacao(
-idEspecificacao INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+CREATE TABLE  especificacao(
+idEspecificacao INT identity(1,1) PRIMARY KEY NOT NULL,
 fkComputador INT NOT NULL,
 fkComponente INT NOT NULL,
 totalComponente DECIMAL(6,2) NULL,
@@ -69,8 +60,8 @@ CONSTRAINT fk_componente_especificacao FOREIGN KEY (fkComponente)
 	REFERENCES componente(idComponente)
 );
 
-CREATE TABLE IF NOT EXISTS registro (
-  idregistro INT AUTO_INCREMENT NOT NULL,
+CREATE TABLE  registro (
+  idregistro INT identity(1,1) NOT NULL,
   dataHoraRegistro DATETIME NOT NULL,
   registro DECIMAL(6,2) NOT NULL,
   tipoCaptura VARCHAR(255) NULL,
@@ -78,8 +69,8 @@ CREATE TABLE IF NOT EXISTS registro (
   PRIMARY KEY (idregistro)
 );
 
-CREATE TABLE IF NOT EXISTS metrica(
-idMetrica INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE  metrica(
+idMetrica INT PRIMARY KEY identity(1,1),
 graveRam DECIMAL(4,2) NOT NULL,
 medioRam DECIMAL(4,2) NOT NULL,
 graveCPU DECIMAL(4,2) NOT NULL,
@@ -90,26 +81,65 @@ fkEmpresa INT NOT NULL,
 fkComputador INT NULL
 );
 
-CREATE TABLE IF NOT EXISTS alertas(
+CREATE TABLE  alertas(
 idAlerta INT PRIMARY KEY NOT NULL,
 tipoAlerta VARCHAR(255) NOT NULL,
-fkComputador INT NOT NULL);
+fkEspecificacao INT NOT NULL,
+CONSTRAINT fkEspecificacao_alertas FOREIGN KEY (fkEspecificacao)
+	REFERENCES especificacao(idEspecificacao),
+fkComputador INT NOT NULL,
+CONSTRAINT fkComputador_alertas FOREIGN KEY (fkComputador)
+	REFERENCES computador(idComputador),
+    dataHoraAlerta DATETIME NOT NULL);
     
 INSERT INTO empresa (razaoSocial, cnpjEmpresa, emailEmpresa, contatoEmpresa, senhaEmpresa) VALUES ('a', 1, 'lucasa@gmail.com', '21102002', '1');
 INSERT INTO funcionario (nomeFuncionario, fkEmpresa, emailFuncionario, senhaFuncionario, tipoAcesso) VALUES ('lucas', 1, 'lucas@gmail.com', '21102002', "Estagiário");
+
+SELECT * FROM empresa;
+SELECT * FROM endereco;
+SELECT * FROM funcionario;
+SELECT * FROM computador;
+SELECT * FROM componente;
+SELECT * FROM especificacao;
+select * from metrica;
+select * from alertas;
+SELECT * FROM registro JOIN especificacao ON fkEspecificacao = idEspecificacao JOIN componente ON fkComponente = idComponente;
+
+delete from especificacao where fkComputador = 1;
+
+select * from registro join especificacao
+	on fkEspecificacao = idEspecificacao
+		join computador
+			on idComputador = fkComputador
+		where idComputador = 1;
+        
+ UPDATE endereco SET cep = 05882000, Logradouro = 'bla', numeroEmpresa = 1263, complementoEmpresa = 'bla' WHERE fkEmpresa = 1;
+ 
+ select * from endereco join empresa
+	on fkEmpresa = idEmpresa;
+	
+select dataHoraRegistro, registro, tipoCaptura from registro join especificacao
+	on fkEspecificacao = idEspecificacao where fkEspecificacao = 5;
     
+    SELECT * FROM registro;
+    
+    SELECT dataHoraRegistro, registro, tipoCaptura FROM registro WHERE fkEspecificacao = 1 ORDER BY idRegistro DESC LIMIT 6;
+    
+SELECT fkComponente, totalComponente FROM especificacao WHERE fkComponente = 1;
 
-/*
-comandos para criar usuário em banco de dados azure, sqlserver,
-com permissão de insert + update + delete + select
-*/
+select * from especificacao;
+SELECT dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 AND tipoCaptura = "UsoCPU" ORDER BY idRegistro DESC LIMIT 6;
+SELECT registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 ORDER BY idRegistro DESC LIMIT 7;
+SELECT * FROM computador WHERE fkEmpresa = '2';
+select * from empresa;
+select * from funcionario;
+insert into computador (nomeComputador, sistemaOperacional, fkEmpresa) values 
+('notebook-kat', 'windows', 2),
+('notebook-pedro', 'windows', 2),
+('notebook-victor', 'linux', 2);
 
-CREATE USER [usuarioParaAPIWebDataViz_datawriter_datareader]
-WITH PASSWORD = '#Gf_senhaParaAPIWebDataViz',
-DEFAULT_SCHEMA = dbo;
-
-EXEC sys.sp_addrolemember @rolename = N'db_datawriter',
-@membername = N'usuarioParaAPIWebDataViz_datawriter_datareader';
-
-EXEC sys.sp_addrolemember @rolename = N'db_datareader',
-@membername = N'usuarioParaAPIWebDataViz_datawriter_datareader';
+select * from registro join especificacao on idEspecificacao = fkEspecificacao 
+join computador on idComputador = fkComputador join empresa on fkEmpresa = idEmpresa where fkEmpresa = 2 and fkEspecificacao = 3 and tipoCaptura = 'Uso'
+order by idRegistro desc limit 6;
+use medguardian;
+select * from registro;

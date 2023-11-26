@@ -75,5 +75,9 @@ router.post("/excluirFuncionario", function (req, res) {
     usuarioController.excluirFuncionario(req, res);
 });
 
+router.post("/selectAlertas", function (req, res) {
+    usuarioController.selectAlertas(req, res);
+});
+
 
 module.exports = router;

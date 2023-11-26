@@ -7,16 +7,15 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class EnviarBD {
+public class EnviarBDAws {
 
     // Criar o objeto conexão.
-    Conexao conexao = new ConexaoLocal();
+    ConexaoAws conexao = new ConexaoAws();
     JdbcTemplate con = conexao.getConexaoDoBanco();
 
-    int i = 0;
     public List<Funcionario> autenticarUsuario(String email, String senha){
         List<Funcionario> usuario = con.query("SELECT * FROM funcionario WHERE emailFuncionario = ? AND senhaFuncionario = ?", new BeanPropertyRowMapper<>(Funcionario.class), email, senha);
-            mostrarMensagem(usuario);
+        mostrarMensagem(usuario);
         return usuario;
     }
 
@@ -55,6 +54,7 @@ public class EnviarBD {
 
     public void insertComputador(String nomeComputador, Integer fkEmpresa, String sistemaOperacional){
         con.update("INSERT INTO computador (nomeComputador, fkEmpresa, sistemaOperacional) VALUES (?, ?, ?)",nomeComputador, fkEmpresa, sistemaOperacional);
+        System.out.println("Computador: " + nomeComputador + " cadastrado!");
     }
     public String dataHoraAtual(){
         LocalDateTime dataHoraAtual = LocalDateTime.now();
@@ -82,5 +82,26 @@ public class EnviarBD {
         return funcionario.get(0).getFkEmpresa();
     }
 
+    public List<Metrica> getMetricasPorFkEmpresa(Integer fkEmpresa, Integer fkComputador){
+        List<Metrica> metricas =  con.query("SELECT * FROM metrica WHERE fkEmpresa = ?", new BeanPropertyRowMapper<>(Metrica.class), fkEmpresa);
+        if(metricas.size() > 1){
+            metricas = con.query("SELECT * FROM metrica WHERE fkEmpresa = ? AND fkComputador = ?", new BeanPropertyRowMapper<>(Metrica.class), fkEmpresa, fkComputador);
+        }
+        return metricas;
+    }
+
+    public void insertAlertas(String tipoAlerta, Integer fkEspecificacao, Integer fkComputador){
+        con.update("INSERT INTO alertas (tipoAlerta, fkEspecificacao, fkComputador, dataHoraAlerta) VALUES (?, ?, ?, ?)", tipoAlerta, fkEspecificacao, fkComputador, dataHoraAtual());
+        String componente;
+
+        if(fkEspecificacao == 1){
+            componente = "CPU";
+        } else if (fkEspecificacao == 3){
+            componente = "RAM";
+        } else {
+            componente = "Disco";
+        }
+        System.out.println("Inserindo alerta do tipo: " + tipoAlerta + " no computador de Id: " + fkComputador + " e se trata do componente " + componente);
+    }
 
 }
