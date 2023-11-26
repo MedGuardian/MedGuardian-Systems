@@ -73,11 +73,6 @@ p {
     background-color: #FFF;
 }
 
-#checkbox {
-    border: 2px solid #527E4A;
-    background-color: #527E4A;
-}
-
 .headerAlteracoesExpecifico {
     display: flex;
     width: 15%;
@@ -146,6 +141,33 @@ p {
     text-align: center;
 }
 
+.containerGeral input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    border-radius: 2px;
+    border: 2px solid rgb(147, 255, 147);
+
+}
+
+input[type="checkbox"]:checked {
+    background-color: #274a28;
+    border-color: #66d56a;
+}
+
+input[type="checkbox"]::before {
+    content: "\2713";
+    /* Símbolo de checkmark Unicode */
+    display: block;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    line-height: 20px;
+}
+
 .botaoVoltar {
     margin: 1% 0;
     display: flex;
@@ -169,4 +191,9 @@ p {
     margin-left: 5%;
     height: 30px;
     width: 30px;
+}
+
+.headerAlteracoesExpecifico a {
+    cursor: pointer;
+    text-decoration: none;
 }

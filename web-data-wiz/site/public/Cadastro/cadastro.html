@@ -166,7 +166,7 @@
   function cnpjApi(cnpj) {
     // https://brasilapi.com.br/api/cnpj/v1/{cnpj}
     var cnpj = inputCNPJ.value
-    cnpjPre = inputCNPJ.value
+    cnpjPre = inputCNPJ.value.replace(/[^\d]/g, '');
     fetch(`https://brasilapi.com.br/api/cnpj/v1/${cnpj}`, {
       method: "GET",
       headers: {

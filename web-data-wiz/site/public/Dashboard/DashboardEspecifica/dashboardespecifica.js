@@ -4,6 +4,26 @@ function voltarDashboardGeral() {
     window.location.href = '../dashboard.html'
 }
 
+function abrirListaJanelas() {
+    const modalListaJanelas = document.getElementById("modalListaJanelas");
+    const sombreamento = document.getElementById("sombreamento");
+    modalListaJanelas.style.display = "flex"
+    sombreamento.style.display = "block";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+function fecharModalListarJanelas() {
+    const modalListaJanelas = document.getElementById("modalListaJanelas");
+    const sombreamento = document.getElementById("sombreamento");
+
+    modalListaJanelas.style.display = "none"
+    sombreamento.style.display = "none";
+}
+
 var divValorBoxLateralCpu = document.getElementById('divValorBoxLateralCpu');
 var divValorBoxLateralDisco = document.getElementById('divValorBoxLateralDisco');
 var divValorBoxLateralRam = document.getElementById('divValorBoxLateralRam');
@@ -29,7 +49,7 @@ var usoRamAtual = 0;
 
 var valoresCards = [velocidadeCpu, discoDisponivel, usoRamAtual];
 
-function atualizarSpanIndicadores(){
+function atualizarSpanIndicadores() {
     spanDias.innerHTML = Math.trunc(tempo_atividade_dias);
     spanHoras.innerHTML = Math.trunc(tempo_atividade_horas);
     spanMinutos.innerHTML = Math.trunc(tempo_atividade_minutos);
@@ -41,26 +61,26 @@ function atualizarSpanIndicadores(){
     spanThreads.innerHTML = Math.trunc(threads);
 }
 
-function atualizarValoresCardsLaterais(){
+function atualizarValoresCardsLaterais() {
     spanValorBoxLateralCpu.innerHTML = valoresCards[0];
     spanValorBoxLateralDisco.innerHTML = valoresCards[1];
     spanValorBoxLateralRam.innerHTML = (valoresCards[2] / 1).toFixed(1);
     spanTotalComponenteRam.innerHTML = (totalComponenteRam / 1).toFixed(1);
 }
 
-function atualizarCoresCardsLaterais(){
+function atualizarCoresCardsLaterais() {
 
-    if(valoresCards[0] > 80){
+    if (valoresCards[0] > 80) {
         divValorBoxLateralCpu.style.backgroundColor = 'rgba(255,0,0,.5)'
-    } else if (valoresCards[0] > 70){
+    } else if (valoresCards[0] > 70) {
         divValorBoxLateralCpu.style.backgroundColor = 'yellow'
     } else {
         divValorBoxLateralCpu.style.backgroundColor = '#718672'
     }
 
-    if(valoresCards[1] > 80){
+    if (valoresCards[1] > 80) {
         divValorBoxLateralDisco.style.backgroundColor = 'rgba(255,0,0,.5)'
-    } else if (valoresCards[1] > 70){
+    } else if (valoresCards[1] > 70) {
         divValorBoxLateralDisco.style.backgroundColor = 'yellow'
     } else {
         divValorBoxLateralDisco.style.backgroundColor = '#718672'
@@ -68,17 +88,17 @@ function atualizarCoresCardsLaterais(){
 
     var porcentagemUsoRam = (valoresCards[2] * 100) / 7.8;
 
-    if(porcentagemUsoRam > 90){
+    if (porcentagemUsoRam > 90) {
         divValorBoxLateralRam.style.backgroundColor = 'rgba(255,0,0,.5)'
-    } else if (porcentagemUsoRam > 80){
+    } else if (porcentagemUsoRam > 80) {
         divValorBoxLateralRam.style.backgroundColor = 'yellow'
     } else {
         divValorBoxLateralRam.style.backgroundColor = '#718672'
     }
 }
 
-function atualizarIndicadores(){
-   
+function atualizarIndicadores() {
+
     fetch("/usuarios/atualizarIndicadores", {
         method: "GET",
         headers: {
@@ -96,31 +116,31 @@ function atualizarIndicadores(){
                         especificacao.forEach((objeto) => {
                             const { fkEspecificacao, tipoCaptura, registro } = objeto;
 
-                            if (fkEspecificacao == 1){
-                                if(tipoCaptura == "UsoCpu"){
+                            if (fkEspecificacao == 1) {
+                                if (tipoCaptura == "UsoCpu") {
                                     valoresCards[0] = registro;
-                                } else if (tipoCaptura == "QuantidadeThreads"){
+                                } else if (tipoCaptura == "QuantidadeThreads") {
                                     threads = registro;
-                                } else if (tipoCaptura == "QuantidadeProcessos"){
+                                } else if (tipoCaptura == "QuantidadeProcessos") {
                                     processos = registro;
                                 } else {
-                                    if(tipoCaptura == "Dias"){
+                                    if (tipoCaptura == "Dias") {
                                         tempo_atividade_dias = registro;
-                                    } else if (tipoCaptura == "Horas"){
+                                    } else if (tipoCaptura == "Horas") {
                                         tempo_atividade_horas = registro;
-                                    } else if (tipoCaptura == "Minutos"){
+                                    } else if (tipoCaptura == "Minutos") {
                                         tempo_atividade_minutos = registro;
-                                    } else if (tipoCaptura == "Segundos"){
+                                    } else if (tipoCaptura == "Segundos") {
                                         tempo_atividade_segundos = registro;
                                     }
                                 }
-                            } else if(fkEspecificacao == 2){
+                            } else if (fkEspecificacao == 2) {
                                 valoresCards[2] = registro;
-                            } else if(fkEspecificacao == 3){
-                                if(tipoCaptura == "Uso"){
+                            } else if (fkEspecificacao == 3) {
+                                if (tipoCaptura == "Uso") {
                                     valoresCards[1] = registro;
                                 }
-                            } else if(fkEspecificacao == 4){
+                            } else if (fkEspecificacao == 4) {
                                 velocidade_de_rede = registro;
                             }
                         });
@@ -158,7 +178,7 @@ const data_graficoDesempenho = {
             data: [],
             backgroundColor: 'rgba(0, 189, 6, .15)',
             borderColor: 'rgba(0, 189, 6, 1)',
-            pointBackgroundColor: '#164018',
+            pointBackgroundColor: '#090909',
             pointBorderColor: 'rgba(255,255,255,.8',
             pointRadius: 5,
             borderWidth: 1,
@@ -184,7 +204,7 @@ const config_graficoDesempenho = {
                     color: '#2E2109;',
                     font: {
                         size: 20,
-                        family: 'LeagueSpartan',
+                        family: 'Poppins',
                         weight: 400
                     }
                 },
@@ -198,7 +218,7 @@ const config_graficoDesempenho = {
                     color: '#2E2109;',
                     font: {
                         size: 12,
-                        family: 'LeagueSpartan',
+                        family: 'Poppins',
                         weight: 600
                     }
                 }
@@ -210,10 +230,10 @@ const config_graficoDesempenho = {
                 text: 'Desempenho da CPU',
                 color: 'black',
                 font: {
-                    size: 25,
+                    size: 20,
                     color: 'black',
-                    family: 'LeagueSpartan',
-                    weight: 600
+                    family: 'Poppins',
+                    weight: 500
                 }
 
             },
@@ -221,11 +241,11 @@ const config_graficoDesempenho = {
                 display: false,
                 labels: {
                     font: {
-                        size: 20,
+                        size: 10,
                         color: 'white',
-                        family: 'LeagueSpartan',
+                        family: 'Poppins',
                         weight: 600,
-                        padding: 20
+                        padding: 15
                     }
                 }
             }
@@ -274,38 +294,38 @@ function atualizarGrafico() {
                             const minuto = dataHoraRegistro.substring(14, 16);  // Extrai o minuto da dataHora
                             const segundo = dataHoraRegistro.substring(17, 19); // Extrai o segundo da dataHora
 
-                            if (fkEspecificacao == 1){
-                                if(uso_cpu.length >= 6){
+                            if (fkEspecificacao == 1) {
+                                if (uso_cpu.length >= 6) {
                                     uso_cpu.shift();
                                 }
-                                    uso_cpu.push(registro);
-                                    if(dataHoraLabelsCPU.length >= 6){
-                                        dataHoraLabelsCPU.shift()
-                                    }
-                                    dataHoraLabelsCPU.push(`${hora}:${minuto}:${segundo}`)
-                            } else if(fkEspecificacao == 2){
+                                uso_cpu.push(registro);
+                                if (dataHoraLabelsCPU.length >= 6) {
+                                    dataHoraLabelsCPU.shift()
+                                }
+                                dataHoraLabelsCPU.push(`${hora}:${minuto}:${segundo}`)
+                            } else if (fkEspecificacao == 2) {
                                 if (uso_ram.length >= 6) {
                                     uso_ram.shift();
                                 }
                                 var porcentagemUsoRam = registro * 100 / totalComponenteRam;
                                 uso_ram.push(porcentagemUsoRam);
 
-                                if(dataHoraLabelsRAM.length >= 6){
+                                if (dataHoraLabelsRAM.length >= 6) {
                                     dataHoraLabelsRAM.shift()
                                 }
                                 dataHoraLabelsRAM.push(`${hora}:${minuto}:${segundo}`)
-                            } else if(fkEspecificacao == 3){
+                            } else if (fkEspecificacao == 3) {
 
-                                if(tipoCaptura == "SwapDisponivel"){
+                                if (tipoCaptura == "SwapDisponivel") {
                                     swapDisponivel = registro;
                                 } else {
                                     valoresCards[1] = registro;
-                                    if(uso_disco.length >= 6){
+                                    if (uso_disco.length >= 6) {
                                         uso_disco.shift();
                                     }
                                     var porcentagemUsoDisco = 100 - (registro * 100 / totalComponenteDisco);
                                     uso_disco.push(porcentagemUsoDisco)
-                                    if(dataHoraLabelsDisco.length >= 6){
+                                    if (dataHoraLabelsDisco.length >= 6) {
                                         dataHoraLabelsDisco.shift()
                                     }
                                     dataHoraLabelsDisco.push(`${hora}:${minuto}:${segundo}`)
@@ -330,7 +350,7 @@ function atualizarGrafico() {
         });
 
     return false;
-  }
+}
 
 
 setInterval(atualizarGrafico, 5000)
@@ -339,7 +359,7 @@ var totalComponenteRam = 0;
 var totalComponenteCPU = 0;
 var totalComponenteDisco = 0;
 
-function selectTotalComponentes(){
+function selectTotalComponentes() {
     fetch("/usuarios/selectTotalComponentes", {
         method: "GET",
         headers: {
@@ -356,19 +376,19 @@ function selectTotalComponentes(){
                         especificacao.forEach((objeto) => {
                             const { fkComponente, totalComponente } = objeto;
 
-                            if(fkComponente == 1){
+                            if (fkComponente == 1) {
                                 totalComponenteCPU = totalComponente;
-                            } else if(fkComponente == 2){
+                            } else if (fkComponente == 2) {
                                 totalComponenteRam = totalComponente;
-                            } else if (fkComponente == 3){
+                            } else if (fkComponente == 3) {
                                 totalComponenteDisco = totalComponente;
-                            }                  
+                            }
                         });
                     });
-                    
+
                 });
                 console.log("Consegui buscar o total dos componentes!")
-                
+
             } else {
                 console.log("Houve um erro ao fazer o select do total dos componentes!");
 
@@ -386,46 +406,56 @@ function selectTotalComponentes(){
 
 var valorN = 1;
 
-function escolherGrafico(n){
-    valorN = n;
-    plotarGrafico(valorN)
+
+function unchekedTodos() {
+    ['cpu', 'Disco', 'ram'].forEach((container) => document.getElementById(container).classList.remove("animacaoBorda"));
 }
+
+function escolherGrafico(n, container) {
+    unchekedTodos();
+    var boxSelecionada = document.getElementById(container);
+    boxSelecionada.classList.add("animacaoBorda");
+
+    valorN = n;
+    plotarGrafico(valorN);
+}
+
 
 function plotarGrafico(n) {
     atualizarComponenteEscolhido(n)
+
+
     switch (n) {
         case 1:
             uso_cpu.reverse();
             dataHoraLabelsCPU.reverse();
-            data_graficoDesempenho.datasets[0].data = uso_cpu.slice(0,6);
-            config_graficoDesempenho.options.plugins.title.text = 'Desempenho CPU'
+            data_graficoDesempenho.datasets[0].data = uso_cpu.slice(0, 6);
+            config_graficoDesempenho.options.plugins.title.text = 'Desempenho CPU';
             config_graficoDesempenho.options.scales.y.max = 50;
             config_graficoDesempenho.options.scales.y.min = 0;
-            data_graficoDesempenho.labels = dataHoraLabelsCPU.slice(0,6);
             break;
         case 2:
             uso_disco.reverse();
             dataHoraLabelsDisco.reverse();
-            data_graficoDesempenho.datasets[0].data = uso_disco.slice(0,6);
-            config_graficoDesempenho.options.plugins.title.text = 'Uso do disco'
+            data_graficoDesempenho.datasets[0].data = uso_disco.slice(0, 6);
+            config_graficoDesempenho.options.plugins.title.text = 'Uso do disco';
             config_graficoDesempenho.options.scales.y.max = 100;
             config_graficoDesempenho.options.scales.y.min = 0;
-            data_graficoDesempenho.labels = dataHoraLabelsDisco.slice(0,6);
             break;
         case 3:
             uso_ram.reverse();
             dataHoraLabelsRAM.reverse();
-            data_graficoDesempenho.datasets[0].data = uso_ram.slice(0,6);
+            data_graficoDesempenho.datasets[0].data = uso_ram.slice(0, 6);
             config_graficoDesempenho.options.plugins.title.text = 'Uso da RAM';
             config_graficoDesempenho.options.scales.y.max = 100;
             config_graficoDesempenho.options.scales.y.min = 80;
-            data_graficoDesempenho.labels = dataHoraLabelsRAM.slice(0,6);
             break;
     }
+
     graficoEmUso.update();
 }
 
-function atualizarComponenteEscolhido(n){
+function atualizarComponenteEscolhido(n) {
     var componenteSelecionado = document.getElementById('componenteSelecionado');
     var tipoValorComponenteSelecionado = document.getElementById('tipoValorComponenteSelecionado')
     var nomeComponente = document.getElementById('nomeComponente')
@@ -451,5 +481,9 @@ function atualizarComponenteEscolhido(n){
     }
 }
 
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
 
-
+const grafico_selecionado = getQueryParam("parametro")

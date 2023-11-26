@@ -5,10 +5,21 @@ function buscarPorId(id) {
   return database.executar(query);
 }
 
+function buscarAlertas(idComputador){
+  var query = `select top 3 * from alertas where fkComputador=${idComputador} order by idAlerta desc;`;
+  return database.executar(query);
+}
+
 function listar() {
   var query = `select * from empresa`;
 
   return database.executar(query);
+}
+function buscarMetricas(fkEmpresa) {
+  var instrucaoSql = `
+  SELECT * FROM metrica WHERE fkEMpresa = ${fkEmpresa}
+  `;
+  return database.executar(instrucaoSql);
 }
 
 function buscarPorCnpj(cnpj) {
@@ -22,5 +33,20 @@ function cadastrar(razaoSocial, cnpj) {
 
   return database.executar(query);
 }
-
-module.exports = { buscarPorCnpj, buscarPorId, cadastrar, listar };
+function cadMetrica(graveCpu, medioCpu, graveDisco, medioDisco, graveRam, medioRam, fkEmpresa){
+  console.log(graveCpu, medioCpu, graveDisco, medioDisco, graveRam, medioRam, fkEmpresa)
+  var instrucaoSQL = `INSERT INTO metrica (graveRam, MedioRam, graveCPU, medioCPU, graveDisco, medioDisco, fkEmpresa, fkComputador) VALUES
+    (${graveRam}, ${medioRam}, ${graveCpu}, ${medioCpu}, ${graveDisco}, ${medioDisco}, ${fkEmpresa}, null);
+    `
+    return database.executar(instrucaoSQL)
+  
+}
+module.exports = {
+  buscarPorCnpj,
+  buscarPorId,
+  cadastrar,
+  listar,
+  buscarMetricas,
+  cadMetrica,
+  buscarAlertas
+};

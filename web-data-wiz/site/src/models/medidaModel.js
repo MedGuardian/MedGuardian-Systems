@@ -31,6 +31,14 @@ function buscarUltimasMedidas(idAquario, limite_linhas) {
     return database.executar(instrucaoSql);
 }
 
+function buscarMetricas(fkEmpresa){
+    var instrucaoSql = `
+    SELECT * FROM metricas WHERE fkEMpresa = ${fkEmpresa}
+    `
+
+    return database.executar(instrucaoSql)
+}
+
 function buscarMedidasEmTempoReal(idAquario) {
 
     instrucaoSql = ''
@@ -64,5 +72,6 @@ function buscarMedidasEmTempoReal(idAquario) {
 
 module.exports = {
     buscarUltimasMedidas,
-    buscarMedidasEmTempoReal
+    buscarMedidasEmTempoReal,
+    buscarMetricas
 }
