@@ -282,6 +282,25 @@ order by idRegistro desc limit 6;`;
     return database.executar(instrucao);
 }
 
+function excluirFuncionario(idFuncionario){
+    console.log("ACESSEI O USUARIO MODEL");
+
+    var instrucao = `
+        DELETE FROM funcionario WHERE idFuncionario = ${idFuncionario};
+    `;
+
+    return database.executar(instrucao)
+        .then(() => {
+            console.log("Instrução SQL 1 concluída com sucesso. Executando instrução SQL: \n" + instrucao);
+            return database.executar(instrucao);
+        })
+        .catch((erro) => {
+            console.error("Erro durante a execução das instruções SQL:", erro);
+            throw erro;
+        });
+}
+
+
 module.exports = {
     autenticar,
     cadastrar,
@@ -299,5 +318,6 @@ module.exports = {
     selectFuncionarios,
     selectComputadores,
     selectLocalComputador,
-    atualizarDashboardGeral
+    atualizarDashboardGeral,
+    excluirFuncionario
 };
