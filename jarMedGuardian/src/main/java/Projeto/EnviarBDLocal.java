@@ -54,8 +54,8 @@ public class EnviarBDLocal {
         con.update("INSERT INTO registro (dataHoraRegistro, registro, tipoCaptura, fkEspecificacao) VALUES (?,?,?,?)", dataHoraAtual(), registro, tipoCaptura, fkEspecificacao);
     }
 
-    public void insertComputador(String nomeComputador, Integer fkEmpresa, String sistemaOperacional){
-        con.update("INSERT INTO computador (nomeComputador, fkEmpresa, sistemaOperacional) VALUES (?,?, ?)",nomeComputador, fkEmpresa, sistemaOperacional);
+    public void insertComputador(String nomeComputador, String sistemaOperacional){
+        con.update("INSERT INTO computador (nomeComputador, sistemaOperacional) VALUES (?, ?)",nomeComputador, sistemaOperacional);
     }
     public String dataHoraAtual(){
         LocalDateTime dataHoraAtual = LocalDateTime.now();
