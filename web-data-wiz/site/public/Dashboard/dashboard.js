@@ -1,6 +1,6 @@
 selectComputadores();
 selectTotalComponentes();
-setInterval(trocarCores, 3000);
+setInterval(atualizarDashboardGeral, 3000)
 
 var totalComponenteRam = 0;
 var totalComponenteCPU = 0;
@@ -238,12 +238,11 @@ var contador = 0;
 var idComputadorFinal = 0;
 
 async function selectComputadores() {
-  var idEmpresa;
   try {
     if (sessionStorage.idEmpresa == null) {
-       idEmpresa = sessionStorage.fkEmpresa;
+      var idEmpresa = sessionStorage.fkEmpresa;
     } else {
-    idEmpresa = sessionStorage.idEmpresa;
+      var idEmpresa = sessionStorage.idEmpresa;
     }
 
     const endereco = await selectLocalComputador(idEmpresa);
@@ -264,7 +263,6 @@ async function selectComputadores() {
       var contador = 0;
       data.forEach((computador, i) => {
         const { idComputador, nomeComputador, sistemaOperacional } = computador;
-        console.log(computador.nomeComputador)
         if (i % 4 == 0) {
           contador++
           gerarDivPaiComputadoresCadastrados(contador)
@@ -290,7 +288,7 @@ function gerarDivPaiComputadoresCadastrados(contador) {
 
 function gerarDivFilhoComputadoresCadastrados(idComputador, nomeComputador, sistemaOperacional, endereco, i, contador) {
   var maquinasCadastradas = document.getElementById(`maquinasCadastradas${contador}`);
-  maquinasCadastradas.innerHTML += `<div id="maquina${i + 1}" class="boxMaquinaCadastrada" id="idComputador${idComputador}">
+  maquinasCadastradas.innerHTML += `<div onload="procurarAlertasPorId(${idComputador})" id="maquina${i + 1}" class="boxMaquinaCadastrada" id="idComputador${idComputador}">
   <div class="spanIconesCardDashboard">
     <div class="spansCardDashboard" onclick="abrirDashboardEspecifica(${idComputador})">
       <div class="spanNome">
@@ -369,131 +367,140 @@ function abrirDashboardEspecifica(idComputador) {
   window.location.href = 'DashboardEspecifica/dashboardespecifica.html?parametro=' + idComputador;
 }
 
-// function trocarCores() {
-//   const classes = ["maquina1", "maquina2", "maquina3", "maquina4", "maquina5", "maquina6", "maquina7", "maquina8", "maquina9", "maquina10", "maquina11", "maquina12"];
-//   const cores = ["#FC8374", "#EE9663", "#91E384"];
+var arrayUsoCpu = [];
+var arrayUsoRam = [];
+var arrayUsoDisco = [];
 
-//   for (var i = 0; i < classes.length; i++) {
-//     const classeDaVez = document.getElementById(classes[i]);
-//     const numeroAleatorio = Math.floor(Math.random() * 3);
-//     const cor = cores[numeroAleatorio];
+function atualizarDashboardGeral() {
+  var idEmpresa;
 
-//     classeDaVez.style.backgroundColor = cor;
+  if (sessionStorage.idEmpresa == null) {
+    idEmpresa = sessionStorage.fkEmpresa
+  } else {
+    idEmpresa = sessionStorage.idEmpresa
+  }
 
-//     if ((classes[i] === "maquina1" || classes[i] === "maquina2" || classes[i] === "maquina3" || classes[i] === "maquina4" || classes[i] === "maquina5" || classes[i] === "maquina5" || classes[i] === "maquina6" || classes[i] === "maquina7" || classes[i] === "maquina8" || classes[i] === "maquina9" || classes[i] === "maquina10" || classes[i] === "maquina11" || classes[i] === "maquina12") && cor === "#91E384") {
-//       const elementosOcultos = classeDaVez.getElementsByClassName('alertaMaquinaCadastrada');
-//       for (var j = 0; j < elementosOcultos.length; j++) {
-//         elementosOcultos[j].style.display = "none";
-//       }
-//     } else {
-//       const elementosOcultos = classeDaVez.getElementsByClassName('alertaMaquinaCadastrada');
-//       for (var j = 0; j < elementosOcultos.length; j++) {
-//         elementosOcultos[j].style.display = "block";
-//       }
-//     }
-//   }
-// }
+  fetch("/usuarios/atualizarDashboardGeral", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      fkEmpresaServer: idEmpresa,
+    }),
+  }).then(function (resposta) {
+    console.log("Estou buscando dados para atualizar a dashboard geral!");
 
+    if (resposta.ok) {
+      console.log(resposta);
+      resposta.json().then((resposta) => {
+        console.log(resposta)
+        resposta.forEach((especificacao) => {
+          especificacao.forEach((objeto) => {
+            const { fkEspecificacao, tipoCaptura, registro } = objeto;
 
-function listaNomesMaquinasCadastradasDashboard() {
-  var spanNomes = [];
-  // Obtém todas as divs com a classe "maquinasCadastradas"
-  var divPai = document.getElementsByClassName("maquinasCadastradas");
+            if (fkEspecificacao == 1) {
+              if (arrayUsoCpu.length >= 6) {
+                arrayUsoCpu.shift();
+              }
+              arrayUsoCpu.push(registro);
+            } else if (fkEspecificacao == 2) {
+              if (arrayUsoRam.length >= 6) {
+                arrayUsoRam.shift();
+              }
+              var porcentagemUsoRam = registro * 100 / totalComponenteRam;
+              arrayUsoRam.push(porcentagemUsoRam);
+            } else if (fkEspecificacao == 3) {
+              arrayUsoDisco = registro;
+              if (arrayUsoDisco.length >= 6) {
+                arrayUsoDisco.shift();
+              }
+              var porcentagemUsoDisco = 100 - (registro * 100 / totalComponenteDisco);
+              arrayUsoDisco.push(porcentagemUsoDisco)
+            }
+          });
+        });
+        plotarGrafico(valorN);
+      });
 
-  // Array para armazenar os elementos que contêm "maquina" no ID
-  var divMaquinas = [];
+      console.log("Consegui retornar os dados para atualizar a dashboard geral!")
+    } else {
+      console.log("Houve um erro ao buscar os dados para atualizar a dashboard geral!");
 
-  // Itera sobre as divs com a classe "maquinasCadastradas"
-  for (var j = 0; j < divPai.length; j++) {
-    var divFilhas = divPai[j].getElementsByTagName("div");
+      resposta.text().then((texto) => {
+        console.error(texto);
+      });
+    }
+  })
+    .catch(function (erro) {
+      console.log(erro);
+    });
 
-    // Itera sobre as divs filhas
-    for (var i = 0; i < divFilhas.length; i++) {
-      var divFilha = divFilhas[i];
+  return false;
+}
 
-      // Verifica se o ID da div contém a string "maquina"
-      if (divFilha.id && divFilha.id.includes('maquina')) {
-        // Adiciona o elemento ao array
-        divMaquinas.push(divFilha);
+/*function trocarCores() {
+  const classes = ["maquina1", "maquina2", "maquina3", "maquina4", "maquina5", "maquina6", "maquina7", "maquina8", "maquina9", "maquina10", "maquina11", "maquina12"];
+  const cores = ["#FC8374", "#EE9663", "#91E384"];
 
-        // Exemplo: Acessa o valor do span com id="spaNome"
-        var spanNome = divFilha.querySelector("#spanNome");
+  for (var i = 0; i < classes.length; i++) {
+    const classeDaVez = document.getElementById(classes[i]);
+    const numeroAleatorio = Math.floor(Math.random() * 3);
+    const cor = cores[numeroAleatorio];
 
-        // Verifica se o span foi encontrado
-        if (spanNome) {
-          spanNomes.push(spanNome.innerHTML);
-        }
+    classeDaVez.style.backgroundColor = cor;
+
+    if ((classes[i] === "maquina1" || classes[i] === "maquina2" || classes[i] === "maquina3" || classes[i] === "maquina4" || classes[i] === "maquina5" || classes[i] === "maquina5" || classes[i] === "maquina6" || classes[i] === "maquina7" || classes[i] === "maquina8" || classes[i] === "maquina9" || classes[i] === "maquina10" || classes[i] === "maquina11" || classes[i] === "maquina12") && cor === "#91E384") {
+      const elementosOcultos = classeDaVez.getElementsByClassName('alertaMaquinaCadastrada');
+      for (var j = 0; j < elementosOcultos.length; j++) {
+        elementosOcultos[j].style.display = "none";
+      }
+    } else {
+      const elementosOcultos = classeDaVez.getElementsByClassName('alertaMaquinaCadastrada');
+      for (var j = 0; j < elementosOcultos.length; j++) {
+        elementosOcultos[j].style.display = "block";
       }
     }
   }
-
-  // Exemplo: Log das divs encontradas
-  console.log("Divs encontradas:", divMaquinas);
-  console.log("Nomes:", spanNomes)
-
-  return {
-    divMaquinas: divMaquinas,
-    spanNomes: spanNomes
-  };
 }
+*/
+function procurarAlertasPorId(idComputador){
+  fetch(`/empresas/alertaPorId/${idComputador}`, { cache: "no-store" }).then(function (resposta) {
+    console.log(resposta)
+    console.log("ESTOU NO THEN DO entrar()!")
+    resposta.json().then(function (resposta){
+      if(resposta.length==0){
+        var computador = document.getElementById(`maquina${idComputador}`)
+        computador.classList.add("corIdeal")
+      }else{
+        var computador = document.getElementById(`maquina${idComputador}`)
+       for(var i=0;i<resposta.length;i++){
+        var dados = resposta[i]
 
-async function selectAlertas() {
-  var idEmpresa;
-  try {
-    if (sessionStorage.idEmpresa == null) {
-       idEmpresa = sessionStorage.fkEmpresa;
-    } else {
-    idEmpresa = sessionStorage.idEmpresa;
-    }
-
-    const resposta = await fetch("/usuarios/selectAlertas", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        fkEmpresaServer: idEmpresa,
-      }),
-    });
-
-    if (resposta.ok) {
-      const data = await resposta.json();
-      console.log(data)
-      data.forEach((computador) => {
-        const { idComputador, nomeComputador, sistemaOperacional } = computador;
+        if(dados.tipoAlerta =="Crítico"){
+          computador.classList.add("corAlerta")
+          computador.classList.remove("corMedio")
+          computador.classList.remove("corIdeal")
+        }else if(dados.tipoAlerta=="Médio"){
+          computador.classList.remove("corAlerta")
+          computador.classList.add("corMedio")
+          computador.classList.remove("corIdeal")                
+        }else{
+          computador.classList.remove("corAlerta")
+          computador.classList.remove("corMedio")
+          computador.classList.add("corIdeal")
+        }
+      }
       
-      });
-      console.log("Deu certo o select dos alertas!");
-    } else {
-      throw "Houve um erro no select dos alertas(FrontEnd)!";
-    }
-  } catch (error) {
-    console.log(`#ERRO: ${error}`);
-    // Trate o erro conforme necessário
-  }
-}
+        // componentesALerta
 
-function validarCores(){
-  var resultadoDivsNomes = listaNomesMaquinasCadastradasDashboard();
+      }
+
+    })
+          
+  })
+
+
 }
 
 
-/*WITH AlertasNumerados AS (
-  SELECT
-    a.*,
-    c.nomeComputador,
-    DENSE_RANK() OVER (PARTITION BY a.fkEspecificacao ORDER BY a.dataHoraAlerta DESC) AS NumeroLinha
-  FROM
-    alertas a
-    JOIN computador c ON a.fkComputador = c.idComputador
-  WHERE
-    c.fkEmpresa = 1
-    AND (
-      (c.nomeComputador LIKE 'ip%' AND a.dataHoraAlerta BETWEEN '2023-11-24 21:25:00' AND '2023-11-24 21:30:00')
-      OR
-      (NOT c.nomeComputador LIKE 'ip%' AND a.dataHoraAlerta BETWEEN '2023-11-24 18:25:00' AND '2023-11-24 18:30:00')
-    )
-)
-SELECT *
-FROM AlertasNumerados
-WHERE NumeroLinha = 1;*/
