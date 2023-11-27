@@ -581,16 +581,40 @@ input:nth-of-type(5):checked~main#carousel {
     text-align: center;
 }
 
+.assuntoContato{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5%;
+    gap: 7.5px;
+    font-size: 20px;
+}
+
 .caixaTexto{
     width: 100%;
     margin-bottom: 7.5%;
+    font-weight: 400;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.assuntoContato textarea {
+    resize: none;
+    font-family: LeagueSpartan;
+    font-size: 18px;
+    font-weight: 600;
+    width: 100%;
+    border-radius: 5px;
+    background-color: #D9D9D9;
+    padding: 1% 1%;
 }
 
 .caixaTexto textarea {
     resize: none;
     font-family: LeagueSpartan;
     font-size: 15px;
-    font-weight: 600;
+    font-weight: 200;
     width: 100%;
     border-radius: 5px;
     background-color: #D9D9D9;
