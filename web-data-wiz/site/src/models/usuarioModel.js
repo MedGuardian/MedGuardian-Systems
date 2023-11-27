@@ -304,7 +304,7 @@ function excluirFuncionario(idFuncionario){
         });
 }
 
-function selectAlertas(idEmpresa) {
+function selectAlertas(idEmpresa, dataHoraAtual, dataHoraReduzida, dataHoraMais3HorasReduzidas, dataHoraMais3Horas) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirMaquina():");
 
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
@@ -318,11 +318,11 @@ function selectAlertas(idEmpresa) {
           alertas a
           JOIN computador c ON a.fkComputador = c.idComputador
         WHERE
-          c.fkEmpresa = 1
+          c.fkEmpresa = ${idEmpresa}
           AND (
-            (c.nomeComputador LIKE 'ip%' AND a.dataHoraAlerta BETWEEN '2023-11-24 21:25:00' AND '2023-11-24 21:30:00')
+            (c.nomeComputador LIKE 'ip%' AND a.dataHoraAlerta BETWEEN '${dataHoraMais3HorasReduzidas}' AND '${dataHoraMais3Horas}')
             OR
-            (NOT c.nomeComputador LIKE 'ip%' AND a.dataHoraAlerta BETWEEN '2023-11-24 18:25:00' AND '2023-11-24 18:30:00')
+            (NOT c.nomeComputador LIKE 'ip%' AND a.dataHoraAlerta BETWEEN '${dataHoraReduzida}' AND '${dataHoraAtual}')
           )
       )
       SELECT *

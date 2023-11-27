@@ -535,7 +535,13 @@ function excluirFuncionario(req, res) {
 function selectAlertas(req, res) {
 
     var idEmpresa = req.body.fkEmpresaServer
-    usuarioModel.selectAlertas(idEmpresa)
+    var dataHoraAtual = req.body.dataHoraAtualServer;
+    var dataHoraReduzida = req.body.dataHoraReduzidaServer;
+    var dataHoraMais3HorasReduzidas = req.body.dataHoraMais3HorasReduzidaServer;
+    var dataHoraMais3Horas = req.body.dataHoraMais3HorasServer;
+
+
+    usuarioModel.selectAlertas(idEmpresa, dataHoraAtual, dataHoraReduzida, dataHoraMais3HorasReduzidas, dataHoraMais3Horas)
         .then(
             function (resultado) {
                 res.json(resultado);
