@@ -70,7 +70,7 @@ public class Log {
 
 
 
-    public void gravarErros() {
+    public void gravarLogErros() {
         try {
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss");

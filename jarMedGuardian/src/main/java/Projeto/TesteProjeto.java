@@ -81,13 +81,19 @@ public class TesteProjeto {
                     System.out.println("Você não é um funcionário registrado na empresa linkada a essa máquina!");
                     System.out.println("Solicite para que alguém libere seu acesso, se for o caso.");
                 Log log = new Log();
-                log.gravarErros();
+                log.gravarLogErros();
 
                 } else {
                     System.out.println("""
                 USUÁRIO %s AUTENTICADO COM SUCESSO!
                 INICIANDO A CAPTURA DE DADOS DA MÁQUINA...
                 """.formatted(bancoDeDados.autenticarUsuario(email, senha).get(0).getNomeFuncionario()));
+
+
+                    Log log = new Log();
+                    log.gravarLog();
+
+
                 }
             }
         } while (!logado);

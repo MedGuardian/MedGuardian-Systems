@@ -106,6 +106,11 @@ public class TesteProjetoSarah {
                 Integer minutos = segundos / 60;
                 segundos = segundos % 60;
 
+                if (dias >= 10) {
+                    Log log = new Log();
+                    log.gravarLogErros();
+                }
+
                 if((looca.getRede().getGrupoDeInterfaces().getInterfaces().get(4).getBytesEnviados().doubleValue() / conversorMb) > 0){
                     redeAtual = (looca.getRede().getGrupoDeInterfaces().getInterfaces().get(4).getPacotesEnviados().doubleValue() + looca.getRede().getGrupoDeInterfaces().getInterfaces().get(4).getPacotesRecebidos().doubleValue()) / conversorMb;
                 } else {
