@@ -19,9 +19,10 @@
 <body>
 
   <style>
-    *{
+    * {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
+
     body {
       margin: 0;
       padding: 0;
@@ -178,6 +179,15 @@
 
 
 <script>
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  var fkComputador = parseInt(getQueryParam("parametro"), 10)
+  selectTotalComponentes();
+
+
   const graficoDesempenho = document.getElementById("myChart")
 
   var labelsGrafico = [];
@@ -274,6 +284,8 @@
   var dataHoraLabelsRAM = [];
   
   async function atualizarGrafico() {
+    console.log("FKCOMPUTADOR"+fkComputador)
+  
     fetch("/usuarios/atualizarDatas", {
       method: "POST",
       headers: {
@@ -285,7 +297,7 @@
     })
       .then(function (resposta) {
         console.log("Estou buscando dados para popular o gráfico!");
-  
+
         if (resposta.ok) {
           console.log(resposta);
           resposta.json().then((resposta) => {
@@ -294,10 +306,13 @@
               if (Array.isArray(especificacao)) {
                 especificacao.forEach((objeto) => {
                   const { fkEspecificacao, tipoCaptura, dataHoraRegistro, registro } = objeto;
-  
+                  const hora = dataHoraRegistro.substring(11, 13);    // Extrai a hora da dataHora
+                  const minuto = dataHoraRegistro.substring(14, 16);  // Extrai o minuto da dataHora
+                  const segundo = dataHoraRegistro.substring(17, 19); // Extrai o segundo da dataHora
+
                   const thirtyDaysAgo = new Date(dataHoraRegistro);
                   thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-                  
+
                   const date = new Date(dataHoraRegistro);
                   const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
                   const formattedDate30 = `${thirtyDaysAgo.getDate().toString().padStart(2, '0')}-${(thirtyDaysAgo.getMonth() + 1).toString().padStart(2, '0')}-${thirtyDaysAgo.getFullYear()}`;
@@ -307,8 +322,39 @@
                       uso_cpu.shift();
                     }
                     uso_cpu.push(registro);
+                    if (dataHoraLabelsCPU.length >= 6) {
+                      dataHoraLabelsCPU.shift()
+                    }
+                    dataHoraLabelsCPU.push(`${hora}:${minuto}:${segundo}`)
                   }
-  
+                  if (tipoCaptura == "UsoRam") {
+                    if (uso_ram.length >= 6) {
+                      uso_ram.shift();
+                    }
+                    var porcentagemUsoRam = registro;
+                    uso_ram.push(porcentagemUsoRam);
+
+                    if (dataHoraLabelsRAM.length >= 6) {
+                      dataHoraLabelsRAM.shift()
+                    }
+                    dataHoraLabelsRAM.push(`${hora}:${minuto}:${segundo}`)
+                    plotarGrafico(3);
+                  }
+
+                  if (tipoCaptura == "SwapDisponivel") {
+                    swapDisponivel = registro;
+                  } else {
+                    if (uso_disco.length >= 6) {
+                      uso_disco.shift();
+                    }
+                    var porcentagemUsoDisco = 100 - (registro * 100 / totalComponenteDisco);
+                    uso_disco.push(porcentagemUsoDisco)
+                    if (dataHoraLabelsDisco.length >= 6) {
+                      dataHoraLabelsDisco.shift()
+                    }
+                    dataHoraLabelsDisco.push(`${hora}:${minuto}:${segundo}`)
+                  }
+
                   var dataGrafico = document.getElementById('dataRelatorio');
                   dataGrafico.innerHTML = formattedDate30 + " - " + formattedDate;
                 });
@@ -316,13 +362,12 @@
                 console.error('O objeto não é um array:', especificacao);
               }
             });
-            plotarGrafico(valorN);
           });
-  
+
           console.log("Consegui retornar os dados para atualizar o gráfico!");
         } else {
           console.log("Houve um erro ao buscar os dados para popular o gráfico!");
-  
+
           resposta.text().then((texto) => {
             console.error(texto);
           });
@@ -331,14 +376,62 @@
       .catch(function (erro) {
         console.log(erro);
       });
-  
+
     return false;
   }
-  
-  setInterval(atualizarGrafico, 5000)
 
+  setTimeout(atualizarGrafico, 2000)
 
-  var valorN = 1;
+  var totalComponenteRam = 0;
+  var totalComponenteCPU = 0;
+  var totalComponenteDisco = 0;
+
+  function selectTotalComponentes() {
+    fetch("/usuarios/selectTotalComponentes", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fkComputadorServer: fkComputador
+      })
+    }).then(function (resposta) {
+      console.log("Estou buscando dados referente a capacidade total dos componentes!");
+
+      if (resposta.ok) {
+        console.log(resposta);
+        resposta.json().then((resposta) => {
+          resposta.forEach((especificacao) => {
+            especificacao.forEach((objeto) => {
+              const { idEspecificacao, totalComponente } = objeto;
+
+              if (idEspecificacao == (fkComputador * 4 - 3)) {
+                totalComponenteCPU = totalComponente;
+              } else if (idEspecificacao == (fkComputador * 4 - 2)) {
+                totalComponenteRam = totalComponente;
+              } else if (idEspecificacao == (fkComputador * 4 - 1)) {
+                totalComponenteDisco = totalComponente;
+              }
+            });
+          });
+
+        });
+        console.log("Consegui buscar o total dos componentes!")
+
+      } else {
+        console.log("Houve um erro ao fazer o select do total dos componentes!");
+
+        resposta.text().then((texto) => {
+          console.error(texto);
+        });
+      }
+    })
+      .catch(function (erro) {
+        console.log(erro);
+      });
+
+    return false;
+  }
 
   function escolherGrafico(n) {
     valorN = n;
