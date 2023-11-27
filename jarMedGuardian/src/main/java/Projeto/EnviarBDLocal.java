@@ -31,7 +31,7 @@ public class EnviarBDLocal {
     }
 
     public Integer getFkEmpresaDaMaquinaPeloNome(String nomeComputador){
-        List<Computador> computador = con.query("SELECT * FROM computador WHERE nomeComputador = ?", new BeanPropertyRowMapper<>(Computador.class),nomeComputador);
+        List<Computador> computador = con.query("SELECT fkEmpresa FROM computador WHERE nomeComputador = ?", new BeanPropertyRowMapper<>(Computador.class),nomeComputador);
 
         return computador.get(0).getFkEmpresa();
     }
