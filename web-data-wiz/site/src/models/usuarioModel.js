@@ -145,6 +145,25 @@ function selectComputador(nomeMaquina) {
     return database.executar(instrucao);
 }
 
+function selectMetricas(fkComputador, fkEmpresa) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirMaquina():");
+
+    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
+    //  e na ordem de inserção dos dados.
+
+    if(fkComputador == null){
+        var instrucao = `SELECT TOP 1 * 
+        FROM metrica 
+        WHERE fkEmpresa = '${fkEmpresa}' AND fkComputador IS NULL;
+        ;`;
+    } else {
+        var instrucao = `SELECT * FROM metrica WHERE fkComputador = ${fkComputador}`
+    }
+
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 function atualizarGrafico(fkComputador, limite_linhas) {
 
     return new Promise(function (resolve, reject) {
@@ -169,13 +188,13 @@ function atualizarGrafico(fkComputador, limite_linhas) {
     });
 }
 
-function selectTotalComponentes() {
+function selectTotalComponentes(fkComputador) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirMaquina():");
 
     return new Promise(function (resolve, reject) {
-        var instrucao1 = `SELECT fkComponente, totalComponente FROM especificacao WHERE fkComponente = 1;`;
-        var instrucao2 = `SELECT fkComponente, totalComponente FROM especificacao WHERE fkComponente = 2;`;
-        var instrucao3 = `SELECT fkComponente, totalComponente FROM especificacao WHERE fkComponente = 3;`;
+        var instrucao1 = `SELECT idEspecificacao, totalComponente FROM especificacao WHERE fkComputador = ${fkComputador};`;
+        var instrucao2 = `SELECT idEspecificacao, totalComponente FROM especificacao WHERE fkComputador = ${fkComputador};`;
+        var instrucao3 = `SELECT idEspecificacao, totalComponente FROM especificacao WHERE fkComputador = ${fkComputador};`;
 
         console.log("Executando as instruções SQL...");
         var selects = [];
@@ -348,5 +367,6 @@ module.exports = {
     selectLocalComputador,
     atualizarDashboardGeral,
     excluirFuncionario,
-    selectAlertas
+    selectAlertas,
+    selectMetricas
 };

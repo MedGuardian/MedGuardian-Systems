@@ -366,12 +366,14 @@ var totalComponenteDisco = 0;
 
 function selectTotalComponentes() {
     fetch("/usuarios/selectTotalComponentes", {
-        method: "GET",
+        method: "POST",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
-    })
-        .then(function (resposta) {
+        body: JSON.stringify({
+          fkComputadorServer: fkComputador
+        })
+      }).then(function (resposta) {
             console.log("Estou buscando dados referente a capacidade total dos componentes!");
 
             if (resposta.ok) {
@@ -379,13 +381,13 @@ function selectTotalComponentes() {
                 resposta.json().then((resposta) => {
                     resposta.forEach((especificacao) => {
                         especificacao.forEach((objeto) => {
-                            const { fkComponente, totalComponente } = objeto;
+                            const { idEspecificacao, totalComponente } = objeto;
 
-                            if (fkComponente == 1) {
+                            if (idEspecificacao == (fkComputador * 4 - 3)) {
                                 totalComponenteCPU = totalComponente;
-                            } else if (fkComponente == 2) {
+                            } else if (idEspecificacao == (fkComputador * 4 - 2)) {
                                 totalComponenteRam = totalComponente;
-                            } else if (fkComponente == 3) {
+                            } else if (idEspecificacao == (fkComputador * 4 - 1)) {
                                 totalComponenteDisco = totalComponente;
                             }
                         });
@@ -484,4 +486,50 @@ function atualizarComponenteEscolhido(n){
             nomeComponente.innerHTML = "";
             break;
     }
+}
+
+function selectMetricas(){
+    fetch("/usuarios/selectMetricas", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fkComputadorServer: fkComputador
+        })
+      }).then(function (resposta) {
+            console.log("Estou buscando dados referente a métrica dos alertas!");
+
+            if (resposta.ok) {
+                console.log(resposta);
+                resposta.json().then((resposta) => {
+                    resposta.forEach((especificacao) => {
+                        especificacao.forEach((objeto) => {
+                            const { idEspecificacao, totalComponente } = objeto;
+
+                            if (idEspecificacao == (fkComputador * 4 - 3)) {
+                                totalComponenteCPU = totalComponente;
+                            } else if (idEspecificacao == (fkComputador * 4 - 2)) {
+                                totalComponenteRam = totalComponente;
+                            } else if (idEspecificacao == (fkComputador * 4 - 1)) {
+                                totalComponenteDisco = totalComponente;
+                            }
+                        });
+                    });
+                });
+                console.log("Consegui buscar a métrica dos alertas!")
+
+            } else {
+                console.log("Houve um erro ao fazer o select da métrica dos alertas!");
+
+                resposta.text().then((texto) => {
+                    console.error(texto);
+                });
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+        });
+
+    return false;
 }

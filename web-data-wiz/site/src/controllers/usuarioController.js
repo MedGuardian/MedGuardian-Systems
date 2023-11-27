@@ -351,7 +351,9 @@ function atualizarGrafico(req, res) {
 
 function selectTotalComponentes(req, res) {
 
-    usuarioModel.selectTotalComponentes()
+    var fkComputador = req.body.fkComputadorServer;
+
+    usuarioModel.selectTotalComponentes(fkComputador)
         .then(
             function (resultado) {
                 res.json(resultado);
@@ -361,6 +363,28 @@ function selectTotalComponentes(req, res) {
                 console.log(erro);
                 console.log(
                     "\nHouve um erro ao buscar os dados totais dos componentes! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function selectMetricas(req, res) {
+
+    var fkComputador = req.body.fkComputadorServer;
+    var fkEmpresa = req.body.fkEmpresaServer;
+
+    usuarioModel.selectMetricas(fkComputador, fkEmpresa)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao buscar os dados quanto a metrica! Erro: ",
                     erro.sqlMessage
                 );
                 res.status(500).json(erro.sqlMessage);
@@ -584,5 +608,6 @@ module.exports = {
     selectLocalComputador,
     atualizarDashboardGeral,
     excluirFuncionario,
-    selectAlertas
+    selectAlertas,
+    selectMetricas
 }
