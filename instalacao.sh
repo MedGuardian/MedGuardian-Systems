@@ -2,12 +2,12 @@
 
 git clone https://github.com/MedGuardian/MedGuardian-Systems.git
 
-sudo wget -0 jarMedGuardian-1.0-SNAPSHOT-jar-with-dependencies.jar https://github.com/MedGuardian/MedGuardian-Systems/blob/Beralde-Individual/jarMedGuardian/target/jarMedGuardian-1.0-SNAPSHOT-jar-with-dependencies.jar
+wget https://github.com/MedGuardian/MedGuardian-Systems/raw/Beralde-Individual/jarMedGuardian/target/jarMedGuardian-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 
 
-sudo apt-get update
-sudo apt-get install default-jre
+sudo apt-get update -y
+sudo apt-get install default-jre -y
 
 java -version
 
@@ -38,61 +38,55 @@ if [ $? = 0 ];
 		echo "Instalando Docker!"
 
 	
-		sudo apt install docker.io
-		sudo apt update && sudo apt upgrade
+		sudo apt install docker.io -y
+		sudo apt update && sudo apt upgrade -y
 fi
 mkdir Dock
 cd Dock
 
 touch tabelas.sql
-cat<<EOL >> tabelas.sql
+echo tabelas.sql >> DROP DATABASE IF EXISTS medguardian;
+echo tabelas.sql >> CREATE DATABASE medguardian;
+echo tabelas.sql >> USE medguardian;
 
+echo tabelas.sql >> CREATE TABLE IF NOT EXISTS computador (
+echo tabelas.sql >> idComputador INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+echo tabelas.sql >> nomeComputador VARCHAR(255) NOT NULL,
+echo tabelas.sql >> sistemaOperacional VARCHAR(255) NOT NULL
+echo tabelas.sql >> );
 
-DROP DATABASE IF EXISTS medguardian;
-CREATE DATABASE medguardian;
-USE medguardian;
+echo tabelas.sql >> CREATE TABLE IF NOT EXISTS componente (
+echo tabelas.sql >> idComponente INT AUTO_INCREMENT NOT NULL,
+echo tabelas.sql >>	nomeComponente VARCHAR(225) NOT NULL,
+echo tabelas.sql >> PRIMARY KEY (idComponente));
 
-CREATE TABLE IF NOT EXISTS computador (
-  idComputador INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  nomeComputador VARCHAR(255) NOT NULL,
-  sistemaOperacional VARCHAR(255) NOT NULL
-);
+echo tabelas.sql >> CREATE TABLE IF NOT EXISTS especificacao(
+echo tabelas.sql >> idEspecificacao INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+echo tabelas.sql >> fkComputador INT NOT NULL,
+echo tabelas.sql >> fkComponente INT NOT NULL,
+echo tabelas.sql >> totalComponente DECIMAL(6,2) NULL,
+echo tabelas.sql >> CONSTRAINT fk_computador_especificacao FOREIGN KEY (fkComputador)
+echo tabelas.sql >> REFERENCES computador(idComputador),
+echo tabelas.sql >> CONSTRAINT fk_componente_especificacao FOREIGN KEY (fkComponente)
+echo tabelas.sql >>	REFERENCES componente(idComponente)
+echo tabelas.sql >> );
 
-CREATE TABLE IF NOT EXISTS componente (
-  idComponente INT AUTO_INCREMENT NOT NULL,
-  nomeComponente VARCHAR(225) NOT NULL,
-  PRIMARY KEY (idComponente));
-
-CREATE TABLE IF NOT EXISTS especificacao(
-idEspecificacao INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
-fkComputador INT NOT NULL,
-fkComponente INT NOT NULL,
-totalComponente DECIMAL(6,2) NULL,
-CONSTRAINT fk_computador_especificacao FOREIGN KEY (fkComputador)
-      REFERENCES computador(idComputador),
-CONSTRAINT fk_componente_especificacao FOREIGN KEY (fkComponente)
-      REFERENCES componente(idComponente)
-);
-
-CREATE TABLE IF NOT EXISTS registro (
-  idregistro INT AUTO_INCREMENT NOT NULL,
-  dataHoraRegistro DATETIME NOT NULL,
-  registro DECIMAL(6,2) NOT NULL,
-  tipoCaptura VARCHAR(255) NULL,
-      fkEspecificacao INT NOT NULL,
-  PRIMARY KEY (idregistro)
-);
-EOL
+echo tabelas.sql >> CREATE TABLE IF NOT EXISTS registro (
+echo tabelas.sql >> idregistro INT AUTO_INCREMENT NOT NULL,
+echo tabelas.sql >> dataHoraRegistro DATETIME NOT NULL,
+echo tabelas.sql >> registro DECIMAL(6,2) NOT NULL,
+echo tabelas.sql >>	tipoCaptura VARCHAR(255) NULL,
+echo tabelas.sql >>	fkEspecificacao INT NOT NULL,
+echo tabelas.sql >> PRIMARY KEY (idregistro)
+echo tabelas.sql >> );
 
 cd ..
 touch Dockerfile
-nano Dockerfile 
-cat<<EOL >> Dockerfile
-FROM mysql:latest
-ENV MYSQL_ROOT_PASSWORD=root
-COPY ./Dock/ /docker-entrypoint-initdb.d/
-EXPOSE 3306
-EOL
+echo Dockerfile >> FROM mysql:latest
+echo Dockerfile >> ENV MYSQL_ROOT_PASSWORD=root
+echo Dockerfile >> COPY ./Dock/ /docker-entrypoint-initdb.d/
+echo Dockerfile >> EXPOSE 3306
+
 
 sudo docker build -t meu-banco .
 
