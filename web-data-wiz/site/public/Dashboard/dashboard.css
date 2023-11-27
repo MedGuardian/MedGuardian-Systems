@@ -364,7 +364,7 @@ body {
 .maquinasCadastradas {
     display: flex;
     width: 100%;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     margin: 1% 0;
 }
 

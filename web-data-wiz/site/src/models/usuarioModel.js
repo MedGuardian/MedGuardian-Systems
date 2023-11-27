@@ -103,31 +103,35 @@ function atualizarFuncionario(novoEmail, novaSenha, idFunc) {
 function excluirMaquina(idComputador) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirMaquina():");
 
-    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
-    //  e na ordem de inserção dos dados.
-    var instrucao1 = `DELETE FROM especificacao WHERE fkComputador = '${idComputador}';`;
-    var instrucao2 = `DELETE FROM computador WHERE idComputador = '${idComputador}';`;
+var instrucao1 = `DELETE FROM alertas WHERE fkComputador = '${idComputador}';`;
+var instrucao2 = `DELETE FROM especificacao WHERE fkComputador = '${idComputador}';`;
+var instrucao3 = `DELETE FROM computador WHERE idComputador = '${idComputador}';`;
 
-    console.log("Executando a instrução SQL 1: \n" + instrucao1);
+console.log("Executando a instrução SQL 1: \n" + instrucao1);
 
-    // Executa a instrução1
-    return database.executar(instrucao1)
-        .then(() => {
-            console.log("Instrução SQL 1 concluída com sucesso. Executando instrução SQL 2: \n" + instrucao2);
+// Executa a instrução1
+return database.executar(instrucao1)
+    .then(() => {
+        console.log("Instrução SQL 1 concluída com sucesso. Executando instrução SQL 2: \n" + instrucao2);
 
-            // Executa a instrução2
-            return database.executar(instrucao2);
-        })
-        .then(() => {
-            console.log("Instrução SQL 2 concluída com sucesso.");
+        // Executa a instrução2
+        return database.executar(instrucao2);
+    })
+    .then(() => {
+        console.log("Instrução SQL 2 concluída com sucesso. Executando instrução SQL 3: \n" + instrucao3);
 
-            // Retorna uma mensagem ou qualquer outra coisa que você deseje
-            return "Instruções SQL concluídas com sucesso.";
-        })
-        .catch((erro) => {
-            console.error("Erro durante a execução das instruções SQL:", erro);
-            throw erro; // Propaga o erro para o bloco catch final
-        });
+        // Executa a instrução3
+        return database.executar(instrucao3);
+    })
+    .then(() => {
+        console.log("Instrução SQL 3 concluída com sucesso.");
+        return "Instruções SQL concluídas com sucesso.";
+    })
+    .catch((erro) => {
+        console.error("Erro durante a execução das instruções SQL:", erro);
+        throw erro; // Propaga o erro para o bloco catch final
+    });
+
 }
 
 function selectComputador(nomeMaquina) {
