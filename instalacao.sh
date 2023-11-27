@@ -92,6 +92,7 @@ FROM mysql:latest
 ENV MYSQL_ROOT_PASSWORD=root
 COPY ./Dock/ /docker-entrypoint-initdb.d/
 EXPOSE 3306
+exit
 EOL
 
 sudo docker build -t meu-banco .
