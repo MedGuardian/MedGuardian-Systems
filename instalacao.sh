@@ -45,7 +45,7 @@ mkdir Dock
 cd Dock
 
 touch tabelas.sql
-<<EOL >> tabelas.sql
+cat<<EOL >> tabelas.sql
  DROP DATABASE IF EXISTS medguardian ;
  CREATE DATABASE medguardian ;
  USE medguardian ;
@@ -83,6 +83,7 @@ CREATE TABLE IF NOT EXISTS computador(
 EOL
 cd ..
 touch Dockerfile
+
 echo FROM mysql:latest >> Dockerfile;
 echo ENV MYSQL_ROOT_PASSWORD=root >> Dockerfile;
 echo COPY ./Dock/ /docker-entrypoint-initdb.d/ >> Dockerfile;
