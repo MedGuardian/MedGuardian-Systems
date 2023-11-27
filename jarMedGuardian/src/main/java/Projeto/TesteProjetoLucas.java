@@ -81,7 +81,7 @@ public class TesteProjetoLucas {
                                 bancoDeDadosAws.insertEspecificacao(idComputador, idComponente, looca.getMemoria().getTotal().doubleValue() / conversorGb);
                             }
                             case 3 -> {
-                                bancoDeDadosAws.insertEspecificacao(idComputador, idComponente, ((looca.getGrupoDeDiscos().getVolumes().get(0).getTotal().doubleValue() / conversorGb)) - 30);
+                                bancoDeDadosAws.insertEspecificacao(idComputador, idComponente, (looca.getGrupoDeDiscos().getVolumes().get(0).getTotal().doubleValue() / conversorGb));
                             }
                             case 4 -> {
                                 bancoDeDadosAws.insertEspecificacao(idComputador, idComponente, null);

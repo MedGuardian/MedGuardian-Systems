@@ -1,4 +1,4 @@
-// setInterval(selectAlertas, 3000)
+setInterval(selectAlertas, 3000)
 
 var totalComponenteRam = 0;
 var totalComponenteCPU = 0;
@@ -374,7 +374,7 @@ function validarAlertasCores(fkComputador, fkEspecificacao, tipoAlerta) {
   for (i = 0; i < idsComputadores.length; i++) {
     const divMaquina = document.getElementById(`maquina${idsComputadores[i]}`)
     if (idsComputadores[i] != fkComputador) {
-      divMaquina.style.backgroundColor = "green"
+      divMaquina.style.backgroundColor = "#91e384"
     } else {
 
       if (fkEspecificacao == (fkComputador * 4 - 3)) {

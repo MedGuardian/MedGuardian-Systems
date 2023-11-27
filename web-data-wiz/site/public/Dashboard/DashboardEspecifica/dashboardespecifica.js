@@ -6,6 +6,7 @@ function getQueryParam(param) {
 var fkComputador = parseInt(getQueryParam("parametro"), 10)
 
 selectTotalComponentes();
+selectMetricas();
 
 const spanUsuarioDashEspecifica = document.getElementById("spanUsuarioDashEspecifica");
 if(sessionStorage.idFuncionario == null){
@@ -56,6 +57,9 @@ var spanSwapDisponivel = document.getElementById("spanSwapDisponivel")
 var spanProcessos = document.getElementById("spanProcessos")
 var spanThreads = document.getElementById("spanThreads")
 
+var maquinaSelecionada = document.getElementById("maquinaSelecionada")
+maquinaSelecionada.innerHTML = "Máquina " + fkComputador;
+
 var velocidadeCpu = 0;
 var discoDisponivel = 0;
 var usoRamAtual = 0;
@@ -82,17 +86,17 @@ function atualizarValoresCardsLaterais() {
 
 function atualizarCoresCardsLaterais() {
 
-    if (valoresCards[0] > 80) {
+    if (valoresCards[0] > metricaGraveCpu) {
         divValorBoxLateralCpu.style.backgroundColor = 'rgba(255,0,0,.5)'
-    } else if (valoresCards[0] > 70) {
+    } else if (valoresCards[0] > metricaMedioCpu) {
         divValorBoxLateralCpu.style.backgroundColor = 'yellow'
     } else {
         divValorBoxLateralCpu.style.backgroundColor = '#718672'
     }
 
-    if (valoresCards[1] > 80) {
+    if (valoresCards[1] > metricaGraveDisco) {
         divValorBoxLateralDisco.style.backgroundColor = 'rgba(255,0,0,.5)'
-    } else if (valoresCards[1] > 70) {
+    } else if (valoresCards[1] > metricaMedioDisco) {
         divValorBoxLateralDisco.style.backgroundColor = 'yellow'
     } else {
         divValorBoxLateralDisco.style.backgroundColor = '#718672'
@@ -100,9 +104,9 @@ function atualizarCoresCardsLaterais() {
 
     var porcentagemUsoRam = (valoresCards[2] * 100) / 7.8;
 
-    if (porcentagemUsoRam > 90) {
+    if (porcentagemUsoRam > metricagraveRam) {
         divValorBoxLateralRam.style.backgroundColor = 'rgba(255,0,0,.5)'
-    } else if (porcentagemUsoRam > 80) {
+    } else if (porcentagemUsoRam > metricaMedioRam) {
         divValorBoxLateralRam.style.backgroundColor = 'yellow'
     } else {
         divValorBoxLateralRam.style.backgroundColor = '#718672'
@@ -437,14 +441,21 @@ function escolherGrafico(n, container) {
 
 function plotarGrafico(n) {
     atualizarComponenteEscolhido(n)
+
+    if(!funcaoAlterarEscalaMinAtivada){
+        config_graficoDesempenho.options.scales.y.min = 0;
+    }
+
+    if(!funcaoAlterarEscalaMaxAtivada){
+        config_graficoDesempenho.options.scales.y.max = 100;
+    }
+
     switch (n) {
         case 1:
             uso_cpu.reverse();
             dataHoraLabelsCPU.reverse();
             data_graficoDesempenho.datasets[0].data = uso_cpu.slice(0,6);
             config_graficoDesempenho.options.plugins.title.text = 'Desempenho CPU'
-            config_graficoDesempenho.options.scales.y.max = 50;
-            config_graficoDesempenho.options.scales.y.min = 0;
             data_graficoDesempenho.labels = dataHoraLabelsCPU.slice(0,6);
             break;
         case 2:
@@ -452,8 +463,6 @@ function plotarGrafico(n) {
             dataHoraLabelsDisco.reverse();
             data_graficoDesempenho.datasets[0].data = uso_disco.slice(0,6);
             config_graficoDesempenho.options.plugins.title.text = 'Uso do disco'
-            config_graficoDesempenho.options.scales.y.max = 100;
-            config_graficoDesempenho.options.scales.y.min = 0;
             data_graficoDesempenho.labels = dataHoraLabelsDisco.slice(0,6);
             break;
         case 3:
@@ -462,11 +471,42 @@ function plotarGrafico(n) {
             data_graficoDesempenho.datasets[0].data = uso_ram.slice(0,6);
             config_graficoDesempenho.options.plugins.title.text = 'Uso da RAM';
             config_graficoDesempenho.options.scales.y.max = 100;
-            config_graficoDesempenho.options.scales.y.min = 80;
             data_graficoDesempenho.labels = dataHoraLabelsRAM.slice(0,6);
             break;
     }
     graficoEmUso.update();
+}
+
+var funcaoAlterarEscalaMinAtivada = false;
+var funcaoAlterarEscalaMaxAtivada = false;
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'p') {
+        alterarEscalaGraficoMin();
+    }
+    if(event.key === 'o'){
+        alterarEscalaGraficoMax();
+    }
+});
+
+function alterarEscalaGraficoMin(){
+    if(config_graficoDesempenho.options.scales.y.min == 0){
+        config_graficoDesempenho.options.scales.y.min = 80;
+    } else {
+        config_graficoDesempenho.options.scales.y.min = 0;
+    }
+    graficoEmUso.update()
+    funcaoAlterarEscalaMinAtivada = true;
+}
+
+function alterarEscalaGraficoMax(){
+    if(config_graficoDesempenho.options.scales.y.max == 100){
+        config_graficoDesempenho.options.scales.y.max = 25;
+    } else {
+        config_graficoDesempenho.options.scales.y.max = 100;
+    }
+    graficoEmUso.update()
+    funcaoAlterarEscalaMaxAtivada = true;
 }
 
 function atualizarComponenteEscolhido(n){
@@ -495,14 +535,28 @@ function atualizarComponenteEscolhido(n){
     }
 }
 
+var metricaMedioRam;
+var metricagraveRam;
+var metricaMedioCpu;
+var metricaGraveCpu;
+var metricaMedioDisco;
+var metricaGraveDisco;
+
 function selectMetricas(){
+
+    if(sessionStorage.idEmpresa == null){
+        var fkEmpresa = sessionStorage.fkEmpresa
+    } else {
+        var fkEmpresa = sessionStorage.idEmpresa
+    }
     fetch("/usuarios/selectMetricas", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fkComputadorServer: fkComputador
+          fkComputadorServer: fkComputador,
+          fkEmpresaServer: fkEmpresa
         })
       }).then(function (resposta) {
             console.log("Estou buscando dados referente a métrica dos alertas!");
@@ -510,20 +564,18 @@ function selectMetricas(){
             if (resposta.ok) {
                 console.log(resposta);
                 resposta.json().then((resposta) => {
-                    resposta.forEach((especificacao) => {
-                        especificacao.forEach((objeto) => {
-                            const { idEspecificacao, totalComponente } = objeto;
-
-                            if (idEspecificacao == (fkComputador * 4 - 3)) {
-                                totalComponenteCPU = totalComponente;
-                            } else if (idEspecificacao == (fkComputador * 4 - 2)) {
-                                totalComponenteRam = totalComponente;
-                            } else if (idEspecificacao == (fkComputador * 4 - 1)) {
-                                totalComponenteDisco = totalComponente;
-                            }
+                        resposta.forEach((objeto) => {
+                            const { medioRam, graveRam, medioCPU, graveCPU, medioDisco, graveDisco  } = objeto;
+                            
+                            metricaMedioRam = medioRam;
+                            metricagraveRam = graveRam;
+                            metricaMedioCpu = medioCPU;
+                            metricaGraveCpu = graveCPU;
+                            metricaMedioDisco = medioDisco;
+                            metricaGraveDisco = graveDisco;
+                            
                         });
                     });
-                });
                 console.log("Consegui buscar a métrica dos alertas!")
 
             } else {

@@ -150,15 +150,11 @@ function selectMetricas(fkComputador, fkEmpresa) {
 
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
-
-    if(fkComputador == null){
-        var instrucao = `SELECT TOP 1 * 
-        FROM metrica 
-        WHERE fkEmpresa = '${fkEmpresa}' AND fkComputador IS NULL;
+        var instrucao = `SELECT TOP 1 *
+        FROM metrica
+        WHERE fkComputador = COALESCE(${fkComputador}, -1)
+           OR (fkComputador IS NULL AND fkEmpresa = ${fkEmpresa});
         ;`;
-    } else {
-        var instrucao = `SELECT * FROM metrica WHERE fkComputador = ${fkComputador}`
-    }
 
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
