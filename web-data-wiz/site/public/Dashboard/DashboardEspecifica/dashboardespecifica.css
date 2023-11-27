@@ -446,8 +446,10 @@ body {
 
 .valorBoxLateral {
     display: flex;
-    flex-direction: column;
     text-align: center;
+    flex-direction: column;
+    border-radius: 15px;
+    background-color: #718672;
 }
 
 .spanValorBoxLateral {
