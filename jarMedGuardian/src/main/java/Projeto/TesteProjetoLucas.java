@@ -62,7 +62,6 @@ public class TesteProjetoLucas {
                     bancoDeDadosAws.insertComponente(PROCESSADOR.getNomeComponente());
                     bancoDeDadosAws.insertComponente(RAM.getNomeComponente());
 
-
                     if(!looca.getGrupoDeDiscos().getVolumes().isEmpty()){
                         for(int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
                             bancoDeDadosAws.insertComponente(HD.getNomeComponente() + (i + 1));

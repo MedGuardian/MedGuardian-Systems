@@ -482,7 +482,9 @@ function selectFuncionarios(req, res) {
 
 function selectComputadores(req, res) {
     var fkEmpresa = req.body.fkEmpresaServer
-    usuarioModel.selectComputadores(fkEmpresa)
+    var filtro = req.body.filtroServer
+
+    usuarioModel.selectComputadores(fkEmpresa, filtro)
         .then(
             function (resultado) {
                 res.json(resultado);
