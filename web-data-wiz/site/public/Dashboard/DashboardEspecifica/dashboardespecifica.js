@@ -7,6 +7,13 @@ var fkComputador = parseInt(getQueryParam("parametro"), 10)
 
 selectTotalComponentes();
 
+const spanUsuarioDashEspecifica = document.getElementById("spanUsuarioDashEspecifica");
+if(sessionStorage.idFuncionario == null){
+    spanUsuarioDashEspecifica.innerHTML = sessionStorage.razaoSocial
+} else {
+    spanUsuarioDashEspecifica.innerHTML = sessionStorage.nomeFuncionario
+}
+
 function voltarDashboardGeral() {
     window.location.href = '../dashboard.html'
 }

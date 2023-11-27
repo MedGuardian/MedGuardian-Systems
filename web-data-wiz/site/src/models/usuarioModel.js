@@ -297,8 +297,6 @@ order by idRegistro desc;`;
             });
     });
 
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
 }
 
 function excluirFuncionario(idFuncionario){
