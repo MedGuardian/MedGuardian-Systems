@@ -1,10 +1,5 @@
 #!/bin/bash
-
-git clone https://github.com/MedGuardian/MedGuardian-Systems.git
-
 wget https://github.com/MedGuardian/MedGuardian-Systems/raw/Beralde-Individual/jarMedGuardian/target/jarMedGuardian-1.0-SNAPSHOT-jar-with-dependencies.jar
-
-
 
 sudo apt-get update -y
 sudo apt-get install default-jre -y
@@ -88,10 +83,7 @@ echo FROM mysql:latest >> Dockerfile;
 echo ENV MYSQL_ROOT_PASSWORD=root >> Dockerfile;
 echo COPY ./Dock/ /docker-entrypoint-initdb.d/ >> Dockerfile;
 echo EXPOSE 3306 >> Dockerfile;
+
 sudo docker build -t meu-banco .
-
 sudo docker run -d --name meu-container -p 3306:3306 meu-banco
-
 sudo docker start meu-container
-
-
