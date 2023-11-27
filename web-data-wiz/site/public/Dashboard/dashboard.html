@@ -14,7 +14,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"
     integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs"
     crossorigin="anonymous"></script>
-  <script src="dashboard.js"></script>
   <link rel="shortcut icon" href="../../assets/images/LOGO.png" type="image/x-icon">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
@@ -27,7 +26,7 @@
   <title>DashBoard Geral | MedGuardian</title>
 </head>
 
-<body onload="validarMetricas(), validarSessao(), alertaCores(), selectComputadores()">
+<body onload="validarMetricas(), selectComputadores()">
   <div class="" id="pagina">
     <div class="AlterarMaquina" id="AlterarMaquina">
       <div class="container">
@@ -164,7 +163,7 @@
                     d="M15.9375 14.896C15.9375 20.5816 20.2279 25.2085 25.5 25.2085C30.7721 25.2085 35.0625 20.5816 35.0625 14.896C35.0625 9.21037 30.7721 4.5835 25.5 4.5835C20.2279 4.5835 15.9375 9.21037 15.9375 14.896ZM42.5 48.1252H44.625V45.8335C44.625 36.99 37.9504 29.7918 29.75 29.7918H21.25C13.0475 29.7918 6.375 36.99 6.375 45.8335V48.1252H42.5Z"
                     fill="currentColor" />
                 </svg>
-                Bem-vindo, <span class="usuario"> MedGuardian |</span>Acompanhe os dados de suas máquinas:</span>
+                Bem-vindo, <span class="usuario" id="spanUsuarioDashboardGeral"> MedGuardian </span>| Acompanhe os dados de suas máquinas:</span>
               <div class="botaoMenu">
                 <span onclick="abrirMenuFlutuante()">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -600,3 +599,4 @@
 
 
 </script>
+<script src="dashboard.js"></script>

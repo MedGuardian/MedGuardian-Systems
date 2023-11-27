@@ -200,17 +200,12 @@ function cadastrarFuncionario(req, res) {
             .then(
                 function (resultadoAutenticar) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
-                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
-
-                    if (resultadoAutenticar.length == 1) {
-                        console.log(resultadoAutenticar);
-                        res.json(resultadoAutenticar[0]);
-                    }
+                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em Strin
                 }
             ).catch(
                 function (erro) {
                     console.log(erro);
-                    console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+                    console.log("\nHouve um erro ao realizar o cadastro de funcionário! Erro: ", erro.sqlMessage);
                     res.status(500).json(erro.sqlMessage);
                 }
             );
@@ -329,8 +324,10 @@ function cadastrarEndereco(req, res) {
 
 function atualizarGrafico(req, res) {
 
+    var fkComputador = req.body.fkComputadorServer;
+
     const limite_linhas = 6;
-    usuarioModel.atualizarGrafico(limite_linhas)
+    usuarioModel.atualizarGrafico(fkComputador, limite_linhas)
         .then(
             function (resultado) {
                 res.json(resultado);
@@ -349,7 +346,9 @@ function atualizarGrafico(req, res) {
 
 function selectTotalComponentes(req, res) {
 
-    usuarioModel.selectTotalComponentes()
+    var fkComputador = req.body.fkComputadorServer;
+
+    usuarioModel.selectTotalComponentes(fkComputador)
         .then(
             function (resultado) {
                 res.json(resultado);
@@ -366,8 +365,33 @@ function selectTotalComponentes(req, res) {
         );
 }
 
+function selectMetricas(req, res) {
+
+    var fkComputador = req.body.fkComputadorServer;
+    var fkEmpresa = req.body.fkEmpresaServer;
+
+    usuarioModel.selectMetricas(fkComputador, fkEmpresa)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao buscar os dados quanto a metrica! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
 function atualizarIndicadores(req, res) {
-    usuarioModel.atualizarIndicadores()
+
+    var fkComputador = req.body.fkComputadorServer
+
+    usuarioModel.atualizarIndicadores(fkComputador)
         .then(
             function (resultado) {
                 res.json(resultado);
@@ -535,7 +559,13 @@ function excluirFuncionario(req, res) {
 function selectAlertas(req, res) {
 
     var idEmpresa = req.body.fkEmpresaServer
-    usuarioModel.selectAlertas(idEmpresa)
+    var dataHoraAtual = req.body.dataHoraAtualServer;
+    var dataHoraReduzida = req.body.dataHoraReduzidaServer;
+    var dataHoraMais3HorasReduzidas = req.body.dataHoraMais3HorasReduzidaServer;
+    var dataHoraMais3Horas = req.body.dataHoraMais3HorasServer;
+
+
+    usuarioModel.selectAlertas(idEmpresa, dataHoraAtual, dataHoraReduzida, dataHoraMais3HorasReduzidas, dataHoraMais3Horas)
         .then(
             function (resultado) {
                 res.json(resultado);
@@ -573,5 +603,6 @@ module.exports = {
     selectLocalComputador,
     atualizarDashboardGeral,
     excluirFuncionario,
-    selectAlertas
+    selectAlertas,
+    selectMetricas
 }

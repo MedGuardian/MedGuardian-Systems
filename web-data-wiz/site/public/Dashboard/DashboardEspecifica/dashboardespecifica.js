@@ -1,4 +1,19 @@
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+var fkComputador = parseInt(getQueryParam("parametro"), 10)
+
 selectTotalComponentes();
+selectMetricas();
+
+const spanUsuarioDashEspecifica = document.getElementById("spanUsuarioDashEspecifica");
+if(sessionStorage.idFuncionario == null){
+    spanUsuarioDashEspecifica.innerHTML = sessionStorage.razaoSocial
+} else {
+    spanUsuarioDashEspecifica.innerHTML = sessionStorage.nomeFuncionario
+}
 
 function voltarDashboardGeral() {
     window.location.href = '../dashboard.html'
@@ -37,11 +52,13 @@ var spanDias = document.getElementById("valorCronometroDias")
 var spanHoras = document.getElementById("valorCronometroHoras")
 var spanMinutos = document.getElementById("valorCronometroMinutos")
 var spanSegundos = document.getElementById("valorCronometroSegundos")
-var spanVelocidadeRede = document.getElementById("spanValorVelocidadeRede")
 var spanUtilizacaoCPU = document.getElementById("spanUtilizacaoCPU")
 var spanSwapDisponivel = document.getElementById("spanSwapDisponivel")
 var spanProcessos = document.getElementById("spanProcessos")
 var spanThreads = document.getElementById("spanThreads")
+
+var maquinaSelecionada = document.getElementById("maquinaSelecionada")
+maquinaSelecionada.innerHTML = "Máquina " + fkComputador;
 
 var velocidadeCpu = 0;
 var discoDisponivel = 0;
@@ -54,7 +71,6 @@ function atualizarSpanIndicadores() {
     spanHoras.innerHTML = Math.trunc(tempo_atividade_horas);
     spanMinutos.innerHTML = Math.trunc(tempo_atividade_minutos);
     spanSegundos.innerHTML = Math.trunc(tempo_atividade_segundos);
-    spanVelocidadeRede.innerHTML = (velocidade_de_rede / 1).toFixed(1);
     spanUtilizacaoCPU.innerHTML = (valoresCards[0] / 1).toFixed(1) + "%";
     spanSwapDisponivel.innerHTML = swapDisponivel + "GB";
     spanProcessos.innerHTML = Math.trunc(processos);
@@ -70,17 +86,17 @@ function atualizarValoresCardsLaterais() {
 
 function atualizarCoresCardsLaterais() {
 
-    if (valoresCards[0] > 80) {
+    if (valoresCards[0] > metricaGraveCpu) {
         divValorBoxLateralCpu.style.backgroundColor = 'rgba(255,0,0,.5)'
-    } else if (valoresCards[0] > 70) {
+    } else if (valoresCards[0] > metricaMedioCpu) {
         divValorBoxLateralCpu.style.backgroundColor = 'yellow'
     } else {
         divValorBoxLateralCpu.style.backgroundColor = '#718672'
     }
 
-    if (valoresCards[1] > 80) {
+    if (valoresCards[1] > metricaGraveDisco) {
         divValorBoxLateralDisco.style.backgroundColor = 'rgba(255,0,0,.5)'
-    } else if (valoresCards[1] > 70) {
+    } else if (valoresCards[1] > metricaMedioDisco) {
         divValorBoxLateralDisco.style.backgroundColor = 'yellow'
     } else {
         divValorBoxLateralDisco.style.backgroundColor = '#718672'
@@ -88,9 +104,9 @@ function atualizarCoresCardsLaterais() {
 
     var porcentagemUsoRam = (valoresCards[2] * 100) / 7.8;
 
-    if (porcentagemUsoRam > 90) {
+    if (porcentagemUsoRam > metricagraveRam) {
         divValorBoxLateralRam.style.backgroundColor = 'rgba(255,0,0,.5)'
-    } else if (porcentagemUsoRam > 80) {
+    } else if (porcentagemUsoRam > metricaMedioRam) {
         divValorBoxLateralRam.style.backgroundColor = 'yellow'
     } else {
         divValorBoxLateralRam.style.backgroundColor = '#718672'
@@ -100,12 +116,14 @@ function atualizarCoresCardsLaterais() {
 function atualizarIndicadores() {
 
     fetch("/usuarios/atualizarIndicadores", {
-        method: "GET",
+        method: "POST",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
-    })
-        .then(function (resposta) {
+        body: JSON.stringify({
+          fkComputadorServer: fkComputador
+        })
+      }).then(function (resposta) {
             console.log("Estou buscando dados para atualizar os indicadores!");
 
             if (resposta.ok) {
@@ -116,7 +134,7 @@ function atualizarIndicadores() {
                         especificacao.forEach((objeto) => {
                             const { fkEspecificacao, tipoCaptura, registro } = objeto;
 
-                            if (fkEspecificacao == 1) {
+                            if (fkEspecificacao == (fkComputador * 4 - 3)) {
                                 if (tipoCaptura == "UsoCpu") {
                                     valoresCards[0] = registro;
                                 } else if (tipoCaptura == "QuantidadeThreads") {
@@ -134,14 +152,12 @@ function atualizarIndicadores() {
                                         tempo_atividade_segundos = registro;
                                     }
                                 }
-                            } else if (fkEspecificacao == 2) {
+                            } else if (fkEspecificacao == (fkComputador * 4 - 2)) {
                                 valoresCards[2] = registro;
-                            } else if (fkEspecificacao == 3) {
+                            } else if (fkEspecificacao == (fkComputador * 4 - 1)) {
                                 if (tipoCaptura == "Uso") {
                                     valoresCards[1] = registro;
                                 }
-                            } else if (fkEspecificacao == 4) {
-                                velocidade_de_rede = registro;
                             }
                         });
                     });
@@ -171,7 +187,7 @@ const graficoDesempenho = document.getElementById("graficoDesempenho")
 
 var labelsGrafico = [];
 const data_graficoDesempenho = {
-    labels: dataHoraLabelsRAM,
+    labels: dataHoraLabelsDisco,
     datasets: [
         {
             label: "Desempenho",
@@ -261,8 +277,7 @@ var dataHoraLabelsCPU = [];
 var dataHoraLabelsDisco = [];
 var dataHoraLabelsRAM = [];
 var threads = 0;
-var processos = 0;
-var velocidade_de_rede = 0;
+var processos = 0
 var tempo_atividade_segundos = 0;
 var tempo_atividade_minutos = 0;
 var tempo_atividade_horas = 0;
@@ -273,12 +288,14 @@ var swapDisponivel = 0;
 function atualizarGrafico() {
 
     fetch("/usuarios/atualizarGrafico", {
-        method: "GET",
+        method: "POST",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
-    })
-        .then(function (resposta) {
+        body: JSON.stringify({
+          fkComputadorServer: fkComputador
+        })
+      }).then(function (resposta) {
             console.log("Estou buscando dados para popular o gráfico!");
 
             if (resposta.ok) {
@@ -293,7 +310,7 @@ function atualizarGrafico() {
                             const minuto = dataHoraRegistro.substring(14, 16);  // Extrai o minuto da dataHora
                             const segundo = dataHoraRegistro.substring(17, 19); // Extrai o segundo da dataHora
 
-                            if (fkEspecificacao == 1) {
+                            if (fkEspecificacao == (fkComputador * 4 - 3)) {
                                 if (uso_cpu.length >= 6) {
                                     uso_cpu.shift();
                                 }
@@ -302,7 +319,7 @@ function atualizarGrafico() {
                                     dataHoraLabelsCPU.shift()
                                 }
                                 dataHoraLabelsCPU.push(`${hora}:${minuto}:${segundo}`)
-                            } else if (fkEspecificacao == 2) {
+                            } else if (fkEspecificacao == (fkComputador * 4 - 2)) {
                                 if (uso_ram.length >= 6) {
                                     uso_ram.shift();
                                 }
@@ -313,7 +330,7 @@ function atualizarGrafico() {
                                     dataHoraLabelsRAM.shift()
                                 }
                                 dataHoraLabelsRAM.push(`${hora}:${minuto}:${segundo}`)
-                            } else if (fkEspecificacao == 3) {
+                            } else if (fkEspecificacao == (fkComputador * 4 - 1)) {
 
                                 if (tipoCaptura == "SwapDisponivel") {
                                     swapDisponivel = registro;
@@ -360,12 +377,14 @@ var totalComponenteDisco = 0;
 
 function selectTotalComponentes() {
     fetch("/usuarios/selectTotalComponentes", {
-        method: "GET",
+        method: "POST",
         headers: {
-            "Content-Type": "application/json",
+          "Content-Type": "application/json",
         },
-    })
-        .then(function (resposta) {
+        body: JSON.stringify({
+          fkComputadorServer: fkComputador
+        })
+      }).then(function (resposta) {
             console.log("Estou buscando dados referente a capacidade total dos componentes!");
 
             if (resposta.ok) {
@@ -373,13 +392,13 @@ function selectTotalComponentes() {
                 resposta.json().then((resposta) => {
                     resposta.forEach((especificacao) => {
                         especificacao.forEach((objeto) => {
-                            const { fkComponente, totalComponente } = objeto;
+                            const { idEspecificacao, totalComponente } = objeto;
 
-                            if (fkComponente == 1) {
+                            if (idEspecificacao == (fkComputador * 4 - 3)) {
                                 totalComponenteCPU = totalComponente;
-                            } else if (fkComponente == 2) {
+                            } else if (idEspecificacao == (fkComputador * 4 - 2)) {
                                 totalComponenteRam = totalComponente;
-                            } else if (fkComponente == 3) {
+                            } else if (idEspecificacao == (fkComputador * 4 - 1)) {
                                 totalComponenteDisco = totalComponente;
                             }
                         });
@@ -423,38 +442,74 @@ function escolherGrafico(n, container) {
 function plotarGrafico(n) {
     atualizarComponenteEscolhido(n)
 
+    if(!funcaoAlterarEscalaMinAtivada){
+        config_graficoDesempenho.options.scales.y.min = 0;
+    }
+
+    if(!funcaoAlterarEscalaMaxAtivada){
+        config_graficoDesempenho.options.scales.y.max = 100;
+    }
 
     switch (n) {
         case 1:
             uso_cpu.reverse();
             dataHoraLabelsCPU.reverse();
-            data_graficoDesempenho.datasets[0].data = uso_cpu.slice(0, 6);
-            config_graficoDesempenho.options.plugins.title.text = 'Desempenho CPU';
-            config_graficoDesempenho.options.scales.y.max = 50;
-            config_graficoDesempenho.options.scales.y.min = 0;
+            data_graficoDesempenho.datasets[0].data = uso_cpu.slice(0,6);
+            config_graficoDesempenho.options.plugins.title.text = 'Desempenho CPU'
+            data_graficoDesempenho.labels = dataHoraLabelsCPU.slice(0,6);
             break;
         case 2:
             uso_disco.reverse();
             dataHoraLabelsDisco.reverse();
-            data_graficoDesempenho.datasets[0].data = uso_disco.slice(0, 6);
-            config_graficoDesempenho.options.plugins.title.text = 'Uso do disco';
-            config_graficoDesempenho.options.scales.y.max = 100;
-            config_graficoDesempenho.options.scales.y.min = 0;
+            data_graficoDesempenho.datasets[0].data = uso_disco.slice(0,6);
+            config_graficoDesempenho.options.plugins.title.text = 'Uso do disco'
+            data_graficoDesempenho.labels = dataHoraLabelsDisco.slice(0,6);
             break;
         case 3:
             uso_ram.reverse();
             dataHoraLabelsRAM.reverse();
-            data_graficoDesempenho.datasets[0].data = uso_ram.slice(0, 6);
+            data_graficoDesempenho.datasets[0].data = uso_ram.slice(0,6);
             config_graficoDesempenho.options.plugins.title.text = 'Uso da RAM';
             config_graficoDesempenho.options.scales.y.max = 100;
-            config_graficoDesempenho.options.scales.y.min = 80;
+            data_graficoDesempenho.labels = dataHoraLabelsRAM.slice(0,6);
             break;
     }
-
     graficoEmUso.update();
 }
 
-function atualizarComponenteEscolhido(n) {
+var funcaoAlterarEscalaMinAtivada = false;
+var funcaoAlterarEscalaMaxAtivada = false;
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'p') {
+        alterarEscalaGraficoMin();
+    }
+    if(event.key === 'o'){
+        alterarEscalaGraficoMax();
+    }
+});
+
+function alterarEscalaGraficoMin(){
+    if(config_graficoDesempenho.options.scales.y.min == 0){
+        config_graficoDesempenho.options.scales.y.min = 80;
+    } else {
+        config_graficoDesempenho.options.scales.y.min = 0;
+    }
+    graficoEmUso.update()
+    funcaoAlterarEscalaMinAtivada = true;
+}
+
+function alterarEscalaGraficoMax(){
+    if(config_graficoDesempenho.options.scales.y.max == 100){
+        config_graficoDesempenho.options.scales.y.max = 25;
+    } else {
+        config_graficoDesempenho.options.scales.y.max = 100;
+    }
+    graficoEmUso.update()
+    funcaoAlterarEscalaMaxAtivada = true;
+}
+
+function atualizarComponenteEscolhido(n){
     var componenteSelecionado = document.getElementById('componenteSelecionado');
     var tipoValorComponenteSelecionado = document.getElementById('tipoValorComponenteSelecionado')
     var nomeComponente = document.getElementById('nomeComponente')
@@ -464,25 +519,76 @@ function atualizarComponenteEscolhido(n) {
     switch (n) {
         case 1:
             componenteSelecionado.innerHTML = "CPU"
-            tipoValorComponenteSelecionado.innerHTML = "% de Utilização"
+            tipoValorComponenteSelecionado.innerHTML = "% de utilização"
             nomeComponente.innerHTML = "13th Gen Intel(R) Core(TM) i5-13450HX"
             break;
         case 2:
             componenteSelecionado.innerHTML = "DISCO"
-            tipoValorComponenteSelecionado.innerHTML = "% de Utilização"
+            tipoValorComponenteSelecionado.innerHTML = "% utilizado"
             nomeComponente.innerHTML = "NVMe KBG50ZNS512G NVMe KIOXIA 512GB"
             break;
         case 3:
             componenteSelecionado.innerHTML = "RAM"
-            tipoValorComponenteSelecionado.innerHTML = "% de Utilização"
+            tipoValorComponenteSelecionado.innerHTML = "% de utilização"
             nomeComponente.innerHTML = "";
             break;
     }
 }
 
-function getQueryParam(param) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
-}
+var metricaMedioRam;
+var metricagraveRam;
+var metricaMedioCpu;
+var metricaGraveCpu;
+var metricaMedioDisco;
+var metricaGraveDisco;
 
-const grafico_selecionado = getQueryParam("parametro")
+function selectMetricas(){
+
+    if(sessionStorage.idEmpresa == null){
+        var fkEmpresa = sessionStorage.fkEmpresa
+    } else {
+        var fkEmpresa = sessionStorage.idEmpresa
+    }
+    fetch("/usuarios/selectMetricas", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fkComputadorServer: fkComputador,
+          fkEmpresaServer: fkEmpresa
+        })
+      }).then(function (resposta) {
+            console.log("Estou buscando dados referente a métrica dos alertas!");
+
+            if (resposta.ok) {
+                console.log(resposta);
+                resposta.json().then((resposta) => {
+                        resposta.forEach((objeto) => {
+                            const { medioRam, graveRam, medioCPU, graveCPU, medioDisco, graveDisco  } = objeto;
+                            
+                            metricaMedioRam = medioRam;
+                            metricagraveRam = graveRam;
+                            metricaMedioCpu = medioCPU;
+                            metricaGraveCpu = graveCPU;
+                            metricaMedioDisco = medioDisco;
+                            metricaGraveDisco = graveDisco;
+                            
+                        });
+                    });
+                console.log("Consegui buscar a métrica dos alertas!")
+
+            } else {
+                console.log("Houve um erro ao fazer o select da métrica dos alertas!");
+
+                resposta.text().then((texto) => {
+                    console.error(texto);
+                });
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+        });
+
+    return false;
+}

@@ -100,3 +100,31 @@ function fazerLogout() {
 function abrirCadastrarFuncionario() {
     window.location.href = '../Dashboard/CadastroFuncionario/cadastrofuncionario.html'
 }
+
+function enviarEmail() {
+
+    const mensagemContato = document.getElementById("mensagemContato").value;
+    const assuntoContato = document.getElementById("assuntoContato").value;
+    const emailContato = document.getElementById("emailContato").value;
+
+
+    fetch('/enviar-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ emailContato, assuntoContato, mensagemContato }),
+    })
+        .then(function (response) {
+            if (response.ok) {
+                
+                console.log('E-mail enviado com sucesso!');
+                alert("E-mail enviado com sucesso!")
+            } else {
+                console.log('Erro ao enviar o e-mail.');
+            }
+        })
+        .catch(function (error) {
+            console.log('Erro ao enviar o e-mail:', error);
+        });
+}

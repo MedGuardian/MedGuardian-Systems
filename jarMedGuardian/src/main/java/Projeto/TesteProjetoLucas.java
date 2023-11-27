@@ -35,7 +35,6 @@ public class TesteProjetoLucas {
         Double graveDisco;
         Double medioDisco;
 
-
         do {
             ObterMemoriaSwap.ObterMemoriaSwap();
             System.out.println("Digite o email: ");
@@ -45,10 +44,10 @@ public class TesteProjetoLucas {
             System.out.println("Digite a senha: ");
             Scanner leitorSenha = new Scanner(System.in);
             String senha = leitorSenha.nextLine();
-            if(!bancoDeDados.autenticarUsuario(email, senha).isEmpty()){
+            if(!bancoDeDadosAws.autenticarUsuario(email, senha).isEmpty()){
                 logado = true;
-                idFuncionario = bancoDeDados.autenticarUsuario(email, senha).get(0).getIdFuncionario();
-                fkEmpresa = bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario);
+                idFuncionario = bancoDeDadosAws.autenticarUsuario(email, senha).get(0).getIdFuncionario();
+                fkEmpresa = bancoDeDadosAws.getFkEmpresaPorIdFuncionario(idFuncionario);
 
                 if(System.getProperty("os.name").toLowerCase().contains("win")){
                     sistemaOperacional = "Windows";
@@ -56,44 +55,44 @@ public class TesteProjetoLucas {
                     sistemaOperacional = "Linux";
                 }
 
-                if(bancoDeDados.verificarComputadorCadastrado(nomeComputador)){
-                    bancoDeDados.insertComputador(nomeComputador, sistemaOperacional);
-                    idComputador = bancoDeDados.selectIdComputador(nomeComputador);
+                if(bancoDeDadosAws.verificarComputadorCadastrado(nomeComputador)){
+                    bancoDeDadosAws.insertComputador(nomeComputador, fkEmpresa, sistemaOperacional);
+                    idComputador = bancoDeDadosAws.selectIdComputador(nomeComputador);
 
-                    bancoDeDados.insertComponente(PROCESSADOR.getNomeComponente());
-                    bancoDeDados.insertComponente(RAM.getNomeComponente());
+                    bancoDeDadosAws.insertComponente(PROCESSADOR.getNomeComponente());
+                    bancoDeDadosAws.insertComponente(RAM.getNomeComponente());
 
 
                     if(!looca.getGrupoDeDiscos().getVolumes().isEmpty()){
                         for(int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
-                            bancoDeDados.insertComponente(HD.getNomeComponente() + (i + 1));
+                            bancoDeDadosAws.insertComponente(HD.getNomeComponente() + (i + 1));
                         }
                     }
-                    bancoDeDados.insertComponente(TEMPOATIVIDADE.getNomeComponente());
+                    bancoDeDadosAws.insertComponente(TEMPOATIVIDADE.getNomeComponente());
 
-                    for(int i = 0; i < bancoDeDados.selectComponente().size(); i++){
-                        Integer idComponente = bancoDeDados.selectComponente().get(i).getIdComponente();
+                    for(int i = 0; i < bancoDeDadosAws.selectComponente().size(); i++){
+                        Integer idComponente = bancoDeDadosAws.selectComponente().get(i).getIdComponente();
 
                         switch (idComponente) {
                             case 1 -> {
-                                bancoDeDados.insertEspecificacao(idComputador, idComponente, 100.);
+                                bancoDeDadosAws.insertEspecificacao(idComputador, idComponente, 100.);
                             }
                             case 2 -> {
-                                bancoDeDados.insertEspecificacao(idComputador, idComponente, looca.getMemoria().getTotal().doubleValue() / conversorGb);
+                                bancoDeDadosAws.insertEspecificacao(idComputador, idComponente, looca.getMemoria().getTotal().doubleValue() / conversorGb);
                             }
                             case 3 -> {
-                                bancoDeDados.insertEspecificacao(idComputador, idComponente, ((looca.getGrupoDeDiscos().getVolumes().get(0).getTotal().doubleValue() / conversorGb)) - 30);
+                                bancoDeDadosAws.insertEspecificacao(idComputador, idComponente, (looca.getGrupoDeDiscos().getVolumes().get(0).getTotal().doubleValue() / conversorGb));
                             }
                             case 4 -> {
-                                bancoDeDados.insertEspecificacao(idComputador, idComponente, null);
+                                bancoDeDadosAws.insertEspecificacao(idComputador, idComponente, null);
                             }
                         }
                     }
                 } else {
-                    idComputador = bancoDeDados.selectIdComputador(nomeComputador);
+                    idComputador = bancoDeDadosAws.selectIdComputador(nomeComputador);
                 }
 
-                if(bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario) != bancoDeDados.getFkEmpresaDaMaquinaPeloNome(nomeComputador)){
+                if(bancoDeDadosAws.getFkEmpresaPorIdFuncionario(idFuncionario) != bancoDeDadosAws.getFkEmpresaDaMaquinaPeloNome(nomeComputador)){
                     logado = false;
                     System.out.println("Você não é um funcionário registrado na empresa linkada a essa máquina!");
                     System.out.println("Solicite para que alguém libere seu acesso, se for o caso.");
@@ -101,7 +100,7 @@ public class TesteProjetoLucas {
                     System.out.println("""
                 USUÁRIO %s AUTENTICADO COM SUCESSO!
                 INICIANDO A CAPTURA DE DADOS DA MÁQUINA...
-                """.formatted(bancoDeDados.autenticarUsuario(email, senha).get(0).getNomeFuncionario()));
+                """.formatted(bancoDeDadosAws.autenticarUsuario(email, senha).get(0).getNomeFuncionario()));
                 }
             }
         } while (!logado);
@@ -123,20 +122,20 @@ public class TesteProjetoLucas {
             bancoDeDados.insertComponente(TEMPOATIVIDADE.getNomeComponente());
 
             for(int i = 0; i < bancoDeDados.selectComponente().size(); i++){
-                Integer idComponente = bancoDeDados.selectComponente().get(i).getIdComponente();
+                Integer idComponenteLocal = bancoDeDados.selectComponente().get(i).getIdComponente();
 
-                switch (idComponente) {
+                switch (idComponenteLocal) {
                     case 1 -> {
-                        bancoDeDados.insertEspecificacao(idComputadorLocal, idComponente, 100.);
+                        bancoDeDados.insertEspecificacao(idComputadorLocal, idComponenteLocal, 100.);
                     }
                     case 2 -> {
-                        bancoDeDados.insertEspecificacao(idComputadorLocal, idComponente, looca.getMemoria().getTotal().doubleValue() / conversorGb);
+                        bancoDeDados.insertEspecificacao(idComputadorLocal, idComponenteLocal, looca.getMemoria().getTotal().doubleValue() / conversorGb);
                     }
                     case 3 -> {
-                        bancoDeDados.insertEspecificacao(idComputadorLocal, idComponente, ((looca.getGrupoDeDiscos().getVolumes().get(0).getTotal().doubleValue() / conversorGb)));
+                        bancoDeDados.insertEspecificacao(idComputadorLocal, idComponenteLocal, ((looca.getGrupoDeDiscos().getVolumes().get(0).getTotal().doubleValue() / conversorGb)));
                     }
                     case 4 -> {
-                        bancoDeDados.insertEspecificacao(idComputadorLocal, idComponente, null);
+                        bancoDeDados.insertEspecificacao(idComputadorLocal, idComponenteLocal, null);
                     }
                 }
             }
@@ -164,7 +163,7 @@ public class TesteProjetoLucas {
                 Double numeroThreads = looca.getGrupoDeProcessos().getTotalThreads().doubleValue();
                 Double numeroProcessos = looca.getGrupoDeProcessos().getTotalProcessos().doubleValue();
                 Integer segundos = looca.getSistema().getTempoDeAtividade().intValue();
-//                List<Metrica> metrica = bancoDeDadosAws.getMetricasPorFkEmpresa(finalFkEmpresa, finalIdComputador);
+                List<Metrica> metrica = bancoDeDadosAws.getMetricasPorFkEmpresa(finalFkEmpresa, finalIdComputador);
 
                 Integer dias = segundos / 86400;
                 segundos = segundos % 86400;
@@ -180,47 +179,47 @@ public class TesteProjetoLucas {
 
                     switch (idComponenteAws) {
                         case  1-> {
-                            bancoDeDados.insertRegistro(processadorEmUso, "UsoCpu", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(dias), "Dias", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(horas), "Horas", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(minutos), "Minutos", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(Double.valueOf(segundos), "Segundos", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(numeroProcessos, "QuantidadeProcessos", finalIdComputador * 4 - 3);
-                            bancoDeDados.insertRegistro(numeroThreads, "QuantidadeThreads", finalIdComputador * 4 - 3);
-//
-//                            if(processadorEmUso >= metrica.get(0).getGraveCPU()){
-//                                bancoDeDados.insertAlertas("Crítico",finalIdComputador * 4 - 3, finalIdComputador);
-//                            } else if(processadorEmUso >= metrica.get(0).getMedioCPU()){
-//                                bancoDeDados.insertAlertas("Médio", finalIdComputador * 4 - 3, finalIdComputador);
-//                            }
+                            bancoDeDadosAws.insertRegistro(processadorEmUso, "UsoCpu", finalIdComputador * 4 - 3);
+                            bancoDeDadosAws.insertRegistro(Double.valueOf(dias), "Dias", finalIdComputador * 4 - 3);
+                            bancoDeDadosAws.insertRegistro(Double.valueOf(horas), "Horas", finalIdComputador * 4 - 3);
+                            bancoDeDadosAws.insertRegistro(Double.valueOf(minutos), "Minutos", finalIdComputador * 4 - 3);
+                            bancoDeDadosAws.insertRegistro(Double.valueOf(segundos), "Segundos", finalIdComputador * 4 - 3);
+                            bancoDeDadosAws.insertRegistro(numeroProcessos, "QuantidadeProcessos", finalIdComputador * 4 - 3);
+                            bancoDeDadosAws.insertRegistro(numeroThreads, "QuantidadeThreads", finalIdComputador * 4 - 3);
+
+                            if(processadorEmUso >= metrica.get(0).getGraveCPU()){
+                                bancoDeDadosAws.insertAlertas("Crítico",finalIdComputador * 4 - 3, finalIdComputador);
+                            } else if(processadorEmUso >= metrica.get(0).getMedioCPU()){
+                                bancoDeDadosAws.insertAlertas("Médio", finalIdComputador * 4 - 3, finalIdComputador);
+                            }
                         }
                         case 2 -> {
-                            bancoDeDados.insertRegistro(memoriaRamEmUso, "Uso", finalIdComputador * 4 - 2);
-//
-//                            if(memoriaRamEmUso >= (looca.getMemoria().getTotal().doubleValue() / conversorGb) * (metrica.get(0).getGraveRam() / 100)){
-//                                bancoDeDados.insertAlertas("Crítico", finalIdComputador * 4 - 2, finalIdComputador);
-//                            } else if(memoriaRamEmUso >= (looca.getMemoria().getTotal().doubleValue() / conversorGb) * (metrica.get(0).getMedioRam() / 100)){
-//                                bancoDeDados.insertAlertas("Médio", finalIdComputador * 4 - 2, finalIdComputador);
-//                            }
+                            bancoDeDadosAws.insertRegistro(memoriaRamEmUso, "Uso", finalIdComputador * 4 - 2);
+
+                            if(memoriaRamEmUso >= (looca.getMemoria().getTotal().doubleValue() / conversorGb) * (metrica.get(0).getGraveRam() / 100)){
+                                bancoDeDadosAws.insertAlertas("Crítico", finalIdComputador * 4 - 2, finalIdComputador);
+                            } else if(memoriaRamEmUso >= (looca.getMemoria().getTotal().doubleValue() / conversorGb) * (metrica.get(0).getMedioRam() / 100)){
+                                bancoDeDadosAws.insertAlertas("Médio", finalIdComputador * 4 - 2, finalIdComputador);
+                            }
                         }
                         case 3 -> {
-                            bancoDeDados.insertRegistro(discoDisponivel, "Uso", finalIdComputador * 4 - 1);
-                            bancoDeDados.insertRegistro(swapDisponivel, "SwapDisponivel", finalIdComputador * 4 - 1);
-//
-//                            Double tamanhoDiscoGb = looca.getGrupoDeDiscos().getVolumes().get(0).getTotal().doubleValue() / conversorGb;
-//                            Double porcentagemMedio = metrica.get(0).getMedioDisco() / 100;
-//                            Double porcentagemGrave = metrica.get(0).getGraveDisco() / 100;
-//
-//
-//                            if(discoDisponivel < (tamanhoDiscoGb - (tamanhoDiscoGb * porcentagemGrave))){
-//                                bancoDeDados.insertAlertas("Crítico", finalIdComputador * 4 - 1, finalIdComputador);
-//                            } else if(discoDisponivel < (tamanhoDiscoGb - (tamanhoDiscoGb * porcentagemMedio))){
-//                                bancoDeDados.insertAlertas("Médio", finalIdComputador * 4 - 1, finalIdComputador);
-//                            }
+                            bancoDeDadosAws.insertRegistro(discoDisponivel, "Uso", finalIdComputador * 4 - 1);
+                            bancoDeDadosAws.insertRegistro(swapDisponivel, "SwapDisponivel", finalIdComputador * 4 - 1);
+
+                            Double tamanhoDiscoGb = looca.getGrupoDeDiscos().getVolumes().get(0).getTotal().doubleValue() / conversorGb;
+                            Double porcentagemMedio = metrica.get(0).getMedioDisco() / 100;
+                            Double porcentagemGrave = metrica.get(0).getGraveDisco() / 100;
+
+
+                            if(discoDisponivel < (tamanhoDiscoGb - (tamanhoDiscoGb * porcentagemGrave))){
+                                bancoDeDadosAws.insertAlertas("Crítico", finalIdComputador * 4 - 1, finalIdComputador);
+                            } else if(discoDisponivel < (tamanhoDiscoGb - (tamanhoDiscoGb * porcentagemMedio))){
+                                bancoDeDadosAws.insertAlertas("Médio", finalIdComputador * 4 - 1, finalIdComputador);
+                            }
                         }
                     }
 
-                    List<Janelas> listaJanelasSelect = bancoDeDados.selectJanelas(finalIdComputador);
+                    List<Janelas> listaJanelasSelect = bancoDeDadosAws.selectJanelas(finalIdComputador);
                     List<Janela> listaJanelasLooca = new ArrayList<>();
                     MatarProcesso matarProcesso = new MatarProcesso();
 
@@ -250,7 +249,7 @@ public class TesteProjetoLucas {
                         }
 
                         if (!janelaEncontrada) {
-                            bancoDeDados.excluirJanela(janelaSelect.getComando(), finalIdComputador);
+                            bancoDeDadosAws.excluirJanela(janelaSelect.getComando(), finalIdComputador);
                         }
                     }
 
@@ -266,7 +265,7 @@ public class TesteProjetoLucas {
                         }
 
                         if (!janelaExistente) {
-                            bancoDeDados.insertJanelas(janelaLooca.getTitulo(), janelaLooca.getComando(), finalIdComputador, false);
+                            bancoDeDadosAws.insertJanelas(janelaLooca.getTitulo(), janelaLooca.getComando(), finalIdComputador, false);
                         }
                     }
                 }

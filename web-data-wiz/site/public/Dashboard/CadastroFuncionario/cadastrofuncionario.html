@@ -124,7 +124,12 @@
     //Recupere o valor da nova input pelo nome do id
     // Agora vá para o método fetch logo abaixo
     var tipoUserVar = tipoFunc.value;
-    var fkEmpresaVar = sessionStorage.idEmpresa;
+    if(sessionStorage.idEmpresa == null){
+      var fkEmpresaVar = sessionStorage.fkEmpresa;
+    } else {
+      var fkEmpresaVar = sessionStorage.idEmpresa;
+    }
+    
     var nomeFuncVar = nomeFuncionario.value;
     var emailVar = emailFuncionario.value;
     var senhaVar = senha;

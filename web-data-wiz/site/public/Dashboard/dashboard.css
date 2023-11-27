@@ -366,6 +366,7 @@ body {
     width: 100%;
     justify-content: flex-start;
     margin: 1% 0;
+    gap: 100px;
 }
 
 .boxMaquinaCadastrada {
