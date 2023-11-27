@@ -4,63 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../cssGlobal/cssGlobal.css">
+
+
     <link rel="stylesheet" href="paginaInicial.css">
-    <link rel="shortcut icon" href="../../assets/images/LOGO.png" type="image/x-icon">
-    <script src="../js/funcoes.js"></script>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="shortcut icon" href="../assets/images/LOGO.png" type="image/x-icon">
     <title>Home | MedGuardian</title>
 </head>
 
-<body onload="validarSessao()">
-
-    <div class="botaoMenu">
-        <span onclick="abrirMenuFlutuante()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                <g fill="none">
-                    <path
-                        d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092" />
-                    <path fill="currentColor"
-                        d="M20 17.5a1.5 1.5 0 0 1 .144 2.993L20 20.5H4a1.5 1.5 0 0 1-.144-2.993L4 17.5zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 0 1 0-3zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 1 1 0-3z" />
-                </g>
-            </svg>
-            <span>Menu</span>
-    </div>
-    <div class="menuFlutuante" id="menuFlutuante" style="display: none;">
-        <div class="conteudoMenuFlutuante">
-            <div class="headerMenuFlutuante">
-                <div class="esquerdaHeaderMenuFlutuante">
-                    <div class="circuloMenuFlutuante"></div>
-                </div>
-                <div class="direitaHeaderMenuFlutuante">
-                    <div class="nomeCargoRow">
-                        <span id="nomeMenuFlutuante">Lucas</span>
-                        <span id="cargoMenuFlutuante">(Admin)</span>
-                    </div>
-                    <div class="emailRow">
-                        <span id="emailMenuFlutuante">lucas.flima@sptech.school</span>
-                    </div>
-                </div>
-            </div>
-            <div class="opcoesMenuFlutuante">
-                <span onclick="abrirDashboardMenuFlutuante()">Dashboard</span>
-                <span onclick="abrirGerenciamentoMenuFlutuante()">Gerenciamento</span>
-                <span onclick="abrirCadastrarFuncionario()" id="spanCadastrarFuncionario">Cadastrar
-                    funcionário</span>
-                <span onclick="abrirAlterarFuncionario()"> Alterar Funcionários</span>
-                <div class="linhaMenuFlutuante"></div>
-                <span onclick="fazerLogout()">Fazer Logout</span>
-            </div>
-        </div>
-    </div>
-
-
+<body>
     <div class="header">
         <div class="container">
 
             <div class="tituloHeader">
-                <span id="tituloHeader"><a href="../PaginaInicial/paginaInicial.html">MedGuardian</a></span>
-
+                <span id="tituloHeader"><a href="index.html">MedGuardian</a></span>
+            </div>
+            <div class="conteudoHeader">
                 <div class="botaoMenu">
                     <span onclick="abrirMenuFlutuante()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -74,24 +33,37 @@
                         <span>Menu</span>
                 </div>
             </div>
-            <div class="conteudoHeader">
-                <div class="botoesHeader">
-                    <button id="botaoLogin" onclick="telaLogin()">Login</button>
-                    <button id="botaoCadastro" onclick="telaCadastro()">Cadastre-se</button>
-                </div>
 
-                <div class="saudacaoLogado" id="saudacaoLogado">
-                    <span id="saudacao">Olá, </span>
-                    <li id="iconmenuperfil" class="material-symbols-outlined">menu</li>
-                </div>
 
+            <div class="menuFlutuante" id="menuFlutuante" style="display: none;">
+                <div class="conteudoMenuFlutuante">
+                    <div class="headerMenuFlutuante">
+                        <div class="esquerdaHeaderMenuFlutuante">
+                            <div class="circuloMenuFlutuante"></div>
+                        </div>
+                        <div class="direitaHeaderMenuFlutuante">
+                            <div class="nomeCargoRow">
+                                <span id="nomeMenuFlutuante">Lucas</span>
+                                <span id="cargoMenuFlutuante">(Admin)</span>
+                            </div>
+                            <div class="emailRow">
+                                <span id="emailMenuFlutuante">lucas.flima@sptech.school</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="opcoesMenuFlutuante">
+                        <span onclick="abrirDashboardMenuFlutuante()">Dashboard</span>
+                        <span onclick="abrirGerenciamentoMenuFlutuante()">Gerenciamento</span>
+                        <span onclick="abrirCadastrarFuncionario()" id="spanCadastrarFuncionario">Cadastrar
+                            funcionário</span>
+                        <span onclick="abrirAlterarFuncionario()"> Alterar Funcionários</span>
+                        <div class="linhaMenuFlutuante"></div>
+                        <span onclick="fazerLogout()">Fazer Logout</span>
+                    </div>
+                </div>
             </div>
-
-
         </div>
     </div>
-
-
     <div class="apresentacaoHeader">
         <div class="container">
             <div class="conteudoApresentacaoHeader">
@@ -117,19 +89,16 @@
             </div>
 
             <div class="imagemApresentacaoHeader">
-                <img src="../../assets/images/2doutores-Header1.svg" alt="">
+                <img src="../assets/images/2doutores-Header1.svg" alt="">
             </div>
         </div>
     </div>
-
-
-
     <div class="modalContato" id="modalContato" style="display: none;">
         <div class="container">
             <div class="conteudoModalContato">
 
                 <div class="iconFecharModal">
-                    <img src="../../assets/images/icon-fechar.png" onclick="fecharModal()">
+                    <img src="../assets/images/icon-fechar.png" onclick="fecharModal()">
                 </div>
 
                 <div class="textoSuperiorModalContato">
@@ -156,15 +125,11 @@
             </div>
         </div>
     </div>
-
     <div id="overlay"></div>
-
-
-
     <div class="segundaApresentacao">
 
         <div class="imagemSegundaApresentacao">
-            <img src="../../assets/images/sala-de-cirurgia-homepage.png" alt="">
+            <img src="../assets/images/sala-de-cirurgia-homepage.png" alt="">
         </div>
 
         <div class="container">
@@ -195,7 +160,6 @@
             </div>
         </div>
     </div>
-
     <div class="sobreNos">
         <div class="container">
             <div class="conteudoSobreNos">
@@ -235,7 +199,7 @@
                         </div>
 
                         <div class="imagemSobreNos">
-                            <img src="../../assets/images/3doutores-sobre-nos.svg" alt="">
+                            <img src="../assets/images/3doutores-sobre-nos.svg" alt="">
                         </div>
 
                         <div class="conteudoDireitaSobreNos">
@@ -265,7 +229,7 @@
                     <div class="conteudoDireitaSobreNosCelular">
 
                         <div class="imagemSobreNosCelular">
-                            <img src="../../assets/images/3doutores-sobre-nos.svg" alt="">
+                            <img src="../assets/images/3doutores-sobre-nos.svg" alt="">
                         </div>
 
                         <div class="conteudoInferiorSobreNos">
@@ -288,8 +252,6 @@
             </div>
         </div>
     </div>
-
-
     <div class="MissaoVisaoValores">
         <div class="container">
             <div class="conteudoMissaoVisaoValores">
@@ -297,7 +259,7 @@
                 <div class="missao">
 
                     <div class="imagemMissao">
-                        <img src="../../assets/images/missao.svg" alt="">
+                        <img src="../assets/images/missao.svg" alt="">
                     </div>
 
                     <div class="conteudoMissao">
@@ -323,7 +285,7 @@
                 <div class="visao">
 
                     <div class="imagemVisao">
-                        <img src="../../assets/images/visao.svg" alt="">
+                        <img src="../assets/images/visao.svg" alt="">
                     </div>
 
                     <div class="conteudoVisao">
@@ -348,7 +310,7 @@
                 <div class="valores">
 
                     <div class="imagemValores">
-                        <img src="../../assets/images/valores.svg" alt="">
+                        <img src="../assets/images/valores.svg" alt="">
                     </div>
 
                     <div class="conteudoValores">
@@ -368,122 +330,93 @@
                             </span>
                         </div>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </div>
-
     <div class="tituloAvaliacoes">
         <div class="container">
             <h1>Aqui estão alguns de nossos clientes que impulsionaram este projeto:
             </h1>
         </div>
     </div>
-
     <div class="avaliacoes">
         <div class="container">
             <div class="conteudoAvaliacoes">
-
                 <input type="radio" name="position" checked />
                 <input type="radio" name="position" />
                 <input type="radio" name="position" />
                 <input type="radio" name="position" />
                 <input type="radio" name="position" />
-
                 <main id="carousel">
-
                     <div class="item">
                         <div class="tituloAvaliacao" id="avaliacao1">
-                            <span>Avaliação 1</span>
+                            <span>João Pedro</span>
                         </div>
-
                         <div class="imagemAvaliacao">
-                            <img src="../../assets/images/avaliacao1.svg" alt="">
+                            <img src="../assets/images/avaliacao1.svg" alt="">
                         </div>
-
                         <div class="textoAvaliacao">
                             <span>O sistema de monitoramento de máquinas da recepção de pronto-socorros é incrível! Ele
                                 nos ajuda a manter tudo funcionando sem problemas, economizando tempo e garantindo um
                                 atendimento de qualidade.</span>
                         </div>
-
                     </div>
-
                     <div class="item">
                         <div class="tituloAvaliacao" id="avaliacao2">
-                            <span>Avaliação 2</span>
+                            <span>Maria Vitória</span>
                         </div>
-
                         <div class="imagemAvaliacao">
-                            <img src="../../assets/images/avaliacao2.svg" alt="">
+                            <img src="../assets/images/avaliacao2.svg" alt="">
                         </div>
-
                         <div class="textoAvaliacao">
                             <span>Simplesmente fantástico! Com as informações em tempo real sobre RAM, disco e CPU,
                                 estamos sempre um passo à frente em termos de manutenção e desempenho.</span>
                         </div>
-
                     </div>
-
                     <div class="item">
                         <div class="tituloAvaliacao" id="avaliacao3">
-                            <span>Avaliação 3</span>
+                            <span>Francisco Neves</span>
                         </div>
-
                         <div class="imagemAvaliacao">
-                            <img src="../../assets/images/avaliacao3.svg" alt="">
+                            <img src="../assets/images/avaliacao3.svg" alt="">
                         </div>
-
                         <div class="textoAvaliacao">
                             <span>Uma ferramenta essencial para nossa equipe. O sistema de monitoramento é fácil de usar
                                 e fornece dados vitais para a gestão eficaz dos recursos.</span>
                         </div>
-
                     </div>
-
                     <div class="item">
                         <div class="tituloAvaliacao" id="avaliacao4">
-                            <span>Avaliação 4</span>
+                            <span>Bruno Oliveira</span>
                         </div>
-
                         <div class="imagemAvaliacao">
-                            <img src="../../assets/images/avaliacao4.svg" alt="">
+                            <img src="../assets/images/avaliacao4.svg" alt="">
                         </div>
-
                         <div class="textoAvaliacao">
                             <span>Eficiência e tranquilidade. O sistema nos permite tomar decisões informadas e evitar
                                 problemas de desempenho. Essencial para qualquer pronto-socorro.</span>
                         </div>
-
                     </div>
-
                     <div class="item">
                         <div class="tituloAvaliacao" id="avaliacao5">
-                            <span>Avaliação 5</span>
+                            <span>Regina Souza</span>
                         </div>
-
                         <div class="imagemAvaliacao">
-                            <img src="../../assets/images/avaliacao5.svg" alt="">
+                            <img src="../assets/images/avaliacao5.svg" alt="">
                         </div>
-
                         <div class="textoAvaliacao">
                             <span>O monitoramento de máquinas do pronto-socorro é a melhor adição à nossa
                                 infraestrutura. Simplifica nossa operação e garante um atendimento ininterrupto aos
                                 pacientes.</span>
                         </div>
-
                     </div>
-
             </div>
         </div>
     </div>
-
-
     <div class="footer">
         <div class="imagemFooter">
-            <img src="../../assets/images/LOGO.png" alt="">
+            <img src="../assets/images/LOGO.png" alt="">
         </div>
 
         <div class="nomeEmpresaFooter">
@@ -491,9 +424,23 @@
                 privacidade | Definições de cookies | Mapa do site</span>
         </div>
     </div>
-
 </body>
 
 </html>
 
+<script>
+    function telaLogin() {
+        window.location.href = "Login/tipoLogin.html"
+    }
+
+    function telaCadastro() {
+        window.location.href = 'Cadastro/cadastro.html'
+    }
+
+    function abrirAlterarFuncionario() {
+        window.location.href = './Dashboard/Funcionarios/funcionarios.html'
+    }
+</script>
+<script src="../js/funcoes.js"></script>
+<script src="../js/sessao.js"></script>
 <script src="paginaInicial.js"></script>
