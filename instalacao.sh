@@ -49,11 +49,11 @@ echo DROP DATABASE IF EXISTS medguardian >> tabelas.sql;
 echo CREATE DATABASE medguardian >> tabelas.sql;
 echo USE medguardian >> tabelas.sql;
 
-echo CREATE TABLE IF NOT EXISTS computador( >> tabelas.sql;
-echo idComputador INT AUTO_INCREMENT NOT NULL PRIMARY KEY, >> tabelas.sql;
-echo nomeComputador VARCHAR(255) NOT NULL, >> tabelas.sql;
-echo sistemaOperacional VARCHAR(255) NOT NULL >> tabelas.sql;
-echo ); >> tabelas.sql;
+echo CREATE TABLE IF NOT EXISTS computador( 
+ idComputador INT AUTO_INCREMENT NOT NULL PRIMARY KEY, 
+ nomeComputador VARCHAR(255) NOT NULL, 
+ sistemaOperacional VARCHAR(255) NOT NULL 
+ ); >> tabelas.sql;
 
 echo CREATE TABLE IF NOT EXISTS componente( >> tabelas.sql;
 echo idComponente INT AUTO_INCREMENT NOT NULL, >> tabelas.sql;
