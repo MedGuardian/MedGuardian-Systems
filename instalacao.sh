@@ -78,12 +78,13 @@ CREATE TABLE IF NOT EXISTS registro(
 ); 
 EOL
 cd ..
-touch Dockerfile
 
-echo FROM mysql:latest >> Dockerfile;
-echo ENV MYSQL_ROOT_PASSWORD=root >> Dockerfile;
-echo COPY ./Dock/ /docker-entrypoint-initdb.d/ >> Dockerfile;
-echo EXPOSE 3306 >> Dockerfile;
+cat<<EOL >> Dockerfile
+ FROM mysql:latest 
+ ENV MYSQL_ROOT_PASSWORD=root 
+ COPY ./Dock/ /docker-entrypoint-initdb.d/ 
+ EXPOSE 3306 /
+EOL
 
 sudo docker build -t meu-banco .
 sudo docker run -d --name meu-container -p 3306:3306 meu-banco
