@@ -362,8 +362,8 @@ function gerarDivFilhoComputadoresCadastrados(idComputador, nomeComputador, sist
 </div>`
 }
 
-function abrirDashboardEspecifica(idComputador) {
-  window.location.href = 'DashboardEspecifica/dashboardespecifica.html?parametro=' + idComputador;
+function abrirDashboardEspecifica() {
+  window.location.href = 'DashboardEspecifica/dashboardespecifica.html'
 }
 
 function selectAlertas() {
@@ -454,31 +454,25 @@ function validarAlertasCores(fkComputador, fkEspecificacao, tipoAlerta) {
         if (tipoAlerta == "Crítico") {
           removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
           gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "CPU", "#fc8374", divMaquina, alertaMaquinaCadastrada)
-
         } else {
           removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
           gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "CPU", "#ee9663", divMaquina, alertaMaquinaCadastrada)
-
         }
       } else if (fkEspecificacao == (fkComputador * 4 - 2)) {
         if (tipoAlerta == "Crítico") {
           removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
           gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "RAM", "#fc8374", divMaquina, alertaMaquinaCadastrada)
-
         } else {
           removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
           gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "RAM", "#ee9663", divMaquina, alertaMaquinaCadastrada)
-
         }
       } else if (fkEspecificacao == (fkComputador * 4 - 1)){
         if (tipoAlerta == "Crítico") {
           removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
           gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "DISCO", "#fc8374", divMaquina, alertaMaquinaCadastrada)
-
         } else {
           removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
           gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "DISCO", "#ee9663", divMaquina, alertaMaquinaCadastrada)
-
         }
       }
 
@@ -520,6 +514,7 @@ function removerDivAlerta(fkComputador, fkEspecificacao, tipoAlerta) {
     divRemover.remove();
   }
 }
+
 
 
 

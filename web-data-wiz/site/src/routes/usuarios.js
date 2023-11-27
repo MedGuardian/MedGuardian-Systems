@@ -43,7 +43,7 @@ router.post("/selectComputador", function (req, res) {
     usuarioController.selectComputador(req, res);
 })
 
-router.get("/atualizarGrafico", function (req, res) {
+router.post("/atualizarGrafico", function (req, res) {
     usuarioController.atualizarGrafico(req, res);
 });
 
@@ -51,7 +51,7 @@ router.get("/selectTotalComponentes", function (req, res) {
     usuarioController.selectTotalComponentes(req, res);
 });
 
-router.get("/atualizarIndicadores", function (req, res) {
+router.post("/atualizarIndicadores", function (req, res) {
     usuarioController.atualizarIndicadores(req, res);
 });
 

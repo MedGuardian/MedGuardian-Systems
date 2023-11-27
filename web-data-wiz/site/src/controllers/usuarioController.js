@@ -329,8 +329,10 @@ function cadastrarEndereco(req, res) {
 
 function atualizarGrafico(req, res) {
 
+    var fkComputador = req.body.fkComputadorServer;
+
     const limite_linhas = 6;
-    usuarioModel.atualizarGrafico(limite_linhas)
+    usuarioModel.atualizarGrafico(fkComputador, limite_linhas)
         .then(
             function (resultado) {
                 res.json(resultado);
@@ -367,7 +369,10 @@ function selectTotalComponentes(req, res) {
 }
 
 function atualizarIndicadores(req, res) {
-    usuarioModel.atualizarIndicadores()
+
+    var fkComputador = req.body.fkComputadorServer
+
+    usuarioModel.atualizarIndicadores(fkComputador)
         .then(
             function (resultado) {
                 res.json(resultado);

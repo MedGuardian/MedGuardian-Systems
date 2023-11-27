@@ -145,13 +145,12 @@ function selectComputador(nomeMaquina) {
     return database.executar(instrucao);
 }
 
-function atualizarGrafico(limite_linhas) {
+function atualizarGrafico(fkComputador, limite_linhas) {
 
     return new Promise(function (resolve, reject) {
-        var instrucao1 = `SELECT TOP ${limite_linhas} dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 AND tipoCaptura = 'UsoCPU' ORDER BY idRegistro DESC;`;
-        var instrucao2 = `SELECT TOP ${limite_linhas} dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 2 ORDER BY idRegistro DESC;`;
-        var instrucao3 = `SELECT TOP ${limite_linhas} dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 3 ORDER BY idRegistro DESC;`;
-        var instrucao4 = `SELECT TOP ${limite_linhas} dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 4 ORDER BY idRegistro DESC;`;
+        var instrucao1 = `SELECT TOP ${limite_linhas} dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = ${fkComputador * 4 - 3} AND tipoCaptura = 'UsoCPU' ORDER BY idRegistro DESC;`;
+        var instrucao2 = `SELECT TOP ${limite_linhas} dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = ${fkComputador * 4 - 2} ORDER BY idRegistro DESC;`;
+        var instrucao3 = `SELECT TOP ${limite_linhas} dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = ${fkComputador * 4 - 1} ORDER BY idRegistro DESC;`;
 
         console.log("Executando as instruções SQL...");
         var selects = [];
@@ -159,7 +158,6 @@ function atualizarGrafico(limite_linhas) {
         selects.push(database.executar(instrucao1));
         selects.push(database.executar(instrucao2));
         selects.push(database.executar(instrucao3));
-        selects.push(database.executar(instrucao4))
 
         Promise.all(selects)
             .then(function (res) {
@@ -196,13 +194,12 @@ function selectTotalComponentes() {
     });
 }
 
-function atualizarIndicadores() {
+function atualizarIndicadores(fkComputador) {
 
     return new Promise(function (resolve, reject) {
-        var instrucao1 = `SELECT TOP 7 registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 ORDER BY idRegistro DESC;`;
-        var instrucao2 = `SELECT TOP 1 registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 2 ORDER BY idRegistro DESC`;
-        var instrucao3 = `SELECT TOP 1 registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 3 ORDER BY idRegistro DESC`;
-        var instrucao4 = `SELECT TOP 1 registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 4 ORDER BY idRegistro DESC`;
+        var instrucao1 = `SELECT TOP 7 registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = ${fkComputador * 4 - 3} ORDER BY idRegistro DESC;`;
+        var instrucao2 = `SELECT TOP 1 registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = ${fkComputador * 4 - 2} ORDER BY idRegistro DESC`;
+        var instrucao3 = `SELECT TOP 1 registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = ${fkComputador * 4 - 1} ORDER BY idRegistro DESC`;
 
         console.log("Executando as instruções SQL...");
         var selects = [];
@@ -210,7 +207,6 @@ function atualizarIndicadores() {
         selects.push(database.executar(instrucao1));
         selects.push(database.executar(instrucao2));
         selects.push(database.executar(instrucao3));
-        selects.push(database.executar(instrucao4));
 
         Promise.all(selects)
             .then(function (res) {
