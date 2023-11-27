@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Funcionário</title>
+    <title>Login Funcionário|MedGuardian</title>
     <link rel="stylesheet" href="../PaginaInicial/paginaInicial.css">
     <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
@@ -42,7 +42,7 @@
             <div class="conteudoLogin">
 
                 <div class="conteudoEsquerda">
-                    
+
                     <div class="inputsLogin">
                         <span>E-mail</span>
                         <input type="text" id="inputEmail">
@@ -50,13 +50,13 @@
                         <input type="password" id="inputSenha">
                         <span id="spanErro">E-mail ou senha inválido(s)</span>
                     </div>
-                    
+
 
                     <div class="botaoEntrar">
                         <button onclick="logarUser()">Entrar</button>
                     </div>
                 </div>
-                
+
                 <div class="conteudoDireita">
                     <div class="imagem">
                         <img src="../assets/images/hospital.svg" alt="">
@@ -74,7 +74,7 @@
 <script>
     inputEmail.value = "lucas@clinicas.com"
     inputSenha.value = "12345678"
-    function logarUser(){
+    function logarUser() {
         const spanErro = document.getElementById("spanErro")
 
         var emailVar = inputEmail.value;
@@ -102,20 +102,20 @@
                     console.log(JSON.stringify(json));
                     sessionStorage.fkEmpresa = json.fkEmpresa;
                     sessionStorage.idFuncionario = json.idFuncionario;
-                    sessionStorage.cargo=json.tipoAcesso;
+                    sessionStorage.cargo = json.tipoAcesso;
                     sessionStorage.nomeFuncionario = json.nomeFuncionario
                     sessionStorage.emailFuncionario = json.emailFuncionario
-                    
+
                     setTimeout(function () {
                         window.location = "../Dashboard/dashboard.html";
-                    }, 1000); 
+                    }, 1000);
                 });
-                
+
             } else {
                 spanErro.style.display = "flex";
                 console.log("Houve um erro ao tentar realizar o login!");
 
-                setTimeout(function (){
+                setTimeout(function () {
                     spanErro.style.display = "none";
                 }, 3000)
 

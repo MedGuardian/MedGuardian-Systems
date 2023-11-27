@@ -9,17 +9,71 @@
     <script src="../js/funcoes.js"></script>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <title>Home</title>
+    <title>Home | MedGuardian</title>
 </head>
 
 <body onload="validarSessao()">
+
+    <div class="botaoMenu">
+        <span onclick="abrirMenuFlutuante()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <g fill="none">
+                    <path
+                        d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092" />
+                    <path fill="currentColor"
+                        d="M20 17.5a1.5 1.5 0 0 1 .144 2.993L20 20.5H4a1.5 1.5 0 0 1-.144-2.993L4 17.5zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 0 1 0-3zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 1 1 0-3z" />
+                </g>
+            </svg>
+            <span>Menu</span>
+    </div>
+    <div class="menuFlutuante" id="menuFlutuante" style="display: none;">
+        <div class="conteudoMenuFlutuante">
+            <div class="headerMenuFlutuante">
+                <div class="esquerdaHeaderMenuFlutuante">
+                    <div class="circuloMenuFlutuante"></div>
+                </div>
+                <div class="direitaHeaderMenuFlutuante">
+                    <div class="nomeCargoRow">
+                        <span id="nomeMenuFlutuante">Lucas</span>
+                        <span id="cargoMenuFlutuante">(Admin)</span>
+                    </div>
+                    <div class="emailRow">
+                        <span id="emailMenuFlutuante">lucas.flima@sptech.school</span>
+                    </div>
+                </div>
+            </div>
+            <div class="opcoesMenuFlutuante">
+                <span onclick="abrirDashboardMenuFlutuante()">Dashboard</span>
+                <span onclick="abrirGerenciamentoMenuFlutuante()">Gerenciamento</span>
+                <span onclick="abrirCadastrarFuncionario()" id="spanCadastrarFuncionario">Cadastrar
+                    funcionário</span>
+                <span onclick="abrirAlterarFuncionario()"> Alterar Funcionários</span>
+                <div class="linhaMenuFlutuante"></div>
+                <span onclick="fazerLogout()">Fazer Logout</span>
+            </div>
+        </div>
+    </div>
+
+
     <div class="header">
         <div class="container">
 
             <div class="tituloHeader">
                 <span id="tituloHeader"><a href="../PaginaInicial/paginaInicial.html">MedGuardian</a></span>
-            </div>
 
+                <div class="botaoMenu">
+                    <span onclick="abrirMenuFlutuante()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                            <g fill="none">
+                                <path
+                                    d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092" />
+                                <path fill="currentColor"
+                                    d="M20 17.5a1.5 1.5 0 0 1 .144 2.993L20 20.5H4a1.5 1.5 0 0 1-.144-2.993L4 17.5zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 0 1 0-3zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 1 1 0-3z" />
+                            </g>
+                        </svg>
+                        <span>Menu</span>
+                </div>
+            </div>
             <div class="conteudoHeader">
                 <div class="botoesHeader">
                     <button id="botaoLogin" onclick="telaLogin()">Login</button>
@@ -158,57 +212,65 @@
 
                         <div class="conteudoEsquerdaSobreNos">
                             <div class="conteudoSuperiorEsquerdaSobreNos">
-                                <span id="conteudoSuperiorEsquerdaSobreNos"> Ao ter acesso rápido a informações relevantes sobre os pacientes, os profissionais de
+                                <span id="conteudoSuperiorEsquerdaSobreNos"> Ao ter acesso rápido a informações
+                                    relevantes sobre os pacientes, os profissionais de
                                     saúde podem tomar decisões mais informadas, proporcionando um atendimento mais
                                     preciso e personalizado.</span>
                             </div>
-    
+
                             <div class="conteudoMeioEsquerdaSobreNos">
-                                <span id="conteudoMeioEsquerdaSobreNos">Ao centralizar os dados de pacientes, será possível realizar análises de tendências de
+                                <span id="conteudoMeioEsquerdaSobreNos">Ao centralizar os dados de pacientes, será
+                                    possível realizar análises de tendências de
                                     saúde, identificar surtos de doenças e tomar medidas preventivas em nível
                                     populacional.</span>
                             </div>
-    
+
                             <div class="conteudoInferiorEsquerdaSobreNos">
-                                <span id="conteudoInferiorEsquerdaSobreNos">As informações armazenadas podem ser usadas para apoiar decisões estratégicas
-                                    relacionadas à alocação de recursos, planejamento de atendimento e desenvolvimento de
+                                <span id="conteudoInferiorEsquerdaSobreNos">As informações armazenadas podem ser usadas
+                                    para apoiar decisões estratégicas
+                                    relacionadas à alocação de recursos, planejamento de atendimento e desenvolvimento
+                                    de
                                     políticas de saúde.</span>
                             </div>
                         </div>
-    
+
                         <div class="imagemSobreNos">
                             <img src="../../assets/images/3doutores-sobre-nos.svg" alt="">
                         </div>
-    
+
                         <div class="conteudoDireitaSobreNos">
                             <div class="conteudoSuperiorDireitaSobreNos">
-                                <span id="conteudoSuperiorDireitaSobreNos">Com dados precisos e atualizados disponíveis eletronicamente, os erros relacionados à administração incorreta de medicamentos, alergias e histórico médico podem ser
+                                <span id="conteudoSuperiorDireitaSobreNos">Com dados precisos e atualizados disponíveis
+                                    eletronicamente, os erros relacionados à administração incorreta de medicamentos,
+                                    alergias e histórico médico podem ser
                                     minimizados, aumentando a segurança do paciente.</span>
                             </div>
-    
+
                             <div class="conteudoMeioDireitaSobreNos">
-                                <span
-                                 id="conteudoMeioDireitaSobreNos"> O sistema permitirá que os médicos, enfermeiros e outros profissionais de saúde
+                                <span id="conteudoMeioDireitaSobreNos"> O sistema permitirá que os médicos, enfermeiros
+                                    e outros profissionais de saúde
                                     compartilhem informações de forma rápida e eficaz, melhorando a colaboração e a
                                     coordenação no cuidado do paciente.</span>
                             </div>
-    
+
                             <div class="conteudoInferiorDireitaSobreNos">
-                                <span id="conteudoInferiorDireitaSobreNos"> O sistema permitirá que pacientes acessem seus próprios registros médicos de forma
+                                <span id="conteudoInferiorDireitaSobreNos"> O sistema permitirá que pacientes acessem
+                                    seus próprios registros médicos de forma
                                     segura, incentivando a participação ativa na gestão de sua saúde.</span>
                             </div>
                         </div>
                     </div>
-    
-    
+
+
                     <div class="conteudoDireitaSobreNosCelular">
-    
+
                         <div class="imagemSobreNosCelular">
                             <img src="../../assets/images/3doutores-sobre-nos.svg" alt="">
                         </div>
-    
+
                         <div class="conteudoInferiorSobreNos">
-                            <span>O monitoramento de desempenho das máquinas que portam um sistema de coleta e armazenamento
+                            <span>O monitoramento de desempenho das máquinas que portam um sistema de coleta e
+                                armazenamento
                                 de
                                 dados de pacientes em hospitais públicos é fundamental para aprimorar a qualidade do
                                 atendimento
@@ -216,12 +278,12 @@
                                 análises
                                 de saúde populacional.</span>
                         </div>
-                        
+
                     </div>
 
 
                 </div>
-                
+
 
             </div>
         </div>
@@ -245,7 +307,8 @@
                         </div>
 
                         <div class="textoMissao">
-                            <span id="textoMissao">Nossa missão é capacitar e monitorar os sistemas para garantir a segurança, a
+                            <span id="textoMissao">Nossa missão é capacitar e monitorar os sistemas para garantir a
+                                segurança, a
                                 eficiência e a integridade de seus dados por meio da monitoração avançada de
                                 computadores. Através do nosso sistema de monitoramento de coleta e armazenamento de
                                 dados, estamos comprometidos em oferecer soluções de monitoramento inteligentes,
@@ -270,7 +333,8 @@
                         </div>
 
                         <div class="textoVisao">
-                            <span id="textoVisao">Nossa visão é liderar a indústria de monitoramento de computadores, sendo reconhecidos
+                            <span id="textoVisao">Nossa visão é liderar a indústria de monitoramento de computadores,
+                                sendo reconhecidos
                                 como o parceiro de confiança quando se trata de gerenciar o desempenho de computadores
                                 que coletam dado. Planejamos alcançar isso expandindo nossa presença global,
                                 desenvolvendo constantemente tecnologias inovadoras e oferecendo um serviço
@@ -294,7 +358,8 @@
                         </div>
 
                         <div class="textoValores">
-                            <span id="textoValores"> Estamos comprometidos com a constante busca por inovação e excelência. Acreditamos no
+                            <span id="textoValores"> Estamos comprometidos com a constante busca por inovação e
+                                excelência. Acreditamos no
                                 poder da colaboração. Trabalhamos em estreita parceria com nossos clientes para entender
                                 suas necessidades. Reconhecemos nossa responsabilidade em contribuir positivamente para
                                 a
@@ -339,7 +404,9 @@
                         </div>
 
                         <div class="textoAvaliacao">
-                            <span>O sistema de monitoramento de máquinas da recepção de pronto-socorros é incrível! Ele nos ajuda a manter tudo funcionando sem problemas, economizando tempo e garantindo um atendimento de qualidade.</span>
+                            <span>O sistema de monitoramento de máquinas da recepção de pronto-socorros é incrível! Ele
+                                nos ajuda a manter tudo funcionando sem problemas, economizando tempo e garantindo um
+                                atendimento de qualidade.</span>
                         </div>
 
                     </div>
@@ -354,7 +421,8 @@
                         </div>
 
                         <div class="textoAvaliacao">
-                            <span>Simplesmente fantástico! Com as informações em tempo real sobre RAM, disco e CPU, estamos sempre um passo à frente em termos de manutenção e desempenho.</span>
+                            <span>Simplesmente fantástico! Com as informações em tempo real sobre RAM, disco e CPU,
+                                estamos sempre um passo à frente em termos de manutenção e desempenho.</span>
                         </div>
 
                     </div>
@@ -369,7 +437,8 @@
                         </div>
 
                         <div class="textoAvaliacao">
-                            <span>Uma ferramenta essencial para nossa equipe. O sistema de monitoramento é fácil de usar e fornece dados vitais para a gestão eficaz dos recursos.</span>
+                            <span>Uma ferramenta essencial para nossa equipe. O sistema de monitoramento é fácil de usar
+                                e fornece dados vitais para a gestão eficaz dos recursos.</span>
                         </div>
 
                     </div>
@@ -384,7 +453,8 @@
                         </div>
 
                         <div class="textoAvaliacao">
-                            <span>Eficiência e tranquilidade. O sistema nos permite tomar decisões informadas e evitar problemas de desempenho. Essencial para qualquer pronto-socorro.</span>
+                            <span>Eficiência e tranquilidade. O sistema nos permite tomar decisões informadas e evitar
+                                problemas de desempenho. Essencial para qualquer pronto-socorro.</span>
                         </div>
 
                     </div>
@@ -399,7 +469,9 @@
                         </div>
 
                         <div class="textoAvaliacao">
-                            <span>O monitoramento de máquinas do pronto-socorro é a melhor adição à nossa infraestrutura. Simplifica nossa operação e garante um atendimento ininterrupto aos pacientes.</span>
+                            <span>O monitoramento de máquinas do pronto-socorro é a melhor adição à nossa
+                                infraestrutura. Simplifica nossa operação e garante um atendimento ininterrupto aos
+                                pacientes.</span>
                         </div>
 
                     </div>
@@ -413,7 +485,7 @@
         <div class="imagemFooter">
             <img src="../../assets/images/LOGO.png" alt="">
         </div>
-        
+
         <div class="nomeEmpresaFooter">
             <span>Copyright © 2023 - 2023 MedGuardian. Todos os direitos reservados. | Termos de uso | Política de
                 privacidade | Definições de cookies | Mapa do site</span>
