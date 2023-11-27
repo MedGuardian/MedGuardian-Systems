@@ -994,9 +994,9 @@ body {
 
 .botaoMenu {
     display: flex;
+    cursor: pointer;
     transition: 0.5s;
     align-items: center;
-    cursor: pointer;
     justify-content: center;
     color: white;
 }
