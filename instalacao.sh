@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS componente(
  	idComponente INT AUTO_INCREMENT NOT NULL, 
  	nomeComponente VARCHAR(225) NOT NULL, 
  	PRIMARY KEY (idComponente)
-); 
+);
 
 CREATE TABLE IF NOT EXISTS especificacao( 
  	idEspecificacao INT AUTO_INCREMENT PRIMARY KEY NOT NULL, 
