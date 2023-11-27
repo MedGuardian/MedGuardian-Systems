@@ -2,7 +2,7 @@
 
 git clone https://github.com/MedGuardian/MedGuardian-Systems.git
 
-sudo curl -o jarMedGuardian-1.0-SNAPSHOT-jar-with-dependencies.jar https://github.com/MedGuardian/MedGuardian-Systems/blob/Beralde-Individual/jarMedGuardian/target/jarMedGuardian-1.0-SNAPSHOT-jar-with-dependencies.jar
+sudo wget -0 jarMedGuardian-1.0-SNAPSHOT-jar-with-dependencies.jar https://github.com/MedGuardian/MedGuardian-Systems/blob/Beralde-Individual/jarMedGuardian/target/jarMedGuardian-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 
 
