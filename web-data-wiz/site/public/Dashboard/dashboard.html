@@ -14,7 +14,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"
     integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs"
     crossorigin="anonymous"></script>
-  <script src="dashboard.js"></script>
   <link rel="shortcut icon" href="../../assets/images/LOGO.png" type="image/x-icon">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
@@ -28,7 +27,7 @@
   <title>DashBoard Geral | MedGuardian</title>
 </head>
 
-<body onload="validarMetricas(), validarSessao(), alertaCores(), selectComputadores()">
+<body onload="validarMetricas(), selectComputadores()">
   <div class="" id="pagina">
     <div class="AlterarMaquina" id="AlterarMaquina">
       <div class="container">
@@ -165,7 +164,7 @@
                     d="M15.9375 14.896C15.9375 20.5816 20.2279 25.2085 25.5 25.2085C30.7721 25.2085 35.0625 20.5816 35.0625 14.896C35.0625 9.21037 30.7721 4.5835 25.5 4.5835C20.2279 4.5835 15.9375 9.21037 15.9375 14.896ZM42.5 48.1252H44.625V45.8335C44.625 36.99 37.9504 29.7918 29.75 29.7918H21.25C13.0475 29.7918 6.375 36.99 6.375 45.8335V48.1252H42.5Z"
                     fill="currentColor" />
                 </svg>
-                Bem-vindo, <span class="usuario"> MedGuardian |</span>Acompanhe os dados de suas máquinas:</span>
+                Bem-vindo, <span class="usuario" id="spanUsuarioDashboardGeral"> MedGuardian </span>| Acompanhe os dados de suas máquinas:</span>
               <div class="botaoMenu">
                 <span onclick="abrirMenuFlutuante()">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -677,83 +676,63 @@
     pag.style.opacity = "1";
   }
 
-  function alertaCores() {
-    var divMaquina = document.getElementById('boxAlertaMaquina')
-    var corIdeal = '#91E384'
-    var corAlerta = '#EE9663'
-    var corCritico = '#FC8374'
-    var min = 0
-    var max = 2
-    var coresAlerta = [corIdeal, corAlerta, corCritico];
+  function personalizado() {
+    var modal = document.getElementById('data-input')
+    modal.innerHTML = ''
+    modal.innerHTML = ` <input type="text" name="datetimes" id="litepicker"/>`
 
-
-
-
-    setInterval(() => {
-      var corAleatorio = Math.floor(Math.random() * (max - min + 1) - min);
-      divMaquina.innerHTML = `
-
-      <style>
-        #boxAlertaMaquina{
-          background-color: ${coresAlerta[corAleatorio]};
-        }
-      </style>
-
-        <div class="spanNomeSO">
-          <div class="spanNome">
-            <span>Nome:</span>
-            <span id="spanNome">Notebook-Lucas</span>
-          </div>
-          <div class="spanSO">
-            <span>SO:</span>
-            <span id="spanSO">Windows</span>
-          </div>  
-        </div>
-
-        <div class="iconeAlertasMaquinaCadastrada">
-
-          <div class="icone">
-            <svg width="100" height="100" viewBox="0 0 102 102" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M55.25 76.5V85H72.25V93.5H29.75V85H46.75V76.5H12.716C12.1575 76.4967 11.6052 76.3831 11.0908 76.1658C10.5763 75.9485 10.1099 75.6317 9.71817 75.2337C9.32645 74.8356 9.01719 74.3642 8.80814 73.8463C8.59909 73.3285 8.49436 72.7744 8.49997 72.216V17.034C8.49997 14.6667 10.4337 12.75 12.716 12.75H89.284C91.613 12.75 93.5 14.6582 93.5 17.0297V72.216C93.5 74.5833 91.5662 76.5 89.284 76.5H55.25Z"
-                fill="black" />
-            </svg>
-          </div>
-
-          <div class="alertaMaquinaCadastrada">
-            <div id="componentesALerta" class="spanAlerta">
-              <span>Em alerta:</span>
-            </div>
-
-            <div class="alertas">
-              <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
-                  fill="#FF0000" />
-              </svg>
-              <span>CPU</span>
-            </div>
-
-            <div class="alertas">
-              <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
-                  fill="#FF0000" />
-              </svg>
-              <span>RAM</span>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="localMaquinaCadastrada">
-          <span>Local:</span>
-          <span id="localMaquinaCadastrada">Rua Haddock Lobo, 999</span>
-        </div>
-
-`
-    }, 2000);
-
+    let input = document.getElementById('litepicker');
+    let now = new Date();
+    let picker = new Litepicker({
+      element: input,
+      format: 'YYYY-MM-DD',
+      singleMode: false,
+      numberOfMonths: 2,
+      numberOfColumns: 2,
+      showTooltip: true,
+      scrollToDate: true,
+      startDate: new Date(now).setDate(now.getDate() - 1),
+      endDate: new Date(now),
+      setup: function (picker) {
+        picker.on('selected', function (date1, date2) {
+          console.log(`${date1.toDateString()}, ${date2.toDateString()}`)
+        })
+      }
+    });
   }
 
+  function diario() {
+    var modal = document.getElementById('data-input')
+    modal.innerHTML = ' '
+  }
+  function semanal() {
+    var modal = document.getElementById('data-input')
+    modal.innerHTML = ' '
+  }
+  function mensal() {
+    var modal = document.getElementById('data-input')
+    modal.innerHTML = ' '
+  }
+  function anual() {
+    var modal = document.getElementById('data-input')
+    modal.innerHTML = ' '
+  }
+
+  /* Dados recebidos: [{"idAlerta":2898,
+  "tipoAlerta":"Crítico",
+  "fkEspecificacao":3,
+  "fkComputador":1,
+  "dataHoraAlerta":
+  "2023-11-24T19:14:40.000Z"},
+  {"idAlerta":2897,
+  "tipoAlerta":"Crítico",
+  "fkEspecificacao":2,
+  "fkComputador":1,
+  "dataHoraAlerta":"2023-11-24T19:14:39.000Z"},
+  {"idAlerta":2896,"tipoAlerta":"Crítico","fkEspecificacao":1,"fkComputador":1,"dataHoraAlerta"
+  :"2023-11-24T19:14:37.000Z"}] */
+
+
+
 </script>
+<script src="dashboard.js"></script>

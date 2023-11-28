@@ -174,8 +174,8 @@ public class TesteProjeto {
                 Integer minutos = segundos / 60;
                 segundos = segundos % 60;
 
-                for(int i = 0; i < bancoDeDados.selectComponente().size(); i++){
-                    Integer idComponente = bancoDeDados.selectComponente().get(i).getIdComponente();
+                for(int i = 0; i < bancoDeDadosAws.selectComponente().size(); i++){
+                    Integer idComponente = bancoDeDadosAws.selectComponente().get(i).getIdComponente();
 
                     switch (idComponente) {
                         case  1-> {

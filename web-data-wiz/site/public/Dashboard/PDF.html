@@ -185,7 +185,6 @@
   }
 
   var fkComputador = parseInt(getQueryParam("parametro"), 10)
-  selectTotalComponentes();
 
 
   const graficoDesempenho = document.getElementById("myChart")
@@ -279,12 +278,12 @@
   var uso_cpu = [];
   var uso_ram = [];
   var uso_disco = [];
+  var swapDisponivel = [];
   var dataHoraLabelsCPU = [];
   var dataHoraLabelsDisco = [];
   var dataHoraLabelsRAM = [];
   
   async function atualizarGrafico() {
-    console.log("FKCOMPUTADOR"+fkComputador)
   
     fetch("/usuarios/atualizarDatas", {
       method: "POST",
@@ -319,42 +318,40 @@
 
                   if (tipoCaptura == "UsoCpu") {
                     if (uso_cpu.length >= 6) {
-                      uso_cpu.shift();
+                        uso_cpu.shift();
                     }
                     uso_cpu.push(registro);
                     if (dataHoraLabelsCPU.length >= 6) {
-                      dataHoraLabelsCPU.shift()
+                        dataHoraLabelsCPU.shift()
                     }
                     dataHoraLabelsCPU.push(`${hora}:${minuto}:${segundo}`)
-                  }
-                  if (tipoCaptura == "UsoRam") {
+                    plotarGrafico(1)
+                }
+                 if (tipoCaptura == "Uso" && fkEspecificacao == 6) {
                     if (uso_ram.length >= 6) {
-                      uso_ram.shift();
+                        uso_ram.shift();
                     }
-                    var porcentagemUsoRam = registro;
+                    var porcentagemUsoRam = registro * 100 / 8.4;
                     uso_ram.push(porcentagemUsoRam);
 
                     if (dataHoraLabelsRAM.length >= 6) {
-                      dataHoraLabelsRAM.shift()
+                        dataHoraLabelsRAM.shift()
                     }
                     dataHoraLabelsRAM.push(`${hora}:${minuto}:${segundo}`)
-                    plotarGrafico(3);
-                  }
-
-                  if (tipoCaptura == "SwapDisponivel") {
-                    swapDisponivel = registro;
-                  } else {
-                    if (uso_disco.length >= 6) {
-                      uso_disco.shift();
+                } 
+                    if (tipoCaptura == "SwapDisponivel") {
+                        swapDisponivel = registro;
+                    } else {
+                        if (uso_disco.length >= 6) {
+                            uso_disco.shift();
+                        }
+                        var porcentagemUsoDisco = 100 - (registro * 100 / 8.26);
+                        uso_disco.push(porcentagemUsoDisco)
+                        if (dataHoraLabelsDisco.length >= 6) {
+                            dataHoraLabelsDisco.shift()
+                        }
+                        dataHoraLabelsDisco.push(`${hora}:${minuto}:${segundo}`)
                     }
-                    var porcentagemUsoDisco = 100 - (registro * 100 / totalComponenteDisco);
-                    uso_disco.push(porcentagemUsoDisco)
-                    if (dataHoraLabelsDisco.length >= 6) {
-                      dataHoraLabelsDisco.shift()
-                    }
-                    dataHoraLabelsDisco.push(`${hora}:${minuto}:${segundo}`)
-                  }
-
                   var dataGrafico = document.getElementById('dataRelatorio');
                   dataGrafico.innerHTML = formattedDate30 + " - " + formattedDate;
                 });
@@ -382,7 +379,7 @@
 
   setTimeout(atualizarGrafico, 2000)
 
-  var totalComponenteRam = 0;
+/*  var totalComponenteRam = 0;
   var totalComponenteCPU = 0;
   var totalComponenteDisco = 0;
 
@@ -431,7 +428,7 @@
       });
 
     return false;
-  }
+  }*/
 
   function escolherGrafico(n) {
     valorN = n;
@@ -467,13 +464,16 @@
         config_graficoDesempenho.options.scales.y.min = 80;
         data_graficoDesempenho.labels = dataHoraLabelsRAM.slice(0, 6);
         break;
-    }
+      case 4:{
+        yValues2 = uso_cpu.slice(0,6);
+      }
+      }
     graficoEmUso.update();
   }
 
-  var xValues2 = ["HD", "CPU", "Memória", "Rede", "GPU"];
-  var yValues2 = [55, 49, 44, 24, 40];
-  var barColors = ["red", "green", "blue", "orange", "brown"];
+  var xValues2 = ["","HD", "CPU", "RAM"];
+  var yValues2 = [0, 55, 40, 100];
+  var barColors = ["red", "green", "blue",];
 
   var graficoBarras = new Chart("myChart2", {
     type: "bar",

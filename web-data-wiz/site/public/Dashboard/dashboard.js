@@ -1,57 +1,15 @@
-selectComputadores();
-selectTotalComponentes();
 // setInterval(selectAlertas, 3000)
 
 var totalComponenteRam = 0;
 var totalComponenteCPU = 0;
 var totalComponenteDisco = 0;
 
-function selectTotalComponentes() {
-  fetch("/usuarios/selectTotalComponentes", {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then(function (resposta) {
-      console.log("Estou buscando dados referente a capacidade total dos componentes!");
-
-      if (resposta.ok) {
-        console.log(resposta);
-        resposta.json().then((resposta) => {
-          resposta.forEach((especificacao) => {
-            especificacao.forEach((objeto) => {
-              const { fkComponente, totalComponente } = objeto;
-
-              if (fkComponente == 1) {
-                totalComponenteCPU = totalComponente;
-              } else if (fkComponente == 2) {
-                totalComponenteRam = totalComponente;
-              } else if (fkComponente == 3) {
-                totalComponenteDisco = totalComponente;
-              }
-            });
-          });
-
-        });
-        console.log("Consegui buscar o total dos componentes!")
-
-      } else {
-        console.log("Houve um erro ao fazer o select do total dos componentes!");
-
-        resposta.text().then((texto) => {
-          console.error(texto);
-        });
-      }
-    })
-    .catch(function (erro) {
-      console.log(erro);
-    });
-
-  return false;
+const spanUsuarioDashboardGeral = document.getElementById("spanUsuarioDashboardGeral");
+if(sessionStorage.idFuncionario == null){
+  spanUsuarioDashboardGeral.innerHTML = sessionStorage.razaoSocial
+} else {
+  spanUsuarioDashboardGeral.innerHTML = sessionStorage.nomeFuncionario
 }
-
-
 
 function voltarIndex() {
   window.location.href = '../index.html'
@@ -106,37 +64,6 @@ function abrirModalAlterarMaquina() {
 
 }
 
-const iconeLixeira = document.getElementById('iconeLixeira');
-const maquina1 = document.getElementById('maquina1');
-const iconeAlterarMaquina = document.getElementById('iconeAlterarMaquina')
-
-// Função associada à div exterior
-function funcaoDivExterior() {
-  console.log('Função da Div Exterior');
-}
-
-// Função associada à div interior
-function funcaoDivInterior() {
-  console.log('Função da Div Interior');
-}
-
-maquina1.addEventListener('click', (event) => {
-  if (event.target === maquina1 || maquina1.contains(event.target)) {
-    abrirDashboardEspecifica();
-  }
-});
-
-iconeLixeira.addEventListener('click', (event) => {
-  if (event.target === iconeLixeira) {
-    abrirModalExcluirMaquina();
-  }
-});
-
-iconeAlterarMaquina.addEventListener('click', (event) => {
-  if (event.target === iconeAlterarMaquina) {
-    abrirModalAlterarMaquina();
-  }
-});
 
 function excluirMaquina() {
 
@@ -362,8 +289,8 @@ function gerarDivFilhoComputadoresCadastrados(idComputador, nomeComputador, sist
 </div>`
 }
 
-function abrirDashboardEspecifica() {
-  window.location.href = 'DashboardEspecifica/dashboardespecifica.html'
+function abrirDashboardEspecifica(idComputador) {
+  window.location.href = "DashboardEspecifica/dashboardespecifica.html?parametro=" + idComputador;
 }
 
 function selectAlertas() {
