@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="dashboard.css" />
   <link rel="stylesheet" href="../PaginaInicial/paginaInicial.css" />
+  <link rel="stylesheet" href="../cssGlobal/cssGlobal.css">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="../js/sessao.js"></script>
   <script src="../js/funcoes.js"></script>
@@ -13,17 +14,19 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"
     integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs"
     crossorigin="anonymous"></script>
-  <script src="dashboard.js"></script>
+  <link rel="shortcut icon" href="../../assets/images/LOGO.png" type="image/x-icon">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
   <script src="https://html2canvas. html2canvas.jshtml2canvas.min.js"></script>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
 
-  <title>Dashboard</title>
+  <title>DashBoard Geral | MedGuardian</title>
 </head>
 
-<body onload="validarMetricas(), validarSessao(), alertaCores(), selectComputadores()">
+<body onload="validarMetricas(), selectComputadores()">
   <div class="" id="pagina">
     <div class="AlterarMaquina" id="AlterarMaquina">
       <div class="container">
@@ -67,7 +70,32 @@
         </div>
       </div>
     </div>
-
+    <div class="menuFlutuante" id="menuFlutuante" style="display: none;">
+      <div class="conteudoMenuFlutuante">
+        <div class="headerMenuFlutuante">
+          <div class="esquerdaHeaderMenuFlutuante">
+            <div class="circuloMenuFlutuante"></div>
+          </div>
+          <div class="direitaHeaderMenuFlutuante">
+            <div class="nomeCargoRow">
+              <span id="nomeMenuFlutuante">Lucas</span>
+              <span id="cargoMenuFlutuante">(Admin)</span>
+            </div>
+            <div class="emailRow">
+              <span id="emailMenuFlutuante">lucas.flima@sptech.school</span>
+            </div>
+          </div>
+        </div>
+        <div class="opcoesMenuFlutuante">
+          <span onclick="abrirDashboardMenuFlutuante()">Dashboard</span>
+          <span onclick="abrirGerenciamentoMenuFlutuante()">Gerenciamento</span>
+          <span onclick="abrirCadastrarFuncionario()" id="spanCadastrarFuncionario">Cadastrar funcionário</span>
+          <span onclick="abrirAlterarFuncionario()"> Alterar Funcionários</span>
+          <div class="linhaMenuFlutuante"></div>
+          <span onclick="fazerLogout()">Fazer Logout</span>
+        </div>
+      </div>
+    </div>
     <div class="modalExcluirMaquina" id="modalExcluirMaquina">
       <div class="container">
         <div class="conteudoModalExcluirMaquina">
@@ -105,7 +133,6 @@
             <button onclick="fecharModal()" id="botaoCancelarModalExcluirMaquina">Cancelar</button>
             <button onclick="excluirMaquina()" id="botaoConfirmarExcluirMaquina">Sim, excluir.</button>
           </div>
-
         </div>
       </div>
     </div>
@@ -123,25 +150,39 @@
         <div class="headerDireitaTitulo">
 
           <div class="spansHeader">
-            <span id="saudacaoDashboard">Olá, MedGuardian</span>
-            <span>Seja bem-vindo de volta</span>
-            <span>Acompanhe os dados das suas máquinas</span>
+            <div class="separacao">
+              <span id="saudacaoDashboard"><svg width="31" height="35" viewBox="0 0 51 55" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M15.9375 14.896C15.9375 20.5816 20.2279 25.2085 25.5 25.2085C30.7721 25.2085 35.0625 20.5816 35.0625 14.896C35.0625 9.21037 30.7721 4.5835 25.5 4.5835C20.2279 4.5835 15.9375 9.21037 15.9375 14.896ZM42.5 48.1252H44.625V45.8335C44.625 36.99 37.9504 29.7918 29.75 29.7918H21.25C13.0475 29.7918 6.375 36.99 6.375 45.8335V48.1252H42.5Z"
+                    fill="currentColor" />
+                </svg>
+                Bem-vindo, <span class="usuario" id="spanUsuarioDashboardGeral"> MedGuardian </span>| Acompanhe os dados de suas máquinas:</span>
+              <div class="botaoMenu">
+                <span onclick="abrirMenuFlutuante()">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <g fill="none">
+                      <path
+                        d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01l-.184-.092" />
+                      <path fill="currentColor"
+                        d="M20 17.5a1.5 1.5 0 0 1 .144 2.993L20 20.5H4a1.5 1.5 0 0 1-.144-2.993L4 17.5zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 0 1 0-3zm0-7a1.5 1.5 0 0 1 0 3H4a1.5 1.5 0 1 1 0-3z" />
+                    </g>
+                  </svg>
+                  <span>Menu</span>
+              </div>
+            </div>
           </div>
-
         </div>
       </div>
     </div>
 
     <div class="dashboard">
       <div class="conteudoDashboard">
-
         <div class="menuLateral">
           <div class="containerMenuLateral">
-
             <div class="botaoHome">
               <span>Home</span>
             </div>
-
             <div class="botaoDashboard">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path opacity="0.4"
@@ -151,14 +192,11 @@
                   d="M4.53852 2H7.92449C9.32676 2 10.463 3.14585 10.463 4.55996V7.97452C10.463 9.38864 9.32676 10.5345 7.92449 10.5345H4.53852C3.13626 10.5345 2 9.38864 2 7.97452V4.55996C2 3.14585 3.13626 2 4.53852 2ZM4.53852 13.4655H7.92449C9.32676 13.4655 10.463 14.6114 10.463 16.0255V19.44C10.463 20.8532 9.32676 22 7.92449 22H4.53852C3.13626 22 2 20.8532 2 19.44V16.0255C2 14.6114 3.13626 13.4655 4.53852 13.4655ZM19.4615 13.4655H16.0755C14.6732 13.4655 13.537 14.6114 13.537 16.0255V19.44C13.537 20.8532 14.6732 22 16.0755 22H19.4615C20.8637 22 22 20.8532 22 19.44V16.0255C22 14.6114 20.8637 13.4655 19.4615 13.4655Z"
                   fill="white" />
               </svg>
-
               <span>Dashboard</span>
             </div>
 
             <div class="linha"><span></span></div>
-
             <div class="filtros">
-
               <div class="botaoFiltros">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path opacity="0.5"
@@ -180,7 +218,7 @@
               <div class="boxFiltros">
 
                 <div class="filtroRow">
-                  <input name="filtroDashboard" type="radio">
+                  <input name="filtroDashboard" type="radio" onclick="verificarRadio()">
                   <span>Recentes</span>
                   <svg width="4" height="9" viewBox="0 0 4 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -190,7 +228,7 @@
                 </div>
 
                 <div class="filtroRow">
-                  <input name="filtroDashboard" type="radio">
+                  <input name="filtroDashboard" type="radio" onclick="verificarRadio()">
                   <span>A a Z</span>
                   <svg width="4" height="9" viewBox="0 0 4 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -198,9 +236,8 @@
                       fill="black" />
                   </svg>
                 </div>
-
                 <div class="filtroRow">
-                  <input name="filtroDashboard" type="radio">
+                  <input name="filtroDashboard" type="radio" onclick="verificarRadio()">
                   <span>Sis. Op.</span>
                   <svg width="4" height="9" viewBox="0 0 4 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -208,17 +245,13 @@
                       fill="black" />
                   </svg>
                 </div>
-
               </div>
-
             </div>
-
             <div class="relatorio" id="divGerarRelatorio">
               <a class="btn" href="#open-modal"> <img width="25" height="25" src="../assets/images/iconPaper.svg"
                   alt="">
                 Gerar Relatório</a>
             </div>
-
             <div id="open-modal" class="modal-window">
               <div>
                 <a href="#" title="Close" class="modal-close"><img style="margin-top: 15px;" width="30" height="30"
@@ -260,20 +293,15 @@
                       <div class="radio-design"></div>
                       <div class="label-text">Personalizado</div>
                     </label>
-
                     <div id="data-input">
-
                     </div>
-
                     <div class="botao">
                       <button onclick="abrirPDF()" class="botao-relatorio">Gerar relatório</button>
-
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
             <div class="botaoSair" onclick="sairDaDashboard()" id="botaoSair">
               <svg width="25" height="25" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -283,72 +311,50 @@
               <span>Sair</span>
             </div>
           </div>
-
         </div>
       </div>
-
-
     </div>
-
     <div class="dashboardMaquinas">
       <div class="conteudoDashboardMaquinas" id="conteudoDashboardMaquinas">
-
         <div class="tituloDashboardMaquinas">
           <span>Gerenciamento de Máquinas</span>
         </div>
-
         <div class="boxesIndicadoresMaquinas">
-
           <div class="boxIndicador" id="boxTodasMaquinas">
-
             <span>Todas as máquinas</span>
             <span id="spanBaixoBoxIndicador">100</span>
           </div>
-
           <div class="boxIndicador" id="boxIdeal">
-
             <div class="circuloBoxIndicador"></div>
-
             <div class="tooltipIndicador">
               <span>?</span>
             </div>
-
             <div class="spanBoxIndicador">
               <span>Ideal</span>
               <span id="spanBaixoBoxIndicador">100</span>
             </div>
           </div>
-
           <div class="boxIndicador" id="boxAlerta">
-
             <div class="circuloBoxIndicador"></div>
-
             <div class="tooltipIndicador">
               <span>?</span>
             </div>
-
             <div class="spanBoxIndicador">
               <span>Alerta</span>
               <span id="spanBaixoBoxIndicador">100</span>
             </div>
           </div>
-
           <div class="boxIndicador" id="boxCritico">
-
             <div class="circuloBoxIndicador"></div>
-
             <div class="tooltipIndicador">
               <span>?</span>
             </div>
-
             <div class="spanBoxIndicador">
               <span>Crítico</span>
               <span id="spanBaixoBoxIndicador">100</span>
             </div>
           </div>
-
         </div>
-
         <div class="tituloDashboards">
           <div class="auxiliarTituloDashboards">
             <span>Máquinas Registradas</span>
@@ -359,11 +365,10 @@
           <span>Selecione uma máquina para ver mais detalhes:</span>
         </div>
 
-        </div>
       </div>
     </div>
   </div>
-
+  </div>
   <div class="" id="modalMetric" style="display: none;">
     <div class="modalCompleto">
 
@@ -516,96 +521,17 @@
   function modalMetricas() {
     var modal = document.getElementById('modalMetric')
     var pag = document.getElementById('pagina')
-    
+
     modal.style.display = "block"
     pag.style.opacity = ".5";
   }
 
-  function fecharModalMetricas(){
+  function fecharModalMetricas() {
     var modal = document.getElementById('modalMetric')
     var pag = document.getElementById('pagina')
 
     modal.style.display = "none";
     pag.style.opacity = "1";
-  }
-
-  function alertaCores() {
-    var divMaquina = document.getElementById('boxAlertaMaquina')
-    var corIdeal = '#91E384'
-    var corAlerta = '#EE9663'
-    var corCritico = '#FC8374'
-    var min = 0
-    var max = 2
-    var coresAlerta = [corIdeal, corAlerta, corCritico];
-
-
-
-
-    setInterval(() => {
-      var corAleatorio = Math.floor(Math.random() * (max - min + 1) - min);
-      divMaquina.innerHTML = `
-
-      <style>
-        #boxAlertaMaquina{
-          background-color: ${coresAlerta[corAleatorio]};
-        }
-      </style>
-
-        <div class="spanNomeSO">
-          <div class="spanNome">
-            <span>Nome:</span>
-            <span id="spanNome">Notebook-Lucas</span>
-          </div>
-          <div class="spanSO">
-            <span>SO:</span>
-            <span id="spanSO">Windows</span>
-          </div>  
-        </div>
-
-        <div class="iconeAlertasMaquinaCadastrada">
-
-          <div class="icone">
-            <svg width="100" height="100" viewBox="0 0 102 102" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M55.25 76.5V85H72.25V93.5H29.75V85H46.75V76.5H12.716C12.1575 76.4967 11.6052 76.3831 11.0908 76.1658C10.5763 75.9485 10.1099 75.6317 9.71817 75.2337C9.32645 74.8356 9.01719 74.3642 8.80814 73.8463C8.59909 73.3285 8.49436 72.7744 8.49997 72.216V17.034C8.49997 14.6667 10.4337 12.75 12.716 12.75H89.284C91.613 12.75 93.5 14.6582 93.5 17.0297V72.216C93.5 74.5833 91.5662 76.5 89.284 76.5H55.25Z"
-                fill="black" />
-            </svg>
-          </div>
-
-          <div class="alertaMaquinaCadastrada">
-            <div class="spanAlerta">
-              <span>Em alerta:</span>
-            </div>
-
-            <div class="alertas">
-              <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
-                  fill="#FF0000" />
-              </svg>
-              <span>CPU</span>
-            </div>
-
-            <div class="alertas">
-              <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
-                  fill="#FF0000" />
-              </svg>
-              <span>RAM</span>
-            </div>
-          </div>
-
-        </div>
-
-        <div class="localMaquinaCadastrada">
-          <span>Local:</span>
-          <span id="localMaquinaCadastrada">Rua Haddock Lobo, 999</span>
-        </div>
-
-`
-    }, 2000);
-
   }
 
   function personalizado() {
@@ -649,4 +575,22 @@
     var modal = document.getElementById('data-input')
     modal.innerHTML = ' '
   }
+
+  /* Dados recebidos: [{"idAlerta":2898,
+  "tipoAlerta":"Crítico",
+  "fkEspecificacao":3,
+  "fkComputador":1,
+  "dataHoraAlerta":
+  "2023-11-24T19:14:40.000Z"},
+  {"idAlerta":2897,
+  "tipoAlerta":"Crítico",
+  "fkEspecificacao":2,
+  "fkComputador":1,
+  "dataHoraAlerta":"2023-11-24T19:14:39.000Z"},
+  {"idAlerta":2896,"tipoAlerta":"Crítico","fkEspecificacao":1,"fkComputador":1,"dataHoraAlerta"
+  :"2023-11-24T19:14:37.000Z"}] */
+
+
+
 </script>
+<script src="dashboard.js"></script>

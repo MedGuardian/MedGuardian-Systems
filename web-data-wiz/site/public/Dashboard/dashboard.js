@@ -1,58 +1,15 @@
-selectComputadores();
-selectTotalComponentes();
-setInterval(trocarCores, 3000);
-setInterval(atualizarDashboardGeral, 3000)
+setInterval(selectAlertas, 3000)
 
 var totalComponenteRam = 0;
 var totalComponenteCPU = 0;
 var totalComponenteDisco = 0;
 
-function selectTotalComponentes(){
-  fetch("/usuarios/selectTotalComponentes", {
-      method: "GET",
-      headers: {
-          "Content-Type": "application/json",
-      },
-  })
-      .then(function (resposta) {
-          console.log("Estou buscando dados referente a capacidade total dos componentes!");
-
-          if (resposta.ok) {
-              console.log(resposta);
-              resposta.json().then((resposta) => {
-                  resposta.forEach((especificacao) => {
-                      especificacao.forEach((objeto) => {
-                          const { fkComponente, totalComponente } = objeto;
-
-                          if(fkComponente == 1){
-                              totalComponenteCPU = totalComponente;
-                          } else if(fkComponente == 2){
-                              totalComponenteRam = totalComponente;
-                          } else if (fkComponente == 3){
-                              totalComponenteDisco = totalComponente;
-                          }                
-                      });
-                  });
-                  
-              });
-              console.log("Consegui buscar o total dos componentes!")
-              
-          } else {
-              console.log("Houve um erro ao fazer o select do total dos componentes!");
-
-              resposta.text().then((texto) => {
-                  console.error(texto);
-              });
-          }
-      })
-      .catch(function (erro) {
-          console.log(erro);
-      });
-
-  return false;
+const spanUsuarioDashboardGeral = document.getElementById("spanUsuarioDashboardGeral");
+if(sessionStorage.idFuncionario == null){
+  spanUsuarioDashboardGeral.innerHTML = sessionStorage.razaoSocial
+} else {
+  spanUsuarioDashboardGeral.innerHTML = sessionStorage.nomeFuncionario
 }
-
-
 
 function voltarIndex() {
   window.location.href = '../index.html'
@@ -72,7 +29,11 @@ function fecharModal() {
   overlay.style.display = "none";
 }
 
-function abrirModalExcluirMaquina() {
+var idMaquinaExcluida = null;
+
+function abrirModalExcluirMaquina(idComputador) {
+
+  idMaquinaExcluida = idComputador;
 
   const modalExcluirMaquina = document.getElementById("modalExcluirMaquina");
   const overlay = document.getElementById("overlay");
@@ -84,6 +45,8 @@ function abrirModalExcluirMaquina() {
     top: 0,
     behavior: "smooth"
   });
+
+
 
 }
 
@@ -101,75 +64,54 @@ function abrirModalAlterarMaquina() {
 
 }
 
-const iconeLixeira = document.getElementById('iconeLixeira');
-const maquina1 = document.getElementById('maquina1');
-const iconeAlterarMaquina = document.getElementById('iconeAlterarMaquina')
-
-// Função associada à div exterior
-function funcaoDivExterior() {
-  console.log('Função da Div Exterior');
-}
-
-// Função associada à div interior
-function funcaoDivInterior() {
-  console.log('Função da Div Interior');
-}
-
-maquina1.addEventListener('click', (event) => {
-  if (event.target === maquina1 || maquina1.contains(event.target)) {
-    abrirDashboardEspecifica();
-  }
-});
-
-iconeLixeira.addEventListener('click', (event) => {
-  if (event.target === iconeLixeira) {
-    abrirModalExcluirMaquina();
-  }
-});
-
-iconeAlterarMaquina.addEventListener('click', (event) => {
-  if (event.target === iconeAlterarMaquina) {
-    abrirModalAlterarMaquina();
-  }
-});
 
 function excluirMaquina() {
-  var nomeMaquinaVar = "Notebook-Lucas";
+
+  var idComputadorVar = idMaquinaExcluida;
 
   // Chama selectComputador e aguarda a resolução da Promessa
-  selectComputador().then(idComputadorVar => {
-    fetch("/usuarios/excluirMaquina", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        nomeMaquinaServer: nomeMaquinaVar,
-        idComputadorServer: idComputadorVar
-      })
-    }).then(function (resposta) {
-      console.log("Estou tentando excluir a máquina desejada!")
-      if (resposta.ok) {
-        console.log(resposta);
-        resposta.json().then(json => {
-          console.log(json);
-          console.log(JSON.stringify(json));
-          alert("Máquina: Notebook-Lucas excluída")
-          fecharModal();
-        });
-      } else {
-        alert("Erro na exclusão da maquina!")
-        resposta.text().then(texto => {
-          console.error(texto);
-        });
-      }
-    }).catch(function (erro) {
-      console.log(erro);
-    });
+  fetch("/usuarios/excluirMaquina", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      idComputadorServer: idComputadorVar
+    })
+  }).then(function (resposta) {
+    console.log("Estou tentando excluir a máquina desejada!")
+    if (resposta.ok) {
+      console.log(resposta);
+      resposta.json().then(json => {
+        console.log(json);
+        console.log(JSON.stringify(json));
+        alert("Máquina de ID: " + idComputadorVar + " excluída!")
+        fecharModal();
+        removerDivMaquinaExcluida(idComputadorVar);
+      });
+    } else {
+      alert("Erro na exclusão da maquina! ")
+      resposta.text().then(texto => {
+        console.error(texto);
+      });
+    }
+  }).catch(function (erro) {
+    console.log(erro);
   });
 
   return false;
 }
+
+function removerDivMaquinaExcluida(idComputador) {
+  var divRemovida = document.getElementById(`maquina${idComputador}`);
+
+  if (divRemovida && divRemovida.parentNode) {
+    divRemovida.parentNode.removeChild(divRemovida);
+  } else {
+    console.log("Não foi possível encontrar ou remover a div.");
+  }
+}
+
 
 function selectComputador() {
   var nomeMaquinaVar = "Notebook-Lucas";
@@ -237,14 +179,18 @@ async function selectLocalComputador(idEmpresa) {
 
 var contador = 0;
 var idComputadorFinal = 0;
+var idsComputadores = [];
 
-async function selectComputadores() {
+async function selectComputadores(i) {
   try {
     if (sessionStorage.idEmpresa == null) {
       var idEmpresa = sessionStorage.fkEmpresa;
     } else {
       var idEmpresa = sessionStorage.idEmpresa;
     }
+
+    var filtro = 0;
+    filtro = i;
 
     const endereco = await selectLocalComputador(idEmpresa);
     console.log("Endereço retornado:", endereco);
@@ -256,14 +202,17 @@ async function selectComputadores() {
       },
       body: JSON.stringify({
         fkEmpresaServer: idEmpresa,
+        filtroServer: filtro
       }),
     });
 
     if (resposta.ok) {
+      idsComputadores = [];
       const data = await resposta.json();
       var contador = 0;
       data.forEach((computador, i) => {
         const { idComputador, nomeComputador, sistemaOperacional } = computador;
+        idsComputadores.push(idComputador);
         if (i % 4 == 0) {
           contador++
           gerarDivPaiComputadoresCadastrados(contador)
@@ -289,7 +238,7 @@ function gerarDivPaiComputadoresCadastrados(contador) {
 
 function gerarDivFilhoComputadoresCadastrados(idComputador, nomeComputador, sistemaOperacional, endereco, i, contador) {
   var maquinasCadastradas = document.getElementById(`maquinasCadastradas${contador}`);
-  maquinasCadastradas.innerHTML += `<div id="maquina${i + 1}" class="boxMaquinaCadastrada" id="idComputador${idComputador}">
+  maquinasCadastradas.innerHTML += `<div id="maquina${idComputador}" class="boxMaquinaCadastrada">
   <div class="spanIconesCardDashboard">
     <div class="spansCardDashboard" onclick="abrirDashboardEspecifica(${idComputador})">
       <div class="spanNome">
@@ -310,7 +259,7 @@ function gerarDivFilhoComputadoresCadastrados(idComputador, nomeComputador, sist
             fill="black" />
         </svg>
       </div>
-      <div class="iconeRemoverMaquina" id="iconeLixeira" onclick="abrirModalExcluirMaquina()">
+      <div class="iconeRemoverMaquina" id="iconeLixeira" onclick="abrirModalExcluirMaquina(${idComputador})">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M7 21C6.45 21 5.979 20.804 5.587 20.412C5.195 20.02 4.99933 19.5493 5 19V6H4V4H9V3H15V4H20V6H19V19C19 19.55 18.804 20.021 18.412 20.413C18.02 20.805 17.5493 21.0007 17 21H7ZM9 17H11V8H9V17ZM13 17H15V8H13V17Z"
@@ -330,28 +279,8 @@ function gerarDivFilhoComputadoresCadastrados(idComputador, nomeComputador, sist
       </svg>
     </div>
 
-    <div class="alertaMaquinaCadastrada" onclick="abrirDashboardEspecifica(${idComputador})">
-      <div class="spanAlerta">
-        <span>Em alerta:</span>
-      </div>
+    <div class="alertaMaquinaCadastrada" id="alertaMaquinaCadastrada${idComputador}" onclick="abrirDashboardEspecifica(${idComputador})">
 
-      <div class="alertas">
-        <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
-            fill="#FF0000" />
-        </svg>
-        <span>CPU</span>
-      </div>
-
-      <div class="alertas" onclick="abrirDashboardEspecifica(${idComputador})">
-        <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
-            fill="#FF0000" />
-        </svg>
-        <span>RAM</span>
-      </div>
     </div>
 
   </div>
@@ -365,14 +294,10 @@ function gerarDivFilhoComputadoresCadastrados(idComputador, nomeComputador, sist
 }
 
 function abrirDashboardEspecifica(idComputador) {
-  window.location.href = 'DashboardEspecifica/dashboardespecifica.html?parametro=' + idComputador;
+  window.location.href = "DashboardEspecifica/dashboardespecifica.html?parametro=" + idComputador;
 }
 
-var arrayUsoCpu = [];
-var arrayUsoRam = [];
-var arrayUsoDisco = [];
-
-function atualizarDashboardGeral() {
+function selectAlertas() {
   var idEmpresa;
 
   if (sessionStorage.idEmpresa == null) {
@@ -381,13 +306,42 @@ function atualizarDashboardGeral() {
     idEmpresa = sessionStorage.idEmpresa
   }
 
-  fetch("/usuarios/atualizarDashboardGeral", {
+  var dataHoraAtual = new Date();
+
+  var formatoDataHoraAtual = formatarDataHora(dataHoraAtual);
+  dataHoraAtual.setSeconds(dataHoraAtual.getSeconds() - 5);
+  var formatoDataHoraReduzida = formatarDataHora(dataHoraAtual);
+  dataHoraAtual.setHours(dataHoraAtual.getHours() + 3);
+  var formatoDataHoraMais3HorasReduzida = formatarDataHora(dataHoraAtual);
+  dataHoraAtual.setSeconds(dataHoraAtual.getSeconds() + 5);
+  var formatoDataHoraMais3Horas = formatarDataHora(dataHoraAtual);
+
+  function formatarDataHora(data) {
+    var ano = data.getFullYear();
+    var mes = padZero(data.getMonth() + 1);
+    var dia = padZero(data.getDate());
+    var horas = padZero(data.getHours());
+    var minutos = padZero(data.getMinutes());
+    var segundos = padZero(data.getSeconds());
+
+    return `${ano}-${mes}-${dia} ${horas}:${minutos}:${segundos}`;
+  }
+
+  function padZero(numero) {
+    return numero < 10 ? '0' + numero : numero;
+  }
+
+  fetch("/usuarios/selectAlertas", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
       fkEmpresaServer: idEmpresa,
+      dataHoraAtualServer: formatoDataHoraAtual,
+      dataHoraReduzidaServer: formatoDataHoraReduzida,
+      dataHoraMais3HorasReduzidaServer: formatoDataHoraMais3HorasReduzida,
+      dataHoraMais3HorasServer: formatoDataHoraMais3Horas
     }),
   }).then(function (resposta) {
     console.log("Estou buscando dados para atualizar a dashboard geral!");
@@ -396,37 +350,14 @@ function atualizarDashboardGeral() {
       console.log(resposta);
       resposta.json().then((resposta) => {
         console.log(resposta)
-        resposta.forEach((especificacao) => {
-          especificacao.forEach((objeto) => {
-            const { fkEspecificacao, tipoCaptura, registro } = objeto;
-
-            if (fkEspecificacao == 1) {
-              if (arrayUsoCpu.length >= 6) {
-                arrayUsoCpu.shift();
-              }
-              arrayUsoCpu.push(registro);
-            } else if (fkEspecificacao == 2) {
-              if (arrayUsoRam.length >= 6) {
-                arrayUsoRam.shift();
-              }
-              var porcentagemUsoRam = registro * 100 / totalComponenteRam;
-              arrayUsoRam.push(porcentagemUsoRam);
-            } else if (fkEspecificacao == 3) {
-              arrayUsoDisco = registro;
-              if (arrayUsoDisco.length >= 6) {
-                arrayUsoDisco.shift();
-              }
-              var porcentagemUsoDisco = 100 - (registro * 100 / totalComponenteDisco);
-              arrayUsoDisco.push(porcentagemUsoDisco)
-            }
-          });
+        resposta.forEach((alerta) => {
+          const { fkComputador, fkEspecificacao, tipoAlerta } = alerta;
+          validarAlertasCores(fkComputador, fkEspecificacao, tipoAlerta);
         });
-        plotarGrafico(valorN);
       });
-
-      console.log("Consegui retornar os dados para atualizar a dashboard geral!")
+      console.log("Consegui retornar os dados para validar os alertas das máquinas!")
     } else {
-      console.log("Houve um erro ao buscar os dados para atualizar a dashboard geral!");
+      console.log("Houve um erro ao buscar os dados para validar os alertas das máquinas!");
 
       resposta.text().then((texto) => {
         console.error(texto);
@@ -440,30 +371,111 @@ function atualizarDashboardGeral() {
   return false;
 }
 
-function trocarCores() {
-  const classes = ["maquina1", "maquina2", "maquina3", "maquina4", "maquina5", "maquina6", "maquina7", "maquina8", "maquina9", "maquina10", "maquina11", "maquina12"];
-  const cores = ["#FC8374", "#EE9663", "#91E384"];
+function validarAlertasCores(fkComputador, fkEspecificacao, tipoAlerta) {
 
-  for (var i = 0; i < classes.length; i++) {
-    const classeDaVez = document.getElementById(classes[i]);
-    const numeroAleatorio = Math.floor(Math.random() * 3);
-    const cor = cores[numeroAleatorio];
+  const alertaMaquinaCadastrada = document.getElementById(`alertaMaquinaCadastrada${fkComputador}`);
 
-    classeDaVez.style.backgroundColor = cor;
-
-    if ((classes[i] === "maquina1" || classes[i] === "maquina2" || classes[i] === "maquina3" || classes[i] === "maquina4" || classes[i] === "maquina5" || classes[i] === "maquina5" || classes[i] === "maquina6" || classes[i] === "maquina7" || classes[i] === "maquina8" || classes[i] === "maquina9" || classes[i] === "maquina10" || classes[i] === "maquina11" || classes[i] === "maquina12") && cor === "#91E384") {
-      const elementosOcultos = classeDaVez.getElementsByClassName('alertaMaquinaCadastrada');
-      for (var j = 0; j < elementosOcultos.length; j++) {
-        elementosOcultos[j].style.display = "none";
-      }
+  for (i = 0; i < idsComputadores.length; i++) {
+    const divMaquina = document.getElementById(`maquina${idsComputadores[i]}`)
+    if (idsComputadores[i] != fkComputador) {
+      divMaquina.style.backgroundColor = "#91e384"
     } else {
-      const elementosOcultos = classeDaVez.getElementsByClassName('alertaMaquinaCadastrada');
-      for (var j = 0; j < elementosOcultos.length; j++) {
-        elementosOcultos[j].style.display = "block";
-      }
+
+        if (fkEspecificacao == (fkComputador * 4 - 3)) {
+          if (tipoAlerta == "Crítico") {
+            removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
+            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "CPU", "#fc8374", divMaquina, alertaMaquinaCadastrada)
+          } else {
+            removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
+            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "CPU", "#ee9663", divMaquina, alertaMaquinaCadastrada)
+          }
+        } else if (fkEspecificacao == (fkComputador * 4 - 2)) {
+          if (tipoAlerta == "Crítico") {
+            removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
+            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "RAM", "#fc8374", divMaquina, alertaMaquinaCadastrada)
+          } else {
+            removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
+            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "RAM", "#ee9663", divMaquina, alertaMaquinaCadastrada)
+          }
+        } else if (fkEspecificacao == (fkComputador * 4 - 1)){
+          if (tipoAlerta == "Crítico") {
+            removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
+            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "DISCO", "#fc8374", divMaquina, alertaMaquinaCadastrada)
+          } else {
+            removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
+            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "DISCO", "#ee9663", divMaquina, alertaMaquinaCadastrada)
+          }
+        }
+
     }
   }
+
+  function gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, corIcone, componente, corDiv, div, alertaMaquinaCadastrada) {
+
+    const divExistente = document.getElementById(`alerta_${tipoAlerta}_${fkComputador}_${fkEspecificacao}`)
+
+    if (divExistente) {
+      console.log("Já tem o alerta do tipo: " + tipoAlerta + " do componente: " + componente);
+      return
+    }
+
+    alertaMaquinaCadastrada.style.marginTop = "1%"
+
+    alertaMaquinaCadastrada.innerHTML += `<div class="alertas" id="alerta_${tipoAlerta}_${fkComputador}_${fkEspecificacao}" onclick="abrirDashboardEspecifica(${fkComputador})">
+
+          <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
+            fill="${corIcone}" />
+        </svg>
+        <span>${componente}</span>
+
+      </div>
+      `;
+
+    div.style.backgroundColor = `${corDiv}`;
+  }
 }
+
+function removerDivAlerta(fkComputador, fkEspecificacao, tipoAlerta) {
+
+  var divRemover = document.getElementById(`alerta_${tipoAlerta}_${fkComputador}_${fkEspecificacao}`)
+
+  if (divRemover) {
+    divRemover.remove();
+  }
+}
+
+// Função para verificar se um radio button está selecionado
+function verificarRadio() {
+  var radios = document.getElementsByName('filtroDashboard');
+
+  for (var i = 0; i < radios.length; i++) {
+    if (radios[i].checked) {
+      selectFiltro(i);
+      return;
+    }
+  }
+
+  // Se nenhum radio button estiver selecionado
+  console.log('Nenhum radio button está selecionado.');
+}
+
+function selectFiltro(i){
+var divsMaquinasCadastradas = document.getElementsByClassName('maquinasCadastradas');
+
+var divsArray = Array.from(divsMaquinasCadastradas);
+
+divsArray.forEach(function(div) {
+    div.remove();
+});
+
+  selectComputadores(i);
+}
+
+
+
+
 
 
 

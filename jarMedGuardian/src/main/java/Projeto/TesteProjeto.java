@@ -92,6 +92,9 @@ public class TesteProjeto {
                     logado = false;
                     System.out.println("Você não é um funcionário registrado na empresa linkada a essa máquina!");
                     System.out.println("Solicite para que alguém libere seu acesso, se for o caso.");
+                Log log = new Log();
+                log.gravarErros();
+
                 } else {
                     System.out.println("""
                 USUÁRIO %s AUTENTICADO COM SUCESSO!
@@ -172,9 +175,9 @@ public class TesteProjeto {
                 segundos = segundos % 60;
 
                 for(int i = 0; i < bancoDeDadosAws.selectComponente().size(); i++){
-                    Integer idComponenteAws = bancoDeDadosAws.selectComponente().get(i).getIdComponente();
+                    Integer idComponente = bancoDeDadosAws.selectComponente().get(i).getIdComponente();
 
-                    switch (idComponenteAws) {
+                    switch (idComponente) {
                         case  1-> {
                             bancoDeDadosAws.insertRegistro(processadorEmUso, "UsoCpu", finalIdComputador * 4 - 3);
                             bancoDeDadosAws.insertRegistro(Double.valueOf(dias), "Dias", finalIdComputador * 4 - 3);
@@ -239,6 +242,7 @@ public class TesteProjeto {
                             bancoDeDados.insertRegistro(swapDisponivel, "SwapDisponivel", finalIdComputadorLocal * 4 - 1);
                         }
                     }
+
                 }
             }
         }, delay, interval);

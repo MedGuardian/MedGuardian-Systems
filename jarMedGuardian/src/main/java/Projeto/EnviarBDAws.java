@@ -94,14 +94,28 @@ public class EnviarBDAws {
         con.update("INSERT INTO alertas (tipoAlerta, fkEspecificacao, fkComputador, dataHoraAlerta) VALUES (?, ?, ?, ?)", tipoAlerta, fkEspecificacao, fkComputador, dataHoraAtual());
         String componente;
 
-        if(fkEspecificacao == 1){
+        if(fkEspecificacao == (fkComputador * 4 - 3)){
             componente = "CPU";
-        } else if (fkEspecificacao == 3){
+        } else if (fkEspecificacao == (fkComputador * 4 - 2)){
             componente = "RAM";
         } else {
             componente = "Disco";
         }
         System.out.println("Inserindo alerta do tipo: " + tipoAlerta + " no computador de Id: " + fkComputador + " e se trata do componente " + componente);
+    }
+
+    public void insertJanelas(String titulo, String comando, Integer fkComputador, Boolean matar){
+        con.update("INSERT INTO janelas (titulo, comando, fkComputador, matar) VALUES (?,?,?,?)", titulo, comando, fkComputador, matar);
+        System.out.println("Inseri a janela de comando: " + comando);
+    }
+
+    public List<Janelas> selectJanelas(Integer fkComputador){
+        return con.query("SELECT * FROM janelas WHERE fkComputador = ?", new BeanPropertyRowMapper<>(Janelas.class), fkComputador);
+    }
+
+    public void excluirJanela(String comando, Integer fkComputador){
+        con.update("DELETE FROM janelas WHERE comando = ? AND fkComputador = ?", comando, fkComputador);
+        System.out.println("Exclui a janela de comando: " + comando);
     }
 
 }
