@@ -200,17 +200,12 @@ function cadastrarFuncionario(req, res) {
             .then(
                 function (resultadoAutenticar) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
-                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
-
-                    if (resultadoAutenticar.length == 1) {
-                        console.log(resultadoAutenticar);
-                        res.json(resultadoAutenticar[0]);
-                    }
+                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em Strin
                 }
             ).catch(
                 function (erro) {
                     console.log(erro);
-                    console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+                    console.log("\nHouve um erro ao realizar o cadastro de funcionário! Erro: ", erro.sqlMessage);
                     res.status(500).json(erro.sqlMessage);
                 }
             );
@@ -633,7 +628,9 @@ function selectFuncionarios(req, res) {
 
 function selectComputadores(req, res) {
     var fkEmpresa = req.body.fkEmpresaServer
-    usuarioModel.selectComputadores(fkEmpresa)
+    var filtro = req.body.filtroServer
+
+    usuarioModel.selectComputadores(fkEmpresa, filtro)
         .then(
             function (resultado) {
                 res.json(resultado);

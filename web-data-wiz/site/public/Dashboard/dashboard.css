@@ -376,6 +376,8 @@ body {
     padding: 1%;
     width: 17.5%;
     cursor: pointer;
+    height: 190px;
+    width: 190px;
 }
 
 .spanIconesCardDashboard {
@@ -994,9 +996,9 @@ body {
 
 .botaoMenu {
     display: flex;
+    cursor: pointer;
     transition: 0.5s;
     align-items: center;
-    cursor: pointer;
     justify-content: center;
     color: white;
 }

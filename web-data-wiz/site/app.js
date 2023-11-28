@@ -1,5 +1,21 @@
-process.env.AMBIENTE_PROCESSO = "desenvolvimento";
-//process.env.AMBIENTE_PROCESSO = "producao";
+const nodemailer = require('nodemailer');
+
+function configureTransporterAtendimento() {
+    // Configuração do transporte do Nodemailer
+    const transporterAtendimento = nodemailer.createTransport({
+        // Configurações do seu provedor de e-mail (ex: Gmail)
+        service: 'outlook',
+        auth: {
+            user: 'lucas.flima@sptech.school',
+            pass: '#Gf48546298866',
+        },
+    });
+
+    return transporterAtendimento;
+}
+
+// process.env.AMBIENTE_PROCESSO = "desenvolvimento";
+process.env.AMBIENTE_PROCESSO = "producao";
 
 var express = require("express");
 var cors = require("cors");
@@ -68,26 +84,28 @@ async function enviarMensagem(data) {
     return await axios.post(slackUrl, data, config);
 }
 
-let data = new FormData();
-data.append('file', fs.createReadStream('../../../../../relatorio13_11_2023.pdf'));
-data.append('initial_comment', 'Shakes the cat');
-data.append('channels', 'C064MNJC96E');
+app.post('/enviar-email', (req, res) => {
+    const { emailContato, assuntoContato, mensagemContato } = req.body;
 
-let config = {
-  method: 'post',
-  maxBodyLength: Infinity,
-  url: 'https://slack.com/api/files.upload',
-  headers: {
-    'Content-type': 'multipart/form-data', 
-    'Authorization': 'Bearer xoxb-6157746735458-6180861943392-qWz3CvCQpp476wdayPkyoR8F', 
-  },
-  data : data
-};
+    // Obtém uma instância do transporte do Nodemailer
+    const transporterAtendimento = configureTransporterAtendimento();
 
-axios.request(config)
-.then((response) => {
-  console.log(JSON.stringify(response.data));
-})
-.catch((error) => {
-  console.log(error);
+    const mailOptions = {
+        from: 'Cliente <lucas.flima@sptech.school>',
+        to: 'atendimentomedguardian@gmail.com',
+        subject: `Contato de um atual ou futuro cliente - ${assuntoContato}`,
+        text: `Email do remetente: ${emailContato}
+${mensagemContato}
+`,
+    };
+
+    transporterAtendimento.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+            res.status(500).send('Erro ao enviar o e-mail.');
+        } else {
+            console.log('E-mail enviado: ' + info.response);
+            res.send('E-mail enviado com sucesso!');
+        }
+    });
 });

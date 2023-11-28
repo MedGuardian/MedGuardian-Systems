@@ -150,15 +150,11 @@ function selectMetricas(fkComputador, fkEmpresa) {
 
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
-
-    if(fkComputador == null){
-        var instrucao = `SELECT TOP 1 * 
-        FROM metrica 
-        WHERE fkEmpresa = '${fkEmpresa}' AND fkComputador IS NULL;
+        var instrucao = `SELECT TOP 1 *
+        FROM metrica
+        WHERE fkComputador = COALESCE(${fkComputador}, -1)
+           OR (fkComputador IS NULL AND fkEmpresa = ${fkEmpresa});
         ;`;
-    } else {
-        var instrucao = `SELECT * FROM metrica WHERE fkComputador = ${fkComputador}`
-    }
 
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
@@ -246,11 +242,18 @@ function selectFuncionarios(fkEmpresa) {
     return database.executar(instrucao);
 }
 
-function selectComputadores(fkEmpresa) {
+function selectComputadores(fkEmpresa, filtro) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
-    var instrucao = `
-      SELECT * FROM computador WHERE fkEmpresa = ${fkEmpresa};
-    `;
+
+    if(filtro == 0){
+        var instrucao = `
+          SELECT * FROM computador WHERE fkEmpresa = ${fkEmpresa} ORDER BY idComputador;
+        `;
+    } else if (filtro == 1){
+        var instrucao = `SELECT * FROM computador WHERE fkEmpresa = ${fkEmpresa} ORDER BY nomeComputador`
+    } else {
+        var instrucao = `SELECT * FROM computador WHERE fkEmpresa = ${fkEmpresa} ORDER BY sistemaOperacional`
+    }
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }

@@ -62,7 +62,6 @@ public class TesteProjetoLucas {
                     bancoDeDadosAws.insertComponente(PROCESSADOR.getNomeComponente());
                     bancoDeDadosAws.insertComponente(RAM.getNomeComponente());
 
-
                     if(!looca.getGrupoDeDiscos().getVolumes().isEmpty()){
                         for(int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
                             bancoDeDadosAws.insertComponente(HD.getNomeComponente() + (i + 1));
@@ -81,7 +80,7 @@ public class TesteProjetoLucas {
                                 bancoDeDadosAws.insertEspecificacao(idComputador, idComponente, looca.getMemoria().getTotal().doubleValue() / conversorGb);
                             }
                             case 3 -> {
-                                bancoDeDadosAws.insertEspecificacao(idComputador, idComponente, ((looca.getGrupoDeDiscos().getVolumes().get(0).getTotal().doubleValue() / conversorGb)) - 30);
+                                bancoDeDadosAws.insertEspecificacao(idComputador, idComponente, (looca.getGrupoDeDiscos().getVolumes().get(0).getTotal().doubleValue() / conversorGb));
                             }
                             case 4 -> {
                                 bancoDeDadosAws.insertEspecificacao(idComputador, idComponente, null);

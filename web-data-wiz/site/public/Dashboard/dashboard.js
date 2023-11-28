@@ -1,4 +1,4 @@
-// setInterval(selectAlertas, 3000)
+setInterval(selectAlertas, 3000)
 
 var totalComponenteRam = 0;
 var totalComponenteCPU = 0;
@@ -181,13 +181,16 @@ var contador = 0;
 var idComputadorFinal = 0;
 var idsComputadores = [];
 
-async function selectComputadores() {
+async function selectComputadores(i) {
   try {
     if (sessionStorage.idEmpresa == null) {
       var idEmpresa = sessionStorage.fkEmpresa;
     } else {
       var idEmpresa = sessionStorage.idEmpresa;
     }
+
+    var filtro = 0;
+    filtro = i;
 
     const endereco = await selectLocalComputador(idEmpresa);
     console.log("Endereço retornado:", endereco);
@@ -199,6 +202,7 @@ async function selectComputadores() {
       },
       body: JSON.stringify({
         fkEmpresaServer: idEmpresa,
+        filtroServer: filtro
       }),
     });
 
@@ -374,34 +378,34 @@ function validarAlertasCores(fkComputador, fkEspecificacao, tipoAlerta) {
   for (i = 0; i < idsComputadores.length; i++) {
     const divMaquina = document.getElementById(`maquina${idsComputadores[i]}`)
     if (idsComputadores[i] != fkComputador) {
-      divMaquina.style.backgroundColor = "green"
+      divMaquina.style.backgroundColor = "#91e384"
     } else {
 
-      if (fkEspecificacao == (fkComputador * 4 - 3)) {
-        if (tipoAlerta == "Crítico") {
-          removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
-          gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "CPU", "#fc8374", divMaquina, alertaMaquinaCadastrada)
-        } else {
-          removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
-          gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "CPU", "#ee9663", divMaquina, alertaMaquinaCadastrada)
+        if (fkEspecificacao == (fkComputador * 4 - 3)) {
+          if (tipoAlerta == "Crítico") {
+            removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
+            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "CPU", "#fc8374", divMaquina, alertaMaquinaCadastrada)
+          } else {
+            removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
+            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "CPU", "#ee9663", divMaquina, alertaMaquinaCadastrada)
+          }
+        } else if (fkEspecificacao == (fkComputador * 4 - 2)) {
+          if (tipoAlerta == "Crítico") {
+            removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
+            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "RAM", "#fc8374", divMaquina, alertaMaquinaCadastrada)
+          } else {
+            removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
+            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "RAM", "#ee9663", divMaquina, alertaMaquinaCadastrada)
+          }
+        } else if (fkEspecificacao == (fkComputador * 4 - 1)){
+          if (tipoAlerta == "Crítico") {
+            removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
+            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "DISCO", "#fc8374", divMaquina, alertaMaquinaCadastrada)
+          } else {
+            removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
+            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "DISCO", "#ee9663", divMaquina, alertaMaquinaCadastrada)
+          }
         }
-      } else if (fkEspecificacao == (fkComputador * 4 - 2)) {
-        if (tipoAlerta == "Crítico") {
-          removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
-          gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "RAM", "#fc8374", divMaquina, alertaMaquinaCadastrada)
-        } else {
-          removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
-          gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "RAM", "#ee9663", divMaquina, alertaMaquinaCadastrada)
-        }
-      } else if (fkEspecificacao == (fkComputador * 4 - 1)){
-        if (tipoAlerta == "Crítico") {
-          removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
-          gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "DISCO", "#fc8374", divMaquina, alertaMaquinaCadastrada)
-        } else {
-          removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
-          gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "DISCO", "#ee9663", divMaquina, alertaMaquinaCadastrada)
-        }
-      }
 
     }
   }
@@ -470,6 +474,34 @@ function removerDivAlerta(fkComputador, fkEspecificacao, tipoAlerta) {
     });
   }
   
+// Função para verificar se um radio button está selecionado
+function verificarRadio() {
+  var radios = document.getElementsByName('filtroDashboard');
+
+  for (var i = 0; i < radios.length; i++) {
+    if (radios[i].checked) {
+      selectFiltro(i);
+      return;
+    }
+  }
+
+  // Se nenhum radio button estiver selecionado
+  console.log('Nenhum radio button está selecionado.');
+}
+
+function selectFiltro(i){
+var divsMaquinasCadastradas = document.getElementsByClassName('maquinasCadastradas');
+
+var divsArray = Array.from(divsMaquinasCadastradas);
+
+divsArray.forEach(function(div) {
+    div.remove();
+});
+
+  selectComputadores(i);
+}
+
+
 
   function fazerRequisicao(data1, data2){
     var data = [];
