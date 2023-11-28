@@ -15,7 +15,7 @@ if [ $? = 0 ];
 		 "Cliente nao possui JAR instalado!"
 		 "Instalando JAR!"
 
-	sudo apt install openjdk-17-jre -y
+	sudo apt install openjdk-17-jre
 	"Java Instalado!"
 	 "Ate logo!"
 
