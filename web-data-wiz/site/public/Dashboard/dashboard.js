@@ -5,7 +5,7 @@ var totalComponenteCPU = 0;
 var totalComponenteDisco = 0;
 
 const spanUsuarioDashboardGeral = document.getElementById("spanUsuarioDashboardGeral");
-if(sessionStorage.idFuncionario == null){
+if (sessionStorage.idFuncionario == null) {
   spanUsuarioDashboardGeral.innerHTML = sessionStorage.razaoSocial
 } else {
   spanUsuarioDashboardGeral.innerHTML = sessionStorage.nomeFuncionario
@@ -297,6 +297,10 @@ function abrirDashboardEspecifica(idComputador) {
   window.location.href = "DashboardEspecifica/dashboardespecifica.html?parametro=" + idComputador;
 }
 
+var fkComputadorAlerta = [];
+var tipoAlertas = [];
+var fkComponenteAlerta = [];
+
 function selectAlertas() {
   var idEmpresa;
 
@@ -352,10 +356,13 @@ function selectAlertas() {
         console.log(resposta)
         resposta.forEach((alerta) => {
           const { fkComputador, fkEspecificacao, tipoAlerta } = alerta;
-          validarAlertasCores(fkComputador, fkEspecificacao, tipoAlerta);
+          fkComputadorAlerta.push(fkComputador);
+          fkComponenteAlerta.push(fkEspecificacao);
+          tipoAlertas.push(tipoAlerta);
         });
       });
       console.log("Consegui retornar os dados para validar os alertas das máquinas!")
+      validarAlertasCores(fkComputadorAlerta, fkComponenteAlerta, tipoAlertas);
     } else {
       console.log("Houve um erro ao buscar os dados para validar os alertas das máquinas!");
 
@@ -372,56 +379,95 @@ function selectAlertas() {
 }
 
 function validarAlertasCores(fkComputador, fkEspecificacao, tipoAlerta) {
+  // Limpar alertas existentes antes de processar novos alertas
+  limparAlertas();
 
-  const alertaMaquinaCadastrada = document.getElementById(`alertaMaquinaCadastrada${fkComputador}`);
+  for (let i = 0; i < idsComputadores.length; i++) {
+    const divMaquina = document.getElementById(`maquina${idsComputadores[i]}`);
+    let temAlertaCritico = false;
+    let temAlertaMedio = false;
 
-  for (i = 0; i < idsComputadores.length; i++) {
-    const divMaquina = document.getElementById(`maquina${idsComputadores[i]}`)
-    if (idsComputadores[i] != fkComputador) {
-      divMaquina.style.backgroundColor = "#91e384"
-    } else {
+    // Remover alertas antigos que não estão mais presentes nos dados recebidos
+    const alertaMaquinaCadastrada = document.getElementById(`alertaMaquinaCadastrada${idsComputadores[i]}`);
+    alertaMaquinaCadastrada.querySelectorAll(".alertas").forEach((alertaAntigo) => {
+      alertaAntigo.remove();
+    });
 
-        if (fkEspecificacao == (fkComputador * 4 - 3)) {
-          if (tipoAlerta == "Crítico") {
-            removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
-            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "CPU", "#fc8374", divMaquina, alertaMaquinaCadastrada)
-          } else {
-            removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
-            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "CPU", "#ee9663", divMaquina, alertaMaquinaCadastrada)
+    for (let j = 0; j < fkComputador.length; j++) {
+      if (idsComputadores[i] === fkComputador[j]) {
+        if (fkEspecificacao[j] === fkComputador[j] * 4 - 3) {
+          if (tipoAlerta[j] === "Crítico") {
+            temAlertaCritico = true;
+            console.log(`Alerta Crítico na Máquina ${idsComputadores[i]}: CPU`);
+            gerarDivAlerta(fkComputador[j], fkEspecificacao[j], tipoAlerta[j], "#c03221", "CPU", "#fc8374", divMaquina, alertaMaquinaCadastrada);
+          } else if (tipoAlerta[j] === "Médio") {
+            temAlertaMedio = true;
+            console.log(`Alerta Médio na Máquina ${idsComputadores[i]}: CPU`);
+            gerarDivAlerta(fkComputador[j], fkEspecificacao[j], tipoAlerta[j], "yellow", "CPU", "#ee9663", divMaquina, alertaMaquinaCadastrada);
           }
-        } else if (fkEspecificacao == (fkComputador * 4 - 2)) {
-          if (tipoAlerta == "Crítico") {
-            removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
-            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "RAM", "#fc8374", divMaquina, alertaMaquinaCadastrada)
-          } else {
-            removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
-            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "RAM", "#ee9663", divMaquina, alertaMaquinaCadastrada)
+        } else if (fkEspecificacao[j] === fkComputador[j] * 4 - 2) {
+          if (tipoAlerta[j] === "Crítico") {
+            temAlertaCritico = true;
+            console.log(`Alerta Crítico na Máquina ${idsComputadores[i]}: RAM`);
+            gerarDivAlerta(fkComputador[j], fkEspecificacao[j], tipoAlerta[j], "#c03221", "RAM", "#fc8374", divMaquina, alertaMaquinaCadastrada);
+          } else if (tipoAlerta[j] === "Médio") {
+            temAlertaMedio = true;
+            console.log(`Alerta Médio na Máquina ${idsComputadores[i]}: RAM`);
+            gerarDivAlerta(fkComputador[j], fkEspecificacao[j], tipoAlerta[j], "yellow", "RAM", "#ee9663", divMaquina, alertaMaquinaCadastrada);
           }
-        } else if (fkEspecificacao == (fkComputador * 4 - 1)){
-          if (tipoAlerta == "Crítico") {
-            removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
-            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "DISCO", "#fc8374", divMaquina, alertaMaquinaCadastrada)
-          } else {
-            removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
-            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "DISCO", "#ee9663", divMaquina, alertaMaquinaCadastrada)
+        } else {
+          if (tipoAlerta[j] === "Crítico") {
+            temAlertaCritico = true;
+            console.log(`Alerta Crítico na Máquina ${idsComputadores[i]}: DISCO`);
+            gerarDivAlerta(fkComputador[j], fkEspecificacao[j], tipoAlerta[j], "#c03221", "DISCO", "#fc8374", divMaquina, alertaMaquinaCadastrada);
+          } else if (tipoAlerta[j] === "Médio") {
+            temAlertaMedio = true;
+            console.log(`Alerta Médio na Máquina ${idsComputadores[i]}: DISCO`);
+            gerarDivAlerta(fkComputador[j], fkEspecificacao[j], tipoAlerta[j], "yellow", "DISCO", "#ee9663", divMaquina, alertaMaquinaCadastrada);
           }
         }
+      }
+    }
 
+    // Define a cor de fundo com base nos alertas
+    if (temAlertaCritico) {
+      divMaquina.style.backgroundColor = "#fc8374"; // Cor para máquinas com alertas críticos
+    } else if (temAlertaMedio) {
+      divMaquina.style.backgroundColor = "#ee9663"; // Cor para máquinas com alertas médios
+    } else {
+      divMaquina.style.backgroundColor = "#91e384"; // Cor para máquinas sem alertas
     }
   }
+}
 
-  function gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, corIcone, componente, corDiv, div, alertaMaquinaCadastrada) {
 
-    const divExistente = document.getElementById(`alerta_${tipoAlerta}_${fkComputador}_${fkEspecificacao}`)
 
-    if (divExistente) {
-      console.log("Já tem o alerta do tipo: " + tipoAlerta + " do componente: " + componente);
-      return
-    }
+function limparAlertas() {
+  for (let i = 0; i < idsComputadores.length; i++) {
+    // Limpar alertas existentes
+    const divMaquina = document.getElementById(`maquina${idsComputadores[i]}`);
+    divMaquina.style.backgroundColor = "#91e384";
+  }
+}
 
-    alertaMaquinaCadastrada.style.marginTop = "1%"
 
-    alertaMaquinaCadastrada.innerHTML += `<div class="alertas" id="alerta_${tipoAlerta}_${fkComputador}_${fkEspecificacao}" onclick="abrirDashboardEspecifica(${fkComputador})">
+
+
+
+
+
+function gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, corIcone, componente, corDiv, div, alertaMaquinaCadastrada) {
+
+  const divExistente = document.getElementById(`alerta_${tipoAlerta}_${fkComputador}_${fkEspecificacao}`)
+
+  if (divExistente) {
+    console.log("Já tem o alerta do tipo: " + tipoAlerta + " do componente: " + componente);
+    return
+  }
+
+  alertaMaquinaCadastrada.style.marginTop = "1%"
+
+  alertaMaquinaCadastrada.innerHTML += `<div class="alertas" id="alerta_${tipoAlerta}_${fkComputador}_${fkEspecificacao}" onclick="abrirDashboardEspecifica(${fkComputador})">
 
           <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -433,8 +479,7 @@ function validarAlertasCores(fkComputador, fkEspecificacao, tipoAlerta) {
       </div>
       `;
 
-    div.style.backgroundColor = `${corDiv}`;
-  }
+  div.style.backgroundColor = `${corDiv}`;
 }
 
 function removerDivAlerta(fkComputador, fkEspecificacao, tipoAlerta) {
@@ -461,14 +506,14 @@ function verificarRadio() {
   console.log('Nenhum radio button está selecionado.');
 }
 
-function selectFiltro(i){
-var divsMaquinasCadastradas = document.getElementsByClassName('maquinasCadastradas');
+function selectFiltro(i) {
+  var divsMaquinasCadastradas = document.getElementsByClassName('maquinasCadastradas');
 
-var divsArray = Array.from(divsMaquinasCadastradas);
+  var divsArray = Array.from(divsMaquinasCadastradas);
 
-divsArray.forEach(function(div) {
+  divsArray.forEach(function (div) {
     div.remove();
-});
+  });
 
   selectComputadores(i);
 }
