@@ -1,10 +1,30 @@
+.botaoMenu {
+    display: flex;
+    transition: 0.5s;
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+    color: rgb(0, 195, 0);
+}
+
+.botaoMenu span {
+    margin: 2% 0 0 0;
+    font-size: 25px;
+}
+
+.botaoMenu:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+    color: black;
+}
+
 .menuFlutuante {
     display: none;
     width: 300px;
     top: 9%;
     z-index: 9;
     left: 70.5%;
-    
+
     position: absolute;
     font-family: Poppins;
     border-radius: 15px;
@@ -41,10 +61,10 @@
 
 .nomeCargoRow {
     display: flex;
+    width: 100%;
+    font-weight: 600;
     flex-direction: row;
     align-items: center;
-    font-weight: 600;
-    width: 100%;
 }
 
 #nomeMenuFlutuante {
@@ -64,6 +84,7 @@
 
 .opcoesMenuFlutuante {
     display: flex;
+    text-align: left;
     flex-direction: column;
     margin-top: 10%;
 }

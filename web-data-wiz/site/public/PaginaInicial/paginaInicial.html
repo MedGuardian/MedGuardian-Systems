@@ -12,7 +12,7 @@
     <title>Home | MedGuardian</title>
 </head>
 
-<body onload="atualizarGrafico()">
+<body onload="atualizarGrafico(),validarSessao()">
     <div class="header">
         <div class="container">
 
@@ -33,8 +33,6 @@
                         <span>Menu</span>
                 </div>
             </div>
-
-
             <div class="menuFlutuante" id="menuFlutuante" style="display: none;">
                 <div class="conteudoMenuFlutuante">
                     <div class="headerMenuFlutuante">
@@ -425,6 +423,7 @@
         </div>
     </div>
 </body>
+
 </html>
 <script>
     function telaLogin() {
