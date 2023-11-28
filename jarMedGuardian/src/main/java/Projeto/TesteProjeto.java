@@ -90,9 +90,6 @@ public class TesteProjeto {
                 """.formatted(bancoDeDados.autenticarUsuario(email, senha).get(0).getNomeFuncionario()));
 
 
-                    Log log = new Log();
-                    log.gravarLog();
-
 
                 }
             }
@@ -149,6 +146,8 @@ public class TesteProjeto {
                     }
 
                 }
+                Log log = new Log();
+                log.gravarLog();
             }
         }, delay, interval);
     }
