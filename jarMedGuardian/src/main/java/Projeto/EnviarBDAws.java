@@ -93,6 +93,7 @@ public class EnviarBDAws {
     }
 
     public void insertAlertas(String tipoAlerta, Integer fkEspecificacao, Integer fkComputador){
+        System.out.println(fkEspecificacao + "ESPECIFICACAO SELECIONADA");
         con.update("INSERT INTO alertas (tipoAlerta, fkEspecificacao, fkComputador, dataHoraAlerta) VALUES (?, ?, ?, ?)", tipoAlerta, fkEspecificacao, fkComputador, dataHoraAtual());
         String componente;
 
