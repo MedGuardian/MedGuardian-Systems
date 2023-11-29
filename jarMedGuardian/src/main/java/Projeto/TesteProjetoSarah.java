@@ -99,7 +99,7 @@ public class TesteProjetoSarah {
             System.out.println("Digite a senha: ");
             Scanner leitorSenha = new Scanner(System.in);
             String senha = leitorSenha.nextLine();
-            if(!bancoDeDados.autenticarUsuario(email, senha).isEmpty()){
+            if(!bancoDeDadosAws.autenticarUsuario(email, senha).isEmpty()){
                 logado = true;
                 idFuncionario = bancoDeDados.autenticarUsuario(email, senha).get(0).getIdFuncionario();
                 fkEmpresa = bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario);
