@@ -1,6 +1,7 @@
 html {
     background-color: #DAF3EA;
 }
+
 body {
     font-family: LeagueSpartan;
     margin: 0;
@@ -15,33 +16,39 @@ body {
 
 .conteudoHeaderElipse {
     display: flex;
-    flex-direction: row;
     width: 100%;
+    flex-direction: row;
 }
 
 .headerEsquerdaLogo {
     position: fixed;
+    width: 12%;
+    height: 100%;
     align-items: center;
     justify-content: center;
     background-color: #004D02;
-    width: 12%;
-    height: 100%;
+    transition: 0.5s;
 }
 
 .headerEsquerdaLogo img {
-    position: relative;
-    left: 25%;
-    top: 5%;
     width: 50%;
+    top: 5%;
+    left: 25%;
     cursor: pointer;
+    position: relative;
+}
+
+.headerEsquerdaLogo:hover {
+    transition: 0.5s;
+    transform: scale(1.02);
 }
 
 .headerDireitaTitulo {
     display: flex;
+    width: 88%;
+    margin-left: 12%;
     flex-direction: column;
     background-image: url(../assets/images/navbarCircle.svg);
-    margin-left: 12%;
-    width: 88%;
 }
 
 .spansHeader {
@@ -56,9 +63,14 @@ body {
 }
 
 #saudacaoDashboard {
-    font-size: 35px;
-    margin-bottom: 1%;
+    display: flex;
+    width: 80%;
+    font-size: 18px;
+    align-items: center;
+    gap: 8px
 }
+
+
 
 /* MENU LATERAL */
 
@@ -352,8 +364,9 @@ body {
 .maquinasCadastradas {
     display: flex;
     width: 100%;
-    justify-content: space-evenly;
-    margin: 1% 0;
+    justify-content: flex-start;
+    margin: 1.5% 0;
+    gap: 120px;
 }
 
 .boxMaquinaCadastrada {
@@ -363,12 +376,16 @@ body {
     padding: 1%;
     width: 17.5%;
     cursor: pointer;
+    height: 190px;
+    width: 200px;
 }
 
 .spanIconesCardDashboard {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    height: 40px;
+    align-items: center;
 }
 
 .spanNomeSO span {
@@ -387,6 +404,8 @@ body {
 .iconeAlertasMaquinaCadastrada {
     display: flex;
     flex-direction: row;
+    align-items: center;
+    height: 110px;
     align-items: center;
 }
 
@@ -417,7 +436,8 @@ body {
 .localMaquinaCadastrada {
     display: flex;
     flex-direction: row;
-    margin: 1.5% 0;
+    height: 40px;
+    align-items: center;
     font-weight: 600;
     font-size: 18px;
     align-items: center;
@@ -968,6 +988,37 @@ body {
     width: 80%;
     margin: 2%;
     text-align: center;
-    font-size: 90%;
+    font-size: 98%;
     font-weight: 300;
+}
+
+.separacao {
+    display: flex;
+    width: 90%;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.botaoMenu {
+    display: flex;
+    cursor: pointer;
+    transition: 0.5s;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.botaoMenu span {
+    margin: 2% 0 0 0;
+    font-size: 25px;
+}
+
+.botaoMenu:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+    color: black;
+}
+
+.saudacaoDashboard .usuario {
+    font-size: 25px;
 }

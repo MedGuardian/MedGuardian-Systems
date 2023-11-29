@@ -103,10 +103,9 @@ function atualizarFuncionario(novoEmail, novaSenha, idFunc) {
 function excluirMaquina(idComputador) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirMaquina():");
 
-    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
-    //  e na ordem de inserção dos dados.
-    var instrucao1 = `DELETE FROM especificacao WHERE fkComputador = '${idComputador}';`;
-    var instrucao2 = `DELETE FROM computador WHERE idComputador = '${idComputador}';`;
+    var instrucao1 = `DELETE FROM alertas WHERE fkComputador = '${idComputador}';`;
+    var instrucao2 = `DELETE FROM especificacao WHERE fkComputador = '${idComputador}';`;
+    var instrucao3 = `DELETE FROM computador WHERE idComputador = '${idComputador}';`;
 
     console.log("Executando a instrução SQL 1: \n" + instrucao1);
 
@@ -119,15 +118,20 @@ function excluirMaquina(idComputador) {
             return database.executar(instrucao2);
         })
         .then(() => {
-            console.log("Instrução SQL 2 concluída com sucesso.");
+            console.log("Instrução SQL 2 concluída com sucesso. Executando instrução SQL 3: \n" + instrucao3);
 
-            // Retorna uma mensagem ou qualquer outra coisa que você deseje
-            return "Instruções SQL concluídas com sucesso.";
-        })
-        .catch((erro) => {
-            console.error("Erro durante a execução das instruções SQL:", erro);
-            throw erro; // Propaga o erro para o bloco catch final
-        });
+        // Executa a instrução3
+        return database.executar(instrucao3);
+    })
+    .then(() => {
+        console.log("Instrução SQL 3 concluída com sucesso.");
+        return "Instruções SQL concluídas com sucesso.";
+    })
+    .catch((erro) => {
+        console.error("Erro durante a execução das instruções SQL:", erro);
+        throw erro; // Propaga o erro para o bloco catch final
+    });
+
 }
 
 function selectComputador(nomeMaquina) {
@@ -141,13 +145,27 @@ function selectComputador(nomeMaquina) {
     return database.executar(instrucao);
 }
 
-function atualizarGrafico(limite_linhas) {
+function selectMetricas(fkComputador, fkEmpresa) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirMaquina():");
+
+    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
+    //  e na ordem de inserção dos dados.
+    var instrucao = `SELECT TOP 1 *
+        FROM metrica
+        WHERE fkComputador = COALESCE(${fkComputador}, -1)
+           OR (fkComputador IS NULL AND fkEmpresa = ${fkEmpresa});
+        ;`;
+
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+function atualizarGrafico(fkComputador, limite_linhas) {
 
     return new Promise(function (resolve, reject) {
-        var instrucao1 = `SELECT TOP ${limite_linhas} dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 AND tipoCaptura = 'UsoCPU' ORDER BY idRegistro DESC;`;
-        var instrucao2 = `SELECT TOP ${limite_linhas} dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 2 ORDER BY idRegistro DESC;`;
-        var instrucao3 = `SELECT TOP ${limite_linhas} dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 3 ORDER BY idRegistro DESC;`;
-        var instrucao4 = `SELECT TOP ${limite_linhas} dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 4 ORDER BY idRegistro DESC;`;
+        var instrucao1 = `SELECT TOP ${limite_linhas} dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = ${fkComputador * 4 - 3} AND tipoCaptura = 'UsoCPU' ORDER BY idRegistro DESC;`;
+        var instrucao2 = `SELECT TOP ${limite_linhas} dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = ${fkComputador * 4 - 2} ORDER BY idRegistro DESC;`;
+        var instrucao3 = `SELECT TOP ${limite_linhas} dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = ${fkComputador * 4 - 1} ORDER BY idRegistro DESC;`;
 
         console.log("Executando as instruções SQL...");
         var selects = [];
@@ -155,7 +173,6 @@ function atualizarGrafico(limite_linhas) {
         selects.push(database.executar(instrucao1));
         selects.push(database.executar(instrucao2));
         selects.push(database.executar(instrucao3));
-        selects.push(database.executar(instrucao4))
 
         Promise.all(selects)
             .then(function (res) {
@@ -167,13 +184,13 @@ function atualizarGrafico(limite_linhas) {
     });
 }
 
-function selectTotalComponentes() {
+function selectTotalComponentes(fkComputador) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirMaquina():");
 
     return new Promise(function (resolve, reject) {
-        var instrucao1 = `SELECT fkComponente, totalComponente FROM especificacao WHERE fkComponente = 1;`;
-        var instrucao2 = `SELECT fkComponente, totalComponente FROM especificacao WHERE fkComponente = 2;`;
-        var instrucao3 = `SELECT fkComponente, totalComponente FROM especificacao WHERE fkComponente = 3;`;
+        var instrucao1 = `SELECT idEspecificacao, totalComponente FROM especificacao WHERE fkComputador = ${fkComputador};`;
+        var instrucao2 = `SELECT idEspecificacao, totalComponente FROM especificacao WHERE fkComputador = ${fkComputador};`;
+        var instrucao3 = `SELECT idEspecificacao, totalComponente FROM especificacao WHERE fkComputador = ${fkComputador};`;
 
         console.log("Executando as instruções SQL...");
         var selects = [];
@@ -192,13 +209,12 @@ function selectTotalComponentes() {
     });
 }
 
-function atualizarIndicadores() {
+function atualizarIndicadores(fkComputador) {
 
     return new Promise(function (resolve, reject) {
-        var instrucao1 = `SELECT TOP 7 registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 ORDER BY idRegistro DESC;`;
-        var instrucao2 = `SELECT TOP 1 registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 2 ORDER BY idRegistro DESC`;
-        var instrucao3 = `SELECT TOP 1 registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 3 ORDER BY idRegistro DESC`;
-        var instrucao4 = `SELECT TOP 1 registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 4 ORDER BY idRegistro DESC`;
+        var instrucao1 = `SELECT TOP 7 registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = ${fkComputador * 4 - 3} ORDER BY idRegistro DESC;`;
+        var instrucao2 = `SELECT TOP 1 registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = ${fkComputador * 4 - 2} ORDER BY idRegistro DESC`;
+        var instrucao3 = `SELECT TOP 1 registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = ${fkComputador * 4 - 1} ORDER BY idRegistro DESC`;
 
         console.log("Executando as instruções SQL...");
         var selects = [];
@@ -206,7 +222,6 @@ function atualizarIndicadores() {
         selects.push(database.executar(instrucao1));
         selects.push(database.executar(instrucao2));
         selects.push(database.executar(instrucao3));
-        selects.push(database.executar(instrucao4));
 
         Promise.all(selects)
             .then(function (res) {
@@ -227,11 +242,18 @@ function selectFuncionarios(fkEmpresa) {
     return database.executar(instrucao);
 }
 
-function selectComputadores(fkEmpresa) {
+function selectComputadores(fkEmpresa, filtro) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
-    var instrucao = `
-      SELECT * FROM computador WHERE fkEmpresa = ${fkEmpresa};
-    `;
+
+    if (filtro == 0) {
+        var instrucao = `
+          SELECT * FROM computador WHERE fkEmpresa = ${fkEmpresa} ORDER BY idComputador DESC;
+        `;
+    } else if (filtro == 1) {
+        var instrucao = `SELECT * FROM computador WHERE fkEmpresa = ${fkEmpresa} ORDER BY nomeComputador`
+    } else {
+        var instrucao = `SELECT * FROM computador WHERE fkEmpresa = ${fkEmpresa} ORDER BY sistemaOperacional`
+    }
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }
@@ -278,11 +300,9 @@ order by idRegistro desc;`;
             });
     });
 
-    console.log("Executando a instrução SQL: \n" + instrucao);
-    return database.executar(instrucao);
 }
 
-function excluirFuncionario(idFuncionario){
+function excluirFuncionario(idFuncionario) {
     console.log("ACESSEI O USUARIO MODEL");
 
     var instrucao = `
@@ -300,7 +320,7 @@ function excluirFuncionario(idFuncionario){
         });
 }
 
-function selectAlertas(idEmpresa) {
+function selectAlertas(idEmpresa, dataHoraAtual, dataHoraReduzida, dataHoraMais3HorasReduzidas, dataHoraMais3Horas) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirMaquina():");
 
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
@@ -314,17 +334,201 @@ function selectAlertas(idEmpresa) {
           alertas a
           JOIN computador c ON a.fkComputador = c.idComputador
         WHERE
-          c.fkEmpresa = 1
+          c.fkEmpresa = ${idEmpresa}
           AND (
-            (c.nomeComputador LIKE 'ip%' AND a.dataHoraAlerta BETWEEN '2023-11-24 21:25:00' AND '2023-11-24 21:30:00')
+            (c.nomeComputador LIKE 'ip%' AND a.dataHoraAlerta BETWEEN '${dataHoraMais3HorasReduzidas}' AND '${dataHoraMais3Horas}')
             OR
-            (NOT c.nomeComputador LIKE 'ip%' AND a.dataHoraAlerta BETWEEN '2023-11-24 18:25:00' AND '2023-11-24 18:30:00')
+            (NOT c.nomeComputador LIKE 'ip%' AND a.dataHoraAlerta BETWEEN '${dataHoraReduzida}' AND '${dataHoraAtual}')
           )
       )
       SELECT *
       FROM AlertasNumerados
       WHERE NumeroLinha = 1;`;
 
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+function atualizarGrafico(limite_linhas) {
+
+    return new Promise(function (resolve, reject) {
+        var instrucao1 = `SELECT dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 AND tipoCaptura = "UsoCPU" ORDER BY idRegistro DESC LIMIT ${limite_linhas};`;
+        var instrucao2 = `SELECT dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 2 ORDER BY idRegistro DESC LIMIT ${limite_linhas};`;
+        var instrucao3 = `SELECT dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 3 ORDER BY idRegistro DESC LIMIT ${limite_linhas};`;
+        var instrucao4 = `SELECT dataHoraRegistro, registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 4 ORDER BY idRegistro DESC LIMIT ${limite_linhas};`;
+
+        console.log("Executando as instruções SQL...");
+        var selects = [];
+
+        selects.push(database.executar(instrucao1));
+        selects.push(database.executar(instrucao2));
+        selects.push(database.executar(instrucao3));
+        selects.push(database.executar(instrucao4));
+
+        Promise.all(selects)
+            .then(function (res) {
+                resolve(res);
+            })
+            .catch(function (error) {
+                reject(error);
+            });
+    });
+}
+
+function selectTotalComponentes() {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirMaquina():");
+
+    return new Promise(function (resolve, reject) {
+        var instrucao1 = `SELECT fkComponente, totalComponente FROM especificacao WHERE fkComponente = 1;`;
+        var instrucao2 = `SELECT fkComponente, totalComponente FROM especificacao WHERE fkComponente = 2;`;
+        var instrucao3 = `SELECT fkComponente, totalComponente FROM especificacao WHERE fkComponente = 3;`;
+
+        console.log("Executando as instruções SQL...");
+        var selects = [];
+
+        selects.push(database.executar(instrucao1));
+        selects.push(database.executar(instrucao2));
+        selects.push(database.executar(instrucao3));
+
+        Promise.all(selects)
+            .then(function (res) {
+                resolve(res);
+            })
+            .catch(function (error) {
+                reject(error);
+            });
+    });
+}
+
+function atualizarIndicadores() {
+
+    return new Promise(function (resolve, reject) {
+        var instrucao1 = `SELECT registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 1 ORDER BY idRegistro DESC LIMIT 7;`;
+        var instrucao2 = `SELECT registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 2 ORDER BY idRegistro DESC LIMIT 1`;
+        var instrucao3 = `SELECT registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 3 ORDER BY idRegistro DESC LIMIT 1`;
+        var instrucao4 = `SELECT registro, tipoCaptura, fkEspecificacao FROM registro WHERE fkEspecificacao = 4 ORDER BY idRegistro DESC LIMIT 1`;
+
+        console.log("Executando as instruções SQL...");
+        var selects = [];
+
+        selects.push(database.executar(instrucao1));
+        selects.push(database.executar(instrucao2));
+        selects.push(database.executar(instrucao3));
+        selects.push(database.executar(instrucao4));
+
+        Promise.all(selects)
+            .then(function (res) {
+                resolve(res);
+            })
+            .catch(function (error) {
+                reject(error);
+            });
+    });
+}
+
+function selectFuncionarios(fkEmpresa) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
+    var instrucao = `
+      SELECT * FROM funcionario WHERE fkEmpresa = '${fkEmpresa}'`;
+      console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+function selectJanelasAbertas(fkComputador){
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
+    var instrucao = `select * from janelas where fkComputador = '${fkComputador}'`;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+function atualizarDatas(selecaoData) {
+    var selects = [];
+    return new Promise(function (resolve, reject) {
+        switch (selecaoData) {
+            case 1: {
+                console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
+
+                var instrucao = `SELECT registro, tipoCaptura, dataHoraRegistro, fkEspecificacao FROM registro WHERE dataHoraRegistro >= CURDATE() limit 7;`;
+                console.log("Executando a instrução SQL: \n" + instrucao);
+                selects.push(database.executar(instrucao));
+
+            }
+            case 2: {
+                console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
+
+                var instrucao = `SELECT registro, tipoCaptura, dataHoraRegistro, fkEspecificacao FROM registro WHERE dataHoraRegistro >= SUBDATE(CURDATE(),7) limit 7;`;
+                console.log("Executando a instrução SQL: \n" + instrucao);
+                selects.push(database.executar(instrucao));
+
+            }
+            case 3: {
+                console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
+
+                var instrucao = `SELECT registro, tipoCaptura, dataHoraRegistro, fkEspecificacao FROM registro WHERE dataHoraRegistro >= SUBDATE(CURDATE(),30) limit 30;`;
+                console.log("Executando a instrução SQL: \n" + instrucao);
+                selects.push(database.executar(instrucao));
+
+            }
+            default: {
+                console.log('Não há datas específicas')
+            }
+        }
+        Promise.all(selects)
+            .then(function (res) {
+                resolve(res);
+            })
+            .catch(function (error) {
+                reject(error);
+            });
+    });
+}
+// function selectDataDia() {
+//     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function selectDataDia():");
+
+//     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
+//     //  e na ordem de inserção dos dados.
+//     var instrucao = `SELECT registro FROM registro WHERE dataHoraRegistro >= CURDATE() limit 5;`;
+
+//     console.log("Executando a instrução SQL: \n" + instrucao);
+//     return database.executar(instrucao);
+// }
+
+// function selectDataSemana() {
+//     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirMaquina():");
+
+//     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
+//     //  e na ordem de inserção dos dados.
+//     var instrucao = `SELECT registro FROM registro WHERE dataHoraRegistro >= SUBDATE(CURDATE(),7) limit 7;`;
+
+//     console.log("Executando a instrução SQL: \n" + instrucao);
+//     return database.executar(instrucao);
+// }
+
+// function selectDataMes() {
+//     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirMaquina():");
+
+//     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
+//     //  e na ordem de inserção dos dados.
+//     var instrucao = `SELECT registro FROM registro WHERE dataHoraRegistro >= SUBDATE(CURDATE(),30) limit 30;`;
+
+//     console.log("Executando a instrução SQL: \n" + instrucao);
+//     return database.executar(instrucao);
+// }
+
+function selectIntervaloData(dataComeco, dataFim) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function excluirMaquina():");
+
+    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
+    //  e na ordem de inserção dos dados.
+    var instrucao = `SELECT registro FROM registro WHERE dataHoraRegistro between '${dataComeco}' AND '${dataFim} limit 6';`;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+function fecharJanela(idJanela){
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
+    var instrucao = `
+      update janelas set matar = 1 where idJanela = '${idJanela}';
+    `;
     console.log("Executando a instrução SQL: \n" + instrucao);
     return database.executar(instrucao);
 }
@@ -344,9 +548,14 @@ module.exports = {
     atualizarIndicadores,
     selectComputador,
     selectFuncionarios,
+    selectIntervaloData,
+    atualizarDatas,
     selectComputadores,
     selectLocalComputador,
     atualizarDashboardGeral,
     excluirFuncionario,
-    selectAlertas
+    selectAlertas,
+    selectMetricas,
+    selectJanelasAbertas,
+    fecharJanela
 };

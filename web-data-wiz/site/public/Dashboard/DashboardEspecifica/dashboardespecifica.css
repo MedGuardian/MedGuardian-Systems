@@ -119,28 +119,40 @@ body {
     justify-content: space-between;
 }
 
-.spanTituloDashboardMaquina{
+.spanTituloDashboardMaquina {
     width: 50%;
+    margin-top: 1%;
 }
 
-.botaoListarJanelas{
-    width: 50%;
+.botaoListarJanelas {
+    width: 100%;
     display: flex;
     justify-content: flex-end;
+    transition: 0.5s;
+}
+
+.botaoListarJanelas button:hover {
+    transition: 0.5s;
+    background-color: #7bb37c;
 }
 
 .botaoListarJanelas span {
     width: 50%;
 }
 
-.botaoListarJanelas button{
-    background-color: #c4d7bb;
-    font-size: 25px;
-    font-weight: 400;
-    padding: 2.5% 2.5%;
+.botaoListarJanelas button {
+    width: 100%;
+    padding: 2%;
+    font-size: 17px;
+    font-weight: 500;
     border-radius: 12px;
-    width: 33%;
     cursor: pointer;
+    font-family: Poppins;
+    background-color: #c4d7bb;
+
+    -webkit-box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
 }
 
 #maquinaSelecionada {
@@ -302,6 +314,14 @@ body {
     flex-direction: column;
 }
 
+.opcaoSelecionadaGraficoLegenda2 {
+    display: flex;
+    width: 60%;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .opcaoSelecionadaGraficoLegenda span {
     margin-bottom: 10%;
 }
@@ -318,12 +338,12 @@ body {
 }
 
 #tipoValorComponenteSelecionado {
-    font-size: 17px;
-    font-weight: 600;
+    font-size: 22px;
+    font-weight: 400;
 }
 
 #nomeComponente {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 400;
 }
 
@@ -384,7 +404,8 @@ body {
 
 .spanBoxLateral {
     width: 100%;
-    font-size: 18px;
+    font-size: 15px;
+    margin-top: 2%;
     font-weight: 400;
     text-align: center;
     color: rgb(255, 255, 255);
@@ -425,8 +446,10 @@ body {
 
 .valorBoxLateral {
     display: flex;
-    flex-direction: column;
     text-align: center;
+    flex-direction: column;
+    border-radius: 15px;
+    background-color: #718672;
 }
 
 .spanValorBoxLateral {
@@ -449,16 +472,18 @@ body {
     align-items: center;
 }
 
-.modalListaJanelas{
+.modalListaJanelas {
     display: flex;
-    flex-direction: column;
-    background-color: white;
-    width: 25%;
-    z-index: 9;
+    align-items: center;
+    text-align: center;
     position: absolute;
+    width: 30%;
     top: 50;
     left: 50;
+    z-index: 9;
     border-radius: 10px;
+    flex-direction: column;
+    background-color: white;
 }
 
 #sombreamento {
@@ -470,54 +495,84 @@ body {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.7);
     z-index: 1;
-  }
+}
 
-.iconFecharModalListaJanelas{
+.iconFecharModalListaJanelas {
     display: flex;
     justify-content: flex-end;
     cursor: pointer;
 }
 
-.tituloModalListaJanelas{
+.tituloModalListaJanelas {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 3%;
     text-align: center;
-    font-size: 22px;
 }
 
-.subtituloModalListaJanelas{
-    font-size: 12px;
+.subtituloModalListaJanelas {
+    width: 100%;
+    font-family: Poppins;
+    font-size: 17px;
+    font-weight: 600;
+    align-items: center;
     text-align: center;
     margin-bottom: 5%;
 }
 
-.janelasAbertas{
-    width: 100%;
+.subtituloModalListaJanelas span {
+    width: 95%;
+}
+
+.janelasAbertas {
     display: flex;
-    flex-direction: column;
+    width: 100%;
     gap: 20px;
     margin-bottom: 5%;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 250px;
+    overflow-y: auto;
 }
 
-.janelaAberta{
-    background-color: #92E3A9;
+.janelaAberta {
+    display: flex;
     width: 100%;
     height: 40px;
-    display: flex;
     flex-direction: row;
     text-align: center;
-    display: flex;
     align-items: center;
+    background-color: #92E3A9;
 }
 
-.bloquinhoEsquerdaJanelaAberta{
+.bloquinhoEsquerdaJanelaAberta {
     width: 40px;
     height: 40px;
-    background-color: #004D02;
     margin-left: 3%;
+    background-color: #004D02;
+    cursor: pointer;
 }
 
-.nomeJanelaAberta{
+.nomeJanelaAberta {
     margin-left: 5%;
     font-size: 18px;
+}
+
+.avisoFechado{
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 2%;
+    margin-bottom: 2%;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#spanAvisoFechando{
+    color: #f16a1b;
+}
+
+#spanAvisoFechado{
+color: red;
 }
 
 

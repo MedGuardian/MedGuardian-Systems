@@ -1,10 +1,6 @@
-function voltarIndex(){
-    window.location.href = '../../index.html';
+function voltarIndex() {
+    history.back()
 }
-
-
-
-
 
 function gerarDIVFuncionario(nome, email, cargo) {
     var div = document.getElementById('containerFuncionarios')
@@ -28,9 +24,9 @@ var id = [];
 function selectFuncionarios() {
     var idEmpresa;
     if (sessionStorage.idEmpresa == null) {
-      idEmpresa = sessionStorage.fkEmpresa;
+        idEmpresa = sessionStorage.fkEmpresa;
     } else {
-      idEmpresa = sessionStorage.idEmpresa;
+        idEmpresa = sessionStorage.idEmpresa;
     }
     fetch("/usuarios/selectFuncionarios", {
         method: "POST",
@@ -69,30 +65,30 @@ function selectFuncionarios() {
 
 
 
-function selecionarTodos(){
+function selecionarTodos() {
     var checkboxSelecionarTodos = document.getElementById('checkboxSelecionarTodos');
     var checkboxUsuario = document.querySelectorAll('.checkboxFuncionario');
 
-    checkboxUsuario.forEach(function (checkbox){
+    checkboxUsuario.forEach(function (checkbox) {
         checkbox.checked = checkboxSelecionarTodos.checked;
-      });
+    });
 }
 
 
 
 var listaFuncionariosExcluir = [];
 
-function excluirFuncionario(){
+function excluirFuncionario() {
     var checkboxFuncionario = document.querySelectorAll('.checkboxFuncionario');
-    
-    checkboxFuncionario.forEach(function (checkbox){
-        if (checkbox.checked){
+
+    checkboxFuncionario.forEach(function (checkbox) {
+        if (checkbox.checked) {
             console.log(id)
-            for(var i = 0; i < id.length; i++){
+            for (var i = 0; i < id.length; i++) {
                 listaFuncionariosExcluir.push(id[i]);
             }
             console.log(listaFuncionariosExcluir.length)
-            for(var j = 0; j < listaFuncionariosExcluir.length; j++){
+            for (var j = 0; j < listaFuncionariosExcluir.length; j++) {
                 console.log(listaFuncionariosExcluir[j])
                 fetch("/usuarios/excluirFuncionario", {
                     method: "POST",
@@ -108,6 +104,7 @@ function excluirFuncionario(){
                         if (resposta.ok) {
                             console.log(resposta);
                             console.log("Deu certo seu exclud de funcionários!")
+                            location.reload()
                         } else {
                             throw "Houve um erro na exclusão de funcionários(FrontEnd)!";
                         }
@@ -115,10 +112,10 @@ function excluirFuncionario(){
                     .catch(function (resposta) {
                         console.log(`#ERRO: ${resposta}`);
                     });
-                }
-            }    
-        });
-        return false;
+            }
+        }
+    });
+    return false;
 
-        
+
 }
