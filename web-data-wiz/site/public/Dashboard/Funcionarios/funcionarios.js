@@ -104,6 +104,7 @@ function excluirFuncionario() {
                         if (resposta.ok) {
                             console.log(resposta);
                             console.log("Deu certo seu exclud de funcionários!")
+                            location.reload()
                         } else {
                             throw "Houve um erro na exclusão de funcionários(FrontEnd)!";
                         }
