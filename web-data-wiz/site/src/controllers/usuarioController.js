@@ -286,6 +286,150 @@ function cadastrarEndereco(req, res) {
     }
 }
 
+function selectDataDia(req, res) {
+    var idVar = req.body.idDiaVar;
+    usuarioModel.selectDataDia(idVar)
+        .then(
+            function (resultadoDatas) {
+                console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
+                console.log(`Resultados: ${JSON.stringify(resultadoDatas)}`); // transforma JSON em String
+
+                if (resultadoDatas.length > 0) {
+                    console.log(resultadoDatas);
+                    res.status(200).json(resultadoDatas);
+                } else if (resultadoDatas.length == 0) {
+                    res.status(403).send("Erro no select de datas do dia!");
+                } else {
+                    res.status(404).send("Erro no select de datas do dia!!!!");
+                }
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao realizar o select de datas! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function selectDataSemana(req, res) {
+    var idVar = req.body.idSemanaVar;
+    usuarioModel.selectDataSemana(idVar)
+        .then(
+            function (resultadoDatas) {
+                console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
+                console.log(`Resultados: ${JSON.stringify(resultadoDatas)}`); // transforma JSON em String
+
+                if (resultadoDatas.length > 0) {
+                    console.log(resultadoDatas);
+                    res.status(200).json(resultadoDatas);
+                } else if (resultadoDatas.length == 0) {
+                    res.status(403).send("Erro no select de datas do dia!");
+                } else {
+                    res.status(404).send("Erro no select de datas do dia!!!!");
+                }
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao realizar o select de datas! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function selectDataMes(req, res) {
+    var idMes = req.body.idMesVar;
+
+    usuarioModel.selectDataMes(idMes)
+        .then(
+            function (resultadoDatas) {
+                console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
+                console.log(`Resultados: ${JSON.stringify(resultadoDatas)}`); // transforma JSON em String
+
+                if (resultadoDatas.length > 0) {
+                    console.log(resultadoDatas);
+                    res.status(200).json(resultadoDatas);
+                } else if (resultadoDatas.length == 0) {
+                    res.status(403).send("Erro no select de datas do dia!");
+                } else {
+                    res.status(404).send("Erro no select de datas do dia!!!!");
+                }
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao realizar o select de datas! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function atualizarDatas(req, res){
+    var idServer = req.body.idServer;
+   
+    usuarioModel.atualizarDatas(idServer)
+    .then(
+        function (resultadoDatas) {
+            console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
+            console.log(`Resultados: ${JSON.stringify(resultadoDatas)}`); // transforma JSON em String
+
+            if (resultadoDatas.length > 0) {
+                console.log(resultadoDatas);
+                res.status(200).json(resultadoDatas);
+            } else if (resultadoDatas.length == 0) {
+                res.status(403).send("Erro no select de datas do dia!");
+            } else {
+                res.status(404).send("Erro no select de datas do dia!!!!");
+            }
+        }
+    ).catch(
+        function (erro) {
+            console.log(erro);
+            console.log("\nHouve um erro ao realizar o select de datas! Erro: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        }
+    );
+    
+}
+
+function selectIntervaloData(req, res) {
+    var data1 = req.body.date1Server;
+    var data2 = req.body.date2Server;
+
+
+    if ((data1 || data2) == undefined) {
+        console.log(data1)
+        console.log(data2)
+
+        res.status(400).send("Datas inválidas");
+    } else {
+        usuarioModel.selectIntervaloData(data1, data2)
+            .then(
+                function (resultadoDatas) {
+                    console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
+                    console.log(`Resultados: ${JSON.stringify(resultadoDatas)}`); // transforma JSON em String
+
+                    if (resultadoDatas.length > 0) {
+                        console.log(resultadoDatas);
+                        res.status(200).json(resultadoDatas);
+                    } else if (resultadoDatas.length == 0) {
+                        res.status(403).send("Erro no select do intervalo das datas!");
+                    } else {
+                        res.status(404).send("Erro no select do intervalo das datas!!!!");
+                    }
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao realizar o select de datas! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+
+}
+
 function cadastrarEndereco(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var cep = req.body.cepServer;
@@ -460,6 +604,8 @@ function excluirMaquina(req, res) {
     }
 
 }
+
+
 
 function selectFuncionarios(req, res) {
     var fkEmpresa = req.body.fkEmpresaServer
@@ -660,6 +806,12 @@ module.exports = {
     selectTotalComponentes,
     atualizarIndicadores,
     selectComputador,
+    selectDataDia,
+    selectDataSemana,
+    selectDataMes,
+    selectIntervaloData,
+    selectFuncionarios,
+    atualizarDatas,
     selectFuncionarios,
     selectComputadores,
     selectLocalComputador,

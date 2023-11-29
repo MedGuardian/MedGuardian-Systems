@@ -494,6 +494,34 @@ const divExisteOutroTipo = document.getElementById(`alerta_${tipoOpuesto}_${fkCo
 
 
 
+  function personalizado() {
+    var modal = document.getElementById('data-input');
+    modal.innerHTML = ' ';
+    modal.innerHTML = ` <input type="text" name="datetimes" id="litepicker"/>`;
+    let input = document.getElementById('litepicker');
+    let now = new Date();
+    let picker = new Litepicker({
+      element: input,
+      format: 'YYYY-MM-DD',
+      singleMode: false,
+      numberOfMonths: 2,
+      numberOfColumns: 2,
+      showTooltip: true,
+      scrollToDate: true,
+      startDate: new Date(now).setDate(now.getDate() - 1),
+      endDate: new Date(now),
+      setup: function (picker) {
+        picker.on('selected', function (date1, date2) {
+          let formattedDate1 = date1.format('YYYY-MM-DD');
+          let formattedDate2 = date2.format('YYYY-MM-DD');
+  
+          console.log(`${formattedDate1}, ${formattedDate2}`);
+          fazerRequisicao(formattedDate1, formattedDate2);
+        });
+      }
+    });
+  }
+  
 // Função para verificar se um radio button está selecionado
 function verificarRadio() {
   var radios = document.getElementsByName('filtroDashboard');
@@ -523,7 +551,44 @@ function selectFiltro(i) {
 
 
 
+  function fazerRequisicao(data1, data2){
+    var data = [];
+    sessionStorage.setItem('Personalizado', data);
 
+    fetch("/usuarios/selectIntervaloData", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            date1Server: data1,
+            date2Server: data2,
+        })
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO intervalo()!")
+        if (resposta.ok) {
+            console.log("Estou dentro do IF!")
 
+            console.log(resposta);
+            resposta.json().then(json => {
+                console.log(json);
+                console.log(JSON.stringify(json));
+                data = json.data
+                alert("Fiz o select das Datas! Datas: " + data)
+                return data;
+            });
 
+        } else {
+            alert("Erro ao captar os dados!")
 
+            resposta.text().then(texto => {
+                console.error(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    })
+
+    return false;
+  }

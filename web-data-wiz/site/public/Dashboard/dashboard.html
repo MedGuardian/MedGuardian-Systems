@@ -18,6 +18,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
   <script src="https://html2canvas. html2canvas.jshtml2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
@@ -261,28 +262,19 @@
                 <div id="radio-input-wrapper">
                   <div class="coluna-direita">
                     <label class="label">
-                      <input value="diario" onclick="diario()" name="value-radio" id="value-2" class="radio-input"
-                        type="radio">
+                      <input value="diario" name="value-radio" id="value-2" class="radio-input" type="radio">
                       <div class="radio-design"></div>
                       <div class="label-text">Diário</div>
                     </label>
                     <label class="label">
-                      <input value="semanal" onclick="semanal()" name="value-radio" id="value-3" class="radio-input"
-                        type="radio">
+                      <input value="semanal" name="value-radio" id="value-3" class="radio-input" type="radio">
                       <div class="radio-design"></div>
                       <div class="label-text">Semanal</div>
                     </label>
                     <label class="label">
-                      <input value="mensal" onclick="mensal()" name="value-radio" id="value-4" class="radio-input"
-                        type="radio">
+                      <input value="mensal" name="value-radio" id="value-4" class="radio-input" type="radio">
                       <div class="radio-design"></div>
                       <div class="label-text">Mensal</div>
-                    </label>
-                    <label class="label">
-                      <input value="anual" onclick="anual()" name="value-radio" id="value-5" class="radio-input"
-                        type="radio">
-                      <div class="radio-design"></div>
-                      <div class="label-text">Anual</div>
                     </label>
                   </div>
                   <div class="coluna-esquerda">
@@ -479,7 +471,151 @@
 
   }
   function abrirPDF() {
-    window.open('PDF.html', '_blank');
+    var inputSelecionada;
+
+    if (document.getElementById('value-2').checked) {
+      inputSelecionada = 1;
+
+      var data = [];
+      sessionStorage.setItem('dataDia', data)
+      fetch("/usuarios/atualizarDatas", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          idServer: inputSelecionada
+        })
+
+      }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO verificarData()!")
+        console.log(`Dados atuais do gráfico:`);
+        console.log(data);
+        console.log(resposta);
+
+        if (resposta.ok) {
+          console.log(resposta);
+          resposta.json().then(json => {
+            console.log(json);
+            console.log(JSON.stringify(json));
+            data.push(JSON.stringify(json));
+            return data;
+
+          });
+
+        } else {
+          alert("Erro ao captar os dados!")
+
+          resposta.text().then(texto => {
+            console.error(texto);
+          });
+        }
+
+      }).catch(function (erro) {
+        console.log(erro);
+      })
+
+      window.open('PDF.html', '_blank');
+      return false;
+    }
+
+    else if (document.getElementById('value-3').checked) {
+      inputSelecionada = 2;
+
+      var data = [];
+
+      sessionStorage.setItem('dataSemana', data)
+
+      fetch("/usuarios/atualizarDatas", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          idServer: inputSelecionada
+        })
+
+      }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO verificarData()!")
+        console.log(`Dados atuais do gráfico:`);
+        console.log(data);
+        console.log(resposta);
+
+        if (resposta.ok) {
+          console.log(resposta);
+          resposta.json().then(json => {
+            console.log(json);
+            console.log(JSON.stringify(json));
+            data.push(JSON.stringify(json));
+            return data;
+
+          });
+
+        } else {
+          alert("Erro ao captar os dados!")
+
+          resposta.text().then(texto => {
+            console.error(texto);
+          });
+        }
+
+      }).catch(function (erro) {
+        console.log(erro);
+      })
+
+      window.open('PDF.html', '_blank');
+      return false;
+    }
+
+    else if (document.getElementById('value-4').checked) {
+      inputSelecionada = 3;
+
+      var data = [];
+
+      sessionStorage.setItem('dataMes', data)
+
+      fetch("/usuarios/atualizarDatas", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          idServer: inputSelecionada
+        })
+
+      }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO verificarData()!")
+        console.log(`Dados atuais do gráfico:`);
+        console.log(data);
+        console.log(resposta);
+
+        if (resposta.ok) {
+          console.log(resposta);
+          resposta.json().then(json => {
+            console.log(json);
+            console.log(JSON.stringify(json));
+            data.push(JSON.stringify(json));
+            return data;
+
+          });
+
+        } else {
+          alert("Erro ao captar os dados!")
+
+          resposta.text().then(texto => {
+            console.error(texto);
+          });
+        }
+
+      }).catch(function (erro) {
+        console.log(erro);
+      })
+
+      window.open('PDF.html', '_blank');
+      return false;
+    }
+
+
   }
 
   function validarMetricas() {

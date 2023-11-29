@@ -434,6 +434,7 @@ function selectTotalComponentes() {
 var valorN = 1;
 
 
+
 function unchekedTodos() {
     ['cpu', 'Disco', 'ram'].forEach((container) => document.getElementById(container).classList.remove("animacaoBorda"));
 }

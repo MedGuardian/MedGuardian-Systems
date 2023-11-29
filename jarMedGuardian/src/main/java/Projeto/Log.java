@@ -17,7 +17,7 @@ public class Log {
 
     public void gravarLog() {
         Looca looca = new Looca();
-
+        Slack slack = new Slack();
         Double processadorEmUso = looca.getProcessador().getUso();
 
         Integer segundos = looca.getSistema().getTempoDeAtividade().intValue();
