@@ -530,6 +530,9 @@ body {
     gap: 20px;
     margin-bottom: 5%;
     flex-direction: column;
+    gap: 15px;
+    max-height: 250px;
+    overflow-y: auto;
 }
 
 .janelaAberta {
@@ -547,9 +550,30 @@ body {
     height: 40px;
     margin-left: 3%;
     background-color: #004D02;
+    cursor: pointer;
 }
 
 .nomeJanelaAberta {
     margin-left: 5%;
     font-size: 18px;
 }
+
+.avisoFechado{
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 2%;
+    margin-bottom: 2%;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#spanAvisoFechando{
+    color: #f16a1b;
+}
+
+#spanAvisoFechado{
+color: red;
+}
+
+
+

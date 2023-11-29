@@ -87,5 +87,9 @@ router.get(`/selectJanelasAbertas/:fkComputadorServer`, function (req, res) {
     usuarioController.selectJanelasAbertas(req, res);
 });
 
+router.post(`/fecharJanela`, function (req, res) {
+    usuarioController.fecharJanela(req, res);
+});
+
 
 module.exports = router;

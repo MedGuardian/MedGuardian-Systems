@@ -131,6 +131,7 @@ function excluirMaquina(idComputador) {
         console.error("Erro durante a execução das instruções SQL:", erro);
         throw erro; // Propaga o erro para o bloco catch final
     });
+
 }
 
 function selectComputador(nomeMaquina) {
@@ -246,7 +247,7 @@ function selectComputadores(fkEmpresa, filtro) {
 
     if (filtro == 0) {
         var instrucao = `
-          SELECT * FROM computador WHERE fkEmpresa = ${fkEmpresa} ORDER BY idComputador;
+          SELECT * FROM computador WHERE fkEmpresa = ${fkEmpresa} ORDER BY idComputador DESC;
         `;
     } else if (filtro == 1) {
         var instrucao = `SELECT * FROM computador WHERE fkEmpresa = ${fkEmpresa} ORDER BY nomeComputador`
@@ -348,6 +349,24 @@ function selectAlertas(idEmpresa, dataHoraAtual, dataHoraReduzida, dataHoraMais3
     return database.executar(instrucao);
 }
 
+function selectJanelasAbertas(fkComputador){
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
+    var instrucao = `
+      select * from janelas where fkComputador = '${fkComputador}';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
+function fecharJanela(idJanela){
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
+    var instrucao = `
+      update janelas set matar = 1 where idJanela = '${idJanela}';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     autenticar,
     cadastrar,
@@ -368,5 +387,7 @@ module.exports = {
     atualizarDashboardGeral,
     excluirFuncionario,
     selectAlertas,
-    selectMetricas
+    selectMetricas,
+    selectJanelasAbertas,
+    fecharJanela
 };

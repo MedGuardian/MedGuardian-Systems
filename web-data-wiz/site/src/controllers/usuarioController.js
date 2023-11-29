@@ -624,6 +624,27 @@ function selectJanelasAbertas(req, res) {
         );
 }
 
+function fecharJanela(req, res) {
+
+    var idJanela = req.body.idJanelaServer;
+
+    usuarioModel.fecharJanela(idJanela)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao fazer o select das janelas abertas! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
 
 module.exports = {
     autenticar,
@@ -646,5 +667,6 @@ module.exports = {
     excluirFuncionario,
     selectAlertas,
     selectMetricas,
-    selectJanelasAbertas
+    selectJanelasAbertas,
+    fecharJanela
 }
