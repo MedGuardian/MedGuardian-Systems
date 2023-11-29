@@ -131,7 +131,6 @@ return database.executar(instrucao1)
         console.error("Erro durante a execução das instruções SQL:", erro);
         throw erro; // Propaga o erro para o bloco catch final
     });
-
 }
 
 function selectComputador(nomeMaquina) {
@@ -349,6 +348,15 @@ function selectAlertas(idEmpresa, dataHoraAtual, dataHoraReduzida, dataHoraMais3
     return database.executar(instrucao);
 }
 
+function selectJanelasAbertas(fkComputador) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ")
+    var instrucao = `
+      select * from janelas where fkComputador = '${fkComputador}';
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucao);
+    return database.executar(instrucao);
+}
+
 module.exports = {
     autenticar,
     cadastrar,
@@ -369,5 +377,6 @@ module.exports = {
     atualizarDashboardGeral,
     excluirFuncionario,
     selectAlertas,
-    selectMetricas
+    selectMetricas,
+    selectJanelasAbertas
 };

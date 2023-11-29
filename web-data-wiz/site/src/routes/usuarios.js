@@ -83,5 +83,9 @@ router.post("/selectMetricas", function (req, res) {
     usuarioController.selectMetricas(req, res);
 });
 
+router.get(`/selectJanelasAbertas/:fkComputadorServer`, function (req, res) {
+    usuarioController.selectJanelasAbertas(req, res);
+});
+
 
 module.exports = router;

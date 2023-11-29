@@ -35,27 +35,8 @@
                 <span>Para fechar uma janela, clique no quadrado verde à esquerda e aguarde</span>
             </div>
 
-            <div class="janelasAbertas">
-                <div class="janelaAberta">
-                    <div class="bloquinhoEsquerdaJanelaAberta"></div>
-                    <div class="nomeJanelaAberta">
-                        <span>Discord</span>
-                    </div>
-                </div>
-
-                <div class="janelaAberta">
-                    <div class="bloquinhoEsquerdaJanelaAberta"></div>
-                    <div class="nomeJanelaAberta">
-                        <span>MySql</span>
-                    </div>
-                </div>
-
-                <div class="janelaAberta">
-                    <div class="bloquinhoEsquerdaJanelaAberta"></div>
-                    <div class="nomeJanelaAberta">
-                        <span>Notepad</span>
-                    </div>
-                </div>
+            <div class="janelasAbertas" id="janelasAbertas">
+                
             </div>
 
 
@@ -201,7 +182,8 @@
                         <div class="conteudoDireitaDashboardMaquina">
                             <div class="boxesLaterais">
                                 <div class="botaoListarJanelas" onclick="abrirListaJanelas()">
-                                    <button onclick="abrirListaJanelas()">Janelas abertas</button>
+                                    <button onclick="abrirListaJanelas(); selectJanelasAbertas()">Janelas abertas</button>
+
                                 </div>
                                 <span class="spanBoxLateral">Selecione um componente:</span>
                                 <div class="boxLateral" id="cpu" onclick="escolherGrafico(1, 'cpu')"

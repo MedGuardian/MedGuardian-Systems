@@ -592,3 +592,63 @@ function selectMetricas(){
 
     return false;
 }
+
+function selectJanelasAbertas(){
+    
+    fetch(`/usuarios/selectJanelasAbertas/${fkComputador}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }).then(function (resposta) {
+            console.log("Estou buscando dados referente as janelas abertas!");
+
+            if (resposta.ok) {
+                resposta.json().then((resposta) => {
+                    console.log(resposta)
+                        resposta.forEach((objeto) => {
+                                const { idJanela, titulo, comando, matar } = objeto;    
+                                gerarDivJanelas(idJanela, titulo, comando, matar)  
+                        });
+                    });
+                console.log("Consegui buscar as janelas abertas!")
+
+            } else {
+                console.log("Houve um erro ao fazer o select das janelas abertas (frontend)!");
+
+                resposta.text().then((texto) => {
+                    console.error(texto);
+                });
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+        });
+
+    return false;
+}
+
+function gerarDivJanelas(idJanela, titulo, comando, matar) {
+
+    titulo = removerAposQuintoEspaco(titulo);
+
+    var janelasAbertas = document.getElementById("janelasAbertas");
+
+    janelasAbertas.innerHTML += `<div class="janelaAberta" id="janela${idJanela}">
+        <div class="bloquinhoEsquerdaJanelaAberta"></div>
+        <div class="nomeJanelaAberta">
+            <span>${titulo}</span>
+        </div>
+    </div>`;
+}
+
+function removerAposQuintoEspaco(titulo) {
+    // Dividir a string em partes usando o espaço como delimitador
+    let partes = titulo.split(" ");
+
+    // Pegar as primeiras cinco partes
+    let primeirasCincoPartes = partes.slice(0, 4);
+
+    // Juntar as partes de volta em uma string
+    return primeirasCincoPartes.join(" ");
+}
