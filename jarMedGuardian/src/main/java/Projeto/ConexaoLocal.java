@@ -6,7 +6,7 @@ public class ConexaoLocal extends Conexao {
         super("com.mysql.cj.jdbc.Driver",
                 "jdbc:mysql://localhost:3306/medguardian",
                 "root",
-                "@21102002Lu");
+                "272505");
     }
 }
 
