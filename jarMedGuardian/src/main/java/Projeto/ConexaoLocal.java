@@ -5,8 +5,8 @@ public class ConexaoLocal extends Conexao {
         // Configurações específicas para conexão local
         super("com.mysql.cj.jdbc.Driver",
                 "jdbc:mysql://localhost:3306/medguardian",
-                "aluno",
-                "aluno");
+                "root",
+                "@21102002Lu");
     }
 }
 

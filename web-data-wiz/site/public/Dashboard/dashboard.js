@@ -435,8 +435,6 @@ function removerAlertasAntigos(alertaMaquinaCadastrada) {
   });
 }
 
-
-
 function getColor(tipoAlerta) {
   return tipoAlerta === "Crítico" ? "#c03221" : "yellow";
 }
