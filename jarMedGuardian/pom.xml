@@ -85,7 +85,7 @@
             </descriptorRefs>
             <archive>
                 <manifest>
-                    <mainClass>Projeto.TesteProjeto</mainClass>
+                    <mainClass>Projeto.TesteProjetoArthur</mainClass>
                 </manifest>
             </archive>
         </configuration>
