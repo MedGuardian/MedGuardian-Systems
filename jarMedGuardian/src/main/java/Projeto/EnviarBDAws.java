@@ -84,7 +84,6 @@ public class EnviarBDAws {
         return computador.get(0).getIdComputador();
     }
 
-
     public Integer getFkEmpresaPorIdFuncionario(Integer idFuncionario){
         List<Funcionario> funcionario = con.query("SELECT * FROM funcionario WHERE idFuncionario = ?", new BeanPropertyRowMapper<>(Funcionario.class), idFuncionario);
 
