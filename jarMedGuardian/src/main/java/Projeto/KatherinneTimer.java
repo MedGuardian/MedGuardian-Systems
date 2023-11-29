@@ -118,7 +118,7 @@ public class KatherinneTimer {
                     System.out.println("Você não é um funcionário registrado na empresa linkada a essa máquina!");
                     System.out.println("Solicite para que alguém libere seu acesso, se for o caso.");
                     Log log = new Log();
-                    log.gravarErros();
+                    log.gravarLogErros("Você não é um funcionário registrado na empresa linkada a essa máquina!");
 
                 } else {
                     System.out.println("""
