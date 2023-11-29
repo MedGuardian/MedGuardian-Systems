@@ -17,7 +17,7 @@ public class KatherinneTimer {
 
     private TimerTask criarTask() {
         Looca looca = new Looca();
-        EnviarBD bancoDeDados = new EnviarBD();
+        EnviarBDLocal bancoDeDados = new EnviarBDLocal();
 
         Componente HD = new Componente(looca.getGrupoDeDiscos().getDiscos().get(0).getModelo());
         Componente RAM = new Componente("RAM");
@@ -55,7 +55,7 @@ public class KatherinneTimer {
             } else {
                 sistemaOperacional = "Linux";
             }
-            bancoDeDados.insertComputador(nomeComputador, bancoDeDados.getFkEmpresaPorIdFuncionario(idFuncionario), sistemaOperacional);
+            bancoDeDados.insertComputador(nomeComputador, sistemaOperacional);
             idComputador = bancoDeDados.selectIdComputador(nomeComputador);
             if(!looca.getGrupoDeDiscos().getVolumes().isEmpty()){
                 for(int i = 0; i < looca.getGrupoDeDiscos().getQuantidadeDeDiscos(); i++) {
