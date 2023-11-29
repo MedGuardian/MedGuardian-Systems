@@ -14,8 +14,8 @@ function configureTransporterAtendimento() {
     return transporterAtendimento;
 }
 
-process.env.AMBIENTE_PROCESSO = "desenvolvimento";
-//process.env.AMBIENTE_PROCESSO = "producao";
+//process.env.AMBIENTE_PROCESSO = "desenvolvimento";
+process.env.AMBIENTE_PROCESSO = "producao";
 
 var express = require("express");
 var cors = require("cors");
@@ -24,7 +24,7 @@ const axios = require('axios');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 
-var PORTA = process.env.AMBIENTE_PROCESSO == "desenvolvimento" ? 3333 : 8080;
+var PORTA = process.env.AMBIENTE_PROCESSO == "producao" ? 80 : 80;
 
 var app = express();
 app.use(bodyParser.json());

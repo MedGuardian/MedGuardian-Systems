@@ -2,11 +2,11 @@ function voltarIndex() {
     history.back()
 }
 
-function gerarDIVFuncionario(nome, email, cargo) {
+function gerarDIVFuncionario(idFuncionario, nome, email, cargo) {
     var div = document.getElementById('containerFuncionarios')
     div.innerHTML += `<div class="dadosFuncionarios3">
                 <div class="dadosFuncionarios2">
-                <input type="checkbox" class="checkboxFuncionario">
+                <input type="checkbox" class="checkboxFuncionario" value=${idFuncionario}>
                     <label>${nome}</label>
                     <label>${email}</label>
                     <label>${cargo}</label>
@@ -49,7 +49,7 @@ function selectFuncionarios() {
                         nome = nomeFuncionario;
                         email = emailFuncionario;
                         cargo = tipoAcesso;
-                        gerarDIVFuncionario(nome, email, cargo);
+                        gerarDIVFuncionario(idFuncionario, nome, email, cargo);
                     });
                 });
                 console.log("Deu certo seu select de funcionários!")
@@ -83,39 +83,40 @@ function excluirFuncionario() {
 
     checkboxFuncionario.forEach(function (checkbox) {
         if (checkbox.checked) {
-            console.log(id)
-            for (var i = 0; i < id.length; i++) {
-                listaFuncionariosExcluir.push(id[i]);
-            }
-            console.log(listaFuncionariosExcluir.length)
-            for (var j = 0; j < listaFuncionariosExcluir.length; j++) {
-                console.log(listaFuncionariosExcluir[j])
-                fetch("/usuarios/excluirFuncionario", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        idFuncionarioServer: listaFuncionariosExcluir[j]
-                    }),
-                })
-                    .then(function (resposta) {
-                        console.log("resposta: ", resposta);
-                        if (resposta.ok) {
-                            console.log(resposta);
-                            console.log("Deu certo seu exclud de funcionários!")
-                            location.reload()
-                        } else {
-                            throw "Houve um erro na exclusão de funcionários(FrontEnd)!";
-                        }
-                    })
-                    .catch(function (resposta) {
-                        console.log(`#ERRO: ${resposta}`);
-                    });
-            }
+            // Get the value attribute from the checked checkbox
+            var idFuncionario = checkbox.value;
+            // Push the idFuncionario into the array
+            listaFuncionariosExcluir.push(idFuncionario);
         }
     });
+
+    console.log(listaFuncionariosExcluir.length);
+
+    for (var j = 0; j < listaFuncionariosExcluir.length; j++) {
+        console.log(listaFuncionariosExcluir[j]);
+        fetch("/usuarios/excluirFuncionario", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idFuncionarioServer: listaFuncionariosExcluir[j]
+            }),
+        })
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+            if (resposta.ok) {
+                console.log(resposta);
+                console.log("Deu certo seu excluído de funcionários!");
+                location.reload();
+            } else {
+                throw "Houve um erro na exclusão de funcionários(FrontEnd)!";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+    }
+
     return false;
-
-
 }

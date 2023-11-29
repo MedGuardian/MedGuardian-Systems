@@ -9,7 +9,7 @@ import java.util.Base64;
 public class Slack {
     public static void enviarMensagemSlack(String mensagem) throws Exception {
         String jsonMensagem = """
-                {\r\n  \"channel\": \"C064MNJC96E\",\r\n  \"text\": \"%s\"\r\n}
+                {\r\n  \"channel\": \"C067SHE6HHT\",\r\n  \"text\": \"%s\"\r\n}
                 """.formatted(mensagem);
 
         OkHttpClient client = new OkHttpClient().newBuilder().build();
@@ -43,7 +43,7 @@ public class Slack {
                 .addFormDataPart("file",fileName,
                         RequestBody.create(MediaType.parse("application/octet-stream"), new File(pathFile)))
                 .addFormDataPart("initial_comment",mensagem)
-                .addFormDataPart("channels","C064MNJC96E")
+                .addFormDataPart("channels","C067SHE6HHT")
                 .build();
         Request request = new Request.Builder()
                 .url("https://slack.com/api/files.upload")
