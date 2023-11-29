@@ -1,12 +1,37 @@
 package Projeto;
-
 import com.github.britooo.looca.api.core.Looca;
-
 import java.util.*;
 
 public class KatherinneTimer {
-    public static void main(String[] args) {
+    private Timer timer;
+    private TimerTask timerTask;
 
+    public KatherinneTimer() {
+        timer = new Timer();
+        timerTask = criarTask();
+    }
+    public void zerarTimer() {
+        timer.cancel();
+        timer.purge();
+    }
+
+    public void resetar () {
+        timer = new Timer();
+        timerTask = criarTask();
+        executar();
+    }
+
+    public void executar () {
+        int delay = 0;
+        int interval = 3000;
+        timer.scheduleAtFixedRate(timerTask, delay, interval);
+    }
+
+
+
+
+
+    public TimerTask criarTask() {
         Looca looca = new Looca();
         EnviarBDAws bancoDeDadosAws = new EnviarBDAws();
 
@@ -123,7 +148,6 @@ public class KatherinneTimer {
 
             for(int i = 0; i < bancoDeDados.selectComponente().size(); i++){
                 Integer idComponente = bancoDeDados.selectComponente().get(i).getIdComponente();
-
                 switch (idComponente) {
                     case 1 -> {
                         bancoDeDados.insertEspecificacao(idComputadorLocal, idComponente, 100.);
@@ -174,11 +198,11 @@ public class KatherinneTimer {
                 Integer minutos = segundos / 60;
                 segundos = segundos % 60;
 
-                for(int i = 0; i < bancoDeDados.selectComponente().size(); i++){
+                for (int i = 0; i < bancoDeDados.selectComponente().size(); i++) {
                     Integer idComponente = bancoDeDados.selectComponente().get(i).getIdComponente();
 
                     switch (idComponente) {
-                        case  1-> {
+                        case 1 -> {
                             bancoDeDadosAws.insertRegistro(processadorEmUso, "UsoCpu", finalIdComputador * 4 - 3);
                             bancoDeDadosAws.insertRegistro(Double.valueOf(dias), "Dias", finalIdComputador * 4 - 3);
                             bancoDeDadosAws.insertRegistro(Double.valueOf(horas), "Horas", finalIdComputador * 4 - 3);
@@ -187,18 +211,18 @@ public class KatherinneTimer {
                             bancoDeDadosAws.insertRegistro(numeroProcessos, "QuantidadeProcessos", finalIdComputador * 4 - 3);
                             bancoDeDadosAws.insertRegistro(numeroThreads, "QuantidadeThreads", finalIdComputador * 4 - 3);
 
-                            if(processadorEmUso >= metrica.get(0).getGraveCPU()){
-                                bancoDeDadosAws.insertAlertas("Crítico",finalIdComputador * 4 - 3, finalIdComputador);
-                            } else if(processadorEmUso >= metrica.get(0).getMedioCPU()){
+                            if (processadorEmUso >= metrica.get(0).getGraveCPU()) {
+                                bancoDeDadosAws.insertAlertas("Crítico", finalIdComputador * 4 - 3, finalIdComputador);
+                            } else if (processadorEmUso >= metrica.get(0).getMedioCPU()) {
                                 bancoDeDadosAws.insertAlertas("Médio", finalIdComputador * 4 - 3, finalIdComputador);
                             }
                         }
                         case 2 -> {
                             bancoDeDadosAws.insertRegistro(memoriaRamEmUso, "Uso", finalIdComputador * 4 - 2);
 
-                            if(memoriaRamEmUso >= (looca.getMemoria().getTotal().doubleValue() / conversorGb) * (metrica.get(0).getGraveRam() / 100)){
+                            if (memoriaRamEmUso >= (looca.getMemoria().getTotal().doubleValue() / conversorGb) * (metrica.get(0).getGraveRam() / 100)) {
                                 bancoDeDadosAws.insertAlertas("Crítico", finalIdComputador * 4 - 2, finalIdComputador);
-                            } else if(memoriaRamEmUso >= (looca.getMemoria().getTotal().doubleValue() / conversorGb) * (metrica.get(0).getMedioRam() / 100)){
+                            } else if (memoriaRamEmUso >= (looca.getMemoria().getTotal().doubleValue() / conversorGb) * (metrica.get(0).getMedioRam() / 100)) {
                                 bancoDeDadosAws.insertAlertas("Médio", finalIdComputador * 4 - 2, finalIdComputador);
                             }
                         }
@@ -211,21 +235,19 @@ public class KatherinneTimer {
                             Double porcentagemGrave = metrica.get(0).getGraveDisco() / 100;
 
 
-                            if(discoDisponivel < (tamanhoDiscoGb - (tamanhoDiscoGb * porcentagemGrave))){
+                            if (discoDisponivel < (tamanhoDiscoGb - (tamanhoDiscoGb * porcentagemGrave))) {
                                 bancoDeDadosAws.insertAlertas("Crítico", finalIdComputador * 4 - 1, finalIdComputador);
-                            } else if(discoDisponivel < (tamanhoDiscoGb - (tamanhoDiscoGb * porcentagemMedio))){
+                            } else if (discoDisponivel < (tamanhoDiscoGb - (tamanhoDiscoGb * porcentagemMedio))) {
                                 bancoDeDadosAws.insertAlertas("Médio", finalIdComputador * 4 - 1, finalIdComputador);
                             }
                         }
                     }
                 }
 
-                for(int i = 0; i < bancoDeDados.selectComponente().size() - 1; i++){
-
+                for (int i = 0; i < bancoDeDados.selectComponente().size() - 1; i++) {
                     Integer idComponenteLocal = bancoDeDados.selectComponente().get(i).getIdComponente();
-
                     switch (idComponenteLocal) {
-                        case  1-> {
+                        case 1 -> {
                             bancoDeDados.insertRegistro(processadorEmUso, "UsoCpu", finalIdComputadorLocal * 4 - 3);
                             bancoDeDados.insertRegistro(Double.valueOf(dias), "Dias", finalIdComputadorLocal * 4 - 3);
                             bancoDeDados.insertRegistro(Double.valueOf(horas), "Horas", finalIdComputadorLocal * 4 - 3);
@@ -242,10 +264,10 @@ public class KatherinneTimer {
                             bancoDeDados.insertRegistro(swapDisponivel, "SwapDisponivel", finalIdComputadorLocal * 4 - 1);
                         }
                     }
-
-                }
+                };
             }
-        }, delay, interval);
 
+        }, delay, interval);
+        return null;
     }
 }
