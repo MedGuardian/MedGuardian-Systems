@@ -5,11 +5,11 @@ import com.github.britooo.looca.api.core.Looca;
 import java.util.*;
 
 public class TesteProjeto {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         Looca looca = new Looca();
         EnviarBDAws bancoDeDadosAws = new EnviarBDAws();
-
+        Slack slack = new Slack();
         Componente HD = new Componente(looca.getGrupoDeDiscos().getDiscos().get(0).getModelo());
         Componente RAM = new Componente("RAM");
         Componente PROCESSADOR = new Componente(looca.getProcessador().getNome());
@@ -92,14 +92,18 @@ public class TesteProjeto {
                     logado = false;
                     System.out.println("Você não é um funcionário registrado na empresa linkada a essa máquina!");
                     System.out.println("Solicite para que alguém libere seu acesso, se for o caso.");
-                Log log = new Log();
-                log.gravarErros();
+                    Log log = new Log();
+                    log.gravarLogErros("Você não é um funcionário registrado na empresa linkada a essa máquina!");
 
                 } else {
                     System.out.println("""
                 USUÁRIO %s AUTENTICADO COM SUCESSO!
                 INICIANDO A CAPTURA DE DADOS DA MÁQUINA...
                 """.formatted(bancoDeDadosAws.autenticarUsuario(email, senha).get(0).getNomeFuncionario()));
+                    slack.enviarMensagemSlack("""
+                            Bem vindo à MedGuardian %s!
+                            Receba todas suas notificações pelo nosso slack :tada
+                            """.formatted(bancoDeDadosAws.autenticarUsuario(email, senha).get(0).getNomeFuncionario()));
                 }
             }
         } while (!logado);
@@ -154,6 +158,12 @@ public class TesteProjeto {
 
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
+
+                try {
+                    slack.enviarMensagemSlack("Seus dados estão sendo monitorados, acompanhe-os pelo nosso JAR.");
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
                 System.out.println("DADOS SENDO MONITORADOS...");
 
                 Double discoDisponivel = looca.getGrupoDeDiscos().getVolumes().get(0).getDisponivel().doubleValue() / conversorGb;

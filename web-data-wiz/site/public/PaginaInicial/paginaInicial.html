@@ -5,14 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../cssGlobal/cssGlobal.css">
-
-
     <link rel="stylesheet" href="paginaInicial.css">
     <link rel="shortcut icon" href="../assets/images/LOGO.png" type="image/x-icon">
     <title>Home | MedGuardian</title>
 </head>
 
-<body onload="atualizarGrafico(),validarSessao()">
+<body onload="atualizarGrafico(), validarSessao()">
     <div class="header">
         <div class="container">
 
@@ -21,7 +19,7 @@
             </div>
             <div class="conteudoHeader">
                 <div class="botaoMenu">
-                    <span onclick="abrirMenuFlutuante()">
+                    <span onclick="abrirMenuFlutuante(), atualizarMenuFlutuante()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                             <g fill="none">
                                 <path
@@ -32,6 +30,7 @@
                         </svg>
                         <span>Menu</span>
                 </div>
+            
             </div>
             <div class="menuFlutuante" id="menuFlutuante" style="display: none;">
                 <div class="conteudoMenuFlutuante">
@@ -41,11 +40,11 @@
                         </div>
                         <div class="direitaHeaderMenuFlutuante">
                             <div class="nomeCargoRow">
-                                <span id="nomeMenuFlutuante">Lucas</span>
-                                <span id="cargoMenuFlutuante">(Admin)</span>
+                                <span id="nomeMenuFlutuante">Teste</span>
+                                <span id="cargoMenuFlutuante">Teste</span>
                             </div>
                             <div class="emailRow">
-                                <span id="emailMenuFlutuante">lucas.flima@sptech.school</span>
+                                <span id="emailMenuFlutuante">teste@teste.com</span>
                             </div>
                         </div>
                     </div>
@@ -54,7 +53,7 @@
                         <span onclick="abrirGerenciamentoMenuFlutuante()">Gerenciamento</span>
                         <span onclick="abrirCadastrarFuncionario()" id="spanCadastrarFuncionario">Cadastrar
                             funcionário</span>
-                        <span onclick="abrirAlterarFuncionario()"> Alterar Funcionários</span>
+                        <span onclick="abrirAlterarFuncionario()"> Excluir Funcionários</span>
                         <div class="linhaMenuFlutuante"></div>
                         <span onclick="fazerLogout()">Fazer Logout</span>
                     </div>
@@ -435,9 +434,9 @@
     }
 
     function abrirAlterarFuncionario() {
-        window.location.href = './Dashboard/Funcionarios/funcionarios.html'
+        window.location.href = '../Dashboard/Funcionarios/funcionarios.html'
     }
 </script>
-<script src="../js/funcoes.js"></script>
 <script src="../js/sessao.js"></script>
+<script src="../js/funcoes.js"></script>
 <script src="paginaInicial.js"></script>

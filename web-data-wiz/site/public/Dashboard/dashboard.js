@@ -5,14 +5,14 @@ var totalComponenteCPU = 0;
 var totalComponenteDisco = 0;
 
 const spanUsuarioDashboardGeral = document.getElementById("spanUsuarioDashboardGeral");
-if(sessionStorage.idFuncionario == null){
+if (sessionStorage.idFuncionario == null) {
   spanUsuarioDashboardGeral.innerHTML = sessionStorage.razaoSocial
 } else {
   spanUsuarioDashboardGeral.innerHTML = sessionStorage.nomeFuncionario
 }
 
 function voltarIndex() {
-  window.location.href = '../index.html'
+  window.location.href = '../PaginaInicial/paginainicial.html'
 }
 
 function sairDaDashboard() {
@@ -297,13 +297,17 @@ function abrirDashboardEspecifica(idComputador) {
   window.location.href = "DashboardEspecifica/dashboardespecifica.html?parametro=" + idComputador;
 }
 
+var fkComputadorAlerta = [];
+var tipoAlertas = [];
+var fkComponenteAlerta = [];
+
 function selectAlertas() {
   var idEmpresa;
 
   if (sessionStorage.idEmpresa == null) {
-    idEmpresa = sessionStorage.fkEmpresa
+    idEmpresa = sessionStorage.fkEmpresa;
   } else {
-    idEmpresa = sessionStorage.idEmpresa
+    idEmpresa = sessionStorage.idEmpresa;
   }
 
   var dataHoraAtual = new Date();
@@ -341,29 +345,33 @@ function selectAlertas() {
       dataHoraAtualServer: formatoDataHoraAtual,
       dataHoraReduzidaServer: formatoDataHoraReduzida,
       dataHoraMais3HorasReduzidaServer: formatoDataHoraMais3HorasReduzida,
-      dataHoraMais3HorasServer: formatoDataHoraMais3Horas
+      dataHoraMais3HorasServer: formatoDataHoraMais3Horas,
     }),
-  }).then(function (resposta) {
-    console.log("Estou buscando dados para atualizar a dashboard geral!");
-
-    if (resposta.ok) {
-      console.log(resposta);
-      resposta.json().then((resposta) => {
-        console.log(resposta)
-        resposta.forEach((alerta) => {
-          const { fkComputador, fkEspecificacao, tipoAlerta } = alerta;
-          validarAlertasCores(fkComputador, fkEspecificacao, tipoAlerta);
-        });
-      });
-      console.log("Consegui retornar os dados para validar os alertas das máquinas!")
-    } else {
-      console.log("Houve um erro ao buscar os dados para validar os alertas das máquinas!");
-
-      resposta.text().then((texto) => {
-        console.error(texto);
-      });
-    }
   })
+    .then(function (resposta) {
+      console.log("Estou buscando dados para atualizar a dashboard geral!");
+
+      if (resposta.ok) {
+        console.log(resposta);
+        resposta.json().then((resposta) => {
+          console.log(resposta);
+          resposta.forEach((alerta) => {
+            const { fkComputador, fkEspecificacao, tipoAlerta } = alerta;
+            fkComputadorAlerta.push(fkComputador);
+            fkComponenteAlerta.push(fkEspecificacao);
+            tipoAlertas.push(tipoAlerta);
+          });
+        });
+        console.log("Consegui retornar os dados para validar os alertas das máquinas!");
+        validarAlertasCores(fkComputadorAlerta, fkComponenteAlerta, tipoAlertas);
+      } else {
+        console.log("Houve um erro ao buscar os dados para validar os alertas das máquinas!");
+
+        resposta.text().then((texto) => {
+          console.error(texto);
+        });
+      }
+    })
     .catch(function (erro) {
       console.log(erro);
     });
@@ -372,80 +380,148 @@ function selectAlertas() {
 }
 
 function validarAlertasCores(fkComputador, fkEspecificacao, tipoAlerta) {
+  for (var i = 0; i < idsComputadores.length; i++) {
+    const divMaquina = document.getElementById(`maquina${idsComputadores[i]}`);
+    const alertaMaquinaCadastrada = document.getElementById(`alertaMaquinaCadastrada${idsComputadores[i]}`);
 
-  const alertaMaquinaCadastrada = document.getElementById(`alertaMaquinaCadastrada${fkComputador}`);
+    const alertas = { critico: new Set(), medio: new Set() };
 
-  for (i = 0; i < idsComputadores.length; i++) {
-    const divMaquina = document.getElementById(`maquina${idsComputadores[i]}`)
-    if (idsComputadores[i] != fkComputador) {
-      divMaquina.style.backgroundColor = "#91e384"
-    } else {
+    for (var j = 0; j < fkComputador.length; j++) {
+      if (idsComputadores[i] === fkComputador[j]) {
+        var componente;
 
-        if (fkEspecificacao == (fkComputador * 4 - 3)) {
-          if (tipoAlerta == "Crítico") {
-            removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
-            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "CPU", "#fc8374", divMaquina, alertaMaquinaCadastrada)
-          } else {
-            removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
-            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "CPU", "#ee9663", divMaquina, alertaMaquinaCadastrada)
-          }
-        } else if (fkEspecificacao == (fkComputador * 4 - 2)) {
-          if (tipoAlerta == "Crítico") {
-            removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
-            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "RAM", "#fc8374", divMaquina, alertaMaquinaCadastrada)
-          } else {
-            removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
-            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "RAM", "#ee9663", divMaquina, alertaMaquinaCadastrada)
-          }
-        } else if (fkEspecificacao == (fkComputador * 4 - 1)){
-          if (tipoAlerta == "Crítico") {
-            removerDivAlerta(fkComputador, fkEspecificacao, "Médio")
-            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "#c03221", "DISCO", "#fc8374", divMaquina, alertaMaquinaCadastrada)
-          } else {
-            removerDivAlerta(fkComputador, fkEspecificacao, "Crítico")
-            gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, "yellow", "DISCO", "#ee9663", divMaquina, alertaMaquinaCadastrada)
-          }
+        if (fkEspecificacao[j] === fkComputador[j] * 4 - 3) {
+          componente = "CPU";
+        } else if (fkEspecificacao[j] === fkComputador[j] * 4 - 2) {
+          componente = "RAM";
+        } else {
+          componente = "DISCO";
         }
 
-    }
-  }
+        
+        gerarDivAlerta(idsComputadores[i], fkEspecificacao[j], tipoAlerta[j], getColor(tipoAlerta[j]), componente, getBackgroundColor(tipoAlerta[j]), divMaquina, alertaMaquinaCadastrada);
+        console.log(`Alerta ${tipoAlerta[j]} na Máquina ${idsComputadores[i]}: ${componente}`);
 
-  function gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, corIcone, componente, corDiv, div, alertaMaquinaCadastrada) {
-
-    const divExistente = document.getElementById(`alerta_${tipoAlerta}_${fkComputador}_${fkEspecificacao}`)
-
-    if (divExistente) {
-      console.log("Já tem o alerta do tipo: " + tipoAlerta + " do componente: " + componente);
-      return
+        const alertaSet = tipoAlerta[j] === "Crítico" ? alertas.critico : alertas.medio;
+        alertaSet.add(`${componente}_${fkEspecificacao[j]}`);
+      }
     }
 
-    alertaMaquinaCadastrada.style.marginTop = "1%"
+    // Exibe os alertas
+    if (alertas.critico.size > 0) {
+      console.log(`Problemas críticos na máquina ${idsComputadores[i]}:\n${Array.from(alertas.critico).join("\n")}`);
+    }
 
-    alertaMaquinaCadastrada.innerHTML += `<div class="alertas" id="alerta_${tipoAlerta}_${fkComputador}_${fkEspecificacao}" onclick="abrirDashboardEspecifica(${fkComputador})">
+    if (alertas.medio.size > 0) {
+      console.log(`Problemas médios na máquina ${idsComputadores[i]}:\n${Array.from(alertas.medio).join("\n")}`);
+    }
 
-          <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
-            fill="${corIcone}" />
-        </svg>
-        <span>${componente}</span>
-
-      </div>
-      `;
-
-    div.style.backgroundColor = `${corDiv}`;
+    // Define a cor de fundo com base nos alertas
+    if (alertas.critico.size > 0) {
+      divMaquina.style.backgroundColor = "#fc8374"; // Cor para máquinas com alertas críticos
+    } else if (alertas.medio.size > 0) {
+      divMaquina.style.backgroundColor = "#ee9663"; // Cor para máquinas com alertas médios
+    } else {
+      divMaquina.style.backgroundColor = "#91e384"; // Cor para máquinas sem alertas
+    }
   }
 }
 
-function removerDivAlerta(fkComputador, fkEspecificacao, tipoAlerta) {
+function removerAlertasAntigos(alertaMaquinaCadastrada) {
+  const alertasAntigos = alertaMaquinaCadastrada.querySelectorAll(".alertas");
 
-  var divRemover = document.getElementById(`alerta_${tipoAlerta}_${fkComputador}_${fkEspecificacao}`)
+  alertasAntigos.forEach((alertaAntigo) => {
+    alertaAntigo.remove();
+  });
+}
 
-  if (divRemover) {
-    divRemover.remove();
+
+
+function getColor(tipoAlerta) {
+  return tipoAlerta === "Crítico" ? "#c03221" : "yellow";
+}
+
+// Função para obter a cor de fundo com base no tipo de alerta
+function getBackgroundColor(tipoAlerta) {
+  return tipoAlerta === "Crítico" ? "#fc8374" : "#ee9663";
+}
+
+// Função para obter a cor de fundo da máquina com base nos alertas gerados
+function getBackgroundColorForMachine(alertasGerados, idMaquina) {
+  const corCritico = "#fc8374";
+  const corMedio = "#ee9663";
+
+  const temAlertaCritico = alertasGerados[`${idMaquina}_Crítico`];
+  const temAlertaMedio = alertasGerados[`${idMaquina}_Médio`];
+
+  if (temAlertaCritico && temAlertaMedio) {
+    return corCritico;
+  } else if (temAlertaCritico) {
+    return corCritico;
+  } else if (temAlertaMedio) {
+    return corMedio;
+  } else {
+    return "#91e384";
   }
 }
 
+function gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, corIcone, componente, corDiv, div, alertaMaquinaCadastrada) {
+  const divExistente = document.getElementById(`alerta_${tipoAlerta}_${fkComputador}_${fkEspecificacao}`);
+
+const tipoOpuesto = tipoAlerta === "Crítico" ? "Médio" : "Crítico";
+
+const divExisteOutroTipo = document.getElementById(`alerta_${tipoOpuesto}_${fkComputador}_${fkEspecificacao}`);
+
+  if (divExistente) {
+    console.log(`Já existe um alerta do tipo ${tipoAlerta} para o componente ${componente}`);
+    return;
+  } else if(divExisteOutroTipo){
+    divExisteOutroTipo.remove();
+  }
+
+  alertaMaquinaCadastrada.style.marginTop = "1%";
+
+  alertaMaquinaCadastrada.innerHTML += `<div class="alertas" id="alerta_${tipoAlerta}_${fkComputador}_${fkEspecificacao}" onclick="abrirDashboardEspecifica(${fkComputador})">
+    <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z" fill="${corIcone}" />
+    </svg>
+    <span>${componente}</span>
+  </div>`;
+
+  div.style.backgroundColor = `${corDiv}`;
+}
+
+
+
+
+  function personalizado() {
+    var modal = document.getElementById('data-input');
+    modal.innerHTML = ' ';
+    modal.innerHTML = ` <input type="text" name="datetimes" id="litepicker"/>`;
+    let input = document.getElementById('litepicker');
+    let now = new Date();
+    let picker = new Litepicker({
+      element: input,
+      format: 'YYYY-MM-DD',
+      singleMode: false,
+      numberOfMonths: 2,
+      numberOfColumns: 2,
+      showTooltip: true,
+      scrollToDate: true,
+      startDate: new Date(now).setDate(now.getDate() - 1),
+      endDate: new Date(now),
+      setup: function (picker) {
+        picker.on('selected', function (date1, date2) {
+          let formattedDate1 = date1.format('YYYY-MM-DD');
+          let formattedDate2 = date2.format('YYYY-MM-DD');
+  
+          console.log(`${formattedDate1}, ${formattedDate2}`);
+          fazerRequisicao(formattedDate1, formattedDate2);
+        });
+      }
+    });
+  }
+  
 // Função para verificar se um radio button está selecionado
 function verificarRadio() {
   var radios = document.getElementsByName('filtroDashboard');
@@ -461,21 +537,58 @@ function verificarRadio() {
   console.log('Nenhum radio button está selecionado.');
 }
 
-function selectFiltro(i){
-var divsMaquinasCadastradas = document.getElementsByClassName('maquinasCadastradas');
+function selectFiltro(i) {
+  var divsMaquinasCadastradas = document.getElementsByClassName('maquinasCadastradas');
 
-var divsArray = Array.from(divsMaquinasCadastradas);
+  var divsArray = Array.from(divsMaquinasCadastradas);
 
-divsArray.forEach(function(div) {
+  divsArray.forEach(function (div) {
     div.remove();
-});
+  });
 
   selectComputadores(i);
 }
 
 
 
+  function fazerRequisicao(data1, data2){
+    var data = [];
+    sessionStorage.setItem('Personalizado', data);
 
+    fetch("/usuarios/selectIntervaloData", {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            date1Server: data1,
+            date2Server: data2,
+        })
+    }).then(function (resposta) {
+        console.log("ESTOU NO THEN DO intervalo()!")
+        if (resposta.ok) {
+            console.log("Estou dentro do IF!")
 
+            console.log(resposta);
+            resposta.json().then(json => {
+                console.log(json);
+                console.log(JSON.stringify(json));
+                data = json.data
+                alert("Fiz o select das Datas! Datas: " + data)
+                return data;
+            });
 
+        } else {
+            alert("Erro ao captar os dados!")
 
+            resposta.text().then(texto => {
+                console.error(texto);
+            });
+        }
+
+    }).catch(function (erro) {
+        console.log(erro);
+    })
+
+    return false;
+  }

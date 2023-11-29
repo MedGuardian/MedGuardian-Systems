@@ -59,6 +59,26 @@ router.post("/selectFuncionarios", function (req, res) {
     usuarioController.selectFuncionarios(req, res);
 });
 
+router.post("/selectDataDia", function (req, res) {
+    usuarioController.selectDataDia(req, res);
+})
+
+router.get("/selectDataSemana", function (req, res) {
+    usuarioController.selectDataSemana(req, res);
+})
+
+router.post("/selectDataMes", function (req, res) {
+    usuarioController.selectDataMes(req, res);
+})
+
+router.post("/selectIntervaloData", function (req, res) {
+    usuarioController.selectIntervaloData(req, res);
+})
+
+router.post("/atualizarDatas", function (req, res) {
+    usuarioController.atualizarDatas(req, res);
+});
+
 router.post("/selectComputadores", function (req, res) {
     usuarioController.selectComputadores(req, res);
 });
@@ -81,6 +101,14 @@ router.post("/selectAlertas", function (req, res) {
 
 router.post("/selectMetricas", function (req, res) {
     usuarioController.selectMetricas(req, res);
+});
+
+router.get(`/selectJanelasAbertas/:fkComputadorServer`, function (req, res) {
+    usuarioController.selectJanelasAbertas(req, res);
+});
+
+router.post(`/fecharJanela`, function (req, res) {
+    usuarioController.fecharJanela(req, res);
 });
 
 

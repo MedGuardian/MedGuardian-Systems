@@ -7,9 +7,10 @@ var fkComputador = parseInt(getQueryParam("parametro"), 10)
 
 selectTotalComponentes();
 selectMetricas();
+validarMostrarJanelas();
 
 const spanUsuarioDashEspecifica = document.getElementById("spanUsuarioDashEspecifica");
-if(sessionStorage.idFuncionario == null){
+if (sessionStorage.idFuncionario == null) {
     spanUsuarioDashEspecifica.innerHTML = sessionStorage.razaoSocial
 } else {
     spanUsuarioDashEspecifica.innerHTML = sessionStorage.nomeFuncionario
@@ -85,6 +86,12 @@ function atualizarValoresCardsLaterais() {
 }
 
 function atualizarCoresCardsLaterais() {
+    console.log(metricaGraveCpu)
+    console.log(metricaGraveDisco)
+    console.log(metricaGraveRam)
+    console.log(valoresCards[0])
+    console.log(valoresCards[1])
+    console.log(valoresCards[2])
 
     if (valoresCards[0] > metricaGraveCpu) {
         divValorBoxLateralCpu.style.backgroundColor = 'rgba(255,0,0,.5)'
@@ -94,17 +101,19 @@ function atualizarCoresCardsLaterais() {
         divValorBoxLateralCpu.style.backgroundColor = '#718672'
     }
 
-    if (valoresCards[1] > metricaGraveDisco) {
+    var porcentagemUsoDisco = (valoresCards[1] * 100 / totalComponenteDisco)
+
+    if ((100 - porcentagemUsoDisco) > metricaGraveDisco) {
         divValorBoxLateralDisco.style.backgroundColor = 'rgba(255,0,0,.5)'
-    } else if (valoresCards[1] > metricaMedioDisco) {
+    } else if ((100 - porcentagemUsoDisco) > metricaMedioDisco) {
         divValorBoxLateralDisco.style.backgroundColor = 'yellow'
     } else {
         divValorBoxLateralDisco.style.backgroundColor = '#718672'
     }
 
-    var porcentagemUsoRam = (valoresCards[2] * 100) / 7.8;
+    var porcentagemUsoRam = (valoresCards[2] * 100) / totalComponenteRam;
 
-    if (porcentagemUsoRam > metricagraveRam) {
+    if (porcentagemUsoRam > metricaGraveRam) {
         divValorBoxLateralRam.style.backgroundColor = 'rgba(255,0,0,.5)'
     } else if (porcentagemUsoRam > metricaMedioRam) {
         divValorBoxLateralRam.style.backgroundColor = 'yellow'
@@ -118,62 +127,62 @@ function atualizarIndicadores() {
     fetch("/usuarios/atualizarIndicadores", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fkComputadorServer: fkComputador
+            fkComputadorServer: fkComputador
         })
-      }).then(function (resposta) {
-            console.log("Estou buscando dados para atualizar os indicadores!");
+    }).then(function (resposta) {
+        console.log("Estou buscando dados para atualizar os indicadores!");
 
-            if (resposta.ok) {
-                console.log(resposta);
-                resposta.json().then((resposta) => {
-                    resposta.reverse();
-                    resposta.forEach((especificacao) => {
-                        especificacao.forEach((objeto) => {
-                            const { fkEspecificacao, tipoCaptura, registro } = objeto;
+        if (resposta.ok) {
+            console.log(resposta);
+            resposta.json().then((resposta) => {
+                resposta.reverse();
+                resposta.forEach((especificacao) => {
+                    especificacao.forEach((objeto) => {
+                        const { fkEspecificacao, tipoCaptura, registro } = objeto;
 
-                            if (fkEspecificacao == (fkComputador * 4 - 3)) {
-                                if (tipoCaptura == "UsoCpu") {
-                                    valoresCards[0] = registro;
-                                } else if (tipoCaptura == "QuantidadeThreads") {
-                                    threads = registro;
-                                } else if (tipoCaptura == "QuantidadeProcessos") {
-                                    processos = registro;
-                                } else {
-                                    if (tipoCaptura == "Dias") {
-                                        tempo_atividade_dias = registro;
-                                    } else if (tipoCaptura == "Horas") {
-                                        tempo_atividade_horas = registro;
-                                    } else if (tipoCaptura == "Minutos") {
-                                        tempo_atividade_minutos = registro;
-                                    } else if (tipoCaptura == "Segundos") {
-                                        tempo_atividade_segundos = registro;
-                                    }
-                                }
-                            } else if (fkEspecificacao == (fkComputador * 4 - 2)) {
-                                valoresCards[2] = registro;
-                            } else if (fkEspecificacao == (fkComputador * 4 - 1)) {
-                                if (tipoCaptura == "Uso") {
-                                    valoresCards[1] = registro;
+                        if (fkEspecificacao == (fkComputador * 4 - 3)) {
+                            if (tipoCaptura == "UsoCpu") {
+                                valoresCards[0] = registro;
+                            } else if (tipoCaptura == "QuantidadeThreads") {
+                                threads = registro;
+                            } else if (tipoCaptura == "QuantidadeProcessos") {
+                                processos = registro;
+                            } else {
+                                if (tipoCaptura == "Dias") {
+                                    tempo_atividade_dias = registro;
+                                } else if (tipoCaptura == "Horas") {
+                                    tempo_atividade_horas = registro;
+                                } else if (tipoCaptura == "Minutos") {
+                                    tempo_atividade_minutos = registro;
+                                } else if (tipoCaptura == "Segundos") {
+                                    tempo_atividade_segundos = registro;
                                 }
                             }
-                        });
+                        } else if (fkEspecificacao == (fkComputador * 4 - 2)) {
+                            valoresCards[2] = registro;
+                        } else if (fkEspecificacao == (fkComputador * 4 - 1)) {
+                            if (tipoCaptura == "Uso") {
+                                valoresCards[1] = registro;
+                            }
+                        }
                     });
                 });
-                console.log("Consegui retornar os dados para atualizar os indicadores")
-                atualizarSpanIndicadores();
-                atualizarCoresCardsLaterais();
-                atualizarValoresCardsLaterais();
-            } else {
-                console.log("Houve um erro ao buscar os dados para atualizar os indicadores!");
+            });
+            console.log("Consegui retornar os dados para atualizar os indicadores")
+            atualizarSpanIndicadores();
+            atualizarCoresCardsLaterais();
+            atualizarValoresCardsLaterais();
+        } else {
+            console.log("Houve um erro ao buscar os dados para atualizar os indicadores!");
 
-                resposta.text().then((texto) => {
-                    console.error(texto);
-                });
-            }
-        })
+            resposta.text().then((texto) => {
+                console.error(texto);
+            });
+        }
+    })
         .catch(function (erro) {
             console.log(erro);
         });
@@ -290,77 +299,77 @@ function atualizarGrafico() {
     fetch("/usuarios/atualizarGrafico", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fkComputadorServer: fkComputador
+            fkComputadorServer: fkComputador
         })
-      }).then(function (resposta) {
-            console.log("Estou buscando dados para popular o gráfico!");
+    }).then(function (resposta) {
+        console.log("Estou buscando dados para popular o gráfico!");
 
-            if (resposta.ok) {
-                console.log(resposta);
-                resposta.json().then((resposta) => {
-                    resposta.reverse();
-                    resposta.forEach((especificacao) => {
-                        especificacao.forEach((objeto) => {
-                            const { fkEspecificacao, tipoCaptura, dataHoraRegistro, registro } = objeto;
+        if (resposta.ok) {
+            console.log(resposta);
+            resposta.json().then((resposta) => {
+                resposta.reverse();
+                resposta.forEach((especificacao) => {
+                    especificacao.forEach((objeto) => {
+                        const { fkEspecificacao, tipoCaptura, dataHoraRegistro, registro } = objeto;
 
-                            const hora = dataHoraRegistro.substring(11, 13);    // Extrai a hora da dataHora
-                            const minuto = dataHoraRegistro.substring(14, 16);  // Extrai o minuto da dataHora
-                            const segundo = dataHoraRegistro.substring(17, 19); // Extrai o segundo da dataHora
+                        const hora = dataHoraRegistro.substring(11, 13);    // Extrai a hora da dataHora
+                        const minuto = dataHoraRegistro.substring(14, 16);  // Extrai o minuto da dataHora
+                        const segundo = dataHoraRegistro.substring(17, 19); // Extrai o segundo da dataHora
 
-                            if (fkEspecificacao == (fkComputador * 4 - 3)) {
-                                if (uso_cpu.length >= 6) {
-                                    uso_cpu.shift();
-                                }
-                                uso_cpu.push(registro);
-                                if (dataHoraLabelsCPU.length >= 6) {
-                                    dataHoraLabelsCPU.shift()
-                                }
-                                dataHoraLabelsCPU.push(`${hora}:${minuto}:${segundo}`)
-                            } else if (fkEspecificacao == (fkComputador * 4 - 2)) {
-                                if (uso_ram.length >= 6) {
-                                    uso_ram.shift();
-                                }
-                                var porcentagemUsoRam = registro * 100 / totalComponenteRam;
-                                uso_ram.push(porcentagemUsoRam);
-
-                                if (dataHoraLabelsRAM.length >= 6) {
-                                    dataHoraLabelsRAM.shift()
-                                }
-                                dataHoraLabelsRAM.push(`${hora}:${minuto}:${segundo}`)
-                            } else if (fkEspecificacao == (fkComputador * 4 - 1)) {
-
-                                if (tipoCaptura == "SwapDisponivel") {
-                                    swapDisponivel = registro;
-                                } else {
-                                    valoresCards[1] = registro;
-                                    if (uso_disco.length >= 6) {
-                                        uso_disco.shift();
-                                    }
-                                    var porcentagemUsoDisco = 100 - (registro * 100 / totalComponenteDisco);
-                                    uso_disco.push(porcentagemUsoDisco)
-                                    if (dataHoraLabelsDisco.length >= 6) {
-                                        dataHoraLabelsDisco.shift()
-                                    }
-                                    dataHoraLabelsDisco.push(`${hora}:${minuto}:${segundo}`)
-                                }
+                        if (fkEspecificacao == (fkComputador * 4 - 3)) {
+                            if (uso_cpu.length >= 6) {
+                                uso_cpu.shift();
                             }
-                        });
+                            uso_cpu.push(registro);
+                            if (dataHoraLabelsCPU.length >= 6) {
+                                dataHoraLabelsCPU.shift()
+                            }
+                            dataHoraLabelsCPU.push(`${hora}:${minuto}:${segundo}`)
+                        } else if (fkEspecificacao == (fkComputador * 4 - 2)) {
+                            if (uso_ram.length >= 6) {
+                                uso_ram.shift();
+                            }
+                            var porcentagemUsoRam = registro * 100 / totalComponenteRam;
+                            uso_ram.push(porcentagemUsoRam);
+
+                            if (dataHoraLabelsRAM.length >= 6) {
+                                dataHoraLabelsRAM.shift()
+                            }
+                            dataHoraLabelsRAM.push(`${hora}:${minuto}:${segundo}`)
+                        } else if (fkEspecificacao == (fkComputador * 4 - 1)) {
+
+                            if (tipoCaptura == "SwapDisponivel") {
+                                swapDisponivel = registro;
+                            } else {
+                                valoresCards[1] = registro;
+                                if (uso_disco.length >= 6) {
+                                    uso_disco.shift();
+                                }
+                                var porcentagemUsoDisco = 100 - (registro * 100 / totalComponenteDisco);
+                                uso_disco.push(porcentagemUsoDisco)
+                                if (dataHoraLabelsDisco.length >= 6) {
+                                    dataHoraLabelsDisco.shift()
+                                }
+                                dataHoraLabelsDisco.push(`${hora}:${minuto}:${segundo}`)
+                            }
+                        }
                     });
-                    plotarGrafico(valorN);
                 });
+                plotarGrafico(valorN);
+            });
 
-                console.log("Consegui retornar os dados para atualizar o gráfico!")
-            } else {
-                console.log("Houve um erro ao buscar os dados para popular o gráfico!");
+            console.log("Consegui retornar os dados para atualizar o gráfico!")
+        } else {
+            console.log("Houve um erro ao buscar os dados para popular o gráfico!");
 
-                resposta.text().then((texto) => {
-                    console.error(texto);
-                });
-            }
-        })
+            resposta.text().then((texto) => {
+                console.error(texto);
+            });
+        }
+    })
         .catch(function (erro) {
             console.log(erro);
         });
@@ -379,42 +388,42 @@ function selectTotalComponentes() {
     fetch("/usuarios/selectTotalComponentes", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fkComputadorServer: fkComputador
+            fkComputadorServer: fkComputador
         })
-      }).then(function (resposta) {
-            console.log("Estou buscando dados referente a capacidade total dos componentes!");
+    }).then(function (resposta) {
+        console.log("Estou buscando dados referente a capacidade total dos componentes!");
 
-            if (resposta.ok) {
-                console.log(resposta);
-                resposta.json().then((resposta) => {
-                    resposta.forEach((especificacao) => {
-                        especificacao.forEach((objeto) => {
-                            const { idEspecificacao, totalComponente } = objeto;
+        if (resposta.ok) {
+            console.log(resposta);
+            resposta.json().then((resposta) => {
+                resposta.forEach((especificacao) => {
+                    especificacao.forEach((objeto) => {
+                        const { idEspecificacao, totalComponente } = objeto;
 
-                            if (idEspecificacao == (fkComputador * 4 - 3)) {
-                                totalComponenteCPU = totalComponente;
-                            } else if (idEspecificacao == (fkComputador * 4 - 2)) {
-                                totalComponenteRam = totalComponente;
-                            } else if (idEspecificacao == (fkComputador * 4 - 1)) {
-                                totalComponenteDisco = totalComponente;
-                            }
-                        });
+                        if (idEspecificacao == (fkComputador * 4 - 3)) {
+                            totalComponenteCPU = totalComponente;
+                        } else if (idEspecificacao == (fkComputador * 4 - 2)) {
+                            totalComponenteRam = totalComponente;
+                        } else if (idEspecificacao == (fkComputador * 4 - 1)) {
+                            totalComponenteDisco = totalComponente;
+                        }
                     });
-
                 });
-                console.log("Consegui buscar o total dos componentes!")
 
-            } else {
-                console.log("Houve um erro ao fazer o select do total dos componentes!");
+            });
+            console.log("Consegui buscar o total dos componentes!")
 
-                resposta.text().then((texto) => {
-                    console.error(texto);
-                });
-            }
-        })
+        } else {
+            console.log("Houve um erro ao fazer o select do total dos componentes!");
+
+            resposta.text().then((texto) => {
+                console.error(texto);
+            });
+        }
+    })
         .catch(function (erro) {
             console.log(erro);
         });
@@ -423,6 +432,7 @@ function selectTotalComponentes() {
 }
 
 var valorN = 1;
+
 
 
 function unchekedTodos() {
@@ -442,11 +452,11 @@ function escolherGrafico(n, container) {
 function plotarGrafico(n) {
     atualizarComponenteEscolhido(n)
 
-    if(!funcaoAlterarEscalaMinAtivada){
+    if (!funcaoAlterarEscalaMinAtivada) {
         config_graficoDesempenho.options.scales.y.min = 0;
     }
 
-    if(!funcaoAlterarEscalaMaxAtivada){
+    if (!funcaoAlterarEscalaMaxAtivada) {
         config_graficoDesempenho.options.scales.y.max = 100;
     }
 
@@ -454,24 +464,24 @@ function plotarGrafico(n) {
         case 1:
             uso_cpu.reverse();
             dataHoraLabelsCPU.reverse();
-            data_graficoDesempenho.datasets[0].data = uso_cpu.slice(0,6);
+            data_graficoDesempenho.datasets[0].data = uso_cpu.slice(0, 6);
             config_graficoDesempenho.options.plugins.title.text = 'Desempenho CPU'
-            data_graficoDesempenho.labels = dataHoraLabelsCPU.slice(0,6);
+            data_graficoDesempenho.labels = dataHoraLabelsCPU.slice(0, 6);
             break;
         case 2:
             uso_disco.reverse();
             dataHoraLabelsDisco.reverse();
-            data_graficoDesempenho.datasets[0].data = uso_disco.slice(0,6);
+            data_graficoDesempenho.datasets[0].data = uso_disco.slice(0, 6);
             config_graficoDesempenho.options.plugins.title.text = 'Uso do disco'
-            data_graficoDesempenho.labels = dataHoraLabelsDisco.slice(0,6);
+            data_graficoDesempenho.labels = dataHoraLabelsDisco.slice(0, 6);
             break;
         case 3:
             uso_ram.reverse();
             dataHoraLabelsRAM.reverse();
-            data_graficoDesempenho.datasets[0].data = uso_ram.slice(0,6);
+            data_graficoDesempenho.datasets[0].data = uso_ram.slice(0, 6);
             config_graficoDesempenho.options.plugins.title.text = 'Uso da RAM';
             config_graficoDesempenho.options.scales.y.max = 100;
-            data_graficoDesempenho.labels = dataHoraLabelsRAM.slice(0,6);
+            data_graficoDesempenho.labels = dataHoraLabelsRAM.slice(0, 6);
             break;
     }
     graficoEmUso.update();
@@ -480,17 +490,17 @@ function plotarGrafico(n) {
 var funcaoAlterarEscalaMinAtivada = false;
 var funcaoAlterarEscalaMaxAtivada = false;
 
-document.addEventListener('keydown', function(event) {
+document.addEventListener('keydown', function (event) {
     if (event.key === 'p') {
         alterarEscalaGraficoMin();
     }
-    if(event.key === 'o'){
+    if (event.key === 'o') {
         alterarEscalaGraficoMax();
     }
 });
 
-function alterarEscalaGraficoMin(){
-    if(config_graficoDesempenho.options.scales.y.min == 0){
+function alterarEscalaGraficoMin() {
+    if (config_graficoDesempenho.options.scales.y.min == 0) {
         config_graficoDesempenho.options.scales.y.min = 80;
     } else {
         config_graficoDesempenho.options.scales.y.min = 0;
@@ -499,8 +509,8 @@ function alterarEscalaGraficoMin(){
     funcaoAlterarEscalaMinAtivada = true;
 }
 
-function alterarEscalaGraficoMax(){
-    if(config_graficoDesempenho.options.scales.y.max == 100){
+function alterarEscalaGraficoMax() {
+    if (config_graficoDesempenho.options.scales.y.max == 100) {
         config_graficoDesempenho.options.scales.y.max = 25;
     } else {
         config_graficoDesempenho.options.scales.y.max = 100;
@@ -509,7 +519,7 @@ function alterarEscalaGraficoMax(){
     funcaoAlterarEscalaMaxAtivada = true;
 }
 
-function atualizarComponenteEscolhido(n){
+function atualizarComponenteEscolhido(n) {
     var componenteSelecionado = document.getElementById('componenteSelecionado');
     var tipoValorComponenteSelecionado = document.getElementById('tipoValorComponenteSelecionado')
     var nomeComponente = document.getElementById('nomeComponente')
@@ -536,15 +546,15 @@ function atualizarComponenteEscolhido(n){
 }
 
 var metricaMedioRam;
-var metricagraveRam;
+var metricaGraveRam;
 var metricaMedioCpu;
 var metricaGraveCpu;
 var metricaMedioDisco;
 var metricaGraveDisco;
 
-function selectMetricas(){
+function selectMetricas() {
 
-    if(sessionStorage.idEmpresa == null){
+    if (sessionStorage.idEmpresa == null) {
         var fkEmpresa = sessionStorage.fkEmpresa
     } else {
         var fkEmpresa = sessionStorage.idEmpresa
@@ -552,43 +562,206 @@ function selectMetricas(){
     fetch("/usuarios/selectMetricas", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          fkComputadorServer: fkComputador,
-          fkEmpresaServer: fkEmpresa
+            fkComputadorServer: fkComputador,
+            fkEmpresaServer: fkEmpresa
         })
-      }).then(function (resposta) {
-            console.log("Estou buscando dados referente a métrica dos alertas!");
+    }).then(function (resposta) {
+        console.log("Estou buscando dados referente a métrica dos alertas!");
 
-            if (resposta.ok) {
-                console.log(resposta);
-                resposta.json().then((resposta) => {
-                        resposta.forEach((objeto) => {
-                            const { medioRam, graveRam, medioCPU, graveCPU, medioDisco, graveDisco  } = objeto;
-                            
-                            metricaMedioRam = medioRam;
-                            metricagraveRam = graveRam;
-                            metricaMedioCpu = medioCPU;
-                            metricaGraveCpu = graveCPU;
-                            metricaMedioDisco = medioDisco;
-                            metricaGraveDisco = graveDisco;
-                            
-                        });
-                    });
-                console.log("Consegui buscar a métrica dos alertas!")
+        if (resposta.ok) {
+            console.log(resposta);
+            resposta.json().then((resposta) => {
+                resposta.forEach((objeto) => {
+                    const { medioRam, graveRam, medioCPU, graveCPU, medioDisco, graveDisco } = objeto;
 
-            } else {
-                console.log("Houve um erro ao fazer o select da métrica dos alertas!");
+                    metricaMedioRam = medioRam;
+                    metricaGraveRam = graveRam;
+                    metricaMedioCpu = medioCPU;
+                    metricaGraveCpu = graveCPU;
+                    metricaMedioDisco = medioDisco;
+                    metricaGraveDisco = graveDisco;
 
-                resposta.text().then((texto) => {
-                    console.error(texto);
                 });
-            }
-        })
+            });
+            console.log("Consegui buscar a métrica dos alertas!")
+
+        } else {
+            console.log("Houve um erro ao fazer o select da métrica dos alertas!");
+
+            resposta.text().then((texto) => {
+                console.error(texto);
+            });
+        }
+    })
         .catch(function (erro) {
             console.log(erro);
         });
 
     return false;
+}
+
+function selectJanelasAbertas() {
+
+    fetch(`/usuarios/selectJanelasAbertas/${fkComputador}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    }).then(function (resposta) {
+        console.log("Estou buscando dados referente as janelas abertas!");
+
+        if (resposta.ok) {
+            resposta.json().then((resposta) => {
+                console.log(resposta);
+                const idsJanelasNoSelect = resposta.map(objeto => objeto.idJanela);
+
+                // Remover divs que não estão presentes no resultado do select
+                listaIdsJanelas.forEach(id => {
+                    if (!idsJanelasNoSelect.includes(id)) {
+                        removerDivJanela(id);
+                    }
+                });
+
+                resposta.forEach((objeto) => {
+                    const { idJanela, titulo, comando, matar } = objeto;
+                    listaIdsJanelas.push(idJanela);
+                    gerarDivJanelas(idJanela, titulo, comando, matar);
+                });
+
+                console.log("Consegui buscar as janelas abertas!");
+
+            });
+        } else {
+            console.log("Houve um erro ao fazer o select das janelas abertas (frontend)!");
+
+            resposta.text().then((texto) => {
+                console.error(texto);
+            });
+        }
+    })
+        .catch(function (erro) {
+            console.log(erro);
+        });
+
+    return false;
+}
+
+setInterval(selectJanelasAbertas, 3000)
+
+function removerDivJanela(idJanela) {
+    var divJanela = document.getElementById(`janela${idJanela}`);
+    if (divJanela) {
+        divJanela.remove();
+    }
+}
+
+function gerarDivJanelas(idJanela, titulo) {
+    
+    var divExiste = document.getElementById(`janela${idJanela}`);
+
+    if (divExiste) {
+        return;
+    } else {
+        titulo = removerAposQuintoEspaco(titulo);
+
+        var janelasAbertas = document.getElementById("janelasAbertas");
+    
+        janelasAbertas.innerHTML += `<div class="janelaAberta" id="janela${idJanela}">
+            <div class="bloquinhoEsquerdaJanelaAberta" id="bloquinhoEsquerdaJanelaAberta${idJanela}" onclick="fecharJanela(${idJanela})"></div>
+            <div class="nomeJanelaAberta">
+                <span>${titulo}</span>
+            </div>
+        </div>`;
+    }
+}
+
+function removerAposQuintoEspaco(titulo) {
+    let partes = titulo.split(" ");
+
+    let primeirasCincoPartes = partes.slice(0, 4);
+    return primeirasCincoPartes.join(" ");
+}
+
+var listaIdsJanelas = [];
+
+function fecharJanela(idJanela) {
+    var bloquinhoEsquerdaJanelaAberta = document.getElementById(`bloquinhoEsquerdaJanelaAberta${idJanela}`);
+
+    bloquinhoEsquerdaJanelaAberta.style.backgroundColor = "yellow"
+
+    fetch(`/usuarios/fecharJanela`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            idJanelaServer: idJanela,
+        })
+    }).then(function (resposta) {
+        console.log("Estou tentando matar a janela!");
+
+        if (resposta.ok) {
+            mostrarMensagemFechando();
+            setTimeout(function() {
+                limparMensagemFechando();
+            }, 4999);
+            setTimeout(function() {
+                limparMensagemFechando();
+                mostrarMensagemConfirmacaoJanelaFechada();
+                selectJanelasAbertas();
+            }, 5000);
+            setTimeout(function() {
+                limparMensagemConfirmacaoJanelaFechada();
+            }, 7000);
+            console.log("Consegui matar a janela!");
+        } else {
+            console.log("Houve um erro ao tentar matar a janela (frontend)!");
+
+            resposta.text().then((texto) => {
+                console.error(texto);
+            });
+        }
+    })
+        .catch(function (erro) {
+            console.log(erro);
+        });
+
+    return false;
+}
+
+function mostrarMensagemConfirmacaoJanelaFechada(){
+    var spanAvisoFechado = document.getElementById("spanAvisoFechado");
+
+    spanAvisoFechado.style.display = "flex"
+}
+
+function limparMensagemConfirmacaoJanelaFechada(){
+    var spanAvisoFechado = document.getElementById("spanAvisoFechado");
+
+    spanAvisoFechado.style.display = "none"
+}
+
+function mostrarMensagemFechando(){
+    var spanAvisoFechando = document.getElementById("spanAvisoFechando");
+
+    spanAvisoFechando.style.display = "flex"
+}
+
+function limparMensagemFechando(){
+    var spanAvisoFechando = document.getElementById("spanAvisoFechando");
+
+    spanAvisoFechando.style.display = "none"
+}
+
+function validarMostrarJanelas(){
+    var botaoListarJanelas = document.getElementById("botaoListarJanelas");
+
+    if(fkComputador != 1){
+        botaoListarJanelas.style.display = "none"
+    } else {
+        botaoListarJanelas.style.display = "flex"
+    }
 }

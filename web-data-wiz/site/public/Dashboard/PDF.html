@@ -4,19 +4,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PDF | MedGuardian</title>
-  <link rel="shortcut icon" href="../assets/images/LOGO.png" type="image/x-icon">
+  <title>PDF</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-  <script src="https://html2canvas. html2canvas.jshtml2canvas.min.js"></script>
+  <script src="https://html2canvas.html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.4.1/jspdf.debug.js"
     integrity="sha384-THVO/sM0mFD9h7dfSndI6TS0PgAGavwKvB5hAxRRvc0o9cPLohB0wb/PTA7LdUHs"
     crossorigin="anonymous"></script>
+  <script src="dashboard.js"></script>
+
 </head>
 
 <body>
 
   <style>
+    * {
+      font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+
     body {
       margin: 0;
       padding: 0;
@@ -133,7 +139,7 @@
           <p>Métricas Dashboard</p>
         </div>
         <div class="dataRelatorio">
-          <p>22 de Out, 2022 - 23 de Out, 2023</p>
+          <p id="dataRelatorio">22 de Out, 2022 - 23 de Out, 2023</p>
         </div>
       </div>
       <div class="bodyPDF">
@@ -173,39 +179,235 @@
 
 
 <script>
-  const xValues = [50, 60, 70, 80, 90];
-  const yValues = [7, 8, 8, 15, 10];
+  function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
 
-  new Chart("myChart", {
-    type: "line",
-    data: {
-      labels: xValues,
-      datasets: [{
-        fill: false,
-        lineTension: 0,
-        backgroundColor: "rgba(0,0,255,1.0)",
-        borderColor: "rgba(0,0,255,0.1)",
-        data: yValues
-      }]
-    },
+  var fkComputador = parseInt(getQueryParam("parametro"), 10)
+
+
+  const graficoDesempenho = document.getElementById("myChart")
+
+  var labelsGrafico = [];
+  const data_graficoDesempenho = {
+    labels: dataHoraLabelsRAM,
+    datasets: [
+      {
+        label: "Desempenho",
+        data: [],
+        backgroundColor: 'rgba(0, 189, 6, .15)',
+        borderColor: 'rgba(0, 189, 6, 1)',
+        pointBackgroundColor: '#164018',
+        pointBorderColor: 'rgba(255,255,255,.8',
+        pointRadius: 5,
+        borderWidth: 1,
+        fill: true
+      }
+    ]
+  };
+
+  const config_graficoDesempenho = {
+    type: 'line',
+    data: data_graficoDesempenho,
     options: {
-      title: {
-        display: true,
-        text: "Gerenciamento de Tarefas"
-      },
-      legend: { display: false },
+      maintainAspectRatio: false,
       scales: {
-        yAxes: [{ ticks: { min: 6, max: 16 } }],
+        y: {
+          max: 0,
+          min: 0,
+          grid: {
+            display: true
+          },
+          ticks: {
+            beginAtZero: true,
+            color: '#2E2109;',
+            font: {
+              size: 20,
+              family: 'LeagueSpartan',
+              weight: 400
+            }
+          },
+        },
+        x: {
+          grid: {
+            display: false
+          },
+          ticks: {
+            display: true,
+            color: '#2E2109;',
+            font: {
+              size: 12,
+              family: 'LeagueSpartan',
+              weight: 600
+            }
+          }
+        }
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: 'Desempenho da CPU',
+          color: 'black',
+          font: {
+            size: 25,
+            color: 'black',
+            family: 'LeagueSpartan',
+            weight: 600
+          }
+
+        },
+        legend: {
+          display: false,
+          labels: {
+            font: {
+              size: 20,
+              color: 'white',
+              family: 'LeagueSpartan',
+              weight: 600,
+              padding: 20
+            }
+          }
+        }
       }
     }
-  });
+  };
 
+  const graficoEmUso = new Chart(graficoDesempenho, config_graficoDesempenho);
 
-  var xValues2 = ["HD", "CPU", "Memória", "Rede", "GPU"];
-  var yValues2 = [55, 49, 44, 24, 40];
-  var barColors = ["red", "green", "blue", "orange", "brown"];
+  var uso_cpu = [];
+  var uso_ram = [];
+  var uso_disco = [];
+  var swapDisponivel = [];
+  var dataHoraLabelsCPU = [];
+  var dataHoraLabelsDisco = [];
+  var dataHoraLabelsRAM = [];
+  var yValues2 = [];
+  
+  async function atualizarGrafico() {
+  
+    fetch("/usuarios/atualizarDatas", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        idServer: 3,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("Estou buscando dados para popular o gráfico!");
 
-  new Chart("myChart2", {
+        if (resposta.ok) {
+          console.log(resposta);
+          resposta.json().then((resposta) => {
+            resposta.reverse();
+            resposta.forEach((especificacao) => {
+              if (Array.isArray(especificacao)) {
+                especificacao.forEach((objeto) => {
+                  const { fkEspecificacao, tipoCaptura, dataHoraRegistro, registro } = objeto;
+                  const hora = dataHoraRegistro.substring(11, 13);    // Extrai a hora da dataHora
+                  const minuto = dataHoraRegistro.substring(14, 16);  // Extrai o minuto da dataHora
+                  const segundo = dataHoraRegistro.substring(17, 19); // Extrai o segundo da dataHora
+
+                  const thirtyDaysAgo = new Date(dataHoraRegistro);
+                  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+                  const date = new Date(dataHoraRegistro);
+                  const formattedDate = `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
+                  const formattedDate30 = `${thirtyDaysAgo.getDate().toString().padStart(2, '0')}-${(thirtyDaysAgo.getMonth() + 1).toString().padStart(2, '0')}-${thirtyDaysAgo.getFullYear()}`;
+
+                  if (tipoCaptura == "UsoCpu") {
+                    if (uso_cpu.length >= 6) {
+                        uso_cpu.shift();
+                    }
+                    uso_cpu.push(registro);
+                    yValues2[0] = registro
+                    if (dataHoraLabelsCPU.length >= 6) {
+                        dataHoraLabelsCPU.shift()
+                    }
+                    dataHoraLabelsCPU.push(`${hora}:${minuto}:${segundo}`)
+                    plotarGrafico(1)
+                }
+                 if (tipoCaptura == "Uso" && fkEspecificacao == 6) {
+                    if (uso_ram.length >= 6) {
+                        uso_ram.shift();
+                    }
+                    var porcentagemUsoRam = registro * 100 / 8.4;
+                    uso_ram.push(porcentagemUsoRam);
+                    yValues2[1] = porcentagemUsoRam
+                    if (dataHoraLabelsRAM.length >= 6) {
+                        dataHoraLabelsRAM.shift()
+                    }
+                    dataHoraLabelsRAM.push(`${hora}:${minuto}:${segundo}`)
+                } 
+                    if (tipoCaptura == "SwapDisponivel") {
+                        swapDisponivel = registro;
+                        yValues2[3] = registro;
+                    } 
+                    if (tipoCaptura == "Uso" && fkEspecificacao == 7) {
+                        if (uso_disco.length >= 6) {
+                            uso_disco.shift();
+                        }
+                        var porcentagemUsoDisco = registro * 100 / 255.37;
+                        uso_disco.push(porcentagemUsoDisco)
+                        yValues2[2] = porcentagemUsoDisco
+                        if (dataHoraLabelsDisco.length >= 6) {
+                            dataHoraLabelsDisco.shift()
+                        }
+                        dataHoraLabelsDisco.push(`${hora}:${minuto}:${segundo}`)
+                    }
+                  var dataGrafico = document.getElementById('dataRelatorio');
+                  dataGrafico.innerHTML = formattedDate30 + " - " + formattedDate;
+                });
+              } else {
+                console.error('O objeto não é um array:', especificacao);
+              }
+            });
+          });
+
+          console.log("Consegui retornar os dados para atualizar o gráfico!");
+        } else {
+          console.log("Houve um erro ao buscar os dados para popular o gráfico!");
+
+          resposta.text().then((texto) => {
+            console.error(texto);
+          });
+        }
+      })
+      .catch(function (erro) {
+        console.log(erro);
+      });
+
+    return false;
+  }
+
+  setTimeout(atualizarGrafico, 2000)
+  function escolherGrafico(n) {
+    valorN = n;
+    plotarGrafico(valorN)
+  }
+
+  async function plotarGrafico(n) {
+    switch (n) {
+      case 1:
+        uso_cpu.reverse();
+        dataHoraLabelsCPU.reverse();
+        data_graficoDesempenho.datasets[0].data = uso_cpu.slice(0, 6);
+        config_graficoDesempenho.options.plugins.title.text = 'Desempenho CPU'
+        config_graficoDesempenho.options.scales.y.max = 50;
+        config_graficoDesempenho.options.scales.y.min = 0;
+        data_graficoDesempenho.labels = dataHoraLabelsCPU.slice(0, 6);
+        break;
+    }
+    graficoEmUso.update();
+    graficoBarras.update()
+  }
+
+  var xValues2 = ["CPU","RAM", "DISCO", "SwapDisponivel"];
+  var barColors = ["red", "green", "blue","orange"];
+
+  var graficoBarras = new Chart("myChart2", {
     type: "bar",
     data: {
       labels: xValues2,
@@ -218,82 +420,78 @@
       legend: { display: false },
       title: {
         display: true,
+        text: "Utilização dos componentes"
+      }
+    }
+  });
+
+  var yValues3 = [51, 49];
+  var barColors = [
+    "#b91d47",
+    "#00aba9",
+  ];
+
+  var graficoPizza = new Chart("myChart3", {
+    type: "pie",
+    data: {
+      labels: ["Usado CPU", "Total CPU"],
+      datasets: [{
+        backgroundColor: barColors,
+        data: yValues3
+      }]
+    },
+    options: {
+      title: {
+        display: true,
         text: "Gerenciamento de Tarefas"
       }
     }
   });
 
-  var xValues3 = ["Italy", "France", "Spain", "USA", "Argentina"];
-  var yValues3 = [55, 49, 44, 24, 15];
+  var yValues4 = [60, 40];
   var barColors = [
     "#b91d47",
     "#00aba9",
-    "#2b5797",
-    "#e8c3b9",
-    "#1e7145"
   ];
 
-  new Chart("myChart3", {
-    type: "pie",
-    data: {
-      labels: xValues,
-      datasets: [{
-        backgroundColor: barColors,
-        data: yValues
-      }]
-    },
-    options: {
-      title: {
-        display: true,
-        text: "Gerenciamento de Tarefas 23-10-2022"
-      }
-    }
-  });
-
-  var xValues4 = ["Italy", "France", "Spain", "USA", "Argentina"];
-  var yValues4 = [55, 49, 44, 24, 15];
-  var barColors = [
-    "#b91d47",
-    "#00aba9",
-    "#2b5797",
-    "#e8c3b9",
-    "#1e7145"
-  ];
-
-  new Chart("myChart4", {
+  var graficoRosca = new Chart("myChart4", {
     type: "doughnut",
     data: {
-      labels: xValues,
+      label: "Uso",
+      labels: ["Usado HD", "Total HD"],
       datasets: [{
         backgroundColor: barColors,
-        data: yValues
+        data: yValues4
       }]
     },
     options: {
       title: {
         display: true,
-        text: "Gerenciamento de Tarefas 23-10-2023"
+        text: "Gerenciamento de Tarefas"
       }
     }
   });
 
 
+  var yValues5 = uso_cpu.slice(0, 6);
+  var yValues6 = [25, 40, 44, 22, 18];
+  var yValues7 = [15, 36, 64, 54, 15];
 
 
-  new Chart("myChart5", {
+  var graficoComparacao = new Chart("myChart5", {
     type: "line",
     data: {
-      labels: xValues,
+      labels: [50, 60, 70, 80, 90],
       datasets: [{
-        data: [86, 11.4, 10.6, 10.60, 10.7],
+        data: yValues5,
         borderColor: "red",
         fill: false
       }, {
-        data: [16, 17, 17, 19, 50],
+        data: yValues6,
         borderColor: "green",
         fill: false
       }, {
-        data: [30.0, 70.0, 20.00, 50.00, 60, 100],
+        data: yValues7,
         borderColor: "blue",
         fill: false
       }]
@@ -307,44 +505,46 @@
     }
   });
 
-  window.onload(showDownloadingMessage())
+  window.onload = function () {
+    showDownloadingMessage();
+    gerarRelatorio();
+  };
 
   function showDownloadingMessage() {
+    return new Promise(resolve => {
+      var modal = document.getElementById('modal');
+      modal.style.display = 'flex';
 
-    var modal = document.getElementById('modal');
-    modal.style.display = 'flex';
-
-    setTimeout(function () {
-      modal.style.display = 'none';
-      gerarRelatorio()
-    }, 3000);
+      setTimeout(function () {
+        modal.style.display = 'none';
+        resolve();
+      }, 5000);
+    });
   }
 
 
-  function gerarRelatorio() {
 
+  async function gerarRelatorio() {
     var pdf = document.getElementById('pdf-content');
     pdf.style.display = 'flex';
 
     var doc = new jsPDF({
       unit: 'cm',
       format: 'a4',
+    }, {
+      top: 0,
+      bottom: 0,
+      left: 0,
+    });
 
-    },
-      margins = {
-        top: 0,
-        bottom: 0,
-        left: 0,
-      }
-    );
+    try {
+      const canvas = await html2canvas(pdf, {
+        orientation: 'landscape',
+        scale: 2,
+        background: '#282828',
+        useCORS: true
+      });
 
-
-    html2canvas(pdf, {
-      orientation: 'landscape',
-      scale: 2,
-      background: '#282828',
-      useCORS: true
-    }).then(function (canvas) {
       const imgData = canvas.toDataURL('image/png');
 
       var pageWidth = doc.internal.pageSize.getWidth();
@@ -357,9 +557,40 @@
       var y = (pageHeight - imgHeight) / 2;
 
       doc.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
-      doc.save('relatorio.pdf');
-    });
+      //await doc.save('relatorio.pdf')
+      console.log("envio do pdf");
+      await enviarMensagem();
+
+    } catch (error) {
+      console.error(error);
+    }
   }
 
 
+
+
+  async function enviarMensagem() {
+    console.log("chegou na função da mensagem")
+    let data = JSON.stringify({
+      "channel": "C064MNJC96E",
+      "text": "Aqui está seu PDF :tada:"
+    });
+    let config = {
+      method: 'post',
+      maxBodyLength: Infinity,
+      url: 'http://localhost:3333/app.js',
+      headers: {
+        'Content-type': 'application/json',
+        'Authorization': 'Bearer xoxb-6157746735458-6180861943392-qWz3CvCQpp476wdayPkyoR8F'
+      },
+      data: data
+    };
+    axios.request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 </script>
