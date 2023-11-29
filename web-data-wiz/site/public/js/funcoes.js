@@ -1,3 +1,17 @@
+// Aguarde o carregamento completo da página
+document.addEventListener("DOMContentLoaded", function () {
+    // Agora você pode executar a lógica da sua função
+    validarDashboard();
+});
+
+function validarDashboard() {
+    var urlAtual = window.location.href;
+
+    if (urlAtual.includes("Dashboard/dashboard.html")) {
+        document.getElementById("spanAbrirDashboard").style.display = "none";
+    }
+}
+
 
 
 function validarSessao() {
@@ -117,7 +131,7 @@ function enviarEmail() {
     })
         .then(function (response) {
             if (response.ok) {
-                
+
                 console.log('E-mail enviado com sucesso!');
                 alert("E-mail enviado com sucesso!")
             } else {
