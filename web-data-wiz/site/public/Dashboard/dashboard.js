@@ -305,9 +305,9 @@ function selectAlertas() {
   var idEmpresa;
 
   if (sessionStorage.idEmpresa == null) {
-    idEmpresa = sessionStorage.fkEmpresa
+    idEmpresa = sessionStorage.fkEmpresa;
   } else {
-    idEmpresa = sessionStorage.idEmpresa
+    idEmpresa = sessionStorage.idEmpresa;
   }
 
   var dataHoraAtual = new Date();
@@ -345,32 +345,33 @@ function selectAlertas() {
       dataHoraAtualServer: formatoDataHoraAtual,
       dataHoraReduzidaServer: formatoDataHoraReduzida,
       dataHoraMais3HorasReduzidaServer: formatoDataHoraMais3HorasReduzida,
-      dataHoraMais3HorasServer: formatoDataHoraMais3Horas
+      dataHoraMais3HorasServer: formatoDataHoraMais3Horas,
     }),
-  }).then(function (resposta) {
-    console.log("Estou buscando dados para atualizar a dashboard geral!");
-
-    if (resposta.ok) {
-      console.log(resposta);
-      resposta.json().then((resposta) => {
-        console.log(resposta)
-        resposta.forEach((alerta) => {
-          const { fkComputador, fkEspecificacao, tipoAlerta } = alerta;
-          fkComputadorAlerta.push(fkComputador);
-          fkComponenteAlerta.push(fkEspecificacao);
-          tipoAlertas.push(tipoAlerta);
-        });
-      });
-      console.log("Consegui retornar os dados para validar os alertas das máquinas!")
-      validarAlertasCores(fkComputadorAlerta, fkComponenteAlerta, tipoAlertas);
-    } else {
-      console.log("Houve um erro ao buscar os dados para validar os alertas das máquinas!");
-
-      resposta.text().then((texto) => {
-        console.error(texto);
-      });
-    }
   })
+    .then(function (resposta) {
+      console.log("Estou buscando dados para atualizar a dashboard geral!");
+
+      if (resposta.ok) {
+        console.log(resposta);
+        resposta.json().then((resposta) => {
+          console.log(resposta);
+          resposta.forEach((alerta) => {
+            const { fkComputador, fkEspecificacao, tipoAlerta } = alerta;
+            fkComputadorAlerta.push(fkComputador);
+            fkComponenteAlerta.push(fkEspecificacao);
+            tipoAlertas.push(tipoAlerta);
+          });
+        });
+        console.log("Consegui retornar os dados para validar os alertas das máquinas!");
+        validarAlertasCores(fkComputadorAlerta, fkComponenteAlerta, tipoAlertas);
+      } else {
+        console.log("Houve um erro ao buscar os dados para validar os alertas das máquinas!");
+
+        resposta.text().then((texto) => {
+          console.error(texto);
+        });
+      }
+    })
     .catch(function (erro) {
       console.log(erro);
     });
@@ -379,60 +380,46 @@ function selectAlertas() {
 }
 
 function validarAlertasCores(fkComputador, fkEspecificacao, tipoAlerta) {
-  // Limpar alertas existentes antes de processar novos alertas
-  limparAlertas();
-
-  for (let i = 0; i < idsComputadores.length; i++) {
+  for (var i = 0; i < idsComputadores.length; i++) {
     const divMaquina = document.getElementById(`maquina${idsComputadores[i]}`);
-    let temAlertaCritico = false;
-    let temAlertaMedio = false;
-
-    // Remover alertas antigos que não estão mais presentes nos dados recebidos
     const alertaMaquinaCadastrada = document.getElementById(`alertaMaquinaCadastrada${idsComputadores[i]}`);
-    alertaMaquinaCadastrada.querySelectorAll(".alertas").forEach((alertaAntigo) => {
-      alertaAntigo.remove();
-    });
 
-    for (let j = 0; j < fkComputador.length; j++) {
+    const alertas = { critico: new Set(), medio: new Set() };
+
+    for (var j = 0; j < fkComputador.length; j++) {
       if (idsComputadores[i] === fkComputador[j]) {
+        var componente;
+
         if (fkEspecificacao[j] === fkComputador[j] * 4 - 3) {
-          if (tipoAlerta[j] === "Crítico") {
-            temAlertaCritico = true;
-            console.log(`Alerta Crítico na Máquina ${idsComputadores[i]}: CPU`);
-            gerarDivAlerta(fkComputador[j], fkEspecificacao[j], tipoAlerta[j], "#c03221", "CPU", "#fc8374", divMaquina, alertaMaquinaCadastrada);
-          } else if (tipoAlerta[j] === "Médio") {
-            temAlertaMedio = true;
-            console.log(`Alerta Médio na Máquina ${idsComputadores[i]}: CPU`);
-            gerarDivAlerta(fkComputador[j], fkEspecificacao[j], tipoAlerta[j], "yellow", "CPU", "#ee9663", divMaquina, alertaMaquinaCadastrada);
-          }
+          componente = "CPU";
         } else if (fkEspecificacao[j] === fkComputador[j] * 4 - 2) {
-          if (tipoAlerta[j] === "Crítico") {
-            temAlertaCritico = true;
-            console.log(`Alerta Crítico na Máquina ${idsComputadores[i]}: RAM`);
-            gerarDivAlerta(fkComputador[j], fkEspecificacao[j], tipoAlerta[j], "#c03221", "RAM", "#fc8374", divMaquina, alertaMaquinaCadastrada);
-          } else if (tipoAlerta[j] === "Médio") {
-            temAlertaMedio = true;
-            console.log(`Alerta Médio na Máquina ${idsComputadores[i]}: RAM`);
-            gerarDivAlerta(fkComputador[j], fkEspecificacao[j], tipoAlerta[j], "yellow", "RAM", "#ee9663", divMaquina, alertaMaquinaCadastrada);
-          }
+          componente = "RAM";
         } else {
-          if (tipoAlerta[j] === "Crítico") {
-            temAlertaCritico = true;
-            console.log(`Alerta Crítico na Máquina ${idsComputadores[i]}: DISCO`);
-            gerarDivAlerta(fkComputador[j], fkEspecificacao[j], tipoAlerta[j], "#c03221", "DISCO", "#fc8374", divMaquina, alertaMaquinaCadastrada);
-          } else if (tipoAlerta[j] === "Médio") {
-            temAlertaMedio = true;
-            console.log(`Alerta Médio na Máquina ${idsComputadores[i]}: DISCO`);
-            gerarDivAlerta(fkComputador[j], fkEspecificacao[j], tipoAlerta[j], "yellow", "DISCO", "#ee9663", divMaquina, alertaMaquinaCadastrada);
-          }
+          componente = "DISCO";
         }
+
+        
+        gerarDivAlerta(idsComputadores[i], fkEspecificacao[j], tipoAlerta[j], getColor(tipoAlerta[j]), componente, getBackgroundColor(tipoAlerta[j]), divMaquina, alertaMaquinaCadastrada);
+        console.log(`Alerta ${tipoAlerta[j]} na Máquina ${idsComputadores[i]}: ${componente}`);
+
+        const alertaSet = tipoAlerta[j] === "Crítico" ? alertas.critico : alertas.medio;
+        alertaSet.add(`${componente}_${fkEspecificacao[j]}`);
       }
     }
 
+    // Exibe os alertas
+    if (alertas.critico.size > 0) {
+      console.log(`Problemas críticos na máquina ${idsComputadores[i]}:\n${Array.from(alertas.critico).join("\n")}`);
+    }
+
+    if (alertas.medio.size > 0) {
+      console.log(`Problemas médios na máquina ${idsComputadores[i]}:\n${Array.from(alertas.medio).join("\n")}`);
+    }
+
     // Define a cor de fundo com base nos alertas
-    if (temAlertaCritico) {
+    if (alertas.critico.size > 0) {
       divMaquina.style.backgroundColor = "#fc8374"; // Cor para máquinas com alertas críticos
-    } else if (temAlertaMedio) {
+    } else if (alertas.medio.size > 0) {
       divMaquina.style.backgroundColor = "#ee9663"; // Cor para máquinas com alertas médios
     } else {
       divMaquina.style.backgroundColor = "#91e384"; // Cor para máquinas sem alertas
@@ -440,56 +427,72 @@ function validarAlertasCores(fkComputador, fkEspecificacao, tipoAlerta) {
   }
 }
 
+function removerAlertasAntigos(alertaMaquinaCadastrada) {
+  const alertasAntigos = alertaMaquinaCadastrada.querySelectorAll(".alertas");
 
-
-function limparAlertas() {
-  for (let i = 0; i < idsComputadores.length; i++) {
-    // Limpar alertas existentes
-    const divMaquina = document.getElementById(`maquina${idsComputadores[i]}`);
-    divMaquina.style.backgroundColor = "#91e384";
-  }
+  alertasAntigos.forEach((alertaAntigo) => {
+    alertaAntigo.remove();
+  });
 }
 
 
 
+function getColor(tipoAlerta) {
+  return tipoAlerta === "Crítico" ? "#c03221" : "yellow";
+}
 
+// Função para obter a cor de fundo com base no tipo de alerta
+function getBackgroundColor(tipoAlerta) {
+  return tipoAlerta === "Crítico" ? "#fc8374" : "#ee9663";
+}
 
+// Função para obter a cor de fundo da máquina com base nos alertas gerados
+function getBackgroundColorForMachine(alertasGerados, idMaquina) {
+  const corCritico = "#fc8374";
+  const corMedio = "#ee9663";
 
+  const temAlertaCritico = alertasGerados[`${idMaquina}_Crítico`];
+  const temAlertaMedio = alertasGerados[`${idMaquina}_Médio`];
+
+  if (temAlertaCritico && temAlertaMedio) {
+    return corCritico;
+  } else if (temAlertaCritico) {
+    return corCritico;
+  } else if (temAlertaMedio) {
+    return corMedio;
+  } else {
+    return "#91e384";
+  }
+}
 
 function gerarDivAlerta(fkComputador, fkEspecificacao, tipoAlerta, corIcone, componente, corDiv, div, alertaMaquinaCadastrada) {
+  const divExistente = document.getElementById(`alerta_${tipoAlerta}_${fkComputador}_${fkEspecificacao}`);
 
-  const divExistente = document.getElementById(`alerta_${tipoAlerta}_${fkComputador}_${fkEspecificacao}`)
+const tipoOpuesto = tipoAlerta === "Crítico" ? "Médio" : "Crítico";
+
+const divExisteOutroTipo = document.getElementById(`alerta_${tipoOpuesto}_${fkComputador}_${fkEspecificacao}`);
 
   if (divExistente) {
-    console.log("Já tem o alerta do tipo: " + tipoAlerta + " do componente: " + componente);
-    return
+    console.log(`Já existe um alerta do tipo ${tipoAlerta} para o componente ${componente}`);
+    return;
+  } else if(divExisteOutroTipo){
+    divExisteOutroTipo.remove();
   }
 
-  alertaMaquinaCadastrada.style.marginTop = "1%"
+  alertaMaquinaCadastrada.style.marginTop = "1%";
 
   alertaMaquinaCadastrada.innerHTML += `<div class="alertas" id="alerta_${tipoAlerta}_${fkComputador}_${fkEspecificacao}" onclick="abrirDashboardEspecifica(${fkComputador})">
-
-          <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z"
-            fill="${corIcone}" />
-        </svg>
-        <span>${componente}</span>
-
-      </div>
-      `;
+    <svg width="20" height="20" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M15.0091 3.5L26.1228 22.75C26.2252 22.9274 26.2791 23.1285 26.2791 23.3333C26.2791 23.5381 26.2252 23.7393 26.1228 23.9167C26.0204 24.094 25.8731 24.2413 25.6958 24.3437C25.5184 24.4461 25.3173 24.5 25.1125 24.5H2.88514C2.68035 24.5 2.47917 24.4461 2.30182 24.3437C2.12447 24.2413 1.97719 24.094 1.8748 23.9167C1.77241 23.7393 1.7185 23.5381 1.71851 23.3333C1.71851 23.1285 1.77241 22.9274 1.87481 22.75L12.9885 3.5C13.0909 3.32266 13.2382 3.17539 13.4155 3.07301C13.5929 2.97062 13.794 2.91672 13.9988 2.91672C14.2036 2.91672 14.4048 2.97062 14.5821 3.07301C14.7595 3.17539 14.9067 3.32266 15.0091 3.5ZM12.8321 18.6667V21H15.1655V18.6667H12.8321ZM12.8321 10.5V16.3333H15.1655V10.5H12.8321Z" fill="${corIcone}" />
+    </svg>
+    <span>${componente}</span>
+  </div>`;
 
   div.style.backgroundColor = `${corDiv}`;
 }
 
-function removerDivAlerta(fkComputador, fkEspecificacao, tipoAlerta) {
 
-  var divRemover = document.getElementById(`alerta_${tipoAlerta}_${fkComputador}_${fkEspecificacao}`)
 
-  if (divRemover) {
-    divRemover.remove();
-  }
-}
 
 // Função para verificar se um radio button está selecionado
 function verificarRadio() {
