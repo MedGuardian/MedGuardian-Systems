@@ -11,7 +11,7 @@ public class TesteProjetoArthur {
     static Integer finalIdComputador;
     static Integer finalIdComputadorLocal;
     static Integer finalFkEmpresa;
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Looca looca = new Looca();
         EnviarBDAws bancoDeDadosAws = new EnviarBDAws();
         EnviarBDLocal bancoDeDados = new EnviarBDLocal();
@@ -20,7 +20,8 @@ public class TesteProjetoArthur {
         Componente RAM = new Componente("RAM");
         Componente PROCESSADOR = new Componente(looca.getProcessador().getNome());
         Componente TEMPOATIVIDADE = new Componente("TEMPO DE ATIVIDADE");
-
+        Slack slack = new Slack();
+        Log log = new Log();
         String nomeComputador = looca.getRede().getParametros().getNomeDeDominio();
         Integer conversorGb = 1000000000;
         Boolean logado = false;
@@ -97,6 +98,10 @@ public class TesteProjetoArthur {
                             USUÁRIO %s AUTENTICADO COM SUCESSO!
                             INICIANDO A CAPTURA DE DADOS DA MÁQUINA...
                             """.formatted(bancoDeDadosAws.autenticarUsuario(email, senha).get(0).getNomeFuncionario()));
+                    slack.enviarMensagemSlack("""
+                            Bem vindo à MedGuardian %s!
+                            Receba todas suas notificações pelo nosso slack :tada
+                            """.formatted(bancoDeDadosAws.autenticarUsuario(email, senha).get(0).getNomeFuncionario()));
                 }
             }
         } while (!logado);
@@ -162,6 +167,7 @@ public class TesteProjetoArthur {
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
+                    log.gravarLogErros("Erro ao recuperar componentes do banco de dados.");
                     System.out.println("Erro ao recuperar componentes do banco de dados.");
                 }
                 Integer numeroDoComponente;
@@ -217,6 +223,14 @@ public class TesteProjetoArthur {
                             if (componenteSelecionado.isEmpty()) {
                                 System.out.println("Nenhum componente selecionado para monitoramento.\n");
                             } else if (componentesCadastrados.contains(componenteSelecionado)) {
+                                try {
+                                    slack.enviarMensagemSlack("""
+                                            Estamos monitorando o componente escolhido %s
+                                            Acompanhe o monitoramento pelo nosso JAR.
+                                            """.formatted(componenteSelecionado));
+                                } catch (Exception e) {
+                                    throw new RuntimeException(e);
+                                }
                                 System.out.println("Monitorando o componente: " + componenteSelecionado);
                                 iniciarMonitoramentoAws(finalNumeroDoComponente, looca, bancoDeDadosAws);
                             } else {
