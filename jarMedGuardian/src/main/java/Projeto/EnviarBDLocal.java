@@ -17,7 +17,7 @@ public class EnviarBDLocal {
     int i = 0;
     public List<Funcionario> autenticarUsuario(String email, String senha){
         List<Funcionario> usuario = con.query("SELECT * FROM funcionario WHERE emailFuncionario = ? AND senhaFuncionario = ?", new BeanPropertyRowMapper<>(Funcionario.class), email, senha);
-        mostrarMensagem(usuario);
+            mostrarMensagem(usuario);
         return usuario;
     }
 

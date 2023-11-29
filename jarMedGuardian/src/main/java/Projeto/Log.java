@@ -12,10 +12,10 @@ public class Log {
 
     public static void main(String[] args) {
         Log log = new Log();
-        log.gravarLog("Log");
+        log.gravarLog();
     }
 
-    public void gravarLog(String mensagem) {
+    public void gravarLog() {
         Looca looca = new Looca();
         Slack slack = new Slack();
         Double processadorEmUso = looca.getProcessador().getUso();
@@ -38,7 +38,7 @@ public class Log {
             FileWriter arq = new FileWriter(caminhoDoArquivo);
             PrintWriter gravarArq = new PrintWriter(arq);
 
-            gravarArq.printf(mensagem + "\n" + dataHoraAtual + "\n");
+            gravarArq.printf(dataHoraAtual + "\n");
             gravarArq.printf(dias + " dias, " + horas + " horas, " + minutos + " minutos, " + segundos + " segundos\n");
 
             // Informações sobre CPU
@@ -70,28 +70,27 @@ public class Log {
 
 
 
-    public void gravarLogErros(String mensagemErro) {
-        Slack slack = new Slack();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss");
-        String dataHoraAtual = dateFormat.format(new Date());
-        String nomeDoArquivo = "Erros_" + dataHoraAtual;
-        String caminhoDoArquivo = "C:\\Users\\lucas\\OneDrive\\Área de Trabalho\\Logs\\" + nomeDoArquivo + ".txt";
+    public void gravarErros() {
         try {
+
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd_MM_yyyy_HH_mm_ss");
+            String dataHoraAtual = dateFormat.format(new Date());
+
+            String nomeDoArquivo = "Erros_" + dataHoraAtual;
+            String caminhoDoArquivo = "C:\\Users\\lucas\\OneDrive\\Área de Trabalho\\Logs\\x1" + nomeDoArquivo + ".txt";
+
             FileWriter arq = new FileWriter(caminhoDoArquivo);
             PrintWriter gravarArq = new PrintWriter(arq);
 
-            gravarArq.printf(mensagemErro + "\n"+ dataHoraAtual + "\n");
+            gravarArq.printf(dataHoraAtual + "\n");
             gravarArq.printf("ERROR!");
 
-            arq.close();
-            slack.enviarArquivoSlack("Log", caminhoDoArquivo, "Erro");
+
 
             System.out.println("\nErro gravado com sucesso em: " + caminhoDoArquivo);
         } catch (IOException ex) {
             // Em caso de falha ao gravar o erro, imprime no console
             ex.printStackTrace();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
 
