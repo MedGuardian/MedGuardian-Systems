@@ -12,7 +12,7 @@ if (sessionStorage.idFuncionario == null) {
 }
 
 function voltarIndex() {
-  window.location.href = '../index.html'
+  window.location.href = '../PaginaInicial/paginainicial.html'
 }
 
 function sairDaDashboard() {

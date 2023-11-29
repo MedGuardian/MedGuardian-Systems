@@ -76,12 +76,12 @@ function abrirMenuFlutuante() {
 }
 
 function abrirDashboardMenuFlutuante() {
-    window.location.href = './Dashboard/dashboard.html'
+    window.location.href = '../Dashboard/dashboard.html'
 }
 
 
 function abrirAlterarFuncionario() {
-    window.location.href = './Dashboard/Funcionarios/funcionarios.html'
+    window.location.href = '../Dashboard/Funcionarios/funcionarios.html'
 }
 
 function abrirGerenciamentoMenuFlutuante() {
