@@ -250,12 +250,11 @@ public class TesteProjetoVictor {
                 do{
                     System.out.println("""
                        *-----------------------*       
-                       | O que quer monitorar: |
+                       | O que quer verificar: |
                        | 1 - HD'S              |
                        | 2 - RAM               |
                        | 3 - PROCESSADOR       |
-                       | 4 - REDE              |
-                       | 5 - Sair              |
+                       | 4 - SAIR              |
                        *-----------------------*
                         """);
                     Scanner leitorOpcao = new Scanner(System.in);
@@ -286,7 +285,7 @@ public class TesteProjetoVictor {
                             System.out.println("Quantidade de processos: " + numeroProcessos);
                             System.out.println("Therads: " + numeroThreads);
                             break;
-                        case 4:
+                        default:
                             System.out.println("Até logo!");
                             parar = true;
                             break;
