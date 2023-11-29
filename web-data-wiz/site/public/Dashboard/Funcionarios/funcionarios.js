@@ -1,5 +1,5 @@
 function voltarIndex() {
-    window.location.href = '../../index.html';
+    history.back()
 }
 
 function gerarDIVFuncionario(nome, email, cargo) {
