@@ -263,20 +263,28 @@ public class TesteProjetoVictor {
                     switch (opcao){
                         case 1:
                             bancoDeDados.insertRegistro(discoDisponivel, "Uso", 1);
+                            bancoDeDadosAws.insertRegistro(discoDisponivel, "Uso", 1);
                             System.out.println("Disco sendo usado: " + discoDisponivel);
                             break;
                         case 2:
-                            bancoDeDados.insertRegistro(memoriaRamEmUso, "Uso", 3);
+                            bancoDeDados.insertRegistro(memoriaRamEmUso, "Uso", 2);
+                            bancoDeDadosAws.insertRegistro(memoriaRamEmUso, "Uso", 2);
                             System.out.println("Memoria RAM sendo usada: " + memoriaRamEmUso);
                             break;
                         case 3:
-                            bancoDeDados.insertRegistro(processadorEmUso, "Uso", 4);
-                            bancoDeDados.insertRegistro(Double.valueOf(dias), "Dias", 4);
-                            bancoDeDados.insertRegistro(Double.valueOf(horas), "Horas", 4);
-                            bancoDeDados.insertRegistro(Double.valueOf(minutos), "Minutos", 4);
-                            bancoDeDados.insertRegistro(Double.valueOf(segundos), "Segundos", 4);
-                            bancoDeDados.insertRegistro(numeroProcessos, "Quantidade", 4);
-                            bancoDeDados.insertRegistro(numeroThreads, "Quantidade", 4);
+                            bancoDeDados.insertRegistro(processadorEmUso, "Uso", 3);
+                            bancoDeDados.insertRegistro(Double.valueOf(dias), "Dias", 3);
+                            bancoDeDados.insertRegistro(Double.valueOf(horas), "Horas", 3);
+                            bancoDeDados.insertRegistro(Double.valueOf(minutos), "Minutos", 3);
+                            bancoDeDados.insertRegistro(Double.valueOf(segundos), "Segundos", 3);
+                            bancoDeDados.insertRegistro(numeroProcessos, "Quantidade", 3);
+                            bancoDeDados.insertRegistro(numeroThreads, "Quantidade",3);
+                            bancoDeDadosAws.insertRegistro(Double.valueOf(dias), "Dias", 3);
+                            bancoDeDadosAws.insertRegistro(Double.valueOf(horas), "Horas", 3);
+                            bancoDeDadosAws.insertRegistro(Double.valueOf(minutos), "Minutos", 3);
+                            bancoDeDadosAws.insertRegistro(Double.valueOf(segundos), "Segundos", 3);
+                            bancoDeDadosAws.insertRegistro(numeroProcessos, "Quantidade", 3);
+                            bancoDeDadosAws.insertRegistro(numeroThreads, "Quantidade", 3);
                             System.out.println("Processador em uso: " + processadorEmUso);
                             System.out.println("Dias em uso: " + Double.valueOf(dias));
                             System.out.println("Horas :" + Double.valueOf(horas));
