@@ -7,13 +7,13 @@
     <link rel="stylesheet" href="PaginaInicial/paginaInicial.css">
     <link rel="shortcut icon" href="assets/images/LOGO.png" type="image/x-icon">
     <script src="PaginaInicial/paginaInicial.js"></script>
-
+    <script src="js/sessao.js"></script>
     <link rel="stylesheet" href="./cssGlobal/cssGlobal.css">
 
     <title>Home | MedGuardian</title>
 </head>
 
-<body onload="validarSessao()">
+<body>
     <div class="header">
         <div class="container">
 
@@ -26,8 +26,6 @@
                     <button id="botaoLogin" onclick="telaLogin()">Login</button>
                     <button id="botaoCadastro" onclick="telaCadastro()">Cadastre-se</button>
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -107,23 +105,16 @@
             </div>
         </div>
     </div>
-
     <div id="overlay"></div>
-
-
-
     <div class="segundaApresentacao">
-
         <div class="imagemSegundaApresentacao">
             <img src="assets/images/sala-de-cirurgia-homepage.png" alt="">
         </div>
-
         <div class="container">
             <div class="conteudoSegundaApresentacao">
                 <div id="textoSuperiorSegundaApresentacao">Nascemos de uma ideia inovadora, onde tudo pela vida humana é
                     possível.
                 </div>
-
                 <div class="textoInferiorSegundaApresentacao" id="textoInferiorSegundaApresentacao">
                     <span>
                         A cada passo que damos, reafirmamos nosso compromisso com a
