@@ -50,6 +50,7 @@ public class EnviarBDAws {
 
     public void insertRegistro(Double registro, String tipoCaptura, Integer fkEspecificacao){
         con.update("INSERT INTO registro (dataHoraRegistro, registro, tipoCaptura, fkEspecificacao) VALUES (?,?,?,?)", dataHoraAtual(), registro, tipoCaptura, fkEspecificacao);
+        System.out.println();
     }
 
     public void insertComputador(String nomeComputador, Integer fkEmpresa, String sistemaOperacional){
@@ -68,6 +69,13 @@ public class EnviarBDAws {
 
     public List<Componente> selectComponente(){
         return con.query("SELECT * FROM componente", new BeanPropertyRowMapper<>(Componente.class));
+    }
+    public List<Componente> selectComponenteFromId(Integer idComputador){
+        return con.query("SELECT e.idEspecificacao, c.nomeComponente\n" +
+                "FROM especificacao e\n" +
+                "JOIN componente c ON e.fkComponente = c.idComponente\n" +
+                "JOIN computador comp ON e.fkComputador = comp.idComputador\n" +
+                "WHERE comp.idComputador = ?;\n", new BeanPropertyRowMapper<>(Componente.class), idComputador);
     }
 
     public Integer selectIdComputador(String nomeComputador){
@@ -91,6 +99,7 @@ public class EnviarBDAws {
     }
 
     public void insertAlertas(String tipoAlerta, Integer fkEspecificacao, Integer fkComputador){
+        System.out.println(fkEspecificacao + "ESPECIFICACAO SELECIONADA");
         con.update("INSERT INTO alertas (tipoAlerta, fkEspecificacao, fkComputador, dataHoraAlerta) VALUES (?, ?, ?, ?)", tipoAlerta, fkEspecificacao, fkComputador, dataHoraAtual());
         String componente;
 

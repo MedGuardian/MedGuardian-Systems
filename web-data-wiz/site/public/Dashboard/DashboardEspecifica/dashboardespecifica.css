@@ -3,12 +3,29 @@
     src: url(../../assets/fonts/LeagueSpartan-VariableFont_wght.ttf);
 }
 
+@font-face {
+    font-family: Poppins;
+    src: url(../../assets/fonts/Poppins-Regular.ttf);
+}
+
 body {
     font-family: LeagueSpartan;
-    background-color: #DAF3EA;
+    margin: 0;
+    padding: 1% 0 0 0;
     width: 100%;
     height: 100%;
-    margin: 0;
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(63, 88, 63);
+}
+
+.divGeral {
+    width: 90%;
+    padding: 1%;
+    border-radius: 20px;
+    background-color: rgba(34, 34, 34, 0.642);
 }
 
 * {
@@ -17,49 +34,58 @@ body {
 
 .headerDashboardEspecifica {
     display: flex;
-    flex-direction: column;
-    background-image: url(../../assets/images/navbarCircle.svg);
     width: 100%;
+    padding: 1%;
+    flex-direction: column;
 }
 
 .spansHeader {
     display: flex;
+    margin-left: 3%;
+    font-weight: 400;
+    margin-top: 1%;
     flex-direction: column;
-    color: white;
-    margin-left: 17%;
-    font-weight: 600;
-    margin: 2% 0 3% 16%;
+    color: rgb(255, 255, 255);
 }
 
+.saudacaoVoltar {
+    display: flex;
+    width: 100%;
+    text-align: left;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+
 #saudacaoDashboard {
-    font-size: 35px;
-    margin-bottom: 1%;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+}
+
+#saudacaoDashboard svg {
+    margin: 0 1% 0 0;
 }
 
 .botaoVoltar {
-    margin: 1% 0;
     display: flex;
-    flex-direction: row;
     cursor: pointer;
-    width: 100%;
+    flex-direction: row;
     align-items: center;
+    transition: 0.5s;
 }
 
-.botaoVoltar span {
-    font-size: 30px;
-}
-
-.botaoVoltar img {
-    margin-top: 1%;
-    margin-left: 5%;
-    height: 30px;
-    width: 30px;
+.botaoVoltar:hover {
+    color: rgb(34, 255, 0);
+    transition: 0.5s;
+    transform: scale(1.3);
 }
 
 .dashboardEspecifica {
     width: 100%;
     display: flex;
-    background-color: #858585;
 }
 
 .conteudoDashboardEspecifica {
@@ -69,23 +95,70 @@ body {
 }
 
 .dashboardMaquina {
-    width: 80%;
+    width: 90%;
     display: flex;
     margin: auto;
     border-radius: 15px;
     flex-direction: column;
 }
 
+.usuario {
+    display: flex;
+    margin: 5px;
+    font-weight: 800;
+}
+
 .tituloDashboardMaquina {
-    width: 100%;
-    font-size: 30px;
+    width: 95%;
+    margin: 2% 0 -2% 0%;
+    font-size: 18px;
     text-align: left;
-    color: #fff;
+    color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.spanTituloDashboardMaquina {
+    width: 50%;
+    margin-top: 1%;
+}
+
+.botaoListarJanelas {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    transition: 0.5s;
+}
+
+.botaoListarJanelas button:hover {
+    transition: 0.5s;
+    background-color: #7bb37c;
+}
+
+.botaoListarJanelas span {
+    width: 50%;
+}
+
+.botaoListarJanelas button {
+    width: 100%;
+    padding: 2%;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 12px;
+    cursor: pointer;
+    font-family: Poppins;
+    background-color: #c4d7bb;
+
+    -webkit-box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
 }
 
 #maquinaSelecionada {
-    font-size: 40px;
+    font-size: 22px;
     font-weight: 700;
+    color: rgb(0, 167, 3);
 }
 
 .conteudoEsquerdaDashboardMaquina {
@@ -94,12 +167,12 @@ body {
     flex-direction: column;
 }
 
-.conteudoDireitaDashboardMaquina{
-    width: 15%;
+.conteudoDireitaDashboardMaquina {
     display: flex;
+    width: 15%;
 }
 
-.auxiliarConteudoDashboardMaquina{
+.auxiliarConteudoDashboardMaquina {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -108,6 +181,7 @@ body {
 .cimaDashboardMaquina {
     display: flex;
     width: 100%;
+    color: rgb(0, 0, 0);
     margin-top: 2%;
     flex-direction: row;
 
@@ -115,290 +189,391 @@ body {
 
 .indicadoresMaquina {
     display: flex;
-    flex-direction: row;
     width: 100%;
+    flex-direction: row;
     justify-content: space-between;
 }
 
 .tempoAtividadeMaquina {
     display: flex;
-    flex-direction: column;
+    width: 40%;
     padding: 10px;
     border-radius: 10px;
-    background-color: #CFCFCF;
-    width: 20%;
+    flex-direction: column;
+    background-color: #c4d7bb;
+    -webkit-box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
 }
 
 .tituloTempoAtividade {
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 3%;
     text-align: center;
-    font-size: 22px;
-    font-weight: 200;
 }
 
 .cronometroTempoAtividade {
     display: flex;
-    flex-direction: row;
     width: 100%;
+    flex-direction: row;
     justify-content: space-evenly;
 }
 
 .cronometro {
     display: flex;
-    flex-direction: column;
     font-weight: 200;
-    margin-top: 5%;
-    justify-content: center;
     align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .cronometro span {
-    margin-bottom: 25%;
+    margin-bottom: 15%;
 }
 
 .valorCronometro {
-    color: #017404;
-    font-size: 25px;
+    font-size: 20px;
+    font-weight: 300;
+    color: rgb(0, 0, 0);
 }
 
 .medidaCronometro {
-    font-size: 18px;
-}
-
-.componente {
-    display: flex;
-    flex-direction: row;
-    background-color: #838383;
-    margin-bottom: 5%;
-    align-items: center;
-    padding: 2% 3%;
-    color: white;
     font-weight: 400;
-    border-radius: 10px;
-    width: 100%;
-    font-size: 20px;
+    font-size: 13px;
 }
 
-.medidor {
+
+.informacoesMaquina {
     display: flex;
-    width: 22%;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: #CFCFCF;
+    width: 80%;
+    border-radius: 15px;
 }
 
-.medidor .speed-meter {
+.boxesInformacoes {
     display: flex;
-    align-items: center;
-    color: #000000;
-    width: 60%;
-    justify-content: center;
-    flex-direction: column;
-}
-
-
-#spanValorVelocidadeRede{
-    text-shadow: 2px 3px 0 #fff;
-    font-size: 40px;
-    color: #000000;
-}
-
-#spanVelocidadeRede{
-    font-size: 15px;
-    margin-bottom: 10%;
-}
-
-.medidor .unit {
-    text-shadow: 2px 3px 0 #fff;
-    color: #000000;
-    font-size: 2em;
-}
-
-.speed{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 40%;
-}
-
-.medidor .spinner {
-    margin-top: 8px;
-    border: 4px solid #45454572;
-    height: 32px;
-    width: 32px;
-    position: relative;
-    border-top-color: rgb(0, 96, 16);
-    border-radius: 50%;
-    animation: rotation 1s infinite linear;
-}
-
-
-@keyframes rotation {
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-.informacoesMaquina{
-    display: flex;
-    background-color: #CFCFCF;
-    width: 50%;
-    border-radius: 10px;
-}
-
-.boxesInformacoes{
-    display: flex;
-    flex-direction: row;
     width: 90%;
-    margin: auto;
-    background-color: #718672;
-    justify-content: space-between;
-    height: 75%;
-    border-radius: 5px;
     padding: 0 1%;
+    border-radius: 15px;
+    margin: 0 0 0 auto;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #c4d7bb;
+    -webkit-box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
 }
 
-.box{
+.box {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     width: 20%;
     height: 100%;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
     justify-content: space-evenly;
 }
 
 .box div {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 400;
     font-size: 20px;
+    font-weight: 400;
+    align-items: center;
+    justify-content: center;
 }
 
 .valorBox span {
-    font-size: 22px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 400;
 }
 
 .graficoInferiorGeral {
     display: flex;
-    width: 96%;
-    flex-direction: column;
-    background-color: #CFCFCF;
-    margin: 2% 0;
-    border-radius: 10px;
+    width: 95%;
     padding: 2%;
+    margin: 3% 0 2% 0;
+    border-radius: 15px;
+    flex-direction: column;
+    background-color: #c4d7bb;
+
+    -webkit-box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
 }
 
-.informacoesMaquinaGrafico{
+.informacoesMaquinaGrafico {
     display: flex;
-    flex-direction: row;
     width: 100%;
-    justify-content: space-between;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-between;
 }
 
-.opcaoSelecionadaGraficoLegenda{
+.opcaoSelecionadaGraficoLegenda {
     display: flex;
     flex-direction: column;
+}
+
+.opcaoSelecionadaGraficoLegenda2 {
+    display: flex;
+    width: 60%;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .opcaoSelecionadaGraficoLegenda span {
     margin-bottom: 10%;
 }
 
-#componenteSelecionado{
-    font-size: 25px;
+#componenteSelecionado {
+    display: flex;
+    font-size: 20px;
+    font-weight: 600;
+    align-items: center;
+}
+
+#componenteSelecionado svg {
+    margin: 0 15% 0 0;
+}
+
+#tipoValorComponenteSelecionado {
+    font-size: 22px;
     font-weight: 400;
 }
 
-#tipoValorComponenteSelecionado{
-    font-size: 15px;
-    font-weight: 200;
-}
-
-#nomeComponente{
-    font-size: 20px;
+#nomeComponente {
+    font-size: 22px;
     font-weight: 400;
 }
 
 .graficoInferior {
     width: 100%;
-    margin: auto;
-    height: 350px;
-    background-color: #718672;
-    border-radius: 10px;
+    height: 290px;
+    border-radius: 15px;
+    background-color: green;
 }
 
-.conteudoCanvas{
+.conteudoCanvas {
+    width: 100%;
     height: 100%;
 }
 
 .graficoInferior canvas {
-    background-color: #718672;
-    border-radius: 15px;
+    background-color: rgb(129, 149, 129);
     padding-left: 2%;
+    border-radius: 15px;
 }
 
-.conteudoDireitaDashboardMaquina{
+.conteudoDireitaDashboardMaquina {
     display: flex;
-    flex-direction: column;
     height: 100%;
+    flex-direction: column;
 }
 
-.boxesLaterais{
-    width: 100%;
+.boxesLaterais {
     display: flex;
-    height: 93.5%;
+    width: 100%;
+    height: 90%;
     margin: auto;
     flex-direction: column;
     justify-content: space-between;
+
 }
 
 .boxLateral {
-    background-color: #CFCFCF;
-    display: flex;
-    flex-direction: column;
-    border-radius: 10px;
     width: 100%;
-    padding: 0 5% 5% 5%;
+    padding: 2%;
+    transition: 0.5s;
+    transition: 0.40s;
+    border-radius: 10px;
+    display: flex;
     cursor: pointer;
+    flex-direction: column;
+    background-color: #909f89;
+
+    -webkit-box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 16px 14px 13px 0px rgba(0, 0, 0, 0.75);
 }
 
-.tituloBoxLateral{
-    font-size: 20px;
+.boxLateral:hover {
+    transition: 0.5s;
+    transform: scale(1.1);
+}
+
+.spanBoxLateral {
+    width: 100%;
+    font-size: 15px;
+    margin-top: 2%;
     font-weight: 400;
     text-align: center;
-    margin: 5% 0;
+    color: rgb(255, 255, 255);
 }
 
-.divValorBoxLateral{
+@keyframes animacaoBorda {
+    0% {
+        border: 3px solid rgb(85, 183, 0);
+
+    }
+
+    50% {
+        border: 3px solid rgb(0, 55, 9);
+    }
+
+    100% {
+        border: 3px solid rgb(0, 128, 13);
+    }
+}
+
+.animacaoBorda {
+    animation-name: animacaoBorda;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.tituloBoxLateral {
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    margin: 3% 0;
+}
+
+.divValorBoxLateral {
+    border-radius: 15px;
+}
+
+.valorBoxLateral {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    border-radius: 15px;
     background-color: #718672;
 }
 
-.valorBoxLateral{
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-}
-
-.spanValorBoxLateral{
-    font-size: 40px;
+.spanValorBoxLateral {
+    font-size: 30px;
     font-weight: 400;
     margin: 10% 0;
 }
 
-.spanTipoValorBoxLateral{
-    font-size: 20px;
-    font-weight: 200;
+.spanTipoValorBoxLateral {
+    font-size: 15px;
+    font-weight: 600;
     margin-bottom: 10%;
 }
 
-.linhaCimaRam{
+.linhaCimaRam {
     display: flex;
     flex-direction: row;
     justify-content: center;
     font-size: 40px;
     align-items: center;
 }
+
+.modalListaJanelas {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    position: absolute;
+    width: 30%;
+    top: 50;
+    left: 50;
+    z-index: 9;
+    border-radius: 10px;
+    flex-direction: column;
+    background-color: white;
+}
+
+#sombreamento {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+.iconFecharModalListaJanelas {
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+.tituloModalListaJanelas {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 3%;
+    text-align: center;
+}
+
+.subtituloModalListaJanelas {
+    width: 100%;
+    font-family: Poppins;
+    font-size: 17px;
+    font-weight: 600;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 5%;
+}
+
+.subtituloModalListaJanelas span {
+    width: 95%;
+}
+
+.janelasAbertas {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    margin-bottom: 5%;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.janelaAberta {
+    display: flex;
+    width: 100%;
+    height: 40px;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+    background-color: #92E3A9;
+}
+
+.bloquinhoEsquerdaJanelaAberta {
+    width: 40px;
+    height: 40px;
+    margin-left: 3%;
+    background-color: #004D02;
+    cursor: pointer;
+}
+
+.nomeJanelaAberta {
+    margin-left: 5%;
+    font-size: 18px;
+}
+
+.avisoFechado{
+    display: flex;
+    justify-content: flex-start;
+    margin-left: 2%;
+    margin-bottom: 2%;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#spanAvisoFechando{
+    color: #f16a1b;
+}
+
+#spanAvisoFechado{
+color: red;
+}
+
+
 

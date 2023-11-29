@@ -93,7 +93,7 @@ public class TesteProjeto {
                     System.out.println("Você não é um funcionário registrado na empresa linkada a essa máquina!");
                     System.out.println("Solicite para que alguém libere seu acesso, se for o caso.");
                     Log log = new Log();
-                    log.gravarLogErros();
+                    log.gravarErros();
 
                 } else {
                     System.out.println("""

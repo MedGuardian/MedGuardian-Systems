@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Empresa</title>
+    <title>Login Empresa|MedGuardian</title>
     <link rel="stylesheet" href="../PaginaInicial/paginaInicial.css">
     <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=League Spartan' rel='stylesheet'>
@@ -103,7 +103,7 @@
                     sessionStorage.emailEmpresa = json.emailEmpresa;
 
                     setTimeout(function () {
-                        window.location ="../Dashboard/dashboard.html";
+                        window.location = "../Dashboard/dashboard.html";
                     }, 1000); // apenas para exibir o loading
 
                 });
@@ -111,7 +111,7 @@
                 spanErro.style.display = 'flex';
                 console.log("Houve um erro ao tentar realizar o login!");
 
-                setTimeout(function (){
+                setTimeout(function () {
                     spanErro.style.display = "none";
                 }, 3000)
 
@@ -127,29 +127,29 @@
         return false;
     }
 
-    function telaLogin(){
+    function telaLogin() {
         window.location.href = 'tipoLogin.html'
     }
-    
-    function telaCadastro(){
+
+    function telaCadastro() {
         window.location.href = '../Cadastro/cadastro.html'
     }
 
     window.addEventListener("keyup", capturarTecla)
-function capturarTecla(event) {
-      if (event.key === "Enter") {
-        entrar();
-      }
-}
+    function capturarTecla(event) {
+        if (event.key === "Enter") {
+            entrar();
+        }
+    }
 
-function transformarCnpj(){
-    var cnpj = inputCnpj.value.replace(/[^\d]/g, '');
+    function transformarCnpj() {
+        var cnpj = inputCnpj.value.replace(/[^\d]/g, '');
 
-            let cnpjFormatado = '';
+        let cnpjFormatado = '';
 
-                cnpjFormatado = `${cnpj.substr(0, 2)}.${cnpj.substr(2, 3)}.${cnpj.substr(5, 3)}/${cnpj.substr(8, 4)}-${cnpj.substr(12)}`;
+        cnpjFormatado = `${cnpj.substr(0, 2)}.${cnpj.substr(2, 3)}.${cnpj.substr(5, 3)}/${cnpj.substr(8, 4)}-${cnpj.substr(12)}`;
 
-            inputCnpj.value = cnpjFormatado;
-}
+        inputCnpj.value = cnpjFormatado;
+    }
 
 </script>

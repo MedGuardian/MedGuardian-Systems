@@ -2,11 +2,11 @@ var usuarioModel = require("../models/usuarioModel");
 
 
 function buscarFuncPorId(req, res) {
-    var idFuncionario = req.params.idFunc; 
-        usuarioModel.listarFuncionario(idFuncionario).then((resultado) => {
-          res.status(200).json(resultado);
-        });
-      };
+    var idFuncionario = req.params.idFunc;
+    usuarioModel.listarFuncionario(idFuncionario).then((resultado) => {
+        res.status(200).json(resultado);
+    });
+};
 
 
 
@@ -116,14 +116,14 @@ function excluirMaquina(req, res) {
 }
 
 function atualizarEmpresa(req, res) {
-    
-   var email = req.body.emailServer;
-   var tel = req.body.telEmpresaServer;
-   var cep = req.body.cepServer;
-   var log = req.body.logServer;
-   var num = req.body.numServer;
-   var comp = req.body.compServer;
-   var idEmpresa = req.body.idEmpresaServer;
+
+    var email = req.body.emailServer;
+    var tel = req.body.telEmpresaServer;
+    var cep = req.body.cepServer;
+    var log = req.body.logServer;
+    var num = req.body.numServer;
+    var comp = req.body.compServer;
+    var idEmpresa = req.body.idEmpresaServer;
 
     if (email == undefined) {
         res.status(400).send("Seu email está undefined!");
@@ -140,7 +140,7 @@ function atualizarEmpresa(req, res) {
                     if (resultadoAutenticar.length == 1) {
                         console.log(resultadoAutenticar);
                         res.json(resultadoAutenticar[0]);
-                   }
+                    }
                 }
             ).catch(
                 function (erro) {
@@ -154,30 +154,30 @@ function atualizarEmpresa(req, res) {
 }
 
 function atualizarFuncionario(req, res) {
-    
+
     var novoEmail = req.body.novoEmailServer;
     var novaSenha = req.body.novaSenhaServer;
-    var idFunc = req.params.idFunc; 
- 
-         usuarioModel.atualizarFuncionario(novoEmail, novaSenha, idFunc)
-             .then(
-                 function (resultadoAutenticar) {
-                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
-                     console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
- 
-                     if (resultadoAutenticar.length == 1) {
-                         console.log(resultadoAutenticar);
-                         res.json(resultadoAutenticar[0]);
-                    }
-                 }
-             ).catch(
-                 function (erro) {
-                     console.log(erro);
-                     console.log("\nHouve um erro ao atualizar os dados do funcionário! Erro: ", erro.sqlMessage);
-                     res.status(500).json(erro.sqlMessage);
-                 }
-             );
- }
+    var idFunc = req.params.idFunc;
+
+    usuarioModel.atualizarFuncionario(novoEmail, novaSenha, idFunc)
+        .then(
+            function (resultadoAutenticar) {
+                console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
+                console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
+
+                if (resultadoAutenticar.length == 1) {
+                    console.log(resultadoAutenticar);
+                    res.json(resultadoAutenticar[0]);
+                }
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao atualizar os dados do funcionário! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
 
 
 function cadastrarFuncionario(req, res) {
@@ -191,26 +191,21 @@ function cadastrarFuncionario(req, res) {
         res.status(400).send("Seu cnpj está undefined!");
     } else if (senha == undefined) {
         res.status(400).send("Sua senha está indefinida!");
-    } else if(email==undefined){
+    } else if (email == undefined) {
         res.status(400).send("O email ta undefined")
-    } 
+    }
     else {
 
-        usuarioModel.cadastrarFuncionario(nome, email,senha, fkEmpresa, tipo)
+        usuarioModel.cadastrarFuncionario(nome, email, senha, fkEmpresa, tipo)
             .then(
                 function (resultadoAutenticar) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
-                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em String
-
-                    if (resultadoAutenticar.length == 1) {
-                        console.log(resultadoAutenticar);
-                        res.json(resultadoAutenticar[0]);
-                   }
+                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`); // transforma JSON em Strin
                 }
             ).catch(
                 function (erro) {
                     console.log(erro);
-                    console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+                    console.log("\nHouve um erro ao realizar o cadastro de funcionário! Erro: ", erro.sqlMessage);
                     res.status(500).json(erro.sqlMessage);
                 }
             );
@@ -291,6 +286,150 @@ function cadastrarEndereco(req, res) {
     }
 }
 
+function selectDataDia(req, res) {
+    var idVar = req.body.idDiaVar;
+    usuarioModel.selectDataDia(idVar)
+        .then(
+            function (resultadoDatas) {
+                console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
+                console.log(`Resultados: ${JSON.stringify(resultadoDatas)}`); // transforma JSON em String
+
+                if (resultadoDatas.length > 0) {
+                    console.log(resultadoDatas);
+                    res.status(200).json(resultadoDatas);
+                } else if (resultadoDatas.length == 0) {
+                    res.status(403).send("Erro no select de datas do dia!");
+                } else {
+                    res.status(404).send("Erro no select de datas do dia!!!!");
+                }
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao realizar o select de datas! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function selectDataSemana(req, res) {
+    var idVar = req.body.idSemanaVar;
+    usuarioModel.selectDataSemana(idVar)
+        .then(
+            function (resultadoDatas) {
+                console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
+                console.log(`Resultados: ${JSON.stringify(resultadoDatas)}`); // transforma JSON em String
+
+                if (resultadoDatas.length > 0) {
+                    console.log(resultadoDatas);
+                    res.status(200).json(resultadoDatas);
+                } else if (resultadoDatas.length == 0) {
+                    res.status(403).send("Erro no select de datas do dia!");
+                } else {
+                    res.status(404).send("Erro no select de datas do dia!!!!");
+                }
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao realizar o select de datas! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function selectDataMes(req, res) {
+    var idMes = req.body.idMesVar;
+
+    usuarioModel.selectDataMes(idMes)
+        .then(
+            function (resultadoDatas) {
+                console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
+                console.log(`Resultados: ${JSON.stringify(resultadoDatas)}`); // transforma JSON em String
+
+                if (resultadoDatas.length > 0) {
+                    console.log(resultadoDatas);
+                    res.status(200).json(resultadoDatas);
+                } else if (resultadoDatas.length == 0) {
+                    res.status(403).send("Erro no select de datas do dia!");
+                } else {
+                    res.status(404).send("Erro no select de datas do dia!!!!");
+                }
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao realizar o select de datas! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function atualizarDatas(req, res){
+    var idServer = req.body.idServer;
+   
+    usuarioModel.atualizarDatas(idServer)
+    .then(
+        function (resultadoDatas) {
+            console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
+            console.log(`Resultados: ${JSON.stringify(resultadoDatas)}`); // transforma JSON em String
+
+            if (resultadoDatas.length > 0) {
+                console.log(resultadoDatas);
+                res.status(200).json(resultadoDatas);
+            } else if (resultadoDatas.length == 0) {
+                res.status(403).send("Erro no select de datas do dia!");
+            } else {
+                res.status(404).send("Erro no select de datas do dia!!!!");
+            }
+        }
+    ).catch(
+        function (erro) {
+            console.log(erro);
+            console.log("\nHouve um erro ao realizar o select de datas! Erro: ", erro.sqlMessage);
+            res.status(500).json(erro.sqlMessage);
+        }
+    );
+    
+}
+
+function selectIntervaloData(req, res) {
+    var data1 = req.body.date1Server;
+    var data2 = req.body.date2Server;
+
+
+    if ((data1 || data2) == undefined) {
+        console.log(data1)
+        console.log(data2)
+
+        res.status(400).send("Datas inválidas");
+    } else {
+        usuarioModel.selectIntervaloData(data1, data2)
+            .then(
+                function (resultadoDatas) {
+                    console.log(`\nResultados encontrados: ${resultadoDatas.length}`);
+                    console.log(`Resultados: ${JSON.stringify(resultadoDatas)}`); // transforma JSON em String
+
+                    if (resultadoDatas.length > 0) {
+                        console.log(resultadoDatas);
+                        res.status(200).json(resultadoDatas);
+                    } else if (resultadoDatas.length == 0) {
+                        res.status(403).send("Erro no select do intervalo das datas!");
+                    } else {
+                        res.status(404).send("Erro no select do intervalo das datas!!!!");
+                    }
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao realizar o select de datas! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+
+}
+
 function cadastrarEndereco(req, res) {
     // Crie uma variável que vá recuperar os valores do arquivo cadastro.html
     var cep = req.body.cepServer;
@@ -329,8 +468,10 @@ function cadastrarEndereco(req, res) {
 
 function atualizarGrafico(req, res) {
 
+    var fkComputador = req.body.fkComputadorServer;
+
     const limite_linhas = 6;
-    usuarioModel.atualizarGrafico(limite_linhas)
+    usuarioModel.atualizarGrafico(fkComputador, limite_linhas)
         .then(
             function (resultado) {
                 res.json(resultado);
@@ -349,7 +490,9 @@ function atualizarGrafico(req, res) {
 
 function selectTotalComponentes(req, res) {
 
-    usuarioModel.selectTotalComponentes()
+    var fkComputador = req.body.fkComputadorServer;
+
+    usuarioModel.selectTotalComponentes(fkComputador)
         .then(
             function (resultado) {
                 res.json(resultado);
@@ -366,8 +509,33 @@ function selectTotalComponentes(req, res) {
         );
 }
 
+function selectMetricas(req, res) {
+
+    var fkComputador = req.body.fkComputadorServer;
+    var fkEmpresa = req.body.fkEmpresaServer;
+
+    usuarioModel.selectMetricas(fkComputador, fkEmpresa)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao buscar os dados quanto a metrica! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
 function atualizarIndicadores(req, res) {
-    usuarioModel.atualizarIndicadores()
+
+    var fkComputador = req.body.fkComputadorServer
+
+    usuarioModel.atualizarIndicadores(fkComputador)
         .then(
             function (resultado) {
                 res.json(resultado);
@@ -405,14 +573,13 @@ function selectComputador(req, res) {
 }
 
 function excluirMaquina(req, res) {
-    var nomeMaquina = req.body.nomeMaquinaServer;
     var idComputador = req.body.idComputadorServer;
 
-    if (nomeMaquina == undefined || idComputador == undefined) {
+    if (idComputador == undefined) {
         res.status(400).send("O nome da máquina ou o ID dela está undefined!");
     } else {
 
-        usuarioModel.excluirMaquina(nomeMaquina, idComputador)
+        usuarioModel.excluirMaquina(idComputador)
             .then(
                 function (resultadoExclusaoMaquina) {
                     console.log(`\nResultados encontrados: ${resultadoExclusaoMaquina.length}`);
@@ -438,106 +605,197 @@ function excluirMaquina(req, res) {
 
 }
 
+
+
 function selectFuncionarios(req, res) {
     var fkEmpresa = req.body.fkEmpresaServer
-        usuarioModel.selectFuncionarios(fkEmpresa)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao realizar o select de Funcionários! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
-    }
-
-    function selectComputadores(req, res) {
-        var fkEmpresa = req.body.fkEmpresaServer
-            usuarioModel.selectComputadores(fkEmpresa)
-                .then(
-                    function (resultado) {
-                        res.json(resultado);
-                    }
-                ).catch(
-                    function (erro) {
-                        console.log(erro);
-                        console.log(
-                            "\nHouve um erro ao realizar o select dos computadores! Erro: ",
-                            erro.sqlMessage
-                        );
-                        res.status(500).json(erro.sqlMessage);
-                    }
-                );
-        }
-
-        function selectLocalComputador(req, res) {
-            var fkEmpresa = req.body.fkEmpresaServer
-                usuarioModel.selectLocalComputador(fkEmpresa)
-                    .then(
-                        function (resultado) {
-                            res.json(resultado);
-                        }
-                    ).catch(
-                        function (erro) {
-                            console.log(erro);
-                            console.log(
-                                "\nHouve um erro ao realizar o select do local dos computadores! Erro: ",
-                                erro.sqlMessage
-                            );
-                            res.status(500).json(erro.sqlMessage);
-                        }
-                    );
+    usuarioModel.selectFuncionarios(fkEmpresa)
+        .then(
+            function (resultado) {
+                res.json(resultado);
             }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao realizar o select de Funcionários! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
 
-            function atualizarDashboardGeral(req, res) {
-                var fkEmpresa = req.body.fkEmpresaServer
-                    usuarioModel.atualizarDashboardGeral(fkEmpresa)
-                        .then(
-                            function (resultado) {
-                                res.json(resultado);
-                            }
-                        ).catch(
-                            function (erro) {
-                                console.log(erro);
-                                console.log(
-                                    "\nHouve um erro ao realizar o select que atualiza os gráficos da dashboard geral! Erro: ",
-                                    erro.sqlMessage
-                                );
-                                res.status(500).json(erro.sqlMessage);
-                            }
-                        );
-                }
+function selectComputadores(req, res) {
+    var fkEmpresa = req.body.fkEmpresaServer
+    var filtro = req.body.filtroServer
 
-                function excluirFuncionario(req,res){
-                    var funcionario = req.body.idFuncionarioServer;
-                    usuarioModel.excluirFuncionario(funcionario)
-                    .then(
-                        function(resultado) {
-                            res.json(resultado)
-                        }
-                    ).catch(
-                        function(erro) {
-                            console.log(erro);
-                            console.log(
-                                "\n Houve um erro ao tentar excluir o Funcionário.",
-                                erro.sqlMessage
-                            )
-                            res.status(500).json(erro.sqlMessage)
-                        }
-                    )
-                }
-    
+    usuarioModel.selectComputadores(fkEmpresa, filtro)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao realizar o select dos computadores! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function selectLocalComputador(req, res) {
+    var fkEmpresa = req.body.fkEmpresaServer
+    usuarioModel.selectLocalComputador(fkEmpresa)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao realizar o select do local dos computadores! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function atualizarDashboardGeral(req, res) {
+    var fkEmpresa = req.body.fkEmpresaServer
+    usuarioModel.atualizarDashboardGeral(fkEmpresa)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao realizar o select que atualiza os gráficos da dashboard geral! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function excluirFuncionario(req, res) {
+    var funcionario = req.body.idFuncionarioServer;
+    usuarioModel.excluirFuncionario(funcionario)
+        .then(
+            function (resultado) {
+                res.json(resultado)
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\n Houve um erro ao tentar excluir o Funcionário.",
+                    erro.sqlMessage
+                )
+                res.status(500).json(erro.sqlMessage)
+            }
+        )
+}
+
+function selectAlertas(req, res) {
+
+    var idEmpresa = req.body.fkEmpresaServer
+    var dataHoraAtual = req.body.dataHoraAtualServer;
+    var dataHoraReduzida = req.body.dataHoraReduzidaServer;
+    var dataHoraMais3HorasReduzidas = req.body.dataHoraMais3HorasReduzidaServer;
+    var dataHoraMais3Horas = req.body.dataHoraMais3HorasServer;
+
+
+    usuarioModel.selectAlertas(idEmpresa, dataHoraAtual, dataHoraReduzida, dataHoraMais3HorasReduzidas, dataHoraMais3Horas)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao fazer o select dos alertas! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function atualizarMenuFlutuante(req, res) {
+    var fkEmpresa = req.body.fkEmpresaServer
+    usuarioModel.selectFuncionarios(fkEmpresa)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao realizar o select de Funcionários! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function selectJanelasAbertas(req, res) {
+
+    var fkComputador = req.params.fkComputadorServer;
+
+    usuarioModel.selectJanelasAbertas(fkComputador)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao fazer o select das janelas abertas! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function fecharJanela(req, res) {
+
+    var idJanela = req.body.idJanelaServer;
+
+    usuarioModel.fecharJanela(idJanela)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao fazer o select das janelas abertas! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
 
 module.exports = {
     autenticar,
     cadastrar,
-    cadastrarEndereco, 
+    cadastrarEndereco,
     cadastrarFuncionario,
     autenticarFuncionario,
     buscarFuncPorId,
@@ -548,9 +806,19 @@ module.exports = {
     selectTotalComponentes,
     atualizarIndicadores,
     selectComputador,
+    selectDataDia,
+    selectDataSemana,
+    selectDataMes,
+    selectIntervaloData,
+    selectFuncionarios,
+    atualizarDatas,
     selectFuncionarios,
     selectComputadores,
     selectLocalComputador,
     atualizarDashboardGeral,
-    excluirFuncionario
+    excluirFuncionario,
+    selectAlertas,
+    selectMetricas,
+    selectJanelasAbertas,
+    fecharJanela
 }
