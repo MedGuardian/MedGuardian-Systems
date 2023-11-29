@@ -1,5 +1,5 @@
 #!/bin/bash
-wget https://github.com/MedGuardian/MedGuardian-Systems/raw/Beralde-Individual/jarMedGuardian/target/jarMedGuardian-1.0-SNAPSHOT-jar-with-dependencies.jar
+wget https://github.com/MedGuardian/MedGuardian-Systems/raw/jar-Beralde-Individual/jarMedGuardian/target/jarMedGuardian-1.0-SNAPSHOT-jar-with-dependencies.jar
 
 sudo apt-get update -y
 sudo apt-get install default-jre -y
