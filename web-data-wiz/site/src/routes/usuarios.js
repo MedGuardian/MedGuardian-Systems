@@ -83,5 +83,9 @@ router.post("/selectMetricas", function (req, res) {
     usuarioController.selectMetricas(req, res);
 });
 
+router.post("/atualizarMenuFlutuante", function (req, res) {
+    usuarioController.selectMetricas(req, res);
+});
+
 
 module.exports = router;

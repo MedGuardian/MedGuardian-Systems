@@ -4,10 +4,11 @@ function validarSessao() {
     const botaoLogin = document.getElementById("botaoLogin");
     const botaoCadastro = document.getElementById("botaoCadastro");
     const divSaudacaoLogado = document.getElementById("saudacaoLogado");
-    const msgSaudacao = document.getElementById("saudacao");
     const spanCadastrarFuncionario = document.getElementById('spanCadastrarFuncionario');
     const divGerarRelatorio = document.getElementById('divGerarRelatorio')
     const botaoSair = document.getElementById('botaoSair');
+
+
     if (window.location.href.indexOf("dashboard.html") > -1) {
         if (sessionStorage.idEmpresa == null && (sessionStorage.cargo == "Analista" || sessionStorage.cargo == "Estagiário")) {
             divGerarRelatorio.style.display = 'none'
@@ -20,14 +21,7 @@ function validarSessao() {
             botaoLogin.style.display = "none";
             botaoCadastro.style.display = "none";
             divSaudacaoLogado.style.display = "flex";
-
-            if (sessionStorage.idFuncionario) {
-                msgSaudacao.innerHTML += sessionStorage.nomeFuncionario.split(' ')[0];
-                atualizarMenuFlutuante(sessionStorage.nomeFuncionario.split(' ')[0], sessionStorage.emailFuncionario, sessionStorage.cargo)
-            } else {
-                msgSaudacao.innerHTML += sessionStorage.razaoSocial.split(' ')[0]
-                atualizarMenuFlutuante(sessionStorage.razaoSocial.split(' ')[0], sessionStorage.emailEmpresa, "Empresa")
-            }
+            atualizarMenuFlutuante();
         }
 
         if (sessionStorage.idEmpresa == null && (sessionStorage.cargo == "Analista" || sessionStorage.cargo == "Estagiário")) {
@@ -36,12 +30,11 @@ function validarSessao() {
             spanCadastrarFuncionario.style.display = 'block'
         }
     }
+
     if (sessionStorage.idEmpresa == null && (sessionStorage.cargo == "Analista" || sessionStorage.cargo == "Estagiário")) {
         spanCadastrarFuncionario.style.display = 'none'
-        divGerarRelatorio.style.backgroundColor = 'red'
     } else if (sessionStorage.idEmpresa != null || (sessionStorage.cargo == "Gerente" || sessionStorage.cargo == "Supervisor")) {
         spanCadastrarFuncionario.style.display = 'block'
-        divGerarRelatorio.style.backgroundColor = 'red'
     }
 }
 
@@ -49,14 +42,22 @@ function voltarPaginaAnterior() {
     window.history.back();
 }
 
-function atualizarMenuFlutuante(nome, email, cargo) {
-    var nomeMenuFlutuante = document.getElementById('nomeMenuFlutuante')
-    var cargoMenuFlutuante = document.getElementById('cargoMenuFlutuante')
-    var emailMenuFlutuante = document.getElementById('emailMenuFlutuante')
+function atualizarMenuFlutuante() {
+    var nomeMenuFlutuante = document.getElementById('nomeMenuFlutuante');
+    var cargoMenuFlutuante = document.getElementById('cargoMenuFlutuante');
+    var emailMenuFlutuante = document.getElementById('emailMenuFlutuante');
 
-    nomeMenuFlutuante.innerHTML = nome
-    cargoMenuFlutuante.innerHTML = "(" + cargo + ")"
-    emailMenuFlutuante.innerHTML = email
+
+    if (sessionStorage.idFuncionario != null) {
+        nomeMenuFlutuante.innerHTML = sessionStorage.nomeFuncionario.split(' ')[0];
+        cargoMenuFlutuante.innerHTML = "(" + sessionStorage.cargo + ")";
+        emailMenuFlutuante.innerHTML = sessionStorage.emailFuncionario;
+    } else {
+        nomeMenuFlutuante.innerHTML = sessionStorage.razaoSocial.split(' ')[0];
+        cargoMenuFlutuante.innerHTML = "(Empresa)";
+        emailMenuFlutuante.innerHTML = sessionStorage.emailEmpresa;
+    }
+
 }
 
 
@@ -70,12 +71,12 @@ function abrirMenuFlutuante() {
 }
 
 function abrirDashboardMenuFlutuante() {
-    window.location.href = '../Dashboard/dashboard.html'
+    window.location.href = './Dashboard/dashboard.html'
 }
 
 
 function abrirAlterarFuncionario() {
-    window.location.href = '../Dashboard/Funcionarios/funcionarios.html'
+    window.location.href = './Dashboard/Funcionarios/funcionarios.html';
 }
 
 function abrirGerenciamentoMenuFlutuante() {
@@ -88,7 +89,7 @@ function abrirGerenciamentoMenuFlutuante() {
 
 function fazerLogout() {
     sessionStorage.clear()
-    window.location.reload()
+    window.location.href = '../Login/login.html';
 }
 
 function abrirCadastrarFuncionario() {
