@@ -5,6 +5,11 @@ function buscarPorId(id) {
   return database.executar(query);
 }
 
+function buscarAlertas(idComputador){
+  var query = `select top 3 * from alertas where fkComputador=${idComputador} order by idAlerta desc;`;
+  return database.executar(query);
+}
+
 function listar() {
   var query = `select * from empresa`;
 
@@ -42,5 +47,6 @@ module.exports = {
   cadastrar,
   listar,
   buscarMetricas,
-  cadMetrica
+  cadMetrica,
+  buscarAlertas
 };

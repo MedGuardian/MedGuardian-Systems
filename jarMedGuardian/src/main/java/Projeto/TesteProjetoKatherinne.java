@@ -10,13 +10,10 @@ import java.util.*;
 
 public class TesteProjetoKatherinne {
     public static void main(String[] args) {
-        boolean pausarMonitoramento = true;
-
         KatherinneTimer timer = new KatherinneTimer();
         System.out.println("""
                 _______________________________________
-                |    Olá, escolha uma das opções:     |
-                |                                     |
+                |        Escolha uma das opções:      |
                 |   1 - Para pausar o monitoramento;  |
                 |   2 - Para Retomar o monitoramento; |
                 |   3 - Sair;                         |

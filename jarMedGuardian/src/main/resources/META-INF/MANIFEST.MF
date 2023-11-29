@@ -1,3 +1,7 @@
 Manifest-Version: 1.0
+<<<<<<< HEAD
 Main-Class: Projeto.TesteProjetoSarah
+=======
+Main-Class: Projeto.TesteProjeto
+>>>>>>> 701ae3186a38fd48e279b955bef5a51a99036d12
 

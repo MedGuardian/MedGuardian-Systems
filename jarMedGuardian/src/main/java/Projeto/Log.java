@@ -17,7 +17,7 @@ public class Log {
 
     public void gravarLog() {
         Looca looca = new Looca();
-
+        Slack slack = new Slack();
         Double processadorEmUso = looca.getProcessador().getUso();
 
         Integer segundos = looca.getSistema().getTempoDeAtividade().intValue();
@@ -32,7 +32,7 @@ public class Log {
         String dataHoraAtual = dateFormat.format(new Date());
 
         String nomeDoArquivo = dataHoraAtual;
-        String caminhoDoArquivo = "C:\\Users\\sarah\\OneDrive\\Área de Trabalho\\Logs\\" + nomeDoArquivo + ".txt";
+        String caminhoDoArquivo = "C:\\Users\\lucas\\OneDrive\\Área de Trabalho\\Logs\\" + nomeDoArquivo + ".txt";
 
         try {
             FileWriter arq = new FileWriter(caminhoDoArquivo);
@@ -77,7 +77,7 @@ public class Log {
             String dataHoraAtual = dateFormat.format(new Date());
 
             String nomeDoArquivo = "Erros_" + dataHoraAtual;
-            String caminhoDoArquivo = "C:\\Users\\sarah\\OneDrive\\Área de Trabalho\\Logs\\" + nomeDoArquivo + ".txt";
+            String caminhoDoArquivo = "C:\\Users\\lucas\\OneDrive\\Área de Trabalho\\Logs\\x1" + nomeDoArquivo + ".txt";
 
             FileWriter arq = new FileWriter(caminhoDoArquivo);
             PrintWriter gravarArq = new PrintWriter(arq);

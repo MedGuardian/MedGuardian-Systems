@@ -110,5 +110,4 @@ public class EnviarBDLocal {
         con.update("DELETE FROM janelas WHERE comando = ? AND fkComputador = ?", comando, fkComputador);
         System.out.println("Exclui a janela de comando: " + comando);
     }
-
 }

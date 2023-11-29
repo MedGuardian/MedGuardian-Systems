@@ -8,6 +8,24 @@ function buscarPorCnpj(req, res) {
   });
 }
 
+// buscarAlertaPId
+
+function buscarAlertaPId(req, res) {
+  var idComputador = req.params.idComputador
+  empresaModel.buscarAlertas(idComputador).then(function (resultado) {
+      if (resultado.length >= 0) {
+          res.status(200).json(resultado);
+      } else {
+          res.status(204).send("Nenhum resultado encontrado!")
+      }
+  }).catch(function (erro) {
+      console.log(erro);
+      console.log("Houve um erro ao buscar as ultimas medidas.", erro.sqlMessage);
+      res.status(500).json(erro.sqlMessage);
+  });
+}
+
+
 function validarMetricas(req, res) {
   var fkEmpresa = req.params.idEmpresa
   empresaModel.buscarMetricas(fkEmpresa).then(function (resultado) {
@@ -76,5 +94,6 @@ module.exports = {
   cadastrar,
   listar,
   validarMetricas,
-  cadastrarMetrica
+  cadastrarMetrica,
+  buscarAlertaPId
 };

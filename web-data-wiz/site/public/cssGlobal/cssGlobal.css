@@ -1,24 +1,46 @@
-.menuFlutuante{
+.botaoMenu {
     display: flex;
-    background-color: #004D02;
-    position: absolute;
-    left: 70.5%;
-    top: 9%;
-    z-index: 9;
-    font-family: LeagueSpartan;
-    color: white;
-    width: 300px;
-    border-radius: 15px;
+    transition: 0.5s;
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+    color: rgb(0, 195, 0);
 }
 
-.conteudoMenuFlutuante{
+.botaoMenu span {
+    margin: 2% 0 0 0;
+    font-size: 25px;
+}
+
+.botaoMenu:hover {
+    transform: scale(1.1);
+    transition: 0.5s;
+    color: black;
+}
+
+.menuFlutuante {
+    display: none;
+    width: 300px;
+    top: 9%;
+    z-index: 9;
+    left: 70.5%;
+
+    position: absolute;
+    font-family: Poppins;
+    border-radius: 15px;
+
+    color: rgb(0, 0, 0);
+    background-color: #8c948c;
+}
+
+.conteudoMenuFlutuante {
     display: flex;
     flex-direction: column;
     padding: 10% 5% 5% 5%;
     width: 100%;
 }
 
-.headerMenuFlutuante{
+.headerMenuFlutuante {
     display: flex;
     flex-direction: row;
 }
@@ -30,23 +52,23 @@
     width: 40px;
 }
 
-.direitaHeaderMenuFlutuante{
+.direitaHeaderMenuFlutuante {
     display: flex;
     flex-direction: column;
     margin-left: 10%;
     width: 100%;
 }
 
-.nomeCargoRow{
+.nomeCargoRow {
     display: flex;
+    width: 100%;
+    font-weight: 600;
     flex-direction: row;
     align-items: center;
-    font-weight: 600;
-    width: 100%;
 }
 
-#nomeMenuFlutuante{
-    font-size: 20px;
+#nomeMenuFlutuante {
+    font-size: 15px;
 }
 
 #cargoMenuFlutuante {
@@ -54,30 +76,33 @@
     margin-left: 2.5%;
 }
 
-.emailRow{
+.emailRow {
     margin-top: 5%;
+    font-size: 12px;
+    font-weight: 600;
 }
 
-.opcoesMenuFlutuante{
+.opcoesMenuFlutuante {
     display: flex;
+    text-align: left;
     flex-direction: column;
     margin-top: 10%;
 }
 
 .opcoesMenuFlutuante span {
-    font-weight: 600;
-    font-size: 20px;
+    font-weight: 400;
+    font-size: 15px;
     margin-bottom: 7.5%;
     cursor: pointer;
 }
 
-.linhaMenuFlutuante{
+.linhaMenuFlutuante {
     height: 1px;
     width: 100%;
     background-color: white;
     margin-bottom: 7.5%;
 }
 
-#spanLogout{
+#spanLogout {
     margin-bottom: 5%;
 }

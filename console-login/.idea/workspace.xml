@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0030085-14a4-4724-a46a-6f5bca94b589" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web-data-wiz/site/public/Dashboard/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/../web-data-wiz/site/public/Dashboard/dashboard.html" afterDir="false" />
-    </list>
+    <list default="true" id="f0030085-14a4-4724-a46a-6f5bca94b589" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

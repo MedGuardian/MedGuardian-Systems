@@ -15,47 +15,67 @@
     </properties>
 
     <dependencies>
-    <dependency>
-        <groupId>com.github.britooo</groupId>
-        <artifactId>looca-api</artifactId>
-        <version>2.2.0</version>
-    </dependency>
+        <dependency>
+            <groupId>com.github.britooo</groupId>
+            <artifactId>looca-api</artifactId>
+            <version>2.2.0</version>
+        </dependency>
 
-    <!-- dependências do spring jdbc -->
-    <dependency>
-        <groupId>org.springframework</groupId>
-        <artifactId>spring-jdbc</artifactId>
-        <version>5.2.25.RELEASE</version>
-    </dependency>
-    <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-dbcp2</artifactId>
-        <version>2.5.0</version>
-    </dependency>
-    <!-- Driver do servidor de banco H2 -->
-    <dependency>
-        <groupId>com.h2database</groupId>
-        <artifactId>h2</artifactId>
-        <version>2.2.222</version>
-    </dependency>
+        <!-- dependências do spring jdbc -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>5.2.25.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-dbcp2</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+        <!-- Driver do servidor de banco H2 -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.2.222</version>
+        </dependency>
 
-    <!-- Driver do servidor de banco SQL SERVER -->
-    <dependency>
-        <groupId>com.microsoft.sqlserver</groupId>
-        <artifactId>mssql-jdbc</artifactId>
-        <version>12.4.1.jre11</version>
-    </dependency>
-    <!-- Driver do servidor de banco MYSQL -->
-    <dependency>
-        <groupId>com.mysql</groupId>
-        <artifactId>mysql-connector-j</artifactId>
-        <version>8.1.0</version>
-    </dependency>
+        <!-- Driver do servidor de banco SQL SERVER -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>12.4.1.jre11</version>
+        </dependency>
+        <!-- Driver do servidor de banco MYSQL -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jalasoft</groupId>
+            <artifactId>HttpClient</artifactId>
+            <version>1.0.5</version>
+        </dependency>
 
-
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>5.0.0-alpha.11</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.jalasoft</groupId>
+            <artifactId>HttpClient</artifactId>
+            <version>1.0.5</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.noobdogcloud</groupId>
+            <artifactId>HttpClient</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>
+<<<<<<< HEAD
     <plugins>
     <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
@@ -81,6 +101,33 @@
         </executions>
     </plugin>
     </plugins>
+=======
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <mainClass>Projeto.TesteProjeto</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id> <!-- this is used for inheritance merges -->
+                        <phase>package</phase> <!-- bind to the packaging phase -->
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+>>>>>>> 701ae3186a38fd48e279b955bef5a51a99036d12
     </build>
 
 </project>

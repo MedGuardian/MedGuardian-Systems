@@ -69,13 +69,18 @@ public class EnviarBDAws {
     public List<Componente> selectComponente(){
         return con.query("SELECT * FROM componente", new BeanPropertyRowMapper<>(Componente.class));
     }
-
+    public List<Componente> selectComponenteFromId(Integer idComputador){
+        return con.query("SELECT e.idEspecificacao, c.nomeComponente\n" +
+                "FROM especificacao e\n" +
+                "JOIN componente c ON e.fkComponente = c.idComponente\n" +
+                "JOIN computador comp ON e.fkComputador = comp.idComputador\n" +
+                "WHERE comp.idComputador = ?;\n", new BeanPropertyRowMapper<>(Componente.class), idComputador);
+    }
     public Integer selectIdComputador(String nomeComputador){
         List<Computador> computador = con.query("SELECT * FROM computador WHERE nomeComputador = ?", new BeanPropertyRowMapper<>(Computador.class), nomeComputador);
 
         return computador.get(0).getIdComputador();
     }
-
     public Integer getFkEmpresaPorIdFuncionario(Integer idFuncionario){
         List<Funcionario> funcionario = con.query("SELECT * FROM funcionario WHERE idFuncionario = ?", new BeanPropertyRowMapper<>(Funcionario.class), idFuncionario);
 
@@ -91,6 +96,7 @@ public class EnviarBDAws {
     }
 
     public void insertAlertas(String tipoAlerta, Integer fkEspecificacao, Integer fkComputador){
+        System.out.println(fkEspecificacao + "ESPECIFICACAO SELECIONADA");
         con.update("INSERT INTO alertas (tipoAlerta, fkEspecificacao, fkComputador, dataHoraAlerta) VALUES (?, ?, ?, ?)", tipoAlerta, fkEspecificacao, fkComputador, dataHoraAtual());
         String componente;
 
@@ -117,5 +123,4 @@ public class EnviarBDAws {
         con.update("DELETE FROM janelas WHERE comando = ? AND fkComputador = ?", comando, fkComputador);
         System.out.println("Exclui a janela de comando: " + comando);
     }
-
 }
