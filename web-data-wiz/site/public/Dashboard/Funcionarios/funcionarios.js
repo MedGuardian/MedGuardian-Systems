@@ -2,10 +2,6 @@ function voltarIndex() {
     window.location.href = '../../index.html';
 }
 
-
-
-
-
 function gerarDIVFuncionario(nome, email, cargo) {
     var div = document.getElementById('containerFuncionarios')
     div.innerHTML += `<div class="dadosFuncionarios3">

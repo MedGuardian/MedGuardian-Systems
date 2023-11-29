@@ -1,7 +1,6 @@
 
 
 function validarSessao() {
-
     const botaoLogin = document.getElementById("botaoLogin");
     const botaoCadastro = document.getElementById("botaoCadastro");
     const divSaudacaoLogado = document.getElementById("saudacaoLogado");
@@ -9,8 +8,6 @@ function validarSessao() {
     const spanCadastrarFuncionario = document.getElementById('spanCadastrarFuncionario');
     const divGerarRelatorio = document.getElementById('divGerarRelatorio')
     const botaoSair = document.getElementById('botaoSair');
-
-
     if (window.location.href.indexOf("dashboard.html") > -1) {
         if (sessionStorage.idEmpresa == null && (sessionStorage.cargo == "Analista" || sessionStorage.cargo == "Estagiário")) {
             divGerarRelatorio.style.display = 'none'
@@ -39,9 +36,6 @@ function validarSessao() {
             spanCadastrarFuncionario.style.display = 'block'
         }
     }
-
-
-
     if (sessionStorage.idEmpresa == null && (sessionStorage.cargo == "Analista" || sessionStorage.cargo == "Estagiário")) {
         spanCadastrarFuncionario.style.display = 'none'
         divGerarRelatorio.style.backgroundColor = 'red'
@@ -117,7 +111,7 @@ function enviarEmail() {
     })
         .then(function (response) {
             if (response.ok) {
-                
+
                 console.log('E-mail enviado com sucesso!');
                 alert("E-mail enviado com sucesso!")
             } else {
