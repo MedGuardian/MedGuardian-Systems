@@ -2,10 +2,6 @@ function voltarIndex() {
     history.back()
 }
 
-
-
-
-
 function gerarDIVFuncionario(nome, email, cargo) {
     var div = document.getElementById('containerFuncionarios')
     div.innerHTML += `<div class="dadosFuncionarios3">
