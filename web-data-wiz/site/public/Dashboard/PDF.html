@@ -343,11 +343,13 @@
                 } 
                     if (tipoCaptura == "SwapDisponivel") {
                         swapDisponivel = registro;
-                    } else {
+                        yValues2[3] = registro;
+                    } 
+                    if (tipoCaptura == "Uso" && fkEspecificacao == 7) {
                         if (uso_disco.length >= 6) {
                             uso_disco.shift();
                         }
-                        var porcentagemUsoDisco = 100 - (registro * 100 / 8.26);
+                        var porcentagemUsoDisco = registro * 100 / 255.37;
                         uso_disco.push(porcentagemUsoDisco)
                         yValues2[2] = porcentagemUsoDisco
                         if (dataHoraLabelsDisco.length >= 6) {
@@ -381,58 +383,6 @@
   }
 
   setTimeout(atualizarGrafico, 2000)
-
-/*  var totalComponenteRam = 0;
-  var totalComponenteCPU = 0;
-  var totalComponenteDisco = 0;
-
-  function selectTotalComponentes() {
-    fetch("/usuarios/selectTotalComponentes", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        fkComputadorServer: fkComputador
-      })
-    }).then(function (resposta) {
-      console.log("Estou buscando dados referente a capacidade total dos componentes!");
-
-      if (resposta.ok) {
-        console.log(resposta);
-        resposta.json().then((resposta) => {
-          resposta.forEach((especificacao) => {
-            especificacao.forEach((objeto) => {
-              const { idEspecificacao, totalComponente } = objeto;
-
-              if (idEspecificacao == (fkComputador * 4 - 3)) {
-                totalComponenteCPU = totalComponente;
-              } else if (idEspecificacao == (fkComputador * 4 - 2)) {
-                totalComponenteRam = totalComponente;
-              } else if (idEspecificacao == (fkComputador * 4 - 1)) {
-                totalComponenteDisco = totalComponente;
-              }
-            });
-          });
-
-        });
-        console.log("Consegui buscar o total dos componentes!")
-
-      } else {
-        console.log("Houve um erro ao fazer o select do total dos componentes!");
-
-        resposta.text().then((texto) => {
-          console.error(texto);
-        });
-      }
-    })
-      .catch(function (erro) {
-        console.log(erro);
-      });
-
-    return false;
-  }*/
-
   function escolherGrafico(n) {
     valorN = n;
     plotarGrafico(valorN)
@@ -449,34 +399,13 @@
         config_graficoDesempenho.options.scales.y.min = 0;
         data_graficoDesempenho.labels = dataHoraLabelsCPU.slice(0, 6);
         break;
-      case 2:
-        uso_disco.reverse();
-        dataHoraLabelsDisco.reverse();
-        data_graficoDesempenho.datasets[0].data = uso_disco.slice(0, 6);
-        config_graficoDesempenho.options.plugins.title.text = 'Uso do disco'
-        config_graficoDesempenho.options.scales.y.max = 100;
-        config_graficoDesempenho.options.scales.y.min = 0;
-        data_graficoDesempenho.labels = dataHoraLabelsDisco.slice(0, 6);
-        break;
-      case 3:
-        uso_ram.reverse();
-        dataHoraLabelsRAM.reverse();
-        data_graficoDesempenho.datasets[0].data = uso_ram.slice(0, 6);
-        config_graficoDesempenho.options.plugins.title.text = 'Uso da RAM';
-        config_graficoDesempenho.options.scales.y.max = 100;
-        config_graficoDesempenho.options.scales.y.min = 80;
-        data_graficoDesempenho.labels = dataHoraLabelsRAM.slice(0, 6);
-        break;
-      case 4:{
-        yValues2 = uso_cpu.slice(0,6);
-      }
-      }
+    }
     graficoEmUso.update();
     graficoBarras.update()
   }
 
-  var xValues2 = ["","HD", "CPU", "RAM"];
-  var barColors = ["red", "green", "blue",];
+  var xValues2 = ["CPU","RAM", "DISCO", "SwapDisponivel"];
+  var barColors = ["red", "green", "blue","orange"];
 
   var graficoBarras = new Chart("myChart2", {
     type: "bar",
@@ -491,7 +420,7 @@
       legend: { display: false },
       title: {
         display: true,
-        text: "Gerenciamento de Tarefas"
+        text: "Utilização dos componentes"
       }
     }
   });
