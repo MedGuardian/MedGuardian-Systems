@@ -282,6 +282,7 @@
   var dataHoraLabelsCPU = [];
   var dataHoraLabelsDisco = [];
   var dataHoraLabelsRAM = [];
+  var yValues2 = [];
   
   async function atualizarGrafico() {
   
@@ -321,6 +322,7 @@
                         uso_cpu.shift();
                     }
                     uso_cpu.push(registro);
+                    yValues2[0] = registro
                     if (dataHoraLabelsCPU.length >= 6) {
                         dataHoraLabelsCPU.shift()
                     }
@@ -333,7 +335,7 @@
                     }
                     var porcentagemUsoRam = registro * 100 / 8.4;
                     uso_ram.push(porcentagemUsoRam);
-
+                    yValues2[1] = porcentagemUsoRam
                     if (dataHoraLabelsRAM.length >= 6) {
                         dataHoraLabelsRAM.shift()
                     }
@@ -347,6 +349,7 @@
                         }
                         var porcentagemUsoDisco = 100 - (registro * 100 / 8.26);
                         uso_disco.push(porcentagemUsoDisco)
+                        yValues2[2] = porcentagemUsoDisco
                         if (dataHoraLabelsDisco.length >= 6) {
                             dataHoraLabelsDisco.shift()
                         }
@@ -469,10 +472,10 @@
       }
       }
     graficoEmUso.update();
+    graficoBarras.update()
   }
 
   var xValues2 = ["","HD", "CPU", "RAM"];
-  var yValues2 = [0, 55, 40, 100];
   var barColors = ["red", "green", "blue",];
 
   var graficoBarras = new Chart("myChart2", {

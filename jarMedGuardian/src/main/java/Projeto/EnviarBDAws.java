@@ -70,6 +70,13 @@ public class EnviarBDAws {
     public List<Componente> selectComponente(){
         return con.query("SELECT * FROM componente", new BeanPropertyRowMapper<>(Componente.class));
     }
+    public List<Componente> selectComponenteFromId(Integer idComputador){
+        return con.query("SELECT e.idEspecificacao, c.nomeComponente\n" +
+                "FROM especificacao e\n" +
+                "JOIN componente c ON e.fkComponente = c.idComponente\n" +
+                "JOIN computador comp ON e.fkComputador = comp.idComputador\n" +
+                "WHERE comp.idComputador = ?;\n", new BeanPropertyRowMapper<>(Componente.class), idComputador);
+    }
 
     public Integer selectIdComputador(String nomeComputador){
         List<Computador> computador = con.query("SELECT * FROM computador WHERE nomeComputador = ?", new BeanPropertyRowMapper<>(Computador.class), nomeComputador);
