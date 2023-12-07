@@ -293,12 +293,13 @@ public class TesteProjetoVictor {
                             System.out.println("Quantidade de processos: " + numeroProcessos);
                             System.out.println("Therads: " + numeroThreads);
                             break;
-                        default:
+                        case 4:
                             System.out.println("Até logo!");
                             parar = true;
+                            System.exit(1);
+
                             break;
                     }
-
                 }while(!parar);
 
             }
